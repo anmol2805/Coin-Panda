@@ -55,7 +55,7 @@ class home : Fragment() {
             for(doc in documentSnapshot.documents){
                 val coinname = doc.id
                 val coinnotify = doc.getBoolean("notify")
-                val coin = Coin(coinname)
+                val coin = Coin(coinname,coinnotify)
                 coins.add(coin)
             }
             if(activity!=null){
