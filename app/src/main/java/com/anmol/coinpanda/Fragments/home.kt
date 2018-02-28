@@ -1,6 +1,7 @@
 package com.anmol.coinpanda.Fragments
 
-import android.app.Fragment
+import android.support.v4.app.Fragment
+
 import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.support.v7.widget.DefaultItemAnimator
@@ -28,12 +29,11 @@ class home : Fragment() {
     lateinit var itemClickListener : ItemClickListener
     var db = FirebaseFirestore.getInstance()
     lateinit var coinAdapter : CoinAdapter
-    override fun onCreateView(inflater: LayoutInflater?,
-                              container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val vi = inflater?.inflate(R.layout.home,
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        val vi = inflater.inflate(R.layout.home,
                 container, false)
         val layoutManager = LinearLayoutManager(activity)
-        mcoinrecycler = vi?.findViewById(R.id.coinrecycler)
+        mcoinrecycler = vi.findViewById(R.id.coinrecycler)
         mcoinrecycler?.layoutManager   = layoutManager
         mcoinrecycler?.setHasFixedSize(true)
         mcoinrecycler?.itemAnimator   = DefaultItemAnimator()
@@ -61,7 +61,7 @@ class home : Fragment() {
             }
             if(activity!=null){
                 if(!coins.isEmpty()){
-                    coinAdapter = CoinAdapter(activity,coins,itemClickListener)
+                    coinAdapter = CoinAdapter(activity!!,coins,itemClickListener)
                     coinrecycler.adapter = coinAdapter
                 }
             }

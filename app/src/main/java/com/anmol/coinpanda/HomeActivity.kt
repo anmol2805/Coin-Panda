@@ -1,6 +1,6 @@
 package com.anmol.coinpanda
 
-import android.app.Fragment
+import android.support.v4.app.Fragment
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v7.app.AppCompatActivity
@@ -34,9 +34,9 @@ class HomeActivity : AppCompatActivity() {
 
 
     private fun setFragment(fragment: Fragment) {
-        val fragmentManager = fragmentManager
-        fragmentManager.beginTransaction().replace(R.id.content,fragment).commit()
-        fragmentManager.executePendingTransactions()
+        supportFragmentManager.beginTransaction().replace(R.id.content,fragment).commit()
+        supportFragmentManager.executePendingTransactions()
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
