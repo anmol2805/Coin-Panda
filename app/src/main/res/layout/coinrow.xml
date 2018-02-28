@@ -27,6 +27,5 @@
         android:layout_centerVertical="true"
         android:textSize="18sp"
         android:textColor="@color/colorAccent"
-        android:textStyle="bold"
         android:text="TextView" />
 </RelativeLayout>

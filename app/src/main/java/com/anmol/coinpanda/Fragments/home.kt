@@ -40,7 +40,7 @@ class home : Fragment() {
         coins = ArrayList()
         itemClickListener = object : ItemClickListener {
             override fun onItemClick(pos: Int) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
             }
 
         }
@@ -52,6 +52,7 @@ class home : Fragment() {
     private fun loaddata() {
         coins.clear()
         db.collection("users").document("Z2ycXxL6GyvPS23NTuYk").collection("portfolio").addSnapshotListener{documentSnapshot, e ->
+            coins.clear()
             for(doc in documentSnapshot.documents){
                 val coinname = doc.id
                 val coinnotify = doc.getBoolean("notify")
