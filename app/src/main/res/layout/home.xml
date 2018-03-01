@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -25,15 +26,24 @@
     </android.support.v7.widget.CardView>
 
     <Switch
-        android:id="@+id/switch2"
+        android:id="@+id/coinselect"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="18dp"
-        android:text="My coins"
+
+        android:checked="true"
+        android:showText="true"
+        android:splitTrack="false"
+        android:switchMinWidth="@dimen/activity_horizontal_margin"
+        android:switchPadding="@dimen/activity_horizontal_margin"
+        android:switchTextAppearance="@android:style/TextAppearance.WindowTitle"
+
         android:textColor="#fff"
-        
-        />
+        android:textOff="All Coins"
+        android:textOn="My Coins"
+        android:theme="@style/SCBSwitch"
+        tools:checked="true" />
 
 </RelativeLayout>

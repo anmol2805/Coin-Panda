@@ -16,7 +16,7 @@ import com.bumptech.glide.Glide
  * Created by anmol on 2/27/2018.
  */
 class CoinAdapter(internal var c: Context,internal var coins: List<Coin>,private val mitemClickListener: ItemClickListener): RecyclerView.Adapter<CoinAdapter.MyViewHolder>(){
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): MyViewHolder{
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val v = LayoutInflater.from(c).inflate(R.layout.coinrow,parent,false)
         return MyViewHolder(v,mitemClickListener)
     }
