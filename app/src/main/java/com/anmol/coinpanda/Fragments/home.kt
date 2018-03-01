@@ -11,6 +11,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CompoundButton
+import android.widget.Switch
 import com.anmol.coinpanda.Adapters.CoinAdapter
 import com.anmol.coinpanda.Interfaces.ItemClickListener
 import com.anmol.coinpanda.Model.Coin
@@ -25,6 +27,7 @@ import org.json.JSONObject
  */
 class home : Fragment() {
     private var mcoinrecycler:RecyclerView? = null
+    private lateinit var mcoinselect: Switch
     lateinit var coins : MutableList<Coin>
     lateinit var itemClickListener : ItemClickListener
     var db = FirebaseFirestore.getInstance()
@@ -34,6 +37,7 @@ class home : Fragment() {
                 container, false)
         val layoutManager = LinearLayoutManager(activity)
         mcoinrecycler = vi.findViewById(R.id.coinrecycler)
+        mcoinselect = vi.findViewById(R.id.coinselect)
         mcoinrecycler?.layoutManager   = layoutManager
         mcoinrecycler?.setHasFixedSize(true)
         mcoinrecycler?.itemAnimator   = DefaultItemAnimator()
@@ -44,9 +48,29 @@ class home : Fragment() {
             }
 
         }
+
+        mcoinselect.isChecked = true
         loaddata()
+        mcoinselect.setOnCheckedChangeListener({ compoundButton, b ->
+            if (b){
+                loaddata()
+            }
+            else{
+                loadalldata()
+            }
+        })
+
         // Inflate the layout for this fragment
         return vi
+    }
+
+    private fun loadalldata() {
+        db.collection("supernode").document("allcoins").collection("names").addSnapshotListener{documentSnapshot, firebaseFirestoreException ->
+            for(doc in documentSnapshot.documents){
+                val coinname = doc.id
+
+            }
+        }
     }
 
     private fun loaddata() {

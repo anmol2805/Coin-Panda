@@ -44,6 +44,6 @@
         android:textOff="All Coins"
         android:textOn="My Coins"
         android:theme="@style/SCBSwitch"
-        tools:checked="true" />
+        />
 
 </RelativeLayout>
