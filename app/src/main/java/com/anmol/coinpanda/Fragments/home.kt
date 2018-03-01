@@ -3,6 +3,7 @@ package com.anmol.coinpanda.Fragments
 import android.support.v4.app.Fragment
 
 import android.content.ContentValues.TAG
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
@@ -19,6 +20,7 @@ import com.anmol.coinpanda.Interfaces.ItemClickListener
 import com.anmol.coinpanda.Model.Allcoin
 import com.anmol.coinpanda.Model.Coin
 import com.anmol.coinpanda.R
+import com.anmol.coinpanda.TweetsActivity
 import com.google.firebase.firestore.EventListener
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.home.*
@@ -49,7 +51,15 @@ class home : Fragment() {
         allcoins = ArrayList()
         itemClickListener = object : ItemClickListener {
             override fun onItemClick(pos: Int) {
+                val intent = Intent(activity,TweetsActivity::class.java)
+                if(!coins.isEmpty()){
+                    intent.putExtra("coin",coins[pos].coinname)
+                }
+                else if(!allcoins.isEmpty()){
+                    intent.putExtra("coin",allcoins[pos].coinname)
+                }
 
+                startActivity(intent)
             }
 
         }
