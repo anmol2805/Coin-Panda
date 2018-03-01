@@ -13,8 +13,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.CompoundButton
 import android.widget.Switch
+import com.anmol.coinpanda.Adapters.AllCoinAdapter
 import com.anmol.coinpanda.Adapters.CoinAdapter
 import com.anmol.coinpanda.Interfaces.ItemClickListener
+import com.anmol.coinpanda.Model.Allcoin
 import com.anmol.coinpanda.Model.Coin
 import com.anmol.coinpanda.R
 import com.google.firebase.firestore.EventListener
@@ -29,9 +31,11 @@ class home : Fragment() {
     private var mcoinrecycler:RecyclerView? = null
     private lateinit var mcoinselect: Switch
     lateinit var coins : MutableList<Coin>
+    lateinit var allcoins:MutableList<Allcoin>
     lateinit var itemClickListener : ItemClickListener
     var db = FirebaseFirestore.getInstance()
     lateinit var coinAdapter : CoinAdapter
+    lateinit var allCoinAdapter: AllCoinAdapter
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val vi = inflater.inflate(R.layout.home,
                 container, false)
@@ -42,6 +46,7 @@ class home : Fragment() {
         mcoinrecycler?.setHasFixedSize(true)
         mcoinrecycler?.itemAnimator   = DefaultItemAnimator()
         coins = ArrayList()
+        allcoins = ArrayList()
         itemClickListener = object : ItemClickListener {
             override fun onItemClick(pos: Int) {
 
@@ -65,18 +70,32 @@ class home : Fragment() {
     }
 
     private fun loadalldata() {
+        coins.clear()
+        allcoins.clear()
         db.collection("supernode").document("allcoins").collection("names").addSnapshotListener{documentSnapshot, firebaseFirestoreException ->
+            coins.clear()
+            allcoins.clear()
             for(doc in documentSnapshot.documents){
                 val coinname = doc.id
-
+                val allcoin = Allcoin(coinname)
+                allcoins.add(allcoin)
             }
+            if(activity!=null){
+                if(!allcoins.isEmpty()){
+                    allCoinAdapter = AllCoinAdapter(activity!!,allcoins,itemClickListener)
+                    coinrecycler.adapter = allCoinAdapter
+                }
+            }
+
         }
     }
 
     private fun loaddata() {
         coins.clear()
+        allcoins.clear()
         db.collection("users").document("Z2ycXxL6GyvPS23NTuYk").collection("portfolio").addSnapshotListener{documentSnapshot, e ->
             coins.clear()
+            allcoins.clear()
             for(doc in documentSnapshot.documents){
                 val coinname = doc.id
                 val coinnotify = doc.getBoolean("notify")
