@@ -8,6 +8,12 @@ class TweetsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tweets)
-        title = intent.getStringExtra("coin")
+        val coin : String = intent.getStringExtra("coin")
+        title = coin
+        loadtweets(coin)
+    }
+
+    private fun loadtweets(coin: String) {
+            
     }
 }
