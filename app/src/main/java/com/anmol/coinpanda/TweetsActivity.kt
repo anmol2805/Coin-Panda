@@ -1,20 +1,40 @@
 package com.anmol.coinpanda
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.widget.DefaultItemAnimator
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
+import com.anmol.coinpanda.Adapters.TweetsAdapter
+import com.anmol.coinpanda.Interfaces.ItemClickListener
 import com.anmol.coinpanda.Model.Tweet
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 
 class TweetsActivity : AppCompatActivity() {
     lateinit var tweets:MutableList<Tweet>
+    private var mtweetrecycler:RecyclerView?=null
+    lateinit var itemClickListener : ItemClickListener
+    lateinit var tweetsAdapter:TweetsAdapter
     var db = FirebaseFirestore.getInstance()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tweets)
         val coin : String = intent.getStringExtra("coin")
         title = coin
+        val layoutManager = LinearLayoutManager(this)
+        mtweetrecycler = findViewById(R.id.tweetrecycler)
+        mtweetrecycler?.layoutManager = layoutManager
+        mtweetrecycler?.setHasFixedSize(true)
+        mtweetrecycler?.itemAnimator = DefaultItemAnimator()
         tweets = ArrayList()
+        itemClickListener = object : ItemClickListener {
+            override fun onItemClick(pos: Int) {
+
+            }
+
+        }
 
         loadtweets(coin)
     }
@@ -35,6 +55,10 @@ class TweetsActivity : AppCompatActivity() {
                         val mtweet = doc.getString("tweet")
                         val tweet = Tweet(mcoin,mflag,mtid,mmain,mngram2, mpolarity as Number?, msubjectivity as Number?,mtweet)
                         tweets.add(tweet)
+                    }
+                    if(!tweets.isEmpty()){
+                        tweetsAdapter = TweetsAdapter(this,tweets,itemClickListener)
+                        mtweetrecycler?.adapter = tweetsAdapter
                     }
                 }
     }
