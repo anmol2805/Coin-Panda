@@ -16,6 +16,7 @@ import android.widget.CompoundButton
 import android.widget.Switch
 import com.anmol.coinpanda.Adapters.AllCoinAdapter
 import com.anmol.coinpanda.Adapters.CoinAdapter
+import com.anmol.coinpanda.AddToPortfolioActivity
 import com.anmol.coinpanda.Interfaces.ItemClickListener
 import com.anmol.coinpanda.Model.Allcoin
 import com.anmol.coinpanda.Model.Coin
@@ -63,6 +64,9 @@ class home : Fragment() {
             }
 
         }
+        portfolio.setOnClickListener(View.OnClickListener {
+            startActivity(Intent(activity,AddToPortfolioActivity::class.java))
+        })
 
         mcoinselect.isChecked = true
         loaddata()
