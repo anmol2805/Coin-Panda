@@ -32,11 +32,18 @@ class TweetsAdapter(internal var c: Context, internal var tweets: List<Tweet>, p
         holder.mtweet?.text = coindata.tweet
         holder.msubjectivity?.text = coindata.subjectivity.toString()
         holder.mpolarity?.text = coindata.polarity.toString()
+
         if(coindata.flag){
             holder.mflag?.visibility = View.VISIBLE
         }
         else{
             holder.mflag?.visibility = View.GONE
+        }
+        if (coindata.polarity.toString().contains("-")){
+            Glide.with(c).load(R.drawable.down).into(holder.mpolstatus)
+        }
+        else{
+            Glide.with(c).load(R.drawable.up).into(holder.mpolstatus)
         }
 
     }
@@ -46,11 +53,13 @@ class TweetsAdapter(internal var c: Context, internal var tweets: List<Tweet>, p
         var mpolarity:TextView?=null
         var msubjectivity:TextView?=null
         var mflag:ImageView?=null
+        var mpolstatus:ImageView?=null
         init {
             this.mtweet = itemView.findViewById(R.id.tweet)
             this.mpolarity = itemView.findViewById(R.id.polarity)
             this.msubjectivity = itemView.findViewById(R.id.subjectivity)
             this.mflag = itemView.findViewById(R.id.flag)
+            this.mpolstatus = itemView.findViewById(R.id.polstatus)
             itemView.setOnClickListener(this)
         }
 
