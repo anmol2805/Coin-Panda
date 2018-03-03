@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:fontFamily="sans-serif-smallcaps"
+        android:fontFamily="sans-serif"
         android:text="TextView"
         android:textColor="#000"
         android:textSize="18sp" />

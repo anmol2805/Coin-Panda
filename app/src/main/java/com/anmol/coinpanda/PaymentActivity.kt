@@ -8,5 +8,7 @@ class PaymentActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_payment)
+        val coin  = intent.getStringExtra("coin")
+        title = coin
     }
 }
