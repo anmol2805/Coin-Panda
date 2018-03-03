@@ -1,6 +1,7 @@
 package com.anmol.coinpanda.Adapters
 
 import android.content.Context
+import android.content.Intent
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,7 @@ import android.widget.TextView
 import com.anmol.coinpanda.Interfaces.ItemClickListener
 import com.anmol.coinpanda.Model.Allcoin
 import com.anmol.coinpanda.Model.Coin
+import com.anmol.coinpanda.PaymentActivity
 import com.anmol.coinpanda.R
 import com.bumptech.glide.Glide
 import com.google.firebase.firestore.FirebaseFirestore
@@ -40,6 +42,11 @@ class AddCoinAdapter(internal var c: Context, internal var allcoins: List<Allcoi
                 }
             }
         }
+        holder.addtoport?.setOnClickListener({
+            val intent = Intent(c,PaymentActivity::class.java)
+            intent.putExtra("coin",coindata.coinname)
+            c.startActivity(intent)
+        })
 
 
     }
