@@ -12,6 +12,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.CompoundButton
 import android.widget.Switch
 import com.anmol.coinpanda.Adapters.AllCoinAdapter
@@ -39,10 +40,12 @@ class home : Fragment() {
     var db = FirebaseFirestore.getInstance()
     lateinit var coinAdapter : CoinAdapter
     lateinit var allCoinAdapter: AllCoinAdapter
+    private var portfolio:Button?=null
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val vi = inflater.inflate(R.layout.home,
                 container, false)
         val layoutManager = LinearLayoutManager(activity)
+        portfolio = vi.findViewById(R.id.portfolio)
         mcoinrecycler = vi.findViewById(R.id.coinrecycler)
         mcoinselect = vi.findViewById(R.id.coinselect)
         mcoinrecycler?.layoutManager   = layoutManager
@@ -64,7 +67,7 @@ class home : Fragment() {
             }
 
         }
-        portfolio.setOnClickListener(View.OnClickListener {
+        portfolio?.setOnClickListener({
             startActivity(Intent(activity,AddToPortfolioActivity::class.java))
         })
 
