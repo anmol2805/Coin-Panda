@@ -30,13 +30,27 @@ class TweetsAdapter(internal var c: Context, internal var tweets: List<Tweet>, p
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val coindata = tweets[position]
         holder.mtweet?.text = coindata.tweet
+        holder.msubjectivity?.text = coindata.subjectivity.toString()
+        holder.mpolarity?.text = coindata.polarity.toString()
+        if(coindata.flag){
+            holder.mflag?.visibility = View.VISIBLE
+        }
+        else{
+            holder.mflag?.visibility = View.GONE
+        }
 
     }
 
     inner class MyViewHolder(itemView: View, private val mitemClickListener: ItemClickListener):RecyclerView.ViewHolder(itemView), View.OnClickListener {
         var mtweet:TextView?=null
+        var mpolarity:TextView?=null
+        var msubjectivity:TextView?=null
+        var mflag:ImageView?=null
         init {
             this.mtweet = itemView.findViewById(R.id.tweet)
+            this.mpolarity = itemView.findViewById(R.id.polarity)
+            this.msubjectivity = itemView.findViewById(R.id.subjectivity)
+            this.mflag = itemView.findViewById(R.id.flag)
             itemView.setOnClickListener(this)
         }
 
