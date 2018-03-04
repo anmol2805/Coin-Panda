@@ -28,7 +28,7 @@ class TweetsAdapter(internal var c: Context, internal var tweets: List<Tweet>, p
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        val coindata = tweets[position]
+        val coindata = tweets[position] 
         holder.mtweet?.text = coindata.tweet
         holder.msubjectivity?.text = coindata.subjectivity.toString()
         holder.mpolarity?.text = coindata.polarity.toString()
@@ -54,12 +54,14 @@ class TweetsAdapter(internal var c: Context, internal var tweets: List<Tweet>, p
         var msubjectivity:TextView?=null
         var mflag:ImageView?=null
         var mpolstatus:ImageView?=null
+        var mkeywordrecycler:RecyclerView?=null
         init {
             this.mtweet = itemView.findViewById(R.id.tweet)
             this.mpolarity = itemView.findViewById(R.id.polarity)
             this.msubjectivity = itemView.findViewById(R.id.subjectivity)
             this.mflag = itemView.findViewById(R.id.flag)
             this.mpolstatus = itemView.findViewById(R.id.polstatus)
+            this.mkeywordrecycler = itemView.findViewById(R.id.keywordrecycler)
             itemView.setOnClickListener(this)
         }
 

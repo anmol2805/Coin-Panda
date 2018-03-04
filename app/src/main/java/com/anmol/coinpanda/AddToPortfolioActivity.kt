@@ -31,7 +31,7 @@ class AddToPortfolioActivity : AppCompatActivity() {
         allcoins = ArrayList()
         itemClickListener = object : ItemClickListener {
             override fun onItemClick(pos: Int) {
-                            }
+            }
 
         }
         loadalldata()
