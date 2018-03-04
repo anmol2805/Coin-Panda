@@ -1,11 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/colorPrimary"
+    >
 
-    <TextView
-        android:id="@+id/textView2"
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="50dp"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="48dp"
+        android:id="@+id/cardView">
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/cointweetrecycler"
+            android:layout_marginBottom="50dp"
+            />
+    </android.support.v7.widget.CardView>
+
+    <Switch
+        android:id="@+id/cointweetselect"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="dashboard" />
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="18dp"
+
+        android:checked="true"
+        android:showText="true"
+        android:splitTrack="false"
+        android:switchMinWidth="@dimen/activity_horizontal_margin"
+        android:switchPadding="@dimen/activity_horizontal_margin"
+        android:switchTextAppearance="@android:style/TextAppearance.Widget.Toolbar.Title"
+
+        android:textColor="#fff"
+        android:textOff="All Coins"
+        android:textOn="My Coins"
+        android:theme="@style/SCBSwitch" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_alignBottom="@+id/coinselect"
+        android:layout_alignLeft="@+id/cardView"
+        android:layout_alignStart="@+id/cardView"
+        android:layout_marginLeft="5dp"
+        android:layout_marginStart="5dp"
+        app:srcCompat="@drawable/btcgold" />
+
+    <Button
+        android:id="@+id/tweetportfolio"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_alignBottom="@+id/coinselect"
+        android:layout_alignEnd="@+id/cardView"
+        android:layout_alignRight="@+id/cardView"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        android:background="@drawable/portgold" />
+
+
 </RelativeLayout>
