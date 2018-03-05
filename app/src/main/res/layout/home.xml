@@ -38,13 +38,13 @@
         android:splitTrack="false"
         android:switchMinWidth="@dimen/activity_horizontal_margin"
         android:switchPadding="@dimen/activity_horizontal_margin"
-        android:switchTextAppearance="@android:style/TextAppearance.WindowTitle"
 
+
+        android:switchTextAppearance="@android:style/TextAppearance.WindowTitle"
         android:textColor="#fff"
         android:textOff="All Coins"
         android:textOn="My Coins"
-        android:theme="@style/SCBSwitch"
-        />
+        android:theme="@style/SCBSwitch" />
 
     <ImageView
         android:id="@+id/imageView"
