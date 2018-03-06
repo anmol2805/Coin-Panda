@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Switch
 import com.anmol.coinpanda.Interfaces.ItemClickListener
+import com.anmol.coinpanda.Model.Allcoin
 import com.anmol.coinpanda.Model.Tweet
 import com.anmol.coinpanda.R
 import com.anmol.coinpanda.TweetsActivity
@@ -28,6 +29,7 @@ import kotlin.collections.ArrayList
  */
 class dashboard : Fragment() {
     private var cointweetrecycler:RecyclerView?=null
+
     private lateinit var tweetselect:Switch
     lateinit var tweets : MutableList<Tweet>
     lateinit var itemClickListener : ItemClickListener
@@ -78,6 +80,19 @@ class dashboard : Fragment() {
         db.collection("Tweets").whereGreaterThanOrEqualTo("date",prevtime)
                 .orderBy("date",Query.Direction.DESCENDING).addSnapshotListener{documentSnapshot,e->
             tweets.clear()
+                    for(doc in documentSnapshot){
+                        val coin = doc.getString("coin")
+                        val coin_symbol = doc.getString("coin_symbol")
+                        val mtweet = doc.getString("tweet")
+                        val url = doc.getString("url")
+                        val tweet = Tweet(coin,coin_symbol,mtweet,url)
+                        tweets.add(tweet)
+                    }
+                    if(activity!=null){
+                        if(!tweets.isEmpty()){
+
+                        }
+                    }
         }
 
 

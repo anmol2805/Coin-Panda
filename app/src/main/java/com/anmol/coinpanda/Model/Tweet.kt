@@ -5,24 +5,18 @@ package com.anmol.coinpanda.Model
  */
 class Tweet{
     var coin:String?=null
-    var flag:Boolean = false
-    var tid:String?=null
-    var main:String?=null
-    var ngram2:String?=null
-    var polarity:Number? = null
-    var subjectivity:Number?=null
+    var coin_symbol:String?=null
     var tweet:String?=null
+    var url:String?=null
+
 
     constructor()
-    constructor(coin: String?, flag: Boolean, tid: String?, main: String?, ngram2: String?, polarity: Number?, subjectivity: Number?, tweet: String?) {
+    constructor(coin: String?, coin_symbol: String?, tweet: String?, url: String?) {
         this.coin = coin
-        this.flag = flag
-        this.tid = tid
-        this.main = main
-        this.ngram2 = ngram2
-        this.polarity = polarity
-        this.subjectivity = subjectivity
+        this.coin_symbol = coin_symbol
         this.tweet = tweet
+        this.url = url
     }
+
 
 }

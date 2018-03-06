@@ -30,38 +30,18 @@ class TweetsAdapter(internal var c: Context, internal var tweets: List<Tweet>, p
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val coindata = tweets[position] 
         holder.mtweet?.text = coindata.tweet
-        holder.msubjectivity?.text = coindata.subjectivity.toString()
-        holder.mpolarity?.text = coindata.polarity.toString()
+        holder.mcoin?.text = coindata.coin
 
-        if(coindata.flag){
-            holder.mflag?.visibility = View.VISIBLE
-        }
-        else{
-            holder.mflag?.visibility = View.GONE
-        }
-        if (coindata.polarity.toString().contains("-")){
-            Glide.with(c).load(R.drawable.down).into(holder.mpolstatus)
-        }
-        else{
-            Glide.with(c).load(R.drawable.up).into(holder.mpolstatus)
-        }
+
 
     }
 
     inner class MyViewHolder(itemView: View, private val mitemClickListener: ItemClickListener):RecyclerView.ViewHolder(itemView), View.OnClickListener {
         var mtweet:TextView?=null
-        var mpolarity:TextView?=null
-        var msubjectivity:TextView?=null
-        var mflag:ImageView?=null
-        var mpolstatus:ImageView?=null
-        var mkeywordrecycler:RecyclerView?=null
+        var mcoin:TextView?=null
         init {
             this.mtweet = itemView.findViewById(R.id.tweet)
-            this.mpolarity = itemView.findViewById(R.id.polarity)
-            this.msubjectivity = itemView.findViewById(R.id.subjectivity)
-            this.mflag = itemView.findViewById(R.id.flag)
-            this.mpolstatus = itemView.findViewById(R.id.polstatus)
-            this.mkeywordrecycler = itemView.findViewById(R.id.keywordrecycler)
+            this.mcoin = itemView.findViewById(R.id.coin)
             itemView.setOnClickListener(this)
         }
 
