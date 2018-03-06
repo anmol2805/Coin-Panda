@@ -104,20 +104,43 @@ class dashboard : Fragment() {
     private fun loaddatatweet() {
         tweets.clear()
         val mycoins :ArrayList<String> = ArrayList()
+
+        db.collection("users").document("MhqeP5vqgdadnSodwzPo").collection("portfolio").addSnapshotListener{ds,er->
+            mycoins.clear()
+            for(docs in ds){
+                val name  = docs.id
+                mycoins.add(name)
+            }
+            var i = 0
+            while (i < mycoins.size) {
+                System.out.println("mycoins:" + mycoins[i])
+//                    if (doc.getString("coin_symbol").contains(mycoins[i])) {
+//                        val coin = doc.getString("coin")
+//                        val coin_symbol = doc.getString("coin_symbol")
+//                        val mtweet = doc.getString("tweet")
+//                        val url = doc.getString("url")
+//                        val tweet = Tweet(coin, coin_symbol, mtweet, url)
+//                        tweets.add(tweet)
+//                    }
+                i++
+            }
+            querymytweets(mycoins)
+        }
+    }
+
+    private fun querymytweets(mycoins: ArrayList<String>) {
         val format = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
         val cal = Calendar.getInstance()
         cal.add(Calendar.MONTH,-1)
         val stringtime = format.format(cal.time)
         val prevtime = Timestamp.valueOf(stringtime)
-        db.collection("Tweets").whereGreaterThanOrEqualTo("timestamp",prevtime)
-                .orderBy("timestamp",Query.Direction.DESCENDING).addSnapshotListener{documentSnapshot,e->
+        db.collection("Tweets").whereGreaterThanOrEqualTo("date",prevtime).orderBy("date",Query.Direction.DESCENDING).addSnapshotListener{documentSnapshot,e->
             tweets.clear()
-            db.collection("users").document("MhqeP5vqgdadnSodwzPo").collection("portfolio").addSnapshotListener{ds,er->
-                ds.mapTo(mycoins) { it.id }
-            }
+
             for(doc in documentSnapshot) {
                 var i = 0
                 while (i < mycoins.size) {
+
                     if (doc.getString("coin_symbol").contains(mycoins[i])) {
                         val coin = doc.getString("coin")
                         val coin_symbol = doc.getString("coin_symbol")
@@ -137,5 +160,6 @@ class dashboard : Fragment() {
                     }
 
         }
+
     }
 }
