@@ -16,6 +16,7 @@ import android.widget.Switch
 import com.anmol.coinpanda.Adapters.AllCoinAdapter
 import com.anmol.coinpanda.Adapters.CoinAdapter
 import com.anmol.coinpanda.Adapters.GridAdapter
+import com.anmol.coinpanda.Adapters.GridnewAdapter
 import com.anmol.coinpanda.AddToPortfolioActivity
 import com.anmol.coinpanda.Interfaces.ItemClickListener
 import com.anmol.coinpanda.Model.Allcoin
@@ -23,53 +24,25 @@ import com.anmol.coinpanda.Model.Coin
 import com.anmol.coinpanda.R
 import com.anmol.coinpanda.TweetsActivity
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import kotlinx.android.synthetic.main.home.*
 
 /**
  * Created by anmol on 2/26/2018.
  */
 class home : Fragment() {
-    private var mcoinrecycler:RecyclerView? = null
     private var coingrid:GridView?=null
-    private lateinit var gridAdapter:GridAdapter
+    private lateinit var gridAdapter:GridnewAdapter
     private lateinit var mcoinselect: Switch
-    lateinit var coins : MutableList<Coin>
     lateinit var allcoins:MutableList<Allcoin>
     lateinit var itemClickListener : ItemClickListener
     var db = FirebaseFirestore.getInstance()
-    lateinit var coinAdapter : CoinAdapter
-    lateinit var allCoinAdapter: AllCoinAdapter
-    private var portfolio:Button?=null
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val vi = inflater.inflate(R.layout.home,
                 container, false)
-        val layoutManager = LinearLayoutManager(activity)
-        portfolio = vi.findViewById(R.id.portfolio)
-        mcoinrecycler = vi.findViewById(R.id.coinrecycler)
+        coingrid = vi.findViewById(R.id.coingrid)
         mcoinselect = vi.findViewById(R.id.coinselect)
-        mcoinrecycler?.layoutManager   = layoutManager
-        mcoinrecycler?.setHasFixedSize(true)
-        mcoinrecycler?.itemAnimator   = DefaultItemAnimator()
-        coins = ArrayList()
         allcoins = ArrayList()
-        itemClickListener = object : ItemClickListener {
-            override fun onItemClick(pos: Int) {
-                val intent = Intent(activity,TweetsActivity::class.java)
-                if(!coins.isEmpty()){
-                    intent.putExtra("coin",coins[pos].coinname)
-                }
-                else if(!allcoins.isEmpty()){
-                    intent.putExtra("coin",allcoins[pos].coinname)
-                }
-
-                startActivity(intent)
-            }
-
-        }
-        portfolio?.setOnClickListener({
-            startActivity(Intent(activity,AddToPortfolioActivity::class.java))
-        })
-
         mcoinselect.isChecked = true
         loaddata()
         mcoinselect.setOnCheckedChangeListener({ compoundButton, b ->
@@ -86,22 +59,18 @@ class home : Fragment() {
     }
 
     private fun loadalldata() {
-        coins.clear()
         allcoins.clear()
-        db.collection("supernode").document("allcoins").collection("names").addSnapshotListener{documentSnapshot, firebaseFirestoreException ->
-            coins.clear()
+        db.collection("AllCoins").orderBy("lastUpdate",Query.Direction.DESCENDING).addSnapshotListener{ documentSnapshot, firebaseFirestoreException ->
             allcoins.clear()
             for(doc in documentSnapshot.documents){
-                val coinname = doc.id
+                val coinname = doc.getString("coin_symbol")
                 val allcoin = Allcoin(coinname)
                 allcoins.add(allcoin)
             }
             if(activity!=null){
                 if(!allcoins.isEmpty()){
-                    gridAdapter = GridAdapter(activity!!,R.layout.coinlayout,allcoins)
+                    gridAdapter = GridnewAdapter(activity!!,allcoins)
                     coingrid?.adapter = gridAdapter
-//                    allCoinAdapter = AllCoinAdapter(activity!!,allcoins,itemClickListener)
-//                    coinrecycler.adapter = allCoinAdapter
                 }
             }
 
@@ -109,24 +78,18 @@ class home : Fragment() {
     }
 
     private fun loaddata() {
-        coins.clear()
         allcoins.clear()
-        db.collection("users").document("Z2ycXxL6GyvPS23NTuYk").collection("portfolio").addSnapshotListener{documentSnapshot, e ->
-            coins.clear()
+        db.collection("users").document("MhqeP5vqgdadnSodwzPo").collection("portfolio").addSnapshotListener{documentSnapshot, e ->
             allcoins.clear()
             for(doc in documentSnapshot.documents){
                 val coinname = doc.id
-                val coinnotify = doc.getBoolean("notify")
-                val coin = Coin(coinname,coinnotify)
                 val allcoin = Allcoin(coinname)
                 allcoins.add(allcoin)
             }
             if(activity!=null){
                 if(!allcoins.isEmpty()){
-                    gridAdapter = GridAdapter(activity!!,R.layout.coinlayout,allcoins)
+                    gridAdapter = GridnewAdapter(activity!!,allcoins)
                     coingrid?.adapter = gridAdapter
-//                    coinAdapter = CoinAdapter(activity!!,coins,itemClickListener)
-//                    coinrecycler.adapter = coinAdapter
                 }
             }
 
