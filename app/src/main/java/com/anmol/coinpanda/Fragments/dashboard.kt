@@ -45,7 +45,7 @@ class dashboard : Fragment() {
         cointweetrecycler?.setHasFixedSize(true)
         cointweetrecycler?.itemAnimator   = DefaultItemAnimator()
         tweets = ArrayList()
-        cointweetselect.isChecked = true
+        tweetselect.isChecked = true
         val format = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
         val cal = Calendar.getInstance()
         cal.add(Calendar.MONTH,-1)
@@ -59,7 +59,7 @@ class dashboard : Fragment() {
 
         }
         loaddatatweet()
-        cointweetselect.setOnCheckedChangeListener({ compoundButton, b ->
+        tweetselect.setOnCheckedChangeListener({ compoundButton, b ->
             if (b){
                 loaddatatweet()
             }
@@ -102,29 +102,40 @@ class dashboard : Fragment() {
     }
 
     private fun loaddatatweet() {
-//        tweets.clear()
-//        val mycoins :ArrayList<String> = ArrayList()
-//        val format = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
-//        val cal = Calendar.getInstance()
-//        cal.add(Calendar.MONTH,-1)
-//        val stringtime = format.format(cal.time)
-//        val prevtime = Timestamp.valueOf(stringtime)
-//        db.collection("Tweets").document("coins").collection("tweets").whereGreaterThanOrEqualTo("timestamp",prevtime)
-//                .orderBy("timestamp",Query.Direction.DESCENDING).addSnapshotListener{documentSnapshot,e->
-//            tweets.clear()
-//            db.collection("users").document("Z2ycXxL6GyvPS23NTuYk").collection("portfolio").addSnapshotListener{ds,er->
-//                ds.mapTo(mycoins) { it.id }
-//            }
-//            for(doc in documentSnapshot){
-//                var i = 0
-//                while (i<mycoins.size){
-//                    if(doc.getString("coinname").contains(mycoins[i])){
-//
-//                    }
-//                    i++
-//                }
-//            }
-//
-//        }
+        tweets.clear()
+        val mycoins :ArrayList<String> = ArrayList()
+        val format = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+        val cal = Calendar.getInstance()
+        cal.add(Calendar.MONTH,-1)
+        val stringtime = format.format(cal.time)
+        val prevtime = Timestamp.valueOf(stringtime)
+        db.collection("Tweets").whereGreaterThanOrEqualTo("timestamp",prevtime)
+                .orderBy("timestamp",Query.Direction.DESCENDING).addSnapshotListener{documentSnapshot,e->
+            tweets.clear()
+            db.collection("users").document("MhqeP5vqgdadnSodwzPo").collection("portfolio").addSnapshotListener{ds,er->
+                ds.mapTo(mycoins) { it.id }
+            }
+            for(doc in documentSnapshot) {
+                var i = 0
+                while (i < mycoins.size) {
+                    if (doc.getString("coin_symbol").contains(mycoins[i])) {
+                        val coin = doc.getString("coin")
+                        val coin_symbol = doc.getString("coin_symbol")
+                        val mtweet = doc.getString("tweet")
+                        val url = doc.getString("url")
+                        val tweet = Tweet(coin, coin_symbol, mtweet, url)
+                        tweets.add(tweet)
+                    }
+                    i++
+                }
+            }
+                    if(activity!=null){
+                        if(!tweets.isEmpty()){
+                            val tweetsAdapter = TweetsAdapter(activity!!,tweets,itemClickListener)
+                            cointweetrecycler?.adapter = tweetsAdapter
+                        }
+                    }
+
+        }
     }
 }

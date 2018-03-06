@@ -53,8 +53,8 @@ class TweetsActivity : AppCompatActivity() {
                         val mpolarity = doc.get("polarity")
                         val msubjectivity = doc.get("subjectivity")
                         val mtweet = doc.getString("tweet")
-                        val tweet = Tweet(mcoin,mflag,mtid,mmain,mngram2, mpolarity as Number?, msubjectivity as Number?,mtweet)
-                        tweets.add(tweet)
+                        //val tweet = Tweet(mcoin,mflag,mtid,mmain,mngram2, mpolarity as Number?, msubjectivity as Number?,mtweet)
+                       // tweets.add(tweet)
                     }
                     if(!tweets.isEmpty()){
                         tweetsAdapter = TweetsAdapter(this,tweets,itemClickListener)
