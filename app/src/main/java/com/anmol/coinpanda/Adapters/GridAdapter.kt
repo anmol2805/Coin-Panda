@@ -46,8 +46,6 @@ class GridAdapter(private val ctx: Context, private val resource: Int, private v
             holder = row.tag as ViewHolder
         }
         holder.coinnameall?.text = allcoins[position].coinname
-
-
         return row
     }
 }
