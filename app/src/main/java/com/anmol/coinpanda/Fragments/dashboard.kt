@@ -32,7 +32,6 @@ class dashboard : Fragment() {
     lateinit var tweets : MutableList<Tweet>
     lateinit var itemClickListener : ItemClickListener
     var db = FirebaseFirestore.getInstance()
-    lateinit var timestamp :Timestamp
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val vi = inflater.inflate(R.layout.dashboard, container, false)
         val layoutManager = LinearLayoutManager(activity)
@@ -76,8 +75,8 @@ class dashboard : Fragment() {
         cal.add(Calendar.MONTH,-1)
         val stringtime = format.format(cal.time)
         val prevtime = Timestamp.valueOf(stringtime)
-        db.collection("supernode").document("coins").collection("tweets").whereGreaterThanOrEqualTo("timestamp",prevtime)
-                .orderBy("timestamp",Query.Direction.DESCENDING).addSnapshotListener{documentSnapshot,e->
+        db.collection("Tweets").whereGreaterThanOrEqualTo("date",prevtime)
+                .orderBy("date",Query.Direction.DESCENDING).addSnapshotListener{documentSnapshot,e->
             tweets.clear()
         }
 
@@ -85,29 +84,29 @@ class dashboard : Fragment() {
     }
 
     private fun loaddatatweet() {
-        tweets.clear()
-        val mycoins :ArrayList<String> = ArrayList()
-        val format = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
-        val cal = Calendar.getInstance()
-        cal.add(Calendar.MONTH,-1)
-        val stringtime = format.format(cal.time)
-        val prevtime = Timestamp.valueOf(stringtime)
-        db.collection("Tweets").document("coins").collection("tweets").whereGreaterThanOrEqualTo("timestamp",prevtime)
-                .orderBy("timestamp",Query.Direction.DESCENDING).addSnapshotListener{documentSnapshot,e->
-            tweets.clear()
-            db.collection("users").document("Z2ycXxL6GyvPS23NTuYk").collection("portfolio").addSnapshotListener{ds,er->
-                ds.mapTo(mycoins) { it.id }
-            }
-            for(doc in documentSnapshot){
-                var i = 0
-                while (i<mycoins.size){
-                    if(doc.getString("coinname").contains(mycoins[i])){
-
-                    }
-                    i++
-                }
-            }
-
-        }
+//        tweets.clear()
+//        val mycoins :ArrayList<String> = ArrayList()
+//        val format = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+//        val cal = Calendar.getInstance()
+//        cal.add(Calendar.MONTH,-1)
+//        val stringtime = format.format(cal.time)
+//        val prevtime = Timestamp.valueOf(stringtime)
+//        db.collection("Tweets").document("coins").collection("tweets").whereGreaterThanOrEqualTo("timestamp",prevtime)
+//                .orderBy("timestamp",Query.Direction.DESCENDING).addSnapshotListener{documentSnapshot,e->
+//            tweets.clear()
+//            db.collection("users").document("Z2ycXxL6GyvPS23NTuYk").collection("portfolio").addSnapshotListener{ds,er->
+//                ds.mapTo(mycoins) { it.id }
+//            }
+//            for(doc in documentSnapshot){
+//                var i = 0
+//                while (i<mycoins.size){
+//                    if(doc.getString("coinname").contains(mycoins[i])){
+//
+//                    }
+//                    i++
+//                }
+//            }
+//
+//        }
     }
 }
