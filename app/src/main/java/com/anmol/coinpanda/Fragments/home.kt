@@ -64,7 +64,8 @@ class home : Fragment() {
             allcoins.clear()
             for(doc in documentSnapshot.documents){
                 val coinname = doc.getString("coin_symbol")
-                val allcoin = Allcoin(coinname)
+                val name = doc.getString("coin_name")
+                val allcoin = Allcoin(coinname,name)
                 allcoins.add(allcoin)
             }
             if(activity!=null){
@@ -83,7 +84,8 @@ class home : Fragment() {
             allcoins.clear()
             for(doc in documentSnapshot.documents){
                 val coinname = doc.id
-                val allcoin = Allcoin(coinname)
+                val name = doc.getString("coin_name")
+                val allcoin = Allcoin(coinname,name)
                 allcoins.add(allcoin)
             }
             if(activity!=null){

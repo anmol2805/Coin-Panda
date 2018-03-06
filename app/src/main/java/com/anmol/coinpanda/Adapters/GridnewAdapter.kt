@@ -29,7 +29,7 @@ class GridnewAdapter(internal var c: Context, internal var allcoins: List<Allcoi
         val urljpg = "https://raw.githubusercontent.com/crypti/cryptocurrencies/master/images/"+allcoins[p0].coinname+".jpg"
         val urljpeg = "https://raw.githubusercontent.com/crypti/cryptocurrencies/master/images/"+allcoins[p0].coinname+".jpeg"
 
-        nametext?.text = allcoins[p0].coinname
+        nametext?.text = allcoins[p0].coin
         Glide.with(c).load(urlpng).listener(object : RequestListener<Drawable>{
             override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
 
