@@ -1,29 +1,20 @@
 package com.anmol.coinpanda.Adapters
 
 import android.content.Context
-import android.media.MediaPlayer
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
-import android.widget.MediaController
 import android.widget.RelativeLayout
 import android.widget.VideoView
 import com.anmol.coinpanda.Model.Allcoin
-import com.anmol.coinpanda.R
-
-import com.bumptech.glide.Glide
-
-
-import java.util.ArrayList
 
 /**
  * Created by anmol on 12/28/2017.
  */
 
-class GridAdapter(private val ctx: Context, private val resource: Int, private val allcoins: ArrayList<Allcoin>) : BaseAdapter() {
+class GridAdapter(private val ctx: Context, private val resource: Int, private val allcoins: MutableList<Allcoin>) : BaseAdapter() {
 
     override fun getCount(): Int {
         return allcoins.size

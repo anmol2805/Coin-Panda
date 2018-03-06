@@ -2,37 +2,36 @@ package com.anmol.coinpanda.Fragments
 
 import android.support.v4.app.Fragment
 
-import android.content.ContentValues.TAG
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.CompoundButton
+import android.widget.GridView
 import android.widget.Switch
 import com.anmol.coinpanda.Adapters.AllCoinAdapter
 import com.anmol.coinpanda.Adapters.CoinAdapter
+import com.anmol.coinpanda.Adapters.GridAdapter
 import com.anmol.coinpanda.AddToPortfolioActivity
 import com.anmol.coinpanda.Interfaces.ItemClickListener
 import com.anmol.coinpanda.Model.Allcoin
 import com.anmol.coinpanda.Model.Coin
 import com.anmol.coinpanda.R
 import com.anmol.coinpanda.TweetsActivity
-import com.google.firebase.firestore.EventListener
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.home.*
-import org.json.JSONObject
 
 /**
  * Created by anmol on 2/26/2018.
  */
 class home : Fragment() {
     private var mcoinrecycler:RecyclerView? = null
+    private var coingrid:GridView?=null
+    private lateinit var gridAdapter:GridAdapter
     private lateinit var mcoinselect: Switch
     lateinit var coins : MutableList<Coin>
     lateinit var allcoins:MutableList<Allcoin>
@@ -99,8 +98,10 @@ class home : Fragment() {
             }
             if(activity!=null){
                 if(!allcoins.isEmpty()){
-                    allCoinAdapter = AllCoinAdapter(activity!!,allcoins,itemClickListener)
-                    coinrecycler.adapter = allCoinAdapter
+                    gridAdapter = GridAdapter(activity!!,R.layout.coinlayout,allcoins)
+                    coingrid?.adapter = gridAdapter
+//                    allCoinAdapter = AllCoinAdapter(activity!!,allcoins,itemClickListener)
+//                    coinrecycler.adapter = allCoinAdapter
                 }
             }
 
@@ -117,12 +118,15 @@ class home : Fragment() {
                 val coinname = doc.id
                 val coinnotify = doc.getBoolean("notify")
                 val coin = Coin(coinname,coinnotify)
-                coins.add(coin)
+                val allcoin = Allcoin(coinname)
+                allcoins.add(allcoin)
             }
             if(activity!=null){
-                if(!coins.isEmpty()){
-                    coinAdapter = CoinAdapter(activity!!,coins,itemClickListener)
-                    coinrecycler.adapter = coinAdapter
+                if(!allcoins.isEmpty()){
+                    gridAdapter = GridAdapter(activity!!,R.layout.coinlayout,allcoins)
+                    coingrid?.adapter = gridAdapter
+//                    coinAdapter = CoinAdapter(activity!!,coins,itemClickListener)
+//                    coinrecycler.adapter = coinAdapter
                 }
             }
 

@@ -92,7 +92,7 @@ class dashboard : Fragment() {
         cal.add(Calendar.MONTH,-1)
         val stringtime = format.format(cal.time)
         val prevtime = Timestamp.valueOf(stringtime)
-        db.collection("supernode").document("coins").collection("tweets").whereGreaterThanOrEqualTo("timestamp",prevtime)
+        db.collection("Tweets").document("coins").collection("tweets").whereGreaterThanOrEqualTo("timestamp",prevtime)
                 .orderBy("timestamp",Query.Direction.DESCENDING).addSnapshotListener{documentSnapshot,e->
             tweets.clear()
             db.collection("users").document("Z2ycXxL6GyvPS23NTuYk").collection("portfolio").addSnapshotListener{ds,er->
