@@ -111,7 +111,9 @@ class home : Fragment() {
             }).into(coinimg)
 
             viewtweet?.setOnClickListener {
-
+                val intent = Intent(activity,TweetsActivity::class.java)
+                intent.putExtra("coin",allcoins[i].coinname)
+                startActivity(intent)
             }
             remove?.setOnClickListener {
 

@@ -88,7 +88,7 @@ class dashboard : Fragment() {
         db.collection("Tweets").whereGreaterThanOrEqualTo("date",prevtime)
                 .orderBy("date",Query.Direction.DESCENDING).addSnapshotListener{documentSnapshot,e->
             tweets.clear()
-                    for(doc in documentSnapshot){
+                    for(doc in documentSnapshot.documents){
                         val coin = doc.getString("coin")
                         val coin_symbol = doc.getString("coin_symbol")
                         val mtweet = doc.getString("tweet")
@@ -113,7 +113,7 @@ class dashboard : Fragment() {
 
         db.collection("users").document("MhqeP5vqgdadnSodwzPo").collection("portfolio").addSnapshotListener{ds,er->
             mycoins.clear()
-            for(docs in ds){
+            for(docs in ds.documents){
                 val name  = docs.id
                 mycoins.add(name)
             }
@@ -143,7 +143,7 @@ class dashboard : Fragment() {
         db.collection("Tweets").whereGreaterThanOrEqualTo("date",prevtime).orderBy("date",Query.Direction.DESCENDING).addSnapshotListener{documentSnapshot,e->
             tweets.clear()
 
-            for(doc in documentSnapshot) {
+            for(doc in documentSnapshot.documents) {
                 var i = 0
                 while (i < mycoins.size) {
 

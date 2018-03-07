@@ -1,6 +1,7 @@
 package com.anmol.coinpanda
 
 import android.content.Intent
+import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.DefaultItemAnimator
@@ -31,7 +32,10 @@ class TweetsActivity : AppCompatActivity() {
         tweets = ArrayList()
         itemClickListener = object : ItemClickListener {
             override fun onItemClick(pos: Int) {
-
+                val url = tweets[pos].url
+                val intent = Intent(Intent.ACTION_VIEW)
+                intent.data = Uri.parse(url)
+                startActivity(intent)
             }
 
         }
@@ -40,26 +44,26 @@ class TweetsActivity : AppCompatActivity() {
     }
 
     private fun loadtweets(coin: String) {
-        db.collection("supernode").document("coins").collection(coin).orderBy("timestamp",Query.Direction.DESCENDING)
-                .addSnapshotListener{documentSnapshot, e ->
+        db.collection("Tweets")
+                .orderBy("date",Query.Direction.DESCENDING).addSnapshotListener{documentSnapshot,e->
                     tweets.clear()
-                    for (doc in documentSnapshot.documents){
-                        System.out.println("tweet data:"+doc.data)
+                    for(doc in documentSnapshot.documents){
                         val mcoin = doc.getString("coin")
-                        val mflag = doc.getBoolean("flag")
-                        val mtid = doc.getString("id")
-                        val mmain = doc.getString("main")
-                        val mngram2 = doc.getString("ngram2")
-                        val mpolarity = doc.get("polarity")
-                        val msubjectivity = doc.get("subjectivity")
+                        val coin_symbol = doc.getString("coin_symbol")
                         val mtweet = doc.getString("tweet")
-                        //val tweet = Tweet(mcoin,mflag,mtid,mmain,mngram2, mpolarity as Number?, msubjectivity as Number?,mtweet)
-                       // tweets.add(tweet)
+                        val url = doc.getString("url")
+                        if(coin_symbol.contains(coin)){
+                            val tweet = Tweet(mcoin,coin_symbol,mtweet,url)
+                            tweets.add(tweet)
+                        }
+
                     }
-                    if(!tweets.isEmpty()){
-                        tweetsAdapter = TweetsAdapter(this,tweets,itemClickListener)
-                        mtweetrecycler?.adapter = tweetsAdapter
-                    }
+
+                        if(!tweets.isEmpty()){
+                            val tweetsAdapter = TweetsAdapter(this,tweets,itemClickListener)
+                            mtweetrecycler?.adapter = tweetsAdapter
+                        }
+
                 }
     }
 }
