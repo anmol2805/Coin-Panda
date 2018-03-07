@@ -37,11 +37,9 @@ class TweetsAdapter(internal var c: Context, internal var tweets: List<Tweet>, p
         holder.mtweet?.text = coindata.tweet
         holder.mcoin?.text = coindata.coin
         holder.coinname?.text = coindata.coin_symbol
-        val urlpng = "https://raw.githubusercontent.com/crypti/cryptocurrencies/master/images/"+tweets[position].coin+".png"
-        val urljpg = "https://raw.githubusercontent.com/crypti/cryptocurrencies/master/images/"+tweets[position].+".jpg"
-        val urljpeg = "https://raw.githubusercontent.com/crypti/cryptocurrencies/master/images/"+tweets[position].coinname+".jpeg"
-
-        nametext?.text = tweets[position].coin
+        val urlpng = "https://raw.githubusercontent.com/crypti/cryptocurrencies/master/images/"+coindata.coin_symbol+".png"
+        val urljpg = "https://raw.githubusercontent.com/crypti/cryptocurrencies/master/images/"+coindata.coin_symbol+".jpg"
+        val urljpeg = "https://raw.githubusercontent.com/crypti/cryptocurrencies/master/images/"+coindata.coin_symbol+".jpeg"
         Glide.with(c).load(urlpng).listener(object : RequestListener<Drawable> {
             override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
 
@@ -51,7 +49,7 @@ class TweetsAdapter(internal var c: Context, internal var tweets: List<Tweet>, p
             override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
                 Glide.with(c).load(urljpg).listener(object : RequestListener<Drawable> {
                     override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
-                        Glide.with(c).load(urljpeg).into(imageicon)
+                        Glide.with(c).load(urljpeg).into(holder.image)
                         return true
                     }
 
@@ -59,11 +57,11 @@ class TweetsAdapter(internal var c: Context, internal var tweets: List<Tweet>, p
                         return false
                     }
 
-                }).into(imageicon)
+                }).into(holder.image)
                 return true
             }
 
-        }).into(imageicon)
+        }).into(holder.image)
 
 
 
