@@ -2,6 +2,7 @@ package com.anmol.coinpanda.Fragments
 
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.DefaultItemAnimator
@@ -54,6 +55,10 @@ class dashboard : Fragment() {
         System.out.println("previousdate:" + format.format(cal.time))
         itemClickListener = object : ItemClickListener {
             override fun onItemClick(pos: Int) {
+                val url = tweets[pos].url
+                val intent = Intent(Intent.ACTION_VIEW)
+                intent.data = Uri.parse(url)
+                startActivity(intent)
 
             }
 
