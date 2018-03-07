@@ -43,7 +43,8 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         supportActionBar?.hide()
         setContentView(R.layout.activity_home)
-        setFragment(home())
+        setFragment(dashboard())
+        navigation.selectedItemId = R.id.navigation_dashboard
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
     }
 }

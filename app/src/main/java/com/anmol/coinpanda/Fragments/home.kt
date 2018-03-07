@@ -21,6 +21,7 @@ import com.anmol.coinpanda.AddToPortfolioActivity
 import com.anmol.coinpanda.Interfaces.ItemClickListener
 import com.anmol.coinpanda.Model.Allcoin
 import com.anmol.coinpanda.Model.Coin
+import com.anmol.coinpanda.PaymentActivity
 import com.anmol.coinpanda.R
 import com.anmol.coinpanda.TweetsActivity
 import com.bumptech.glide.Glide
@@ -119,7 +120,9 @@ class home : Fragment() {
 
             }
             atp?.setOnClickListener {
-
+                val intent = Intent(activity,PaymentActivity::class.java)
+                intent.putExtra("coin",allcoins[i].coin)
+                startActivity(intent)
             }
             dialog.show()
         }
