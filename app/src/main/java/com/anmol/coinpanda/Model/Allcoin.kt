@@ -6,11 +6,12 @@ package com.anmol.coinpanda.Model
 class Allcoin{
     var coinname:String? = null
     var coin:String?=null
-
+    var coinpage:String?=null
     constructor()
-    constructor(coinname: String?, coin: String?) {
+    constructor(coinname: String?, coin: String?,coinpage:String?) {
         this.coinname = coinname
         this.coin = coin
+        this.coinpage = coinpage
     }
 
 }
