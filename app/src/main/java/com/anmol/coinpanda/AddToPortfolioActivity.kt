@@ -43,8 +43,8 @@ class AddToPortfolioActivity : AppCompatActivity() {
             allcoins.clear()
             for(doc in documentSnapshot.documents){
                 val coinname = doc.id
-                val allcoin = Allcoin(coinname)
-                allcoins.add(allcoin)
+//                val allcoin = Allcoin(coinname)
+//                allcoins.add(allcoin)
             }
             if(!allcoins.isEmpty()){
                     addCoinAdapter = AddCoinAdapter(this,allcoins,itemClickListener)

@@ -35,7 +35,7 @@
         android:layout_toEndOf="@+id/coinicon"
         android:layout_toRightOf="@+id/coinicon"
         android:text="tweet"
-        android:textAppearance="@android:style/TextAppearance.Material.ListItemSecondary" />
+         />
 
     <TextView
         android:id="@+id/coinname"
