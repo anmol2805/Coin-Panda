@@ -89,12 +89,13 @@ class dashboard : Fragment() {
                 .orderBy("date",Query.Direction.DESCENDING).addSnapshotListener{documentSnapshot,e->
             tweets.clear()
                     for(doc in documentSnapshot.documents){
+                        val id = doc.id
                         val coin = doc.getString("coin")
                         val coin_symbol = doc.getString("coin_symbol")
                         val mtweet = doc.getString("tweet")
                         val url = doc.getString("url")
                         val keyword = doc.getString("keyword")
-                        val tweet = Tweet(coin,coin_symbol,mtweet,url,keyword)
+                        val tweet = Tweet(coin,coin_symbol,mtweet,url,keyword,id)
                         tweets.add(tweet)
                     }
                     if(activity!=null){
@@ -149,12 +150,13 @@ class dashboard : Fragment() {
                 while (i < mycoins.size) {
 
                     if (doc.getString("coin_symbol").contains(mycoins[i])) {
+                        val id = doc.id
                         val coin = doc.getString("coin")
                         val coin_symbol = doc.getString("coin_symbol")
                         val mtweet = doc.getString("tweet")
                         val url = doc.getString("url")
                         val keyword = doc.getString("keyword")
-                        val tweet = Tweet(coin, coin_symbol, mtweet, url,keyword)
+                        val tweet = Tweet(coin, coin_symbol, mtweet, url,keyword,id)
                         tweets.add(tweet)
                     }
                     i++

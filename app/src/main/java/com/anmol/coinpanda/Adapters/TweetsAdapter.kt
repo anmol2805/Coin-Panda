@@ -18,6 +18,9 @@ import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
+import com.google.firebase.firestore.FirebaseFirestore
+import java.util.*
+import kotlin.collections.HashMap
 
 /**
  * Created by anmol on 2/27/2018.
@@ -63,7 +66,20 @@ class TweetsAdapter(internal var c: Context, internal var tweets: List<Tweet>, p
             }
 
         }).into(holder.image)
+        val db = FirebaseFirestore.getInstance()
+        holder.bookmark?.setOnClickListener {
 
+            val map = HashMap<String,Any>()
+            map["bookmark"] = true
+            db.collection("users").document("MhqeP5vqgdadnSodwzPo").collection("bookmarks").document(coindata.tweetid!!).set(map)
+        }
+        db.collection("users").document("MhqeP5vqgdadnSodwzPo").collection("bookmarks").addSnapshotListener{documentSnapshot,e->
+            for(doc in documentSnapshot.documents){
+                if(doc.id.contains(coindata.tweetid!!)){
+                    Glide.with(c).load(R.drawable.bookmarked50).into(holder.bookmark)
+                }
+            }
+        }
 
 
     }
@@ -74,12 +90,14 @@ class TweetsAdapter(internal var c: Context, internal var tweets: List<Tweet>, p
         var coinname:TextView?=null
         var image:ImageView?=null
         var keyword:TextView?=null
+        var bookmark:ImageView?=null
         init {
             this.mtweet = itemView.findViewById(R.id.tweet)
             this.mcoin = itemView.findViewById(R.id.coin)
             this.coinname = itemView.findViewById(R.id.coinname)
             this.image = itemView.findViewById(R.id.coinicon)
             this.keyword =itemView.findViewById(R.id.keyword)
+            this.bookmark = itemView.findViewById(R.id.bookmark)
             itemView.setOnClickListener(this)
         }
 
