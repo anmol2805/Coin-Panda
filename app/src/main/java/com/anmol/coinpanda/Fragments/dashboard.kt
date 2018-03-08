@@ -14,13 +14,10 @@ import android.view.ViewGroup
 import android.widget.Switch
 import com.anmol.coinpanda.Adapters.TweetsAdapter
 import com.anmol.coinpanda.Interfaces.ItemClickListener
-import com.anmol.coinpanda.Model.Allcoin
 import com.anmol.coinpanda.Model.Tweet
 import com.anmol.coinpanda.R
-import com.anmol.coinpanda.TweetsActivity
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
-import kotlinx.android.synthetic.main.dashboard.*
 import java.sql.Timestamp
 import java.text.SimpleDateFormat
 import java.util.*
@@ -63,22 +60,40 @@ class dashboard : Fragment() {
             }
 
         }
-        loaddatatweet()
-        tweetselect.setOnCheckedChangeListener({ compoundButton, b ->
-            if (b){
-                loaddatatweet()
-            }
-            else{
-                loadalldatatweet()
-            }
-        })
-
+        loadbookmarks()
 
 
         return vi
     }
 
-    private fun loadalldatatweet() {
+    private fun loadbookmarks() {
+        val bookmarks : ArrayList<String> = ArrayList()
+        db.collection("users").document("MhqeP5vqgdadnSodwzPo").collection("bookmarks").addSnapshotListener{documnentSnapshot,e->
+            bookmarks.clear()
+            for (doc in documnentSnapshot.documents){
+                val tweetid = doc.id
+                bookmarks.add(tweetid)
+            }
+            loadquery(bookmarks)
+
+        }
+
+    }
+
+    private fun loadquery(bookmarks: ArrayList<String>) {
+        loaddatatweet(bookmarks)
+        tweetselect.setOnCheckedChangeListener({ _, b ->
+            if (b){
+                loaddatatweet(bookmarks)
+            }
+            else{
+                loadalldatatweet(bookmarks)
+            }
+        })
+
+    }
+
+    private fun loadalldatatweet(bookmarks: ArrayList<String>) {
         tweets.clear()
         val format = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
         val cal = Calendar.getInstance()
@@ -89,13 +104,21 @@ class dashboard : Fragment() {
                 .orderBy("date",Query.Direction.DESCENDING).addSnapshotListener{documentSnapshot,e->
             tweets.clear()
                     for(doc in documentSnapshot.documents){
+                        var booked = false
+                        var i = 0
+                        while(i<bookmarks.size){
+                            if(doc.id.contains(bookmarks[i])){
+                                booked = true
+                            }
+                            i++
+                        }
                         val id = doc.id
                         val coin = doc.getString("coin")
                         val coin_symbol = doc.getString("coin_symbol")
                         val mtweet = doc.getString("tweet")
                         val url = doc.getString("url")
                         val keyword = doc.getString("keyword")
-                        val tweet = Tweet(coin,coin_symbol,mtweet,url,keyword,id)
+                        val tweet = Tweet(coin,coin_symbol,mtweet,url,keyword,id,booked)
                         tweets.add(tweet)
                     }
                     if(activity!=null){
@@ -109,7 +132,7 @@ class dashboard : Fragment() {
 
     }
 
-    private fun loaddatatweet() {
+    private fun loaddatatweet(bookmarks: ArrayList<String>) {
         tweets.clear()
         val mycoins :ArrayList<String> = ArrayList()
 
@@ -119,24 +142,12 @@ class dashboard : Fragment() {
                 val name  = docs.id
                 mycoins.add(name)
             }
-            var i = 0
-            while (i < mycoins.size) {
-                System.out.println("mycoins:" + mycoins[i])
-//                    if (doc.getString("coin_symbol").contains(mycoins[i])) {
-//                        val coin = doc.getString("coin")
-//                        val coin_symbol = doc.getString("coin_symbol")
-//                        val mtweet = doc.getString("tweet")
-//                        val url = doc.getString("url")
-//                        val tweet = Tweet(coin, coin_symbol, mtweet, url)
-//                        tweets.add(tweet)
-//                    }
-                i++
-            }
-            querymytweets(mycoins)
+
+            querymytweets(mycoins,bookmarks)
         }
     }
 
-    private fun querymytweets(mycoins: ArrayList<String>) {
+    private fun querymytweets(mycoins: ArrayList<String>, bookmarks: ArrayList<String>) {
         val format = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
         val cal = Calendar.getInstance()
         cal.add(Calendar.MONTH,-1)
@@ -147,6 +158,14 @@ class dashboard : Fragment() {
 
             for(doc in documentSnapshot.documents) {
                 var i = 0
+                var j = 0
+                var booked = false
+                while (j<bookmarks.size){
+                    if(doc.id.contains(bookmarks[i])){
+                        booked = true
+                    }
+                    j++
+                }
                 while (i < mycoins.size) {
 
                     if (doc.getString("coin_symbol").contains(mycoins[i])) {
@@ -156,7 +175,7 @@ class dashboard : Fragment() {
                         val mtweet = doc.getString("tweet")
                         val url = doc.getString("url")
                         val keyword = doc.getString("keyword")
-                        val tweet = Tweet(coin, coin_symbol, mtweet, url,keyword,id)
+                        val tweet = Tweet(coin, coin_symbol, mtweet, url,keyword,id,booked)
                         tweets.add(tweet)
                     }
                     i++

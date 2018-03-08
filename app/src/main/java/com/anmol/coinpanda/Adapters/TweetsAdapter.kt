@@ -71,14 +71,15 @@ class TweetsAdapter(internal var c: Context, internal var tweets: List<Tweet>, p
 
             val map = HashMap<String,Any>()
             map["bookmark"] = true
-            db.collection("users").document("MhqeP5vqgdadnSodwzPo").collection("bookmarks").document(coindata.tweetid!!).set(map)
-        }
-        db.collection("users").document("MhqeP5vqgdadnSodwzPo").collection("bookmarks").addSnapshotListener{documentSnapshot,e->
-            for(doc in documentSnapshot.documents){
-                if(doc.id.contains(coindata.tweetid!!)){
-                    Glide.with(c).load(R.drawable.bookmarked50).into(holder.bookmark)
-                }
+            db.collection("users").document("MhqeP5vqgdadnSodwzPo").collection("bookmarks").document(coindata.tweetid!!).set(map).addOnSuccessListener {
+                Glide.with(c).load(R.drawable.bookmarked50).into(holder.bookmark)
             }
+        }
+        if(tweets[position].booked){
+            Glide.with(c).load(R.drawable.bookmarked50).into(holder.bookmark)
+        }
+        else{
+            Glide.with(c).load(R.drawable.bookmark50).into(holder.bookmark)
         }
 
 

@@ -39,15 +39,31 @@ class TweetsActivity : AppCompatActivity() {
             }
 
         }
+        val bookmarks : ArrayList<String> = ArrayList()
+        db.collection("users").document("MhqeP5vqgdadnSodwzPo").collection("bookmarks").addSnapshotListener{documnentSnapshot,e->
+            bookmarks.clear()
+            for (doc in documnentSnapshot.documents){
+                val tweetid = doc.id
+                bookmarks.add(tweetid)
+            }
+            loadtweets(coin,bookmarks)
+        }
 
-        loadtweets(coin)
     }
 
-    private fun loadtweets(coin: String) {
+    private fun loadtweets(coin: String, bookmarks: ArrayList<String>) {
         db.collection("Tweets")
                 .orderBy("date",Query.Direction.DESCENDING).addSnapshotListener{documentSnapshot,e->
                     tweets.clear()
                     for(doc in documentSnapshot.documents){
+                        var i = 0
+                        var booked = false
+                        while (i<bookmarks.size){
+                            if(doc.id.contains(bookmarks[i])){
+                                booked = true
+                            }
+                            i++
+                        }
                         val mcoin = doc.getString("coin")
                         val coin_symbol = doc.getString("coin_symbol")
                         val mtweet = doc.getString("tweet")
@@ -55,7 +71,7 @@ class TweetsActivity : AppCompatActivity() {
                         val keyword = doc.getString("keyword")
                         val id = doc.id
                         if(coin_symbol.contains(coin)){
-                            val tweet = Tweet(mcoin,coin_symbol,mtweet,url,keyword,id)
+                            val tweet = Tweet(mcoin,coin_symbol,mtweet,url,keyword,id,booked)
                             tweets.add(tweet)
                         }
 
