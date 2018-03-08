@@ -52,8 +52,9 @@ class TweetsActivity : AppCompatActivity() {
                         val coin_symbol = doc.getString("coin_symbol")
                         val mtweet = doc.getString("tweet")
                         val url = doc.getString("url")
+                        val keyword = doc.getString("keyword")
                         if(coin_symbol.contains(coin)){
-                            val tweet = Tweet(mcoin,coin_symbol,mtweet,url)
+                            val tweet = Tweet(mcoin,coin_symbol,mtweet,url,keyword)
                             tweets.add(tweet)
                         }
 
