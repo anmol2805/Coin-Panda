@@ -37,6 +37,7 @@ class TweetsAdapter(internal var c: Context, internal var tweets: List<Tweet>, p
         holder.mtweet?.text = coindata.tweet
         holder.mcoin?.text = coindata.coin
         holder.coinname?.text = coindata.coin_symbol
+        holder.keyword?.text = coindata.keyword
         val urlpng = "https://raw.githubusercontent.com/crypti/cryptocurrencies/master/images/"+coindata.coin_symbol+".png"
         val urljpg = "https://raw.githubusercontent.com/crypti/cryptocurrencies/master/images/"+coindata.coin_symbol+".jpg"
         val urljpeg = "https://raw.githubusercontent.com/crypti/cryptocurrencies/master/images/"+coindata.coin_symbol+".jpeg"
@@ -72,11 +73,13 @@ class TweetsAdapter(internal var c: Context, internal var tweets: List<Tweet>, p
         var mcoin:TextView?=null
         var coinname:TextView?=null
         var image:ImageView?=null
+        var keyword:TextView?=null
         init {
             this.mtweet = itemView.findViewById(R.id.tweet)
             this.mcoin = itemView.findViewById(R.id.coin)
             this.coinname = itemView.findViewById(R.id.coinname)
             this.image = itemView.findViewById(R.id.coinicon)
+            this.keyword =itemView.findViewById(R.id.keyword)
             itemView.setOnClickListener(this)
         }
 

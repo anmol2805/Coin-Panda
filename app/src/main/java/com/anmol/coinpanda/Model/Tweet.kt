@@ -8,14 +8,16 @@ class Tweet{
     var coin_symbol:String?=null
     var tweet:String?=null
     var url:String?=null
+    var keyword:String?=null
 
 
     constructor()
-    constructor(coin: String?, coin_symbol: String?, tweet: String?, url: String?) {
+    constructor(coin: String?, coin_symbol: String?, tweet: String?, url: String?,keyword:String?) {
         this.coin = coin
         this.coin_symbol = coin_symbol
         this.tweet = tweet
         this.url = url
+        this.keyword = keyword
     }
 
 

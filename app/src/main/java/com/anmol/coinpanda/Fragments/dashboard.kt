@@ -93,7 +93,8 @@ class dashboard : Fragment() {
                         val coin_symbol = doc.getString("coin_symbol")
                         val mtweet = doc.getString("tweet")
                         val url = doc.getString("url")
-                        val tweet = Tweet(coin,coin_symbol,mtweet,url)
+                        val keyword = doc.getString("keyword")
+                        val tweet = Tweet(coin,coin_symbol,mtweet,url,keyword)
                         tweets.add(tweet)
                     }
                     if(activity!=null){
@@ -152,7 +153,8 @@ class dashboard : Fragment() {
                         val coin_symbol = doc.getString("coin_symbol")
                         val mtweet = doc.getString("tweet")
                         val url = doc.getString("url")
-                        val tweet = Tweet(coin, coin_symbol, mtweet, url)
+                        val keyword = doc.getString("keyword")
+                        val tweet = Tweet(coin, coin_symbol, mtweet, url,keyword)
                         tweets.add(tweet)
                     }
                     i++
