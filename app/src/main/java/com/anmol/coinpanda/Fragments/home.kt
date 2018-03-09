@@ -134,7 +134,7 @@ class home : Fragment() {
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 System.out.println("textchange:$p0")
-
+                loadalldata(p0)
             }
 
         })
