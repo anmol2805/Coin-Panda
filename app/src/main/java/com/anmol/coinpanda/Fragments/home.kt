@@ -6,21 +6,15 @@ import android.support.v4.app.Fragment
 import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.support.v7.widget.DefaultItemAnimator
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import com.anmol.coinpanda.Adapters.AllCoinAdapter
-import com.anmol.coinpanda.Adapters.CoinAdapter
-import com.anmol.coinpanda.Adapters.GridAdapter
 import com.anmol.coinpanda.Adapters.GridnewAdapter
-import com.anmol.coinpanda.AddToPortfolioActivity
 import com.anmol.coinpanda.Interfaces.ItemClickListener
 import com.anmol.coinpanda.Model.Allcoin
-import com.anmol.coinpanda.Model.Coin
 import com.anmol.coinpanda.PaymentActivity
 import com.anmol.coinpanda.R
 import com.anmol.coinpanda.TweetsActivity
@@ -31,8 +25,6 @@ import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
-import kotlinx.android.synthetic.main.home.*
-import org.w3c.dom.Text
 
 /**
  * Created by anmol on 2/26/2018.
@@ -44,20 +36,26 @@ class home : Fragment() {
     lateinit var allcoins:MutableList<Allcoin>
     lateinit var itemClickListener : ItemClickListener
     var db = FirebaseFirestore.getInstance()
+    var sedit:EditText? = null
+    var srch:Button? = null
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val vi = inflater.inflate(R.layout.home,
                 container, false)
         coingrid = vi.findViewById(R.id.coingrid)
         mcoinselect = vi.findViewById(R.id.coinselect)
+        sedit = vi.findViewById(R.id.sc)
+        srch = vi.findViewById(R.id.scb)
         allcoins = ArrayList()
         mcoinselect.isChecked = true
         loaddata()
         mcoinselect.setOnCheckedChangeListener({ compoundButton, b ->
             if (b){
                 loaddata()
+                mcoinselect.isChecked = true
             }
             else{
-                loadalldata()
+                loadalldata(null)
+                mcoinselect.isChecked = false
             }
         })
         coingrid?.onItemClickListener = AdapterView.OnItemClickListener { adapterView, view, i, l ->
@@ -126,32 +124,71 @@ class home : Fragment() {
             }
             dialog.show()
         }
+        sedit?.addTextChangedListener(object:TextWatcher{
+            override fun afterTextChanged(p0: Editable?) {
+
+            }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                System.out.println("textchange:$p0")
+
+            }
+
+        })
         // Inflate the layout for this fragment
         return vi
     }
 
-    private fun loadalldata() {
+    private fun loadalldata(p0: CharSequence?) {
+        sedit?.visibility = View.VISIBLE
+        srch?.visibility = View.VISIBLE
         allcoins.clear()
         db.collection("AllCoins").orderBy("lastUpdate",Query.Direction.DESCENDING).addSnapshotListener{ documentSnapshot, firebaseFirestoreException ->
             allcoins.clear()
-            for(doc in documentSnapshot.documents){
-                val coinname = doc.getString("coin_symbol")
-                val name = doc.getString("coin_name")
-                val coinpage = doc.getString("coinPage")
-                val allcoin = Allcoin(coinname,name,coinpage)
-                allcoins.add(allcoin)
-            }
-            if(activity!=null){
-                if(!allcoins.isEmpty()){
-                    gridAdapter = GridnewAdapter(activity!!,allcoins)
-                    coingrid?.adapter = gridAdapter
+            if(p0 == null){
+                for(doc in documentSnapshot.documents){
+                    val coinname = doc.getString("coin_symbol")
+                    val name = doc.getString("coin_name")
+                    val coinpage = doc.getString("coinPage")
+                    val allcoin = Allcoin(coinname,name,coinpage)
+                    allcoins.add(allcoin)
+                }
+                if(activity!=null){
+                    if(!allcoins.isEmpty()){
+                        gridAdapter = GridnewAdapter(activity!!,allcoins)
+                        coingrid?.adapter = gridAdapter
+                    }
                 }
             }
+            else{
+                for(doc in documentSnapshot.documents){
+                    val coinname = doc.getString("coin_symbol")
+                    val name = doc.getString("coin_name")
+                    val coinpage = doc.getString("coinPage")
+                    if (name.toLowerCase().contains(p0) || coinname.toLowerCase().contains(p0) || name.toUpperCase().contains(p0) || coinname.toUpperCase().contains(p0)){
+                        val allcoin = Allcoin(coinname,name,coinpage)
+                        allcoins.add(allcoin)
+                    }
+
+                }
+                if(activity!=null){
+                    if(!allcoins.isEmpty()){
+                        gridAdapter = GridnewAdapter(activity!!,allcoins)
+                        coingrid?.adapter = gridAdapter
+                    }
+                }
+            }
+
 
         }
     }
 
     private fun loaddata() {
+        sedit?.visibility =View.GONE
+        srch?.visibility  =View.GONE
         allcoins.clear()
         db.collection("users").document("MhqeP5vqgdadnSodwzPo").collection("portfolio").addSnapshotListener{documentSnapshot, e ->
             allcoins.clear()
