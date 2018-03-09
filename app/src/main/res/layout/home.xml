@@ -21,13 +21,37 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <SearchView
+            <Button
+                android:id="@+id/scb"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="5dp"
+                android:layout_marginVertical="10dp"
+                android:background="@drawable/search50" />
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
                 android:id="@+id/search"
-                />
+                android:layout_toLeftOf="@+id/scb"
+                android:layout_toStartOf="@+id/scb"
+                >
+                <EditText
+                    android:id="@+id/sc"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:hint="Search Coin"
+                    android:inputType="text"
+                    android:textAlignment="center"
+                    android:textColor="#000"
+                    android:textColorHint="@color/colorPrimary"
+                    />
+
+
+            </android.support.design.widget.TextInputLayout>
+
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/coinrecycler"
