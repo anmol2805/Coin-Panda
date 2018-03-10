@@ -12,6 +12,7 @@ import com.anmol.coinpanda.Interfaces.ItemClickListener
 import com.anmol.coinpanda.Model.Tweet
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
+import java.sql.Date
 
 class TweetsActivity : AppCompatActivity() {
     lateinit var tweets:MutableList<Tweet>
@@ -70,6 +71,7 @@ class TweetsActivity : AppCompatActivity() {
                         val url = doc.getString("url")
                         val keyword = doc.getString("keyword")
                         val id = doc.id
+
                         if(coin_symbol.contains(coin)){
                             val tweet = Tweet(mcoin,coin_symbol,mtweet,url,keyword,id,booked)
                             tweets.add(tweet)
