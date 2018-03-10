@@ -56,6 +56,16 @@ class settings : Fragment() {
             }
 
         }
+        telegram?.setOnClickListener{
+
+        }
+        request?.setOnClickListener {
+
+        }
+        help?.setOnClickListener {
+
+        }
+
         return vi
     }
 }
