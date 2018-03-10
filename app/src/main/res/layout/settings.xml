@@ -7,10 +7,10 @@
 
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/telegram"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Button"
+        android:text="Telegram"
         android:textAlignment="viewStart"
         android:layout_gravity="start"
         android:background="#fff"
@@ -24,10 +24,10 @@
         />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/review"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Button"
+        android:text="Review this app"
 
         android:textAlignment="viewStart"
         android:layout_gravity="start"
@@ -40,10 +40,43 @@
         />
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/request"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Button"
+        android:text="Request a coin"
+        android:textAlignment="viewStart"
+        android:layout_gravity="start"
+        android:background="#fff"
+        android:paddingLeft="20dp"
+        />
+    <view
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:background="@color/colorAccent"
+        />
+
+    <Button
+        android:id="@+id/donate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Donate"
+        android:textAlignment="viewStart"
+        android:layout_gravity="start"
+        android:background="#fff"
+        android:paddingLeft="20dp"
+        />
+    <view
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorAccent"
+        />
+
+
+    <Button
+        android:id="@+id/share"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Share the App"
         android:textAlignment="viewStart"
         android:layout_gravity="start"
         android:background="#fff"
@@ -56,26 +89,10 @@
         />
 
     <Button
-        android:id="@+id/button5"
+        android:id="@+id/support"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Button"
-        android:textAlignment="viewStart"
-        android:layout_gravity="start"
-        android:background="#fff"
-        android:paddingLeft="20dp"
-        />
-    <view
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/colorAccent"
-        />
-
-    <Button
-        android:id="@+id/button6"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Button"
+        android:text="Support"
         android:textAlignment="viewStart"
         android:layout_gravity="start"
         android:background="#fff"
