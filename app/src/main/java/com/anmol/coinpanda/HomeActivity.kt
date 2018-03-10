@@ -28,6 +28,10 @@ class HomeActivity : AppCompatActivity() {
                 //message.setText(R.string.title_notifications)
                 return@OnNavigationItemSelectedListener true
             }
+            R.id.navigation_bookmarks ->{
+
+                return@OnNavigationItemSelectedListener true
+            }
         }
         false
     }
