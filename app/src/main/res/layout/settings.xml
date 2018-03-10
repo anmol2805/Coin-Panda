@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     >
@@ -17,42 +18,27 @@
         android:paddingLeft="20dp"
         />
 
-    <view
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/colorAccent"
-        />
-
     <Button
         android:id="@+id/review"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Review this app"
-
+        android:layout_marginBottom="10dp"
         android:textAlignment="viewStart"
         android:layout_gravity="start"
         android:background="#fff"
         android:paddingLeft="20dp"/>
-    <view
-        android:layout_width="match_parent"
-        android:layout_height="5dp"
-        android:background="@color/colorAccent"
-        />
 
     <Button
         android:id="@+id/request"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Request a coin"
+        android:layout_marginBottom="10dp"
         android:textAlignment="viewStart"
         android:layout_gravity="start"
         android:background="#fff"
         android:paddingLeft="20dp"
-        />
-    <view
-        android:layout_width="match_parent"
-        android:layout_height="5dp"
-        android:background="@color/colorAccent"
         />
 
     <Button
@@ -64,11 +50,6 @@
         android:layout_gravity="start"
         android:background="#fff"
         android:paddingLeft="20dp"
-        />
-    <view
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/colorAccent"
         />
 
 
@@ -82,11 +63,6 @@
         android:background="#fff"
         android:paddingLeft="20dp"
         />
-    <view
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/colorAccent"
-        />
 
     <Button
         android:id="@+id/support"
@@ -97,11 +73,7 @@
         android:layout_gravity="start"
         android:background="#fff"
         android:paddingLeft="20dp"
-        />
-    <view
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/colorAccent"
+
         />
 
 </LinearLayout>

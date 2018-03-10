@@ -22,12 +22,12 @@ class settings : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val vi = inflater.inflate(R.layout.settings,
                 container, false)
-        telegram = vi.findViewById(R.id.telegram)
-        review = vi.findViewById(R.id.review)
-        request = vi.findViewById(R.id.request)
-        donate = vi.findViewById(R.id.donate)
-        share = vi.findViewById(R.id.share)
-        help = vi.findViewById(R.id.support)
+//        telegram = vi.findViewById(R.id.telegram)
+//        review = vi.findViewById(R.id.review)
+//        request = vi.findViewById(R.id.request)
+//        donate = vi.findViewById(R.id.donate)
+//        share = vi.findViewById(R.id.share)
+//        help = vi.findViewById(R.id.support)
 
         return vi
     }

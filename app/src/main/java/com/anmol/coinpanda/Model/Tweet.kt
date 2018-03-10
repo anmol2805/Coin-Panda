@@ -14,17 +14,18 @@ class Tweet{
     var keyword:String?=null
     var tweetid:String?=null
     var booked:Boolean = false
-    var date: Date? = null
+    var dates : String? = null
 
     constructor()
-    constructor(coin: String?, coin_symbol: String?, tweet: String?, url: String?, keyword: String?, tweetid: String?, booked: Boolean) {        this.coin = coin
+    constructor(coin: String?, coin_symbol: String?, tweet: String?, url: String?, keyword: String?, tweetid: String?, booked: Boolean, dates: String?) {
+        this.coin = coin
         this.coin_symbol = coin_symbol
         this.tweet = tweet
         this.url = url
         this.keyword = keyword
         this.tweetid = tweetid
         this.booked = booked
-
+        this.dates = dates
     }
 
 
