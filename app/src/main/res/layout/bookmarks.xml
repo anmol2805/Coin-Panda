@@ -79,14 +79,15 @@
         android:textColor="#fff"
         android:textOff="All Coins"
         android:textOn="My Coins"
-        android:theme="@style/SCBSwitch" />
+        android:theme="@style/SCBSwitch"
+        android:visibility="invisible" />
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="35dp"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/cointweetselect"
         android:layout_alignLeft="@+id/cardView"
+        android:layout_alignBottom="@+id/cointweetselect"
         android:layout_alignStart="@+id/cardView"
         android:layout_marginLeft="5dp"
         android:layout_marginStart="5dp"
