@@ -41,6 +41,7 @@ class TweetsAdapter(internal var c: Context, internal var tweets: List<Tweet>, p
         holder.mcoin?.text = coindata.coin
         holder.coinname?.text = coindata.coin_symbol
         holder.keyword?.text = coindata.keyword
+        holder.timestamp?.text = coindata.dates
         val urlpng = "https://raw.githubusercontent.com/crypti/cryptocurrencies/master/images/"+coindata.coin_symbol+".png"
         val urljpg = "https://raw.githubusercontent.com/crypti/cryptocurrencies/master/images/"+coindata.coin_symbol+".jpg"
         val urljpeg = "https://raw.githubusercontent.com/crypti/cryptocurrencies/master/images/"+coindata.coin_symbol+".jpeg"
@@ -72,14 +73,14 @@ class TweetsAdapter(internal var c: Context, internal var tweets: List<Tweet>, p
             val map = HashMap<String,Any>()
             map["bookmark"] = true
             db.collection("users").document("MhqeP5vqgdadnSodwzPo").collection("bookmarks").document(coindata.tweetid!!).set(map).addOnSuccessListener {
-                Glide.with(c).load(R.drawable.bookmarked50).into(holder.bookmark)
+                Glide.with(c).load(R.drawable.starfilled).into(holder.bookmark)
             }
         }
         if(tweets[position].booked){
-            Glide.with(c).load(R.drawable.bookmarked50).into(holder.bookmark)
+            Glide.with(c).load(R.drawable.starfilled).into(holder.bookmark)
         }
         else{
-            Glide.with(c).load(R.drawable.bookmark50).into(holder.bookmark)
+            Glide.with(c).load(R.drawable.starunfilled).into(holder.bookmark)
         }
 
 
@@ -92,6 +93,7 @@ class TweetsAdapter(internal var c: Context, internal var tweets: List<Tweet>, p
         var image:ImageView?=null
         var keyword:TextView?=null
         var bookmark:ImageView?=null
+        var timestamp:TextView?=null
         init {
             this.mtweet = itemView.findViewById(R.id.tweet)
             this.mcoin = itemView.findViewById(R.id.coin)
@@ -99,6 +101,7 @@ class TweetsAdapter(internal var c: Context, internal var tweets: List<Tweet>, p
             this.image = itemView.findViewById(R.id.coinicon)
             this.keyword =itemView.findViewById(R.id.keyword)
             this.bookmark = itemView.findViewById(R.id.bookmark)
+            this.timestamp = itemView.findViewById(R.id.time)
             itemView.setOnClickListener(this)
         }
 

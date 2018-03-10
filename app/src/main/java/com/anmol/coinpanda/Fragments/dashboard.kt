@@ -139,7 +139,8 @@ class dashboard : Fragment() {
                             val mtweet = doc.getString("tweet")
                             val url = doc.getString("url")
                             val keyword = doc.getString("keyword")
-                            val tweet = Tweet(coin,coin_symbol,mtweet,url,keyword,id,booked)
+                            val dates = doc.getString("dates")
+                            val tweet = Tweet(coin,coin_symbol,mtweet,url,keyword,id,booked,dates)
                             tweets.add(tweet)
                         }
                         if(activity!=null){
@@ -165,8 +166,9 @@ class dashboard : Fragment() {
                             val mtweet = doc.getString("tweet")
                             val url = doc.getString("url")
                             val keyword = doc.getString("keyword")
+                            val dates = doc.getString("dates")
                             if(coin.toLowerCase().contains(p0) || coin_symbol.toLowerCase().contains(p0) || mtweet.toLowerCase().contains(p0) || keyword.toLowerCase().contains(p0) ||coin.toUpperCase().contains(p0) || coin_symbol.toUpperCase().contains(p0) || mtweet.toUpperCase().contains(p0) || keyword.toUpperCase().contains(p0)){
-                                val tweet = Tweet(coin,coin_symbol,mtweet,url,keyword,id,booked)
+                                val tweet = Tweet(coin,coin_symbol,mtweet,url,keyword,id,booked,dates)
                                 tweets.add(tweet)
                             }
 
@@ -227,9 +229,9 @@ class dashboard : Fragment() {
                             val mtweet = doc.getString("tweet")
                             val url = doc.getString("url")
                             val keyword = doc.getString("keyword")
+                            val dates = doc.getString("dates")
 
-
-                            val tweet = Tweet(coin, coin_symbol, mtweet, url,keyword,id,booked)
+                            val tweet = Tweet(coin, coin_symbol, mtweet, url,keyword,id,booked,dates)
                             tweets.add(tweet)
                         }
                         i++
@@ -263,8 +265,9 @@ class dashboard : Fragment() {
                             val mtweet = doc.getString("tweet")
                             val url = doc.getString("url")
                             val keyword = doc.getString("keyword")
+                            val dates = doc.getString("dates")
                             if (coin.toLowerCase().contains(p0) || coin_symbol.toLowerCase().contains(p0) || mtweet.toLowerCase().contains(p0) || keyword.toLowerCase().contains(p0) ||coin.toUpperCase().contains(p0) || coin_symbol.toUpperCase().contains(p0) || mtweet.toUpperCase().contains(p0) || keyword.toUpperCase().contains(p0)){
-                                val tweet = Tweet(coin, coin_symbol, mtweet, url,keyword,id,booked)
+                                val tweet = Tweet(coin, coin_symbol, mtweet, url,keyword,id,booked,dates)
                                 tweets.add(tweet)
                             }
 

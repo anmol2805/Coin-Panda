@@ -9,16 +9,16 @@
 
     <ImageView
         android:id="@+id/bookmark"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
+        android:layout_centerVertical="true"
         android:elevation="8dp"
         android:scaleType="fitStart"
         android:layout_marginEnd="5dp"
         android:layout_marginRight="5dp"
-        app:srcCompat="@drawable/bookmark50" />
+        app:srcCompat="@drawable/starunfilled" />
 
 
             <LinearLayout
@@ -93,6 +93,8 @@
                 android:layout_marginHorizontal="5dp"
                 android:layout_toEndOf="@+id/coinlay"
                 android:layout_toRightOf="@+id/coinlay"
+                android:layout_toLeftOf="@+id/bookmark"
+                android:layout_toStartOf="@+id/bookmark"
                 android:text="tweet"
                 android:autoLink="web"
                 />
