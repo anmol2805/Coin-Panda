@@ -1,5 +1,6 @@
 package com.anmol.coinpanda.Fragments
 
+import android.content.Intent
 import android.support.v4.app.Fragment
 
 import android.os.Bundle
@@ -22,13 +23,20 @@ class settings : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val vi = inflater.inflate(R.layout.settings,
                 container, false)
-//        telegram = vi.findViewById(R.id.telegram)
-//        review = vi.findViewById(R.id.review)
-//        request = vi.findViewById(R.id.request)
-//        donate = vi.findViewById(R.id.donate)
-//        share = vi.findViewById(R.id.share)
-//        help = vi.findViewById(R.id.support)
+        telegram = vi.findViewById(R.id.telegram)
+        review = vi.findViewById(R.id.review)
+        request = vi.findViewById(R.id.request)
+        donate = vi.findViewById(R.id.donate)
+        share = vi.findViewById(R.id.share)
+        help = vi.findViewById(R.id.support)
+        share?.setOnClickListener {
+            val shareintent = Intent()
+            shareintent.action = Intent.ACTION_SEND
+            shareintent.type = "text/plain"
+            shareintent.putExtra(Intent.EXTRA_TEXT,"https://play.google.com/store/apps/details?id=com.anmol.coinpanda")
+            startActivity(Intent.createChooser(shareintent,"Share app via..."))
 
+        }
         return vi
     }
 }

@@ -13,6 +13,7 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Switch
@@ -41,6 +42,7 @@ class dashboard : Fragment() {
     var db = FirebaseFirestore.getInstance()
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val vi = inflater.inflate(R.layout.dashboard, container, false)
+        activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
         val layoutManager = LinearLayoutManager(activity)
         cointweetrecycler = vi.findViewById(R.id.cointweetrecycler)
         tweetselect = vi.findViewById(R.id.cointweetselect)
