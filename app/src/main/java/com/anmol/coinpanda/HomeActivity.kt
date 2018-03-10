@@ -4,6 +4,7 @@ import android.support.v4.app.Fragment
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v7.app.AppCompatActivity
+import com.anmol.coinpanda.Fragments.bookmarks
 import com.anmol.coinpanda.Fragments.dashboard
 import com.anmol.coinpanda.Fragments.home
 import com.anmol.coinpanda.Fragments.settings
@@ -29,7 +30,7 @@ class HomeActivity : AppCompatActivity() {
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_bookmarks ->{
-
+                setFragment(bookmarks())
                 return@OnNavigationItemSelectedListener true
             }
         }
