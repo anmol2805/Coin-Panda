@@ -4,13 +4,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginVertical="5dp"
     android:paddingVertical="5dp"
     >
 
     <ImageView
         android:id="@+id/bookmark"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
@@ -53,8 +54,6 @@
                 android:layout_alignLeft="@+id/tweet"
                 android:layout_alignStart="@+id/tweet"
                 android:layout_alignTop="@+id/coinlay"
-
-
                 android:fontFamily="sans-serif-smallcaps"
                 android:text="TextView"
                 android:textAllCaps="false"
@@ -85,19 +84,19 @@
                 android:textColor="@color/colorPrimary"
                 android:textSize="16sp" />
 
-            <TextView
-                android:id="@+id/tweet"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/keyword"
-                android:layout_marginHorizontal="5dp"
-                android:layout_toEndOf="@+id/coinlay"
-                android:layout_toRightOf="@+id/coinlay"
-                android:layout_toLeftOf="@+id/bookmark"
-                android:layout_toStartOf="@+id/bookmark"
-                android:text="tweet"
-                android:autoLink="web"
-                />
+    <TextView
+        android:id="@+id/tweet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/keyword"
+        android:layout_marginHorizontal="5dp"
+        android:layout_toEndOf="@+id/coinlay"
+        android:layout_toLeftOf="@+id/bookmark"
+        android:layout_toRightOf="@+id/coinlay"
+        android:layout_toStartOf="@+id/bookmark"
+        android:autoLink="web"
+        android:text="tweet"
+        android:textAlignment="textStart" />
 
     <TextView
         android:id="@+id/time"

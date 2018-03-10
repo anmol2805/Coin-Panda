@@ -16,6 +16,8 @@
         android:layout_gravity="start"
         android:background="#fff"
         android:paddingLeft="20dp"
+        android:drawablePadding="10dp"
+        android:drawableLeft="@drawable/layer"
         />
 
     <Button
@@ -27,6 +29,9 @@
         android:textAlignment="viewStart"
         android:layout_gravity="start"
         android:background="#fff"
+        android:drawablePadding="10dp"
+
+        android:drawableLeft="@drawable/layerreview"
         android:paddingLeft="20dp"/>
 
     <Button
@@ -38,6 +43,9 @@
         android:textAlignment="viewStart"
         android:layout_gravity="start"
         android:background="#fff"
+        android:drawablePadding="10dp"
+
+        android:drawableLeft="@drawable/layerreq"
         android:paddingLeft="20dp"
         />
 
@@ -49,6 +57,9 @@
         android:textAlignment="viewStart"
         android:layout_gravity="start"
         android:background="#fff"
+        android:drawablePadding="10dp"
+
+        android:drawableLeft="@drawable/layerdonate"
         android:paddingLeft="20dp"
         />
 
@@ -62,6 +73,9 @@
         android:layout_gravity="start"
         android:background="#fff"
         android:paddingLeft="20dp"
+        android:drawablePadding="10dp"
+
+        android:drawableLeft="@drawable/layershare"
         />
 
     <Button
@@ -73,6 +87,9 @@
         android:layout_gravity="start"
         android:background="#fff"
         android:paddingLeft="20dp"
+        android:drawablePadding="10dp"
+
+        android:drawableLeft="@drawable/layerhelp"
 
         />
 
