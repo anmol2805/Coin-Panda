@@ -42,48 +42,57 @@ class dashboard : Fragment() {
     var db = FirebaseFirestore.getInstance()
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val vi = inflater.inflate(R.layout.dashboard, container, false)
-        activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
-        val layoutManager = LinearLayoutManager(activity)
-        cointweetrecycler = vi.findViewById(R.id.cointweetrecycler)
+//        activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
+//        val layoutManager = LinearLayoutManager(activity)
+//        cointweetrecycler = vi.findViewById(R.id.cointweetrecycler)
         tweetselect = vi.findViewById(R.id.cointweetselect)
-        sedit = vi.findViewById(R.id.sc)
-        srch = vi.findViewById(R.id.scb)
-        cointweetrecycler?.layoutManager   = layoutManager
-        cointweetrecycler?.setHasFixedSize(true)
-        cointweetrecycler?.itemAnimator   = DefaultItemAnimator()
-        tweets = ArrayList()
+//        sedit = vi.findViewById(R.id.sc)
+//        srch = vi.findViewById(R.id.scb)
+//        cointweetrecycler?.layoutManager   = layoutManager
+//        cointweetrecycler?.setHasFixedSize(true)
+//        cointweetrecycler?.itemAnimator   = DefaultItemAnimator()
+//        tweets = ArrayList()
         tweetselect.isChecked = true
-        val format = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
-        val cal = Calendar.getInstance()
-        cal.add(Calendar.MONTH,-1)
-        val stringtime = format.format(cal.time)
-
-        System.out.println("previousdate:" + format.format(cal.time))
-        itemClickListener = object : ItemClickListener {
-            override fun onItemClick(pos: Int) {
-                val url = tweets[pos].url
-                val intent = Intent(Intent.ACTION_VIEW)
-                intent.data = Uri.parse(url)
-                startActivity(intent)
-
+//        val format = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+//        val cal = Calendar.getInstance()
+//        cal.add(Calendar.MONTH,-1)
+//        val stringtime = format.format(cal.time)
+//
+//        System.out.println("previousdate:" + format.format(cal.time))
+//        itemClickListener = object : ItemClickListener {
+//            override fun onItemClick(pos: Int) {
+//                val url = tweets[pos].url
+//                val intent = Intent(Intent.ACTION_VIEW)
+//                intent.data = Uri.parse(url)
+//                startActivity(intent)
+//
+//            }
+//
+//        }
+//        loadquery(null)
+        setFragment(mycoins())
+        tweetselect.setOnCheckedChangeListener { _, b ->
+            if(b){
+                setFragment(mycoins())
             }
-
+            else{
+                setFragment(allcoins())
+            }
         }
-        loadquery(null)
-        sedit?.addTextChangedListener(object :TextWatcher{
-            override fun afterTextChanged(p0: Editable?) {
-
-            }
-
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-
-            }
-
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                loadquery(p0)
-            }
-
-        })
+//        sedit?.addTextChangedListener(object :TextWatcher{
+//            override fun afterTextChanged(p0: Editable?) {
+//
+//            }
+//
+//            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+//
+//            }
+//
+//            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+//                loadquery(p0)
+//            }
+//
+//        })
 
         return vi
     }
@@ -102,192 +111,198 @@ class dashboard : Fragment() {
 //
 //    }
 
-    private fun loadquery(p0: CharSequence?) {
-        loaddatatweet(p0)
-        tweetselect.setOnCheckedChangeListener({ _, b ->
-            if (b){
-                loaddatatweet(p0)
-            }
-            else{
-                loadalldatatweet(p0)
-            }
-        })
-
-    }
-
-    private fun loadalldatatweet(p0: CharSequence?) {
-        tweets.clear()
-        val format = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
-        val cal = Calendar.getInstance()
-        cal.add(Calendar.MONTH,-1)
-        val stringtime = format.format(cal.time)
-        val prevtime = Timestamp.valueOf(stringtime)
-        db.collection("Tweets").whereGreaterThanOrEqualTo("date",prevtime)
-                .orderBy("date",Query.Direction.DESCENDING).addSnapshotListener{documentSnapshot,e->
-            tweets.clear()
-                    if(p0 == null){
-                        for(doc in documentSnapshot.documents){
-                            val booked = false
-//                        var i = 0
-//                        while(i<bookmarks.size){
-//                            if(doc.id.contains(bookmarks[i])){
-//                                booked = true
-//                            }
-//                            i++
+//    private fun loadquery(p0: CharSequence?) {
+//        loaddatatweet(p0)
+//        tweetselect.setOnCheckedChangeListener({ _, b ->
+//            if (b){
+//                loaddatatweet(p0)
+//            }
+//            else{
+//                loadalldatatweet(p0)
+//            }
+//        })
+//
+//    }
+//
+//    private fun loadalldatatweet(p0: CharSequence?) {
+//        tweets.clear()
+//        val format = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+//        val cal = Calendar.getInstance()
+//        cal.add(Calendar.MONTH,-1)
+//        val stringtime = format.format(cal.time)
+//        val prevtime = Timestamp.valueOf(stringtime)
+//        db.collection("Tweets").whereGreaterThanOrEqualTo("date",prevtime)
+//                .orderBy("date",Query.Direction.DESCENDING).addSnapshotListener{documentSnapshot,e->
+//            tweets.clear()
+//                    if(p0 == null){
+//                        for(doc in documentSnapshot.documents){
+//                            val booked = false
+////                        var i = 0
+////                        while(i<bookmarks.size){
+////                            if(doc.id.contains(bookmarks[i])){
+////                                booked = true
+////                            }
+////                            i++
+////                        }
+//                            val id = doc.id
+//                            val coin = doc.getString("coin")
+//                            val coin_symbol = doc.getString("coin_symbol")
+//                            val mtweet = doc.getString("tweet")
+//                            val url = doc.getString("url")
+//                            val keyword = doc.getString("keyword")
+//                            val dates = doc.getString("dates")
+//                            val tweet = Tweet(coin,coin_symbol,mtweet,url,keyword,id,booked,dates)
+//                            tweets.add(tweet)
 //                        }
-                            val id = doc.id
-                            val coin = doc.getString("coin")
-                            val coin_symbol = doc.getString("coin_symbol")
-                            val mtweet = doc.getString("tweet")
-                            val url = doc.getString("url")
-                            val keyword = doc.getString("keyword")
-                            val dates = doc.getString("dates")
-                            val tweet = Tweet(coin,coin_symbol,mtweet,url,keyword,id,booked,dates)
-                            tweets.add(tweet)
-                        }
-                        if(activity!=null){
-                            if(!tweets.isEmpty()){
-                                val tweetsAdapter = TweetsAdapter(activity!!,tweets,itemClickListener)
-                                cointweetrecycler?.adapter = tweetsAdapter
-                            }
-                        }
-                    }
-                    else{
-                        for(doc in documentSnapshot.documents){
-                            val booked = false
-//                        var i = 0
-//                        while(i<bookmarks.size){
-//                            if(doc.id.contains(bookmarks[i])){
-//                                booked = true
+//                        if(activity!=null){
+//                            if(!tweets.isEmpty()){
+//                                val tweetsAdapter = TweetsAdapter(activity!!,tweets,itemClickListener)
+//                                cointweetrecycler?.adapter = tweetsAdapter
 //                            }
-//                            i++
 //                        }
-                            val id = doc.id
-                            val coin = doc.getString("coin")
-                            val coin_symbol = doc.getString("coin_symbol")
-                            val mtweet = doc.getString("tweet")
-                            val url = doc.getString("url")
-                            val keyword = doc.getString("keyword")
-                            val dates = doc.getString("dates")
-                            if(coin.toLowerCase().contains(p0) || coin_symbol.toLowerCase().contains(p0) || mtweet.toLowerCase().contains(p0) || keyword.toLowerCase().contains(p0) ||coin.toUpperCase().contains(p0) || coin_symbol.toUpperCase().contains(p0) || mtweet.toUpperCase().contains(p0) || keyword.toUpperCase().contains(p0)){
-                                val tweet = Tweet(coin,coin_symbol,mtweet,url,keyword,id,booked,dates)
-                                tweets.add(tweet)
-                            }
-
-                        }
-                        if(activity!=null){
-                            if(!tweets.isEmpty()){
-                                val tweetsAdapter = TweetsAdapter(activity!!,tweets,itemClickListener)
-                                cointweetrecycler?.adapter = tweetsAdapter
-                            }
-                        }
-                    }
-
-        }
-
-
-    }
-
-    private fun loaddatatweet(p0: CharSequence?) {
-        tweets.clear()
-        val mycoins :ArrayList<String> = ArrayList()
-
-        db.collection("users").document("MhqeP5vqgdadnSodwzPo").collection("portfolio").addSnapshotListener{ds,er->
-            mycoins.clear()
-            for(docs in ds.documents){
-                val name  = docs.id
-                mycoins.add(name)
-            }
-
-            querymytweets(mycoins,p0)
-        }
-    }
-
-    private fun querymytweets(mycoins: ArrayList<String>, p0: CharSequence?) {
-        val format = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
-        val cal = Calendar.getInstance()
-        cal.add(Calendar.MONTH,-1)
-        val stringtime = format.format(cal.time)
-        val prevtime = Timestamp.valueOf(stringtime)
-        db.collection("Tweets").whereGreaterThanOrEqualTo("date",prevtime).orderBy("date",Query.Direction.DESCENDING).addSnapshotListener{documentSnapshot,e->
-            tweets.clear()
-            if(p0 == null){
-                for(doc in documentSnapshot.documents) {
-                    var i = 0
-                    var j = 0
-                    val booked = false
-//                while (j<bookmarks.size){
-//                    if(doc.id.contains(bookmarks[i])){
-//                        booked = true
 //                    }
-//                    j++
-//                }
-                    while (i < mycoins.size) {
-
-                        if (doc.getString("coin_symbol").contains(mycoins[i])) {
-                            val id = doc.id
-                            val coin = doc.getString("coin")
-                            val coin_symbol = doc.getString("coin_symbol")
-                            val mtweet = doc.getString("tweet")
-                            val url = doc.getString("url")
-                            val keyword = doc.getString("keyword")
-                            val dates = doc.getString("dates")
-
-                            val tweet = Tweet(coin, coin_symbol, mtweet, url,keyword,id,booked,dates)
-                            tweets.add(tweet)
-                        }
-                        i++
-                    }
-                }
-                if(activity!=null){
-                    if(!tweets.isEmpty()){
-                        val tweetsAdapter = TweetsAdapter(activity!!,tweets,itemClickListener)
-                        cointweetrecycler?.adapter = tweetsAdapter
-                    }
-                }
-
-            }
-            else{
-                for(doc in documentSnapshot.documents) {
-                    var i = 0
-                    var j = 0
-                    val booked = false
-//                while (j<bookmarks.size){
-//                    if(doc.id.contains(bookmarks[i])){
-//                        booked = true
+//                    else{
+//                        for(doc in documentSnapshot.documents){
+//                            val booked = false
+////                        var i = 0
+////                        while(i<bookmarks.size){
+////                            if(doc.id.contains(bookmarks[i])){
+////                                booked = true
+////                            }
+////                            i++
+////                        }
+//                            val id = doc.id
+//                            val coin = doc.getString("coin")
+//                            val coin_symbol = doc.getString("coin_symbol")
+//                            val mtweet = doc.getString("tweet")
+//                            val url = doc.getString("url")
+//                            val keyword = doc.getString("keyword")
+//                            val dates = doc.getString("dates")
+//                            if(coin.toLowerCase().contains(p0) || coin_symbol.toLowerCase().contains(p0) || mtweet.toLowerCase().contains(p0) || keyword.toLowerCase().contains(p0) ||coin.toUpperCase().contains(p0) || coin_symbol.toUpperCase().contains(p0) || mtweet.toUpperCase().contains(p0) || keyword.toUpperCase().contains(p0)){
+//                                val tweet = Tweet(coin,coin_symbol,mtweet,url,keyword,id,booked,dates)
+//                                tweets.add(tweet)
+//                            }
+//
+//                        }
+//                        if(activity!=null){
+//                            if(!tweets.isEmpty()){
+//                                val tweetsAdapter = TweetsAdapter(activity!!,tweets,itemClickListener)
+//                                cointweetrecycler?.adapter = tweetsAdapter
+//                            }
+//                        }
 //                    }
-//                    j++
+//
+//        }
+//
+//
+//    }
+//
+//    private fun loaddatatweet(p0: CharSequence?) {
+//        tweets.clear()
+//        val mycoins :ArrayList<String> = ArrayList()
+//
+//        db.collection("users").document("MhqeP5vqgdadnSodwzPo").collection("portfolio").addSnapshotListener{ds,er->
+//            mycoins.clear()
+//            for(docs in ds.documents){
+//                val name  = docs.id
+//                mycoins.add(name)
+//            }
+//
+//            querymytweets(mycoins,p0)
+//        }
+//    }
+//
+//    private fun querymytweets(mycoins: ArrayList<String>, p0: CharSequence?) {
+//        val format = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+//        val cal = Calendar.getInstance()
+//        cal.add(Calendar.MONTH,-1)
+//        val stringtime = format.format(cal.time)
+//        val prevtime = Timestamp.valueOf(stringtime)
+//        db.collection("Tweets").whereGreaterThanOrEqualTo("date",prevtime).orderBy("date",Query.Direction.DESCENDING).addSnapshotListener{documentSnapshot,e->
+//            tweets.clear()
+//            if(p0 == null){
+//                for(doc in documentSnapshot.documents) {
+//                    var i = 0
+//                    var j = 0
+//                    val booked = false
+////                while (j<bookmarks.size){
+////                    if(doc.id.contains(bookmarks[i])){
+////                        booked = true
+////                    }
+////                    j++
+////                }
+//                    while (i < mycoins.size) {
+//
+//                        if (doc.getString("coin_symbol").contains(mycoins[i])) {
+//                            val id = doc.id
+//                            val coin = doc.getString("coin")
+//                            val coin_symbol = doc.getString("coin_symbol")
+//                            val mtweet = doc.getString("tweet")
+//                            val url = doc.getString("url")
+//                            val keyword = doc.getString("keyword")
+//                            val dates = doc.getString("dates")
+//
+//                            val tweet = Tweet(coin, coin_symbol, mtweet, url,keyword,id,booked,dates)
+//                            tweets.add(tweet)
+//                        }
+//                        i++
+//                    }
 //                }
-                    while (i < mycoins.size) {
+//                if(activity!=null){
+//                    if(!tweets.isEmpty()){
+//                        val tweetsAdapter = TweetsAdapter(activity!!,tweets,itemClickListener)
+//                        cointweetrecycler?.adapter = tweetsAdapter
+//                    }
+//                }
+//
+//            }
+//            else{
+//                for(doc in documentSnapshot.documents) {
+//                    var i = 0
+//                    var j = 0
+//                    val booked = false
+////                while (j<bookmarks.size){
+////                    if(doc.id.contains(bookmarks[i])){
+////                        booked = true
+////                    }
+////                    j++
+////                }
+//                    while (i < mycoins.size) {
+//
+//                        if (doc.getString("coin_symbol").contains(mycoins[i])) {
+//                            val id = doc.id
+//                            val coin = doc.getString("coin")
+//                            val coin_symbol = doc.getString("coin_symbol")
+//                            val mtweet = doc.getString("tweet")
+//                            val url = doc.getString("url")
+//                            val keyword = doc.getString("keyword")
+//                            val dates = doc.getString("dates")
+//                            if (coin.toLowerCase().contains(p0) || coin_symbol.toLowerCase().contains(p0) || mtweet.toLowerCase().contains(p0) || keyword.toLowerCase().contains(p0) ||coin.toUpperCase().contains(p0) || coin_symbol.toUpperCase().contains(p0) || mtweet.toUpperCase().contains(p0) || keyword.toUpperCase().contains(p0)){
+//                                val tweet = Tweet(coin, coin_symbol, mtweet, url,keyword,id,booked,dates)
+//                                tweets.add(tweet)
+//                            }
+//
+//
+//                        }
+//                        i++
+//                    }
+//                }
+//                if(activity!=null){
+//                    if(!tweets.isEmpty()){
+//                        val tweetsAdapter = TweetsAdapter(activity!!,tweets,itemClickListener)
+//                        cointweetrecycler?.adapter = tweetsAdapter
+//                    }
+//                }
+//
+//            }
+//
+//        }
+//
+//    }
+    private fun setFragment(fragment: Fragment) {
+        activity!!.supportFragmentManager.beginTransaction().replace(R.id.coinframe,fragment).commit()
 
-                        if (doc.getString("coin_symbol").contains(mycoins[i])) {
-                            val id = doc.id
-                            val coin = doc.getString("coin")
-                            val coin_symbol = doc.getString("coin_symbol")
-                            val mtweet = doc.getString("tweet")
-                            val url = doc.getString("url")
-                            val keyword = doc.getString("keyword")
-                            val dates = doc.getString("dates")
-                            if (coin.toLowerCase().contains(p0) || coin_symbol.toLowerCase().contains(p0) || mtweet.toLowerCase().contains(p0) || keyword.toLowerCase().contains(p0) ||coin.toUpperCase().contains(p0) || coin_symbol.toUpperCase().contains(p0) || mtweet.toUpperCase().contains(p0) || keyword.toUpperCase().contains(p0)){
-                                val tweet = Tweet(coin, coin_symbol, mtweet, url,keyword,id,booked,dates)
-                                tweets.add(tweet)
-                            }
-
-
-                        }
-                        i++
-                    }
-                }
-                if(activity!=null){
-                    if(!tweets.isEmpty()){
-                        val tweetsAdapter = TweetsAdapter(activity!!,tweets,itemClickListener)
-                        cointweetrecycler?.adapter = tweetsAdapter
-                    }
-                }
-
-            }
-
-        }
 
     }
+
 }

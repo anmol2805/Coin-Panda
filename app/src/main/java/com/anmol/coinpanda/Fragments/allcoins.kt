@@ -5,12 +5,14 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.anmol.coinpanda.R
 
 /**
  * Created by anmol on 3/11/2018.
  */
 class allcoins : Fragment(){
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return super.onCreateView(inflater, container, savedInstanceState)
+        val vi = inflater.inflate(R.layout.allcoins, container, false)
+        return vi
     }
 }

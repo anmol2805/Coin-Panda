@@ -18,45 +18,48 @@
         android:id="@+id/cardView">
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <Button
-                android:id="@+id/scb"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="5dp"
-                android:layout_marginVertical="10dp"
-                android:background="@drawable/search50" />
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/search"
-                android:layout_toLeftOf="@+id/scb"
-                android:layout_toStartOf="@+id/scb"
-                >
-                <EditText
-                    android:id="@+id/sc"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:hint="Search Coin"
-                    android:inputType="text"
-                    android:textAlignment="center"
-                    android:textColor="#000"
-                    android:textColorHint="@color/colorPrimary"
-                    />
+            android:layout_height="match_parent"
+            android:id="@+id/coinframe"
+            >
+
+            <!--<Button-->
+                <!--android:id="@+id/scb"-->
+                <!--android:layout_width="35dp"-->
+                <!--android:layout_height="35dp"-->
+                <!--android:layout_alignParentEnd="true"-->
+                <!--android:layout_alignParentRight="true"-->
+                <!--android:layout_marginRight="5dp"-->
+                <!--android:layout_marginVertical="10dp"-->
+                <!--android:background="@drawable/search50" />-->
+            <!--<android.support.design.widget.TextInputLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:id="@+id/search"-->
+                <!--android:layout_toLeftOf="@+id/scb"-->
+                <!--android:layout_toStartOf="@+id/scb"-->
+                <!--&gt;-->
+                <!--<EditText-->
+                    <!--android:id="@+id/sc"-->
+                    <!--android:layout_width="fill_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_margin="10dp"-->
+                    <!--android:hint="Search Coin"-->
+                    <!--android:inputType="text"-->
+                    <!--android:textAlignment="center"-->
+                    <!--android:textColor="#000"-->
+                    <!--android:textColorHint="@color/colorPrimary"-->
+                    <!--/>-->
 
 
-            </android.support.design.widget.TextInputLayout>
+            <!--</android.support.design.widget.TextInputLayout>-->
 
-            <android.support.v7.widget.RecyclerView
-                android:layout_below="@+id/search"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/cointweetrecycler"
-                android:layout_marginBottom="60dp"
-                />
+            <!--<android.support.v7.widget.RecyclerView-->
+                <!--android:layout_below="@+id/search"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:id="@+id/cointweetrecycler"-->
+                <!--android:layout_marginBottom="60dp"-->
+                <!--/>-->
         </RelativeLayout>
 
     </android.support.v7.widget.CardView>
