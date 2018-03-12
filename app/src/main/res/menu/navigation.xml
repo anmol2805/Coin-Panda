@@ -18,6 +18,7 @@
     <item
         android:id="@+id/navigation_ico"
         android:title="ICO"
+        android:icon="@drawable/bitcoin"
         />
 
 

@@ -85,8 +85,6 @@ class LoginActivity : AppCompatActivity(), GoogleApiClient.OnConnectionFailedLis
     private fun instantiateFacebookLogin() {
 
         callbackManager = CallbackManager.Factory.create()
-
-        facebookLoginButton = findViewById<View>(R.id.login_button) as Button
         facebookLoginButton!!.setOnClickListener {
             startFacebookLogin()
             Toast.makeText(this@LoginActivity, "Please wait while we are authenticating your credentials", Toast.LENGTH_LONG).show()
