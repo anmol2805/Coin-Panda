@@ -12,6 +12,10 @@ import android.widget.Button
 import com.anmol.coinpanda.R
 import android.content.ActivityNotFoundException
 import android.net.Uri
+import android.widget.EditText
+import android.widget.ProgressBar
+import android.widget.TextView
+import com.google.firebase.firestore.FirebaseFirestore
 
 
 /**
@@ -63,7 +67,27 @@ class settings : Fragment() {
         request?.setOnClickListener {
             val dialog = Dialog(activity)
             dialog.setContentView(R.layout.request)
-
+            val rc : EditText? = dialog.findViewById(R.id.rc)
+            val submit : Button? = dialog.findViewById(R.id.submit)
+            val pg:ProgressBar? = dialog.findViewById(R.id.pg)
+            submit?.setOnClickListener{
+                if (rc!!.text.isEmpty() || rc.text == null){
+                    rc.error = "Please specify a valid coin name or symbol"
+                }
+                else{
+                    pg?.visibility = View.VISIBLE
+                    submit.visibility = View.GONE
+                    val coin = rc.text
+                    val db = FirebaseFirestore.getInstance()
+                    val ref = db.collection("request").document()
+                    val id = ref.id
+                    val map : HashMap<String,Any>? = null
+                    map!!["coin"] = coin
+                    db.collection("request").document(id).set(map).addOnSuccessListener {
+                        dialog.dismiss()
+                    }
+                }
+            }
             dialog.show()
         }
         help?.setOnClickListener {
