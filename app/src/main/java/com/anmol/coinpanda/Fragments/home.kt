@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment
 import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.os.Handler
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
@@ -47,7 +48,11 @@ class home : Fragment() {
         srch = vi.findViewById(R.id.scb)
         allcoins = ArrayList()
         mcoinselect.isChecked = true
-        loaddata()
+        val handler = Handler()
+        handler.postDelayed({
+            loaddata()
+        },200)
+
         mcoinselect.setOnCheckedChangeListener({ compoundButton, b ->
             if (b){
                 loaddata()

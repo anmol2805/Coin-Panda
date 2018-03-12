@@ -12,7 +12,7 @@ import com.anmol.coinpanda.R
  */
 class ico : Fragment(){
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val vi = inflater.inflate(R.layout.allcoins, container, false)
+        val vi = inflater.inflate(R.layout.ico, container, false)
         return vi
     }
 }

@@ -3,6 +3,7 @@ package com.anmol.coinpanda.Fragments
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
 import android.support.v4.app.Fragment
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
@@ -47,7 +48,9 @@ class bookmarks : Fragment() {
         cointweetrecycler?.setHasFixedSize(true)
         cointweetrecycler?.itemAnimator   = DefaultItemAnimator()
         tweets = ArrayList()
-        loadquery(null)
+        val handler = Handler()
+        handler.postDelayed({loadquery(null)},200)
+
         itemClickListener = object : ItemClickListener {
             override fun onItemClick(pos: Int) {
                 val url = tweets[pos].url
