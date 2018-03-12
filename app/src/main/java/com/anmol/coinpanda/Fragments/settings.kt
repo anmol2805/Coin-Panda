@@ -8,13 +8,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import com.anmol.coinpanda.R
 import android.content.ActivityNotFoundException
 import android.net.Uri
-import android.widget.EditText
-import android.widget.ProgressBar
-import android.widget.TextView
+import android.widget.*
 import com.google.firebase.firestore.FirebaseFirestore
 
 
@@ -62,6 +59,10 @@ class settings : Fragment() {
 
         }
         telegram?.setOnClickListener{
+            val url = "https://t.me/joinchat/GNRigg78ssytJs22torR0Q"
+            val intent = Intent(Intent.ACTION_VIEW)
+            intent.data = Uri.parse(url)
+            startActivity(intent)
 
         }
         request?.setOnClickListener {
@@ -77,13 +78,14 @@ class settings : Fragment() {
                 else{
                     pg?.visibility = View.VISIBLE
                     submit.visibility = View.GONE
-                    val coin = rc.text
+                    val coin = rc.text.toString().trim()
                     val db = FirebaseFirestore.getInstance()
                     val ref = db.collection("request").document()
                     val id = ref.id
-                    val map : HashMap<String,Any>? = null
-                    map!!["coin"] = coin
+                    val map = HashMap<String,Any>()
+                    map["coin"] = coin
                     db.collection("request").document(id).set(map).addOnSuccessListener {
+                        Toast.makeText(activity,"We had received your request",Toast.LENGTH_SHORT).show()
                         dialog.dismiss()
                     }
                 }
