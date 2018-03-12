@@ -12,6 +12,7 @@ import com.anmol.coinpanda.R
 import android.content.ActivityNotFoundException
 import android.net.Uri
 import android.widget.*
+import com.anmol.coinpanda.SupportActivity
 import com.google.firebase.firestore.FirebaseFirestore
 
 
@@ -93,7 +94,7 @@ class settings : Fragment() {
             dialog.show()
         }
         help?.setOnClickListener {
-
+            startActivity(Intent(activity,SupportActivity::class.java))
         }
 
         return vi
