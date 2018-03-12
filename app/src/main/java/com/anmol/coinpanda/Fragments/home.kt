@@ -66,6 +66,7 @@ class home : Fragment() {
         coingrid?.onItemClickListener = AdapterView.OnItemClickListener { adapterView, view, i, l ->
             val dialog = Dialog(activity)
             dialog.setContentView(R.layout.dialoglayout)
+            val prg : ProgressBar? = dialog.findViewById(R.id.prgbr)
             val coinimg:ImageView? = dialog.findViewById(R.id.coinimg)
             val cn :TextView? = dialog.findViewById(R.id.cn)
             val cs:TextView? = dialog.findViewById(R.id.cs)
@@ -77,8 +78,8 @@ class home : Fragment() {
             val remove:Button? = dialog.findViewById(R.id.remove)
             atp?.visibility = View.VISIBLE
             portfoliolay?.visibility = View.GONE
-            db.collection("users").document("MhqeP5vqgdadnSodwzPo").collection("portfolio").addSnapshotListener{documentSnapshot, e ->
-                for(doc in documentSnapshot){
+            db.collection("users").document("MhqeP5vqgdadnSodwzPo").collection("portfolio").get().addOnCompleteListener {task ->
+                for(doc in task.result){
                     if(doc.id.contains(allcoins[i].coinname!!)){
                         atp?.visibility = View.GONE
                         portfoliolay?.visibility = View.VISIBLE
@@ -120,12 +121,25 @@ class home : Fragment() {
                 startActivity(intent)
             }
             remove?.setOnClickListener {
-
+                db.collection("users").document("MhqeP5vqgdadnSodwzPo").collection("portfolio").document(allcoins[i].coinname!!)
+                        .delete().addOnSuccessListener {
+                            Toast.makeText(activity,"Removed from your Portfolio", Toast.LENGTH_SHORT).show()
+                            dialog.dismiss()
+                        }
             }
             atp?.setOnClickListener {
-                val intent = Intent(activity,PaymentActivity::class.java)
-                intent.putExtra("coin",allcoins[i].coin)
-                startActivity(intent)
+//                val intent = Intent(activity,PaymentActivity::class.java)
+//                intent.putExtra("coin",allcoins[i].coin)
+//                startActivity(intent)
+                prg?.visibility = View.VISIBLE
+                atp.visibility = View.GONE
+                val map = HashMap<String,Any>()
+                map["coin_name"] = allcoins[i].coin.toString()
+                map["coinPage"] = allcoins[i].coinpage.toString()
+                db.collection("users").document("MhqeP5vqgdadnSodwzPo").collection("portfolio").document(allcoins[i].coinname!!).set(map).addOnSuccessListener {
+                    Toast.makeText(activity,"Added to your Portfolio", Toast.LENGTH_SHORT).show()
+                    dialog.dismiss()
+                }
             }
             dialog.show()
         }

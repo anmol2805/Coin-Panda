@@ -3,12 +3,12 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="100dp"
-    android:layout_height="wrap_content">
+    android:layout_height="120dp">
 
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         app:cardBackgroundColor="@android:color/white"
         app:cardCornerRadius="@dimen/com_facebook_auth_dialog_corner_radius_oversized"
         app:cardElevation="@dimen/com_facebook_auth_dialog_corner_radius_oversized">
@@ -21,12 +21,11 @@
                 android:id="@+id/namecoinall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
                 android:layout_below="@+id/imageView3"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="5dp"
                 android:fontFamily="sans-serif"
-                android:text="TextView"
+                android:text="Unbreakable Coin"
                 android:textAlignment="center"
                 android:textColor="#000"
                 android:textSize="14sp" />

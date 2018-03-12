@@ -50,15 +50,26 @@
 
     <Button
         android:id="@+id/atp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
         android:text="Add to portfolio"
-        android:layout_margin="5dp"
+
         android:layout_gravity="center"
         android:textColor="#fff"
         android:padding="10dp"
         android:background="#5cb85c"
         />
+
+    <ProgressBar
+        android:id="@+id/progr"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_gravity="center"
+        android:layout_margin="5dp"
+        android:visibility="gone"
+        />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
