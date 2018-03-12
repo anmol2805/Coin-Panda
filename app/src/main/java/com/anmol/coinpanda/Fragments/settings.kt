@@ -1,5 +1,6 @@
 package com.anmol.coinpanda.Fragments
 
+import android.app.Dialog
 import android.content.Intent
 import android.support.v4.app.Fragment
 
@@ -60,7 +61,10 @@ class settings : Fragment() {
 
         }
         request?.setOnClickListener {
+            val dialog = Dialog(activity)
+            dialog.setContentView(R.layout.request)
 
+            dialog.show()
         }
         help?.setOnClickListener {
 

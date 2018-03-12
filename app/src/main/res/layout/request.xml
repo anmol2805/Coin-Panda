@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="300dp"
+    android:layout_height="wrap_content"
+    app:cardBackgroundColor="#fff"
+    app:cardCornerRadius="16dp">
+
+   <RelativeLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content">
+       <android.support.design.widget.TextInputLayout
+           android:id="@+id/search"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content">
+
+
+           <EditText
+               android:id="@+id/rc"
+               android:layout_width="fill_parent"
+               android:layout_height="wrap_content"
+               android:layout_margin="10dp"
+               android:hint="Request Coin"
+               android:inputType="text"
+               android:textAlignment="center"
+               android:textColor="#000"
+               android:textColorHint="@color/colorPrimary" />
+
+
+
+
+       </android.support.design.widget.TextInputLayout>
+       <Button
+           android:id="@+id/submit"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:layout_below="@+id/search"
+           android:background="@color/colorPrimary"
+           android:text="Request"
+           android:textColor="#fff"
+           android:textStyle="bold" />
+
+   </RelativeLayout>
+
+
+
+</android.support.v7.widget.CardView>

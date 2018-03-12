@@ -4,10 +4,7 @@ import android.support.v4.app.Fragment
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v7.app.AppCompatActivity
-import com.anmol.coinpanda.Fragments.bookmarks
-import com.anmol.coinpanda.Fragments.dashboard
-import com.anmol.coinpanda.Fragments.home
-import com.anmol.coinpanda.Fragments.settings
+import com.anmol.coinpanda.Fragments.*
 import kotlinx.android.synthetic.main.activity_home.*
 
 class HomeActivity : AppCompatActivity() {
@@ -23,6 +20,11 @@ class HomeActivity : AppCompatActivity() {
                 setFragment(dashboard())
                 //message.setText(R.string.title_dashboard)
                 return@OnNavigationItemSelectedListener true
+            }
+            R.id.navigation_ico -> {
+                setFragment(ico())
+                return@OnNavigationItemSelectedListener true
+
             }
             R.id.navigation_notifications -> {
                 setFragment(settings())
