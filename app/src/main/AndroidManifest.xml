@@ -35,6 +35,7 @@
         <activity android:name=".AddToPortfolioActivity" />
         <activity android:name=".PaymentActivity" />
         <activity android:name=".SupportActivity"></activity>
+        <activity android:name=".LoginActivity"></activity>
     </application>
 
 </manifest>

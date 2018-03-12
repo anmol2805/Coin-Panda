@@ -1,10 +1,12 @@
 package com.anmol.coinpanda
 
+import android.content.Intent
 import android.support.v4.app.Fragment
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v7.app.AppCompatActivity
 import com.anmol.coinpanda.Fragments.*
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_home.*
 
 class HomeActivity : AppCompatActivity() {
@@ -50,8 +52,15 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         supportActionBar?.hide()
         setContentView(R.layout.activity_home)
-        setFragment(dashboard())
-        navigation.selectedItemId = R.id.navigation_dashboard
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+        val auth = FirebaseAuth.getInstance()
+        if(auth.currentUser == null){
+            startActivity(Intent(this,LoginActivity::class.java))
+        }
+        else{
+            setFragment(dashboard())
+            navigation.selectedItemId = R.id.navigation_dashboard
+            navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+        }
+
     }
 }
