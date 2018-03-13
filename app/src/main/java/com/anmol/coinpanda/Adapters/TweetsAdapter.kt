@@ -22,6 +22,7 @@ import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import java.util.*
 import kotlin.collections.HashMap
@@ -89,7 +90,8 @@ class TweetsAdapter(internal var c: Context, internal var tweets: List<Tweet>, p
 
             val map = HashMap<String,Any>()
             map["bookmark"] = true
-            db.collection("users").document("MhqeP5vqgdadnSodwzPo").collection("bookmarks").document(coindata.tweetid!!).set(map).addOnSuccessListener {
+            val auth = FirebaseAuth.getInstance()
+            db.collection("users").document(auth.currentUser!!.uid).collection("bookmarks").document(coindata.tweetid!!).set(map).addOnSuccessListener {
                 Glide.with(c).load(R.drawable.starfilled).into(holder.bookmark)
             }
         }

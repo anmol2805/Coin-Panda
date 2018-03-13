@@ -25,6 +25,7 @@ import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 
@@ -40,6 +41,7 @@ class home : Fragment() {
     var db = FirebaseFirestore.getInstance()
     var sedit:EditText? = null
     var srch:Button? = null
+    val auth = FirebaseAuth.getInstance()
     @SuppressLint("SetTextI18n")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val vi = inflater.inflate(R.layout.home,
@@ -80,7 +82,7 @@ class home : Fragment() {
             val remove:Button? = dialog.findViewById(R.id.remove)
             atp?.visibility = View.VISIBLE
             portfoliolay?.visibility = View.GONE
-            db.collection("users").document("MhqeP5vqgdadnSodwzPo").collection("portfolio").get().addOnCompleteListener {task ->
+            db.collection("users").document(auth.currentUser!!.uid).collection("portfolio").get().addOnCompleteListener {task ->
                 for(doc in task.result){
                     if(doc.id.contains(allcoins[i].coinname!!)){
                         atp?.visibility = View.GONE
@@ -123,7 +125,7 @@ class home : Fragment() {
                 startActivity(intent)
             }
             remove?.setOnClickListener {
-                db.collection("users").document("MhqeP5vqgdadnSodwzPo").collection("portfolio").document(allcoins[i].coinname!!)
+                db.collection("users").document(auth.currentUser!!.uid).collection("portfolio").document(allcoins[i].coinname!!)
                         .delete().addOnSuccessListener {
                             Toast.makeText(activity,"Removed from your Portfolio", Toast.LENGTH_SHORT).show()
                             dialog.dismiss()
@@ -138,7 +140,7 @@ class home : Fragment() {
                 val map = HashMap<String,Any>()
                 map["coin_name"] = allcoins[i].coin.toString()
                 map["coinPage"] = allcoins[i].coinpage.toString()
-                db.collection("users").document("MhqeP5vqgdadnSodwzPo").collection("portfolio").document(allcoins[i].coinname!!).set(map).addOnSuccessListener {
+                db.collection("users").document(auth.currentUser!!.uid).collection("portfolio").document(allcoins[i].coinname!!).set(map).addOnSuccessListener {
                     Toast.makeText(activity,"Added to your Portfolio", Toast.LENGTH_SHORT).show()
                     dialog.dismiss()
                 }
@@ -211,7 +213,7 @@ class home : Fragment() {
         sedit?.visibility =View.GONE
         srch?.visibility  =View.GONE
         allcoins.clear()
-        db.collection("users").document("MhqeP5vqgdadnSodwzPo").collection("portfolio").addSnapshotListener{documentSnapshot, e ->
+        db.collection("users").document(auth.currentUser!!.uid).collection("portfolio").addSnapshotListener{documentSnapshot, e ->
             allcoins.clear()
             for(doc in documentSnapshot.documents){
                 val coinname = doc.id

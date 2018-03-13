@@ -12,6 +12,7 @@ import com.anmol.coinpanda.Adapters.DividerItemDecoration
 import com.anmol.coinpanda.Adapters.TweetsAdapter
 import com.anmol.coinpanda.Interfaces.ItemClickListener
 import com.anmol.coinpanda.Model.Tweet
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import java.sql.Date
@@ -22,6 +23,7 @@ class TweetsActivity : AppCompatActivity() {
     lateinit var itemClickListener : ItemClickListener
     lateinit var tweetsAdapter:TweetsAdapter
     var db = FirebaseFirestore.getInstance()
+    val auth = FirebaseAuth.getInstance()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tweets)
@@ -43,7 +45,7 @@ class TweetsActivity : AppCompatActivity() {
 
         }
         val bookmarks : ArrayList<String> = ArrayList()
-        db.collection("users").document("MhqeP5vqgdadnSodwzPo").collection("bookmarks").addSnapshotListener{documnentSnapshot,e->
+        db.collection("users").document(auth.currentUser!!.uid).collection("bookmarks").addSnapshotListener{documnentSnapshot,e->
             bookmarks.clear()
             for (doc in documnentSnapshot.documents){
                 val tweetid = doc.id
@@ -84,7 +86,7 @@ class TweetsActivity : AppCompatActivity() {
                         if(!tweets.isEmpty()){
                             val tweetsAdapter = TweetsAdapter(this,tweets,itemClickListener)
                             mtweetrecycler?.adapter = tweetsAdapter
-                            mtweetrecycler?.addItemDecoration(DividerItemDecoration(ContextCompat.getDrawable(applicationContext,R.drawable.item_decorator)!!))
+                            //mtweetrecycler?.addItemDecoration(DividerItemDecoration(ContextCompat.getDrawable(applicationContext,R.drawable.item_decorator)!!))
                         }
 
                 }

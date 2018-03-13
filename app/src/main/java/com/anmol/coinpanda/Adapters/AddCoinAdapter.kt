@@ -15,6 +15,7 @@ import com.anmol.coinpanda.Model.Coin
 import com.anmol.coinpanda.PaymentActivity
 import com.anmol.coinpanda.R
 import com.bumptech.glide.Glide
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
 /**
@@ -34,7 +35,8 @@ class AddCoinAdapter(internal var c: Context, internal var allcoins: List<Allcoi
         val coindata = allcoins[position]
         holder.mcoinname?.text = coindata.coinname
         val db = FirebaseFirestore.getInstance()
-        db.collection("users").document("Z2ycXxL6GyvPS23NTuYk").collection("portfolio").addSnapshotListener{documentSnapshot, e ->
+        val auth = FirebaseAuth.getInstance()
+        db.collection("users").document(auth.currentUser!!.uid).collection("portfolio").addSnapshotListener{ documentSnapshot, e ->
             for(doc in documentSnapshot.documents){
                 if(doc.id.contains(coindata.coinname!!)){
                     holder.addtoport?.visibility = View.GONE

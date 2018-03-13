@@ -38,7 +38,7 @@ class SupportActivity : AppCompatActivity() {
                 prgbr?.visibility = View.VISIBLE
                 val map = HashMap<String, Any>()
                 map["feedback"] = feedback?.text.toString()
-                map["uid"] = "MhqeP5vqgdadnSodwzPo"
+                map["uid"] = auth.currentUser!!.uid
                 val ref = db.collection("feedback").document()
                 val id = ref.id
                 db.collection("feedback").document(id).set(map).addOnSuccessListener {

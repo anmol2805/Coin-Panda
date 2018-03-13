@@ -23,6 +23,7 @@ import com.anmol.coinpanda.Adapters.TweetsAdapter
 import com.anmol.coinpanda.Interfaces.ItemClickListener
 import com.anmol.coinpanda.Model.Tweet
 import com.anmol.coinpanda.R
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import java.sql.Timestamp
@@ -41,6 +42,7 @@ class mycoins : Fragment(){
     var sedit: EditText? = null
     var srch: Button? = null
     var db = FirebaseFirestore.getInstance()
+    val auth = FirebaseAuth.getInstance()
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val vi = inflater.inflate(R.layout.mycoins, container, false)
         activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
@@ -94,14 +96,14 @@ class mycoins : Fragment(){
         db.collection("Tweets").whereGreaterThanOrEqualTo("date",prevtime).orderBy("date", Query.Direction.DESCENDING).addSnapshotListener{ ds1, e->
             tweets.clear()
             val mycoins :ArrayList<String> = ArrayList()
-            db.collection("users").document("MhqeP5vqgdadnSodwzPo").collection("portfolio").addSnapshotListener{ds,er->
+            db.collection("users").document(auth.currentUser!!.uid).collection("portfolio").addSnapshotListener{ds,er->
             mycoins.clear()
             for(docs in ds.documents){
                 val name  = docs.id
                 mycoins.add(name)
             }
                 val bookmarks : ArrayList<String> = ArrayList()
-        db.collection("users").document("MhqeP5vqgdadnSodwzPo").collection("bookmarks").addSnapshotListener{ds2,e->
+        db.collection("users").document(auth.currentUser!!.uid).collection("bookmarks").addSnapshotListener{ds2,e->
             bookmarks.clear()
             for (doc in ds2.documents){
                 val tweetid = doc.id
@@ -144,7 +146,7 @@ class mycoins : Fragment(){
                         System.out.println("logging:$tweets")
                         val tweetsAdapter = TweetsAdapter(activity!!,tweets,itemClickListener)
                         cointweetrecycler?.adapter = tweetsAdapter
-                        cointweetrecycler?.addItemDecoration(DividerItemDecoration(ContextCompat.getDrawable(activity!!,R.drawable.item_decorator)!!))
+                        //cointweetrecycler?.addItemDecoration(DividerItemDecoration(ContextCompat.getDrawable(activity!!,R.drawable.item_decorator)!!))
                     }
                 }
 
@@ -186,7 +188,7 @@ class mycoins : Fragment(){
                     if(!tweets.isEmpty()){
                         val tweetsAdapter = TweetsAdapter(activity!!,tweets,itemClickListener)
                         cointweetrecycler?.adapter = tweetsAdapter
-                        cointweetrecycler?.addItemDecoration(DividerItemDecoration(ContextCompat.getDrawable(activity!!,R.drawable.item_decorator)!!))
+                        //cointweetrecycler?.addItemDecoration(DividerItemDecoration(ContextCompat.getDrawable(activity!!,R.drawable.item_decorator)!!))
                     }
                 }
 
