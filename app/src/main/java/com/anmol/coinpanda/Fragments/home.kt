@@ -70,6 +70,7 @@ class home : Fragment() {
                 mcoinselect.isChecked = false
             }
         })
+
         coingrid?.onItemClickListener = AdapterView.OnItemClickListener { adapterView, view, i, l ->
             val dialog = Dialog(activity)
             dialog.setContentView(R.layout.dialoglayout)
@@ -168,9 +169,10 @@ class home : Fragment() {
         return vi
     }
 
+
+
     private fun loadalldata(p0: CharSequence?) {
         sedit?.visibility = View.VISIBLE
-        srch?.visibility = View.VISIBLE
         empty?.visibility = View.GONE
         allcoins.clear()
         db.collection("AllCoins").orderBy("lastUpdate",Query.Direction.DESCENDING).addSnapshotListener{ documentSnapshot, firebaseFirestoreException ->

@@ -110,6 +110,7 @@ class mycoins : Fragment(){
                 val bookmarks : ArrayList<String> = ArrayList()
         db.collection("users").document(auth.currentUser!!.uid).collection("bookmarks").addSnapshotListener{ds2,e->
             bookmarks.clear()
+            tweets.clear()
             for (doc in ds2.documents){
                 val tweetid = doc.id
                 bookmarks.add(tweetid)
