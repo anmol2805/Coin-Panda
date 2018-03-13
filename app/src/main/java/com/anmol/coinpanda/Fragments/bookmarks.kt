@@ -53,10 +53,10 @@ class bookmarks : Fragment() {
 
         itemClickListener = object : ItemClickListener {
             override fun onItemClick(pos: Int) {
-                val url = tweets[pos].url
-                val intent = Intent(Intent.ACTION_VIEW)
-                intent.data = Uri.parse(url)
-                startActivity(intent)
+//                val url = tweets[pos].url
+//                val intent = Intent(Intent.ACTION_VIEW)
+//                intent.data = Uri.parse(url)
+//                startActivity(intent)
 
             }
 

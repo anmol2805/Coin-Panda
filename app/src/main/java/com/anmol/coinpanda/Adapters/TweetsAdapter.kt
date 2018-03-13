@@ -1,11 +1,15 @@
 package com.anmol.coinpanda.Adapters
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.drawable.Drawable
+import android.net.Uri
+import android.support.v4.content.ContextCompat.startActivity
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import com.anmol.coinpanda.Interfaces.ItemClickListener
@@ -38,6 +42,19 @@ class TweetsAdapter(internal var c: Context, internal var tweets: List<Tweet>, p
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val coindata = tweets[position] 
         holder.mtweet?.text = coindata.tweet
+        holder.mtweet?.setOnClickListener {
+            val url = tweets[position].url
+            val intent = Intent(Intent.ACTION_VIEW)
+            intent.data = Uri.parse(url)
+            c.startActivity(intent)
+        }
+        holder.sharebtn?.setOnClickListener {
+            val shareintent = Intent()
+            shareintent.action = Intent.ACTION_SEND
+            shareintent.type = "text/plain"
+            shareintent.putExtra(Intent.EXTRA_TEXT,tweets[position].url)
+            c.startActivity(Intent.createChooser(shareintent,"Share tweet"))
+        }
         holder.mcoin?.text = coindata.coin
         holder.coinname?.text = coindata.coin_symbol
         holder.keyword?.text = coindata.keyword
@@ -84,6 +101,7 @@ class TweetsAdapter(internal var c: Context, internal var tweets: List<Tweet>, p
         }
 
 
+
     }
 
     inner class MyViewHolder(itemView: View, private val mitemClickListener: ItemClickListener):RecyclerView.ViewHolder(itemView), View.OnClickListener {
@@ -94,6 +112,7 @@ class TweetsAdapter(internal var c: Context, internal var tweets: List<Tweet>, p
         var keyword:TextView?=null
         var bookmark:ImageView?=null
         var timestamp:TextView?=null
+        var sharebtn:Button?=null
         init {
             this.mtweet = itemView.findViewById(R.id.tweet)
             this.mcoin = itemView.findViewById(R.id.coin)
@@ -102,6 +121,7 @@ class TweetsAdapter(internal var c: Context, internal var tweets: List<Tweet>, p
             this.keyword =itemView.findViewById(R.id.keyword)
             this.bookmark = itemView.findViewById(R.id.bookmark)
             this.timestamp = itemView.findViewById(R.id.time)
+            this.sharebtn = itemView.findViewById(R.id.sharebtn)
             itemView.setOnClickListener(this)
         }
 
