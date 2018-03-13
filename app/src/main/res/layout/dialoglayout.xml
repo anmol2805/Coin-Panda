@@ -2,7 +2,7 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="325dp"
+    android:layout_width="300dp"
     android:layout_height="wrap_content"
     android:background="#fff"
     android:orientation="vertical"
@@ -71,21 +71,20 @@
         />
 
     <LinearLayout
+        android:id="@+id/portfoliolay"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:id="@+id/portfoliolay"
-        android:visibility="gone"
-        >
+        android:visibility="gone">
 
 
         <Button
             android:id="@+id/viewtweets"
             android:layout_width="200dp"
-            android:layout_gravity="center"
-            android:background="@drawable/round_button"
-            android:layout_margin="5dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="5dp"
+            android:background="@drawable/round_button"
             android:text="View Tweets" />
 
         <Switch
@@ -99,15 +98,13 @@
 
         <Button
             android:id="@+id/remove"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Remove From Portfolio"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
             android:layout_gravity="center"
-            android:layout_margin="5dp"
-            android:textColor="#fff"
-            android:padding="10dp"
             android:background="#d9534f"
-            />
+            android:padding="10dp"
+            android:text="Remove From Portfolio"
+            android:textColor="#fff" />
     </LinearLayout>
 
 

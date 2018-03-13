@@ -23,6 +23,7 @@
 
             <Button
                 android:id="@+id/scb"
+                android:visibility="gone"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
                 android:layout_alignParentEnd="true"
@@ -38,6 +39,8 @@
                 android:layout_toStartOf="@+id/scb"
                 >
                 <EditText
+                    android:drawableRight="@drawable/layersearch"
+
                     android:id="@+id/sc"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"

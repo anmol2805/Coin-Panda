@@ -21,6 +21,7 @@
             android:layout_height="match_parent">
             <Button
                 android:id="@+id/scb"
+                android:visibility="gone"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
                 android:layout_alignParentEnd="true"
@@ -37,6 +38,8 @@
                 >
                 <EditText
                     android:id="@+id/sc"
+                    android:drawableRight="@drawable/layersearch"
+
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
@@ -92,6 +95,19 @@
         android:layout_marginLeft="5dp"
         android:layout_marginStart="5dp"
         app:srcCompat="@drawable/coinintern" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/cointweetselect"
+        android:layout_centerHorizontal="true"
+        android:fontFamily="monospace"
+        android:text="Bookmarks"
+
+        android:textColor="#fff"
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
 
 </RelativeLayout>

@@ -9,6 +9,7 @@
     android:layout_alignParentEnd="true"
     android:layout_alignParentRight="true"
     android:layout_marginRight="5dp"
+        android:visibility="gone"
     android:layout_marginVertical="10dp"
     android:background="@drawable/search50" />
     <android.support.design.widget.TextInputLayout
@@ -17,9 +18,11 @@
     android:id="@+id/search"
     android:layout_toLeftOf="@+id/scb"
     android:layout_toStartOf="@+id/scb"
+
     >
     <EditText
     android:id="@+id/sc"
+        android:drawableRight="@drawable/layersearch"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:layout_margin="10dp"
