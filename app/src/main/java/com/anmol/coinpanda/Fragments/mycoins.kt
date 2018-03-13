@@ -18,6 +18,7 @@ import android.view.WindowManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Switch
+import android.widget.TextView
 import com.anmol.coinpanda.Adapters.DividerItemDecoration
 import com.anmol.coinpanda.Adapters.TweetsAdapter
 import com.anmol.coinpanda.Interfaces.ItemClickListener
@@ -43,6 +44,8 @@ class mycoins : Fragment(){
     var srch: Button? = null
     var db = FirebaseFirestore.getInstance()
     val auth = FirebaseAuth.getInstance()
+    var empty: TextView? = null
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val vi = inflater.inflate(R.layout.mycoins, container, false)
         activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
@@ -50,6 +53,8 @@ class mycoins : Fragment(){
         cointweetrecycler = vi.findViewById(R.id.cointweetrecycler)
         sedit = vi.findViewById(R.id.sc)
         srch = vi.findViewById(R.id.scb)
+        empty = vi.findViewById(R.id.empty)
+        empty?.visibility = View.GONE
         cointweetrecycler?.layoutManager   = layoutManager
         cointweetrecycler?.setHasFixedSize(true)
         cointweetrecycler?.itemAnimator   = DefaultItemAnimator()
@@ -148,6 +153,9 @@ class mycoins : Fragment(){
                         cointweetrecycler?.adapter = tweetsAdapter
                         //cointweetrecycler?.addItemDecoration(DividerItemDecoration(ContextCompat.getDrawable(activity!!,R.drawable.item_decorator)!!))
                     }
+                    else{
+                        empty?.visibility = View.VISIBLE
+                    }
                 }
 
             }
@@ -189,6 +197,9 @@ class mycoins : Fragment(){
                         val tweetsAdapter = TweetsAdapter(activity!!,tweets,itemClickListener)
                         cointweetrecycler?.adapter = tweetsAdapter
                         //cointweetrecycler?.addItemDecoration(DividerItemDecoration(ContextCompat.getDrawable(activity!!,R.drawable.item_decorator)!!))
+                    }
+                    else{
+                        empty?.visibility = View.VISIBLE
                     }
                 }
 

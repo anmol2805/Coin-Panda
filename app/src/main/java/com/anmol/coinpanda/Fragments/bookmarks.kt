@@ -17,6 +17,7 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import com.anmol.coinpanda.Adapters.DividerItemDecoration
 import com.anmol.coinpanda.Adapters.TweetsAdapter
 import com.anmol.coinpanda.Interfaces.ItemClickListener
@@ -40,6 +41,8 @@ class bookmarks : Fragment() {
     var srch: Button? = null
     var db = FirebaseFirestore.getInstance()
     val auth = FirebaseAuth.getInstance()
+    var empty: TextView? = null
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val vi = inflater.inflate(R.layout.bookmarks,
                 container, false)
@@ -48,6 +51,8 @@ class bookmarks : Fragment() {
         cointweetrecycler = vi.findViewById(R.id.cointweetrecycler)
         sedit = vi.findViewById(R.id.sc)
         srch = vi.findViewById(R.id.scb)
+        empty = vi.findViewById(R.id.empty)
+        empty?.visibility = View.GONE
         cointweetrecycler?.layoutManager   = layoutManager
         cointweetrecycler?.setHasFixedSize(true)
         cointweetrecycler?.itemAnimator   = DefaultItemAnimator()
@@ -133,6 +138,9 @@ class bookmarks : Fragment() {
                                     //cointweetrecycler?.addItemDecoration(DividerItemDecoration(ContextCompat.getDrawable(activity!!,R.drawable.item_decorator)!!))
 
                                 }
+                                else{
+                                    empty?.visibility = View.VISIBLE
+                                }
                             }
                         } else {
                             for (doc in documentSnapshot.documents) {
@@ -163,6 +171,9 @@ class bookmarks : Fragment() {
                                     cointweetrecycler?.adapter = tweetsAdapter
                                     //cointweetrecycler?.addItemDecoration(DividerItemDecoration(ContextCompat.getDrawable(activity!!,R.drawable.item_decorator)!!))
 
+                                }
+                                else{
+                                    empty?.visibility = View.VISIBLE
                                 }
                             }
                         }

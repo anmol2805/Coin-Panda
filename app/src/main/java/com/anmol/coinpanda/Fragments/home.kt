@@ -41,6 +41,7 @@ class home : Fragment() {
     var db = FirebaseFirestore.getInstance()
     var sedit:EditText? = null
     var srch:Button? = null
+    var empty:TextView? = null
     val auth = FirebaseAuth.getInstance()
     @SuppressLint("SetTextI18n")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -50,6 +51,8 @@ class home : Fragment() {
         mcoinselect = vi.findViewById(R.id.coinselect)
         sedit = vi.findViewById(R.id.sc)
         srch = vi.findViewById(R.id.scb)
+        empty = vi.findViewById(R.id.empty)
+        empty?.visibility = View.GONE
         allcoins = ArrayList()
         mcoinselect.isChecked = true
         val handler = Handler()
@@ -168,6 +171,7 @@ class home : Fragment() {
     private fun loadalldata(p0: CharSequence?) {
         sedit?.visibility = View.VISIBLE
         srch?.visibility = View.VISIBLE
+        empty?.visibility = View.GONE
         allcoins.clear()
         db.collection("AllCoins").orderBy("lastUpdate",Query.Direction.DESCENDING).addSnapshotListener{ documentSnapshot, firebaseFirestoreException ->
             allcoins.clear()
@@ -183,6 +187,9 @@ class home : Fragment() {
                     if(!allcoins.isEmpty()){
                         gridAdapter = GridnewAdapter(activity!!,allcoins)
                         coingrid?.adapter = gridAdapter
+                    }
+                    else{
+                        empty?.visibility = View.VISIBLE
                     }
                 }
             }
@@ -201,6 +208,9 @@ class home : Fragment() {
                     if(!allcoins.isEmpty()){
                         gridAdapter = GridnewAdapter(activity!!,allcoins)
                         coingrid?.adapter = gridAdapter
+                    }
+                    else{
+                        empty?.visibility = View.VISIBLE
                     }
                 }
             }
@@ -226,6 +236,9 @@ class home : Fragment() {
                 if(!allcoins.isEmpty()){
                     gridAdapter = GridnewAdapter(activity!!,allcoins)
                     coingrid?.adapter = gridAdapter
+                }
+                else{
+                    empty?.visibility = View.VISIBLE
                 }
             }
 

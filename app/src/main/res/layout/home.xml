@@ -20,6 +20,19 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/empty"
+                android:layout_width="275dp"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:fontFamily="casual"
+                android:textAlignment="center"
+                android:text="You haven't added any coins to your portfolio"
+                android:visibility="gone"
+                android:textColor="@color/colorPrimary"
+                android:textSize="20sp"
+                android:textStyle="bold|italic" />
 
             <Button
                 android:id="@+id/scb"

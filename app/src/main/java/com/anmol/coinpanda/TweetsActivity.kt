@@ -8,6 +8,8 @@ import android.support.v4.content.ContextCompat
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.view.View
+import android.widget.TextView
 import com.anmol.coinpanda.Adapters.DividerItemDecoration
 import com.anmol.coinpanda.Adapters.TweetsAdapter
 import com.anmol.coinpanda.Interfaces.ItemClickListener
@@ -24,6 +26,7 @@ class TweetsActivity : AppCompatActivity() {
     lateinit var tweetsAdapter:TweetsAdapter
     var db = FirebaseFirestore.getInstance()
     val auth = FirebaseAuth.getInstance()
+    var empty: TextView? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tweets)
@@ -35,6 +38,8 @@ class TweetsActivity : AppCompatActivity() {
         mtweetrecycler?.setHasFixedSize(true)
         mtweetrecycler?.itemAnimator = DefaultItemAnimator()
         tweets = ArrayList()
+        empty = findViewById(R.id.empty)
+        empty?.visibility = View.GONE
         itemClickListener = object : ItemClickListener {
             override fun onItemClick(pos: Int) {
 //                val url = tweets[pos].url
@@ -87,6 +92,9 @@ class TweetsActivity : AppCompatActivity() {
                             val tweetsAdapter = TweetsAdapter(this,tweets,itemClickListener)
                             mtweetrecycler?.adapter = tweetsAdapter
                             //mtweetrecycler?.addItemDecoration(DividerItemDecoration(ContextCompat.getDrawable(applicationContext,R.drawable.item_decorator)!!))
+                        }
+                        else{
+                            empty?.visibility = View.VISIBLE
                         }
 
                 }
