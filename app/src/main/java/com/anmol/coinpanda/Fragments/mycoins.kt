@@ -5,6 +5,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.support.v4.app.Fragment
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -17,6 +18,7 @@ import android.view.WindowManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Switch
+import com.anmol.coinpanda.Adapters.DividerItemDecoration
 import com.anmol.coinpanda.Adapters.TweetsAdapter
 import com.anmol.coinpanda.Interfaces.ItemClickListener
 import com.anmol.coinpanda.Model.Tweet
@@ -142,6 +144,7 @@ class mycoins : Fragment(){
                         System.out.println("logging:$tweets")
                         val tweetsAdapter = TweetsAdapter(activity!!,tweets,itemClickListener)
                         cointweetrecycler?.adapter = tweetsAdapter
+                        cointweetrecycler?.addItemDecoration(DividerItemDecoration(ContextCompat.getDrawable(activity!!,R.drawable.item_decorator)!!))
                     }
                 }
 
@@ -183,6 +186,7 @@ class mycoins : Fragment(){
                     if(!tweets.isEmpty()){
                         val tweetsAdapter = TweetsAdapter(activity!!,tweets,itemClickListener)
                         cointweetrecycler?.adapter = tweetsAdapter
+                        cointweetrecycler?.addItemDecoration(DividerItemDecoration(ContextCompat.getDrawable(activity!!,R.drawable.item_decorator)!!))
                     }
                 }
 

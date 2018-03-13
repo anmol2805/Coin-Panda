@@ -1,5 +1,6 @@
 package com.anmol.coinpanda.Fragments
 
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.support.v4.app.Fragment
 
@@ -39,6 +40,7 @@ class home : Fragment() {
     var db = FirebaseFirestore.getInstance()
     var sedit:EditText? = null
     var srch:Button? = null
+    @SuppressLint("SetTextI18n")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val vi = inflater.inflate(R.layout.home,
                 container, false)
@@ -88,7 +90,7 @@ class home : Fragment() {
             }
             cn?.text = allcoins[i].coin
             cs?.text = allcoins[i].coinname
-            cp?.text = allcoins[i].coinpage
+            cp?.text = "#"+allcoins[i].coinpage
             val urlpng = "https://raw.githubusercontent.com/crypti/cryptocurrencies/master/images/"+allcoins[i].coinname+".png"
             val urljpg = "https://raw.githubusercontent.com/crypti/cryptocurrencies/master/images/"+allcoins[i].coinname+".jpg"
             val urljpeg = "https://raw.githubusercontent.com/crypti/cryptocurrencies/master/images/"+allcoins[i].coinname+".jpeg"

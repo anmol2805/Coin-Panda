@@ -4,9 +4,11 @@ import android.content.Intent
 import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import com.anmol.coinpanda.Adapters.DividerItemDecoration
 import com.anmol.coinpanda.Adapters.TweetsAdapter
 import com.anmol.coinpanda.Interfaces.ItemClickListener
 import com.anmol.coinpanda.Model.Tweet
@@ -82,6 +84,7 @@ class TweetsActivity : AppCompatActivity() {
                         if(!tweets.isEmpty()){
                             val tweetsAdapter = TweetsAdapter(this,tweets,itemClickListener)
                             mtweetrecycler?.adapter = tweetsAdapter
+                            mtweetrecycler?.addItemDecoration(DividerItemDecoration(ContextCompat.getDrawable(applicationContext,R.drawable.item_decorator)!!))
                         }
 
                 }

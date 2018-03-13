@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginVertical="5dp"
-    android:paddingVertical="5dp"
+    android:paddingVertical="10dp"
     >
     <Button
         android:layout_width="20dp"
@@ -31,6 +31,7 @@
         android:layout_marginEnd="5dp"
         android:layout_marginRight="5dp"
         app:srcCompat="@drawable/starunfilled" />
+
 
     <ImageView
         android:id="@+id/coinicon"

@@ -7,15 +7,6 @@
     android:background="#fff"
     android:orientation="vertical"
     >
-
-    <ImageView
-        android:id="@+id/coinimg"
-        android:layout_width="75dp"
-        android:layout_height="75dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="10dp"
-        />
-
     <TextView
         android:layout_margin="5dp"
         android:id="@+id/cn"
@@ -26,6 +17,14 @@
         android:textSize="18sp"
         android:textColor="@color/colorAccent"
         android:text="TextView" />
+    <ImageView
+        android:id="@+id/coinimg"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_gravity="center"
+        />
+
+
 
     <TextView
         android:id="@+id/cs"
