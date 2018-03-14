@@ -20,6 +20,7 @@ import android.widget.EditText
 import android.widget.Switch
 import android.widget.TextView
 import com.anmol.coinpanda.Adapters.DividerItemDecoration
+import com.anmol.coinpanda.Adapters.KeywordAdapter
 import com.anmol.coinpanda.Adapters.TweetsAdapter
 import com.anmol.coinpanda.Interfaces.ItemClickListener
 import com.anmol.coinpanda.Model.Tweet
@@ -36,7 +37,8 @@ import java.util.*
  */
 class mycoins : Fragment(){
     private var cointweetrecycler: RecyclerView?=null
-
+    private var keywordrecycler: RecyclerView?=null
+    var keywords:ArrayList<String>?=null
     private lateinit var tweetselect: Switch
     lateinit var tweets : MutableList<Tweet>
     lateinit var itemClickListener : ItemClickListener
@@ -45,20 +47,27 @@ class mycoins : Fragment(){
     var db = FirebaseFirestore.getInstance()
     val auth = FirebaseAuth.getInstance()
     var empty: TextView? = null
+    lateinit var keyClickListener : ItemClickListener
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val vi = inflater.inflate(R.layout.mycoins, container, false)
         activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
         val layoutManager = LinearLayoutManager(activity)
         cointweetrecycler = vi.findViewById(R.id.cointweetrecycler)
+        keywordrecycler = vi.findViewById(R.id.keywordrecycler)
         sedit = vi.findViewById(R.id.sc)
         srch = vi.findViewById(R.id.scb)
         empty = vi.findViewById(R.id.empty)
+        keywordrecycler?.setHasFixedSize(true)
+        keywordrecycler?.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
         empty?.visibility = View.GONE
         cointweetrecycler?.layoutManager   = layoutManager
         cointweetrecycler?.setHasFixedSize(true)
         cointweetrecycler?.itemAnimator   = DefaultItemAnimator()
         tweets = ArrayList()
+        keywords = ArrayList()
+        keywordrecycler?.itemAnimator = DefaultItemAnimator()
         val handler =  Handler()
         handler.postDelayed({
             loadquery(null)
@@ -74,6 +83,13 @@ class mycoins : Fragment(){
             }
 
         }
+        keyClickListener = object :ItemClickListener{
+            override fun onItemClick(pos: Int) {
+
+            }
+        }
+        val keywordAdapter = KeywordAdapter(activity!!, keywords!!,keyClickListener)
+        keywordrecycler?.adapter = keywordAdapter
         sedit?.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {
 
