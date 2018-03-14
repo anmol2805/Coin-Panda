@@ -89,21 +89,24 @@ class home : Fragment() {
             portfoliolay?.visibility = View.GONE
             db.collection("users").document(auth.currentUser!!.uid).collection("portfolio").document(allcoins[i].coinname!!).get().addOnCompleteListener { task ->
                 val snapshot = task.result
-                val notify = snapshot?.getBoolean("notify")
-                if (notify!!){
-                    notificationswitch?.isChecked = true
+                if(snapshot.exists()){
+                    val notify = snapshot?.getBoolean("notify")
+                    if (notify!!){
+                        notificationswitch?.isChecked = true
+                    }
                 }
+
             }
             notificationswitch?.setOnCheckedChangeListener { _, b ->
                 if (b){
                     val map = HashMap<String,Any>()
                     map["notify"] = true
-                    db.collection("users").document(auth.currentUser!!.uid).collection("portfolio").document(allcoins[i].coinname!!).set(map)
+                    db.collection("users").document(auth.currentUser!!.uid).collection("portfolio").document(allcoins[i].coinname!!).update(map)
                 }
                 else{
                     val map = HashMap<String,Any>()
                     map["notify"] = false
-                    db.collection("users").document(auth.currentUser!!.uid).collection("portfolio").document(allcoins[i].coinname!!).set(map)
+                    db.collection("users").document(auth.currentUser!!.uid).collection("portfolio").document(allcoins[i].coinname!!).update(map)
                 }
             }
             db.collection("users").document(auth.currentUser!!.uid).collection("portfolio").get().addOnCompleteListener {task ->
@@ -164,6 +167,7 @@ class home : Fragment() {
                 val map = HashMap<String,Any>()
                 map["coin_name"] = allcoins[i].coin.toString()
                 map["coinPage"] = allcoins[i].coinpage.toString()
+                map["notify"] = true
                 db.collection("users").document(auth.currentUser!!.uid).collection("portfolio").document(allcoins[i].coinname!!).set(map).addOnSuccessListener {
                     Toast.makeText(activity,"Added to your Portfolio", Toast.LENGTH_SHORT).show()
                     dialog.dismiss()

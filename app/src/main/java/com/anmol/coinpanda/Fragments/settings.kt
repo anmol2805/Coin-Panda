@@ -66,6 +66,11 @@ class settings : Fragment() {
             startActivity(intent)
 
         }
+        donate?.setOnClickListener {
+            val dialog = Dialog(activity)
+            dialog.setContentView(R.layout.donate)
+            dialog.show()
+        }
         request?.setOnClickListener {
             val dialog = Dialog(activity)
             dialog.setContentView(R.layout.request)
