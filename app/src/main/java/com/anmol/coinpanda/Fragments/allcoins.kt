@@ -87,11 +87,13 @@ class allcoins : Fragment(){
 
         keyClickListener = object :ItemClickListener{
             override fun onItemClick(pos: Int) {
-
+                loadquery(keywords!![pos])
             }
         }
-        val keywordAdapter = KeywordAdapter(activity!!, keywords!!,keyClickListener)
-        keywordrecycler?.adapter = keywordAdapter
+        if(activity!=null){
+            val keywordAdapter = KeywordAdapter(activity!!, keywords!!,keyClickListener)
+            keywordrecycler?.adapter = keywordAdapter
+        }
         sedit?.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {
 
