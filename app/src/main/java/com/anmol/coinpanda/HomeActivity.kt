@@ -8,8 +8,21 @@ import android.support.v7.app.AppCompatActivity
 import com.anmol.coinpanda.Fragments.*
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_home.*
+import android.content.DialogInterface
+import android.net.Uri
+import android.support.v7.app.AlertDialog
 
-class HomeActivity : AppCompatActivity() {
+
+class HomeActivity : AppCompatActivity(),ForceUpdateChecker.OnUpdateNeededListener {
+    override fun onUpdateNeeded(updateUrl: String) {
+        val dialog = AlertDialog.Builder(this)
+                .setTitle("New version available")
+                .setMessage("Please, update app to new version to continue reposting.")
+                .setPositiveButton("Update",
+                        DialogInterface.OnClickListener { dialog, which -> redirectStore(updateUrl) }).setNegativeButton("No, thanks",
+                        DialogInterface.OnClickListener { dialog, which -> finish() }).create()
+        dialog.show()
+    }
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
@@ -62,5 +75,11 @@ class HomeActivity : AppCompatActivity() {
             navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
         }
 
+    }
+
+    private fun redirectStore(updateUrl: String) {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(updateUrl))
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        startActivity(intent)
     }
 }
