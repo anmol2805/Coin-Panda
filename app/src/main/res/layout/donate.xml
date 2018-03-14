@@ -1,58 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="300dp" android:layout_height="250dp">
+    android:layout_width="300dp" android:layout_height="wrap_content"
+    android:orientation="vertical"
+    >
 
-    <Button
-        android:id="@+id/btc"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_margin ="5dp"
-        android:background="@drawable/bitc" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
 
-    <Button
-        android:id="@+id/nano"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginHorizontal="5dp"
-        android:layout_alignParentBottom="true"
-        android:layout_toEndOf="@+id/btc"
-        android:layout_toRightOf="@+id/btc"
-        android:background="@drawable/nano"
-        android:layout_marginVertical="25dp"
-        />
+        <Button
+            android:id="@+id/btc"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="5dp"
 
-    <Button
-        android:id="@+id/neo"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginHorizontal="5dp"
-        android:layout_marginVertical="25dp"
-        android:layout_alignParentBottom="true"
-        android:layout_toLeftOf="@+id/btc"
-        android:layout_toStartOf="@+id/btc"
-        android:background="@drawable/neoicon" />
+            android:background="@drawable/bitc" />
 
-    <Button
-        android:id="@+id/ltc"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_margin="5dp"
-        android:layout_centerVertical="true"
-        android:layout_toEndOf="@+id/nano"
-        android:layout_toRightOf="@+id/nano"
-        android:background="@drawable/litecoin" />
+        <TextView
+            android:id="@+id/btcadd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="1ZBGG9gFEKyytE1JvHWUVg1EhD2dMQgdN"
+            android:textColor="#000" />
 
-    <Button
-        android:id="@+id/eth"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_alignTop="@+id/ltc"
-        android:layout_toLeftOf="@+id/neo"
-        android:layout_toStartOf="@+id/neo"
-        android:background="@drawable/ether" />
+        <Button
+            android:id="@+id/btcc"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_gravity="center"
+            android:layout_margin="5dp"
+            android:background="@drawable/copy" />
+    </LinearLayout>
 
     <TextView
         android:id="@+id/textView5"
@@ -61,57 +42,173 @@
         android:layout_below="@+id/btc"
         android:layout_centerHorizontal="true"
         android:text="BTC"
-        android:textSize="16sp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginBottom="10dp"
         android:textColor="#000"
-        />
+        android:textSize="16sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/eth"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignTop="@+id/ltc"
+            android:layout_margin="5dp"
+            android:background="@drawable/ether" />
+
+        <TextView
+            android:id="@+id/ethadd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="0xD8c7F5b8473D25099F61784be70CCfa260e973a7"
+            android:textColor="#000" />
+
+        <Button
+            android:id="@+id/ethc"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_gravity="center"
+            android:layout_margin="5dp"
+            android:background="@drawable/copy" />
+    </LinearLayout>
+
     <TextView
         android:id="@+id/textView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/eth"
-        android:text="ETH"
+        android:layout_alignLeft="@+id/eth"
         android:layout_alignStart="@+id/eth"
-        android:layout_marginLeft="10dp"
-        android:textSize="16sp"
+        android:layout_below="@+id/eth"
+        android:layout_marginLeft="15dp"
+        android:layout_marginBottom="10dp"
+        android:text="ETH"
         android:textColor="#000"
-        android:layout_alignLeft="@+id/eth" />
+        android:textSize="16sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/ltc"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_centerVertical="true"
+            android:layout_margin="5dp"
+            android:background="@drawable/litecoin" />
+
+        <TextView
+            android:id="@+id/ltcadd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="LeYkyKuZVmYaURoVfmQmES9JDTMLfAYHWz"
+            android:textColor="#000" />
+
+        <Button
+            android:id="@+id/ltcc"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_gravity="center"
+            android:layout_margin="5dp"
+            android:background="@drawable/copy" />
+    </LinearLayout>
+
     <TextView
         android:id="@+id/textView7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/ltc"
-        android:layout_alignRight="@+id/ltc"
-        android:layout_alignEnd="@+id/ltc"
+        android:layout_marginLeft="15dp"
         android:text="LTC"
-        android:layout_marginRight="10dp"
-        android:textSize="16sp"
+        android:layout_marginBottom="10dp"
         android:textColor="#000"
-        />
+        android:textSize="16sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/neo"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="5dp"
+            android:background="@drawable/neoicon" />
+
+        <TextView
+            android:id="@+id/neoadd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="AdV8iBX8mFNC6F52FAtMGz3PWpWf46UUyc"
+            android:textColor="#000" />
+
+        <Button
+            android:id="@+id/neoc"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_gravity="center"
+            android:layout_margin="5dp"
+            android:background="@drawable/copy" />
+    </LinearLayout>
+
     <TextView
         android:id="@+id/textView8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/neo"
-        android:layout_alignLeft="@+id/neo"
+        android:layout_marginLeft="15dp"
+        android:layout_marginBottom="10dp"
         android:text="NEO"
-        android:layout_marginHorizontal="10dp"
-        android:textSize="16sp"
-        android:layout_marginBottom="5dp"
         android:textColor="#000"
-        />
+        android:textSize="16sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/nano"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="5dp"
+
+            android:background="@drawable/nano" />
+
+        <TextView
+            android:id="@+id/nanoadd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_weight="1"
+            android:text="xrb_156r9amiy7iqkhciurudjujju9wo6juu351dw3coakehfuc6yde8zf3t8go1"
+            android:textColor="#000" />
+
+        <Button
+            android:id="@+id/nanoc"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_gravity="center"
+            android:layout_margin="5dp"
+            android:background="@drawable/copy" />
+    </LinearLayout>
+
     <TextView
         android:id="@+id/textView9"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/nano"
-        android:layout_alignLeft="@+id/nano"
-        android:layout_marginHorizontal="5dp"
+        android:layout_marginLeft="10dp"
         android:layout_marginBottom="5dp"
         android:text="NANO"
         android:textSize="16sp"
         android:textColor="#000"
         />
 
-</RelativeLayout>
+</LinearLayout>
