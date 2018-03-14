@@ -48,9 +48,16 @@
 
 
     </android.support.design.widget.TextInputLayout>
-
     <android.support.v7.widget.RecyclerView
-    android:layout_below="@+id/search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/search"
+        android:id="@+id/keywordrecycler"
+        >
+
+    </android.support.v7.widget.RecyclerView>
+    <android.support.v7.widget.RecyclerView
+    android:layout_below="@+id/keywordrecycler"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/cointweetrecycler"
