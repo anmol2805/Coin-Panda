@@ -18,14 +18,20 @@ import android.view.WindowManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Switch
+import com.android.volley.Request
+import com.android.volley.Response
+import com.android.volley.toolbox.JsonObjectRequest
 import com.anmol.coinpanda.Adapters.DividerItemDecoration
 import com.anmol.coinpanda.Adapters.TweetsAdapter
 import com.anmol.coinpanda.Interfaces.ItemClickListener
 import com.anmol.coinpanda.Model.Tweet
+import com.anmol.coinpanda.Mysingleton
 import com.anmol.coinpanda.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
+import org.json.JSONArray
+import java.lang.reflect.Method
 import java.sql.Timestamp
 import java.text.SimpleDateFormat
 import java.util.*
@@ -92,9 +98,12 @@ class allcoins : Fragment(){
         cal.add(Calendar.MONTH,-1)
         val stringtime = format.format(cal.time)
         val prevtime = Timestamp.valueOf(stringtime)
-        db.collection("Tweets").whereGreaterThanOrEqualTo("date",prevtime)
-                .orderBy("date", Query.Direction.DESCENDING).addSnapshotListener{ documentSnapshot, e->
-            tweets.clear()
+        val jsonobjectrequest = JsonObjectRequest(Request.Method.GET,"http://165.227.98.190/alldata",null,
+                Response.Listener { response ->
+
+                    var c = 0
+                    val jsonArray = JSONArray(response)
+                    tweets.clear()
                     val bookmarks : ArrayList<String> = ArrayList()
                     db.collection("users").document(auth.currentUser!!.uid).collection("bookmarks").addSnapshotListener { documnentSnapshot, e ->
                         bookmarks.clear()
@@ -106,24 +115,26 @@ class allcoins : Fragment(){
 
 
                         if (p0 == null) {
-                            for (doc in documentSnapshot.documents) {
+                            while (c<jsonArray.length()){
+                                val obj = jsonArray.getJSONObject(c)
                                 var booked = false
                                 var i = 0
                                 while(i<bookmarks.size){
-                                    if(doc.id.contains(bookmarks[i])){
-                                    booked = true
+                                    if("".contains(bookmarks[i])){
+                                        booked = true
+                                    }
+                                    i++
                                 }
-                                i++
-                                }
-                                val id = doc.id
-                                val coin = doc.getString("coin")
-                                val coin_symbol = doc.getString("coin_symbol")
-                                val mtweet = doc.getString("tweet")
-                                val url = doc.getString("url")
-                                val keyword = doc.getString("keyword")
-                                val dates = doc.getString("dates")
+                                val id = ""
+                                val coin = obj.getString("coin_name")
+                                val coin_symbol = obj.getString("coin_symbol")
+                                val mtweet = obj.getString("tweet")
+                                val url = obj.getString("url")
+                                val keyword = obj.getString("keyword")
+                                val dates = obj.getString("date")
                                 val tweet = Tweet(coin, coin_symbol, mtweet, url, keyword, id, booked, dates)
                                 tweets.add(tweet)
+                                c++
                             }
                             if (activity != null) {
                                 if (!tweets.isEmpty()) {
@@ -134,27 +145,29 @@ class allcoins : Fragment(){
                                 }
                             }
                         } else {
-                            for (doc in documentSnapshot.documents) {
+                            while (c<jsonArray.length()) {
+                                val obj = jsonArray.getJSONObject(c)
+
                                 var booked = false
                                 var i = 0
                                 while(i<bookmarks.size){
-                                if(doc.id.contains(bookmarks[i])){
-                                    booked = true
+                                    if("".contains(bookmarks[i])){
+                                        booked = true
+                                    }
+                                    i++
                                 }
-                                i++
-                                }
-                                val id = doc.id
-                                val coin = doc.getString("coin")
-                                val coin_symbol = doc.getString("coin_symbol")
-                                val mtweet = doc.getString("tweet")
-                                val url = doc.getString("url")
-                                val keyword = doc.getString("keyword")
-                                val dates = doc.getString("dates")
+                                val id = ""
+                                val coin = obj.getString("coin_name")
+                                val coin_symbol = obj.getString("coin_symbol")
+                                val mtweet = obj.getString("tweet")
+                                val url = obj.getString("url")
+                                val keyword = obj.getString("keyword")
+                                val dates = obj.getString("date")
                                 if (coin.toLowerCase().contains(p0) || coin_symbol.toLowerCase().contains(p0) || mtweet.toLowerCase().contains(p0) || keyword.toLowerCase().contains(p0) || coin.toUpperCase().contains(p0) || coin_symbol.toUpperCase().contains(p0) || mtweet.toUpperCase().contains(p0) || keyword.toUpperCase().contains(p0)) {
                                     val tweet = Tweet(coin, coin_symbol, mtweet, url, keyword, id, booked, dates)
                                     tweets.add(tweet)
                                 }
-
+                                c++
                             }
                             if (activity != null) {
                                 if (!tweets.isEmpty()) {
@@ -167,6 +180,88 @@ class allcoins : Fragment(){
                         }
                     }
 
-        }
+
+
+        }, Response.ErrorListener {error ->
+            System.out.println("error:"+error.message)
+
+        })
+        Mysingleton.getInstance(activity).addToRequestqueue(jsonobjectrequest)
+//        db.collection("Tweets").whereGreaterThanOrEqualTo("date",prevtime)
+//                .orderBy("date", Query.Direction.DESCENDING).addSnapshotListener{ documentSnapshot, e->
+//            tweets.clear()
+//                    val bookmarks : ArrayList<String> = ArrayList()
+//                    db.collection("users").document(auth.currentUser!!.uid).collection("bookmarks").addSnapshotListener { documnentSnapshot, e ->
+//                        bookmarks.clear()
+//                        tweets.clear()
+//                        for (doc in documnentSnapshot.documents) {
+//                            val tweetid = doc.id
+//                            bookmarks.add(tweetid)
+//                        }
+//
+//
+//                        if (p0 == null) {
+//                            for (doc in documentSnapshot.documents) {
+//                                var booked = false
+//                                var i = 0
+//                                while(i<bookmarks.size){
+//                                    if(doc.id.contains(bookmarks[i])){
+//                                    booked = true
+//                                }
+//                                i++
+//                                }
+//                                val id = doc.id
+//                                val coin = doc.getString("coin")
+//                                val coin_symbol = doc.getString("coin_symbol")
+//                                val mtweet = doc.getString("tweet")
+//                                val url = doc.getString("url")
+//                                val keyword = doc.getString("keyword")
+//                                val dates = doc.getString("dates")
+//                                val tweet = Tweet(coin, coin_symbol, mtweet, url, keyword, id, booked, dates)
+//                                tweets.add(tweet)
+//                            }
+//                            if (activity != null) {
+//                                if (!tweets.isEmpty()) {
+//                                    val tweetsAdapter = TweetsAdapter(activity!!, tweets, itemClickListener)
+//                                    cointweetrecycler?.adapter = tweetsAdapter
+//                                    //cointweetrecycler?.addItemDecoration(DividerItemDecoration(ContextCompat.getDrawable(activity!!,R.drawable.item_decorator)!!))
+//
+//                                }
+//                            }
+//                        } else {
+//                            for (doc in documentSnapshot.documents) {
+//                                var booked = false
+//                                var i = 0
+//                                while(i<bookmarks.size){
+//                                if(doc.id.contains(bookmarks[i])){
+//                                    booked = true
+//                                }
+//                                i++
+//                                }
+//                                val id = doc.id
+//                                val coin = doc.getString("coin")
+//                                val coin_symbol = doc.getString("coin_symbol")
+//                                val mtweet = doc.getString("tweet")
+//                                val url = doc.getString("url")
+//                                val keyword = doc.getString("keyword")
+//                                val dates = doc.getString("dates")
+//                                if (coin.toLowerCase().contains(p0) || coin_symbol.toLowerCase().contains(p0) || mtweet.toLowerCase().contains(p0) || keyword.toLowerCase().contains(p0) || coin.toUpperCase().contains(p0) || coin_symbol.toUpperCase().contains(p0) || mtweet.toUpperCase().contains(p0) || keyword.toUpperCase().contains(p0)) {
+//                                    val tweet = Tweet(coin, coin_symbol, mtweet, url, keyword, id, booked, dates)
+//                                    tweets.add(tweet)
+//                                }
+//
+//                            }
+//                            if (activity != null) {
+//                                if (!tweets.isEmpty()) {
+//                                    val tweetsAdapter = TweetsAdapter(activity!!, tweets, itemClickListener)
+//                                    cointweetrecycler?.adapter = tweetsAdapter
+//                                    //cointweetrecycler?.addItemDecoration(DividerItemDecoration(ContextCompat.getDrawable(activity!!,R.drawable.item_decorator)!!))
+//
+//                                }
+//                            }
+//                        }
+//                    }
+
+
     }
 }
