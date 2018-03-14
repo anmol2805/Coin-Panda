@@ -1,7 +1,7 @@
 package com.anmol.coinpanda.Fragments
 
 import android.app.Dialog
-import android.content.Intent
+import android.content.*
 import android.support.v4.app.Fragment
 
 import android.os.Bundle
@@ -9,7 +9,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.anmol.coinpanda.R
-import android.content.ActivityNotFoundException
 import android.net.Uri
 import android.widget.*
 import com.anmol.coinpanda.SupportActivity
@@ -69,6 +68,35 @@ class settings : Fragment() {
         donate?.setOnClickListener {
             val dialog = Dialog(activity)
             dialog.setContentView(R.layout.donate)
+            val btc : Button? = dialog.findViewById(R.id.btcc)
+            val eth : Button? = dialog.findViewById(R.id.ethc)
+            val ltc : Button? = dialog.findViewById(R.id.ltcc)
+            val neo : Button? = dialog.findViewById(R.id.neoc)
+            val nano : Button? = dialog.findViewById(R.id.nanoc)
+            val btcadd : TextView? = dialog.findViewById(R.id.btcadd)
+            val ethadd : TextView? = dialog.findViewById(R.id.ethadd)
+            val ltcadd : TextView? = dialog.findViewById(R.id.ltcadd)
+            val neoadd : TextView? = dialog.findViewById(R.id.neoadd)
+            val nanoadd : TextView? = dialog.findViewById(R.id.nanoadd)
+            btc?.setOnClickListener {
+                ctclip(btcadd?.text.toString().trim())
+            }
+            eth?.setOnClickListener {
+                ctclip(ethadd?.text.toString().trim())
+
+            }
+            ltc?.setOnClickListener {
+                ctclip(ltcadd?.text.toString().trim())
+
+            }
+            neo?.setOnClickListener {
+                ctclip(neoadd?.text.toString().trim())
+
+            }
+            nano?.setOnClickListener {
+                ctclip(nanoadd?.text.toString().trim())
+
+            }
             dialog.show()
         }
         request?.setOnClickListener {
@@ -103,5 +131,12 @@ class settings : Fragment() {
         }
 
         return vi
+    }
+
+    private fun ctclip(address: String) {
+        val clipboard = activity?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        val clip = ClipData.newPlainText("label", address)
+        clipboard.primaryClip = clip
+        Toast.makeText(activity,"Address copied to clipboard", Toast.LENGTH_SHORT).show()
     }
 }
