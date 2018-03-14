@@ -22,6 +22,7 @@ import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.anmol.coinpanda.Adapters.DividerItemDecoration
+import com.anmol.coinpanda.Adapters.KeywordAdapter
 import com.anmol.coinpanda.Adapters.TweetsAdapter
 import com.anmol.coinpanda.Interfaces.ItemClickListener
 import com.anmol.coinpanda.Model.Tweet
@@ -35,14 +36,19 @@ import java.lang.reflect.Method
 import java.sql.Timestamp
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 /**
  * Created by anmol on 3/11/2018.
  */
 class allcoins : Fragment(){
     private var cointweetrecycler: RecyclerView?=null
+    private var keywordrecycler: RecyclerView?=null
+    var keywords:ArrayList<String>?=null
     lateinit var tweets : MutableList<Tweet>
     lateinit var itemClickListener : ItemClickListener
+    lateinit var keyClickListener : ItemClickListener
+
     var sedit: EditText? = null
     var srch: Button? = null
     var db = FirebaseFirestore.getInstance()
@@ -52,12 +58,17 @@ class allcoins : Fragment(){
         activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
         val layoutManager = LinearLayoutManager(activity)
         cointweetrecycler = vi.findViewById(R.id.cointweetrecycler)
+        keywordrecycler = vi.findViewById(R.id.keywordrecycler)
         sedit = vi.findViewById(R.id.sc)
         srch = vi.findViewById(R.id.scb)
+        keywordrecycler?.setHasFixedSize(true)
+        keywordrecycler?.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
         cointweetrecycler?.layoutManager   = layoutManager
         cointweetrecycler?.setHasFixedSize(true)
         cointweetrecycler?.itemAnimator   = DefaultItemAnimator()
+        keywordrecycler?.itemAnimator = DefaultItemAnimator()
         tweets = ArrayList()
+        keywords = ArrayList()
         val handler = Handler()
         handler.postDelayed({
             loadquery(null)
@@ -73,6 +84,14 @@ class allcoins : Fragment(){
             }
 
         }
+
+        keyClickListener = object :ItemClickListener{
+            override fun onItemClick(pos: Int) {
+
+            }
+        }
+        val keywordAdapter = KeywordAdapter(activity!!, keywords!!,keyClickListener)
+        keywordrecycler?.adapter = keywordAdapter
         sedit?.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {
 
