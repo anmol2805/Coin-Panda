@@ -26,6 +26,7 @@ import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 
@@ -86,6 +87,25 @@ class home : Fragment() {
             val remove:Button? = dialog.findViewById(R.id.remove)
             atp?.visibility = View.VISIBLE
             portfoliolay?.visibility = View.GONE
+            db.collection("users").document(auth.currentUser!!.uid).collection("portfolio").document(allcoins[i].coinname!!).get().addOnCompleteListener { task ->
+                val snapshot = task.result
+                val notify = snapshot?.getBoolean("notify")
+                if (notify!!){
+                    notificationswitch?.isChecked = true
+                }
+            }
+            notificationswitch?.setOnCheckedChangeListener { _, b ->
+                if (b){
+                    val map = HashMap<String,Any>()
+                    map["notify"] = true
+                    db.collection("users").document(auth.currentUser!!.uid).collection("portfolio").document(allcoins[i].coinname!!).set(map)
+                }
+                else{
+                    val map = HashMap<String,Any>()
+                    map["notify"] = false
+                    db.collection("users").document(auth.currentUser!!.uid).collection("portfolio").document(allcoins[i].coinname!!).set(map)
+                }
+            }
             db.collection("users").document(auth.currentUser!!.uid).collection("portfolio").get().addOnCompleteListener {task ->
                 for(doc in task.result){
                     if(doc.id.contains(allcoins[i].coinname!!)){
