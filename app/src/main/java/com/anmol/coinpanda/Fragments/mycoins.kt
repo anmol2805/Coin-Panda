@@ -67,16 +67,20 @@ class mycoins : Fragment(){
         cointweetrecycler?.itemAnimator   = DefaultItemAnimator()
         tweets = ArrayList()
         keywords = ArrayList()
-        keywords?.add("")
-        keywords?.add("")
-        keywords?.add("")
-        keywords?.add("")
-        keywords?.add("")
-        keywords?.add("")
-        keywords?.add("")
-        keywords?.add("")
-        keywords?.add("")
-        keywords?.add("")
+        keywords?.add("win")
+        keywords?.add("partnership")
+        keywords?.add("listing")
+        keywords?.add("mainnet")
+        keywords?.add("announcement")
+        keywords?.add("exchange")
+        keywords?.add("beta")
+        keywords?.add("collaboration")
+        keywords?.add("airdrop")
+        keywords?.add("release")
+        keywords?.add("government")
+        keywords?.add("update")
+        keywords?.add("association")
+        keywords?.add("achievement")
         keywordrecycler?.itemAnimator = DefaultItemAnimator()
         val handler =  Handler()
         handler.postDelayed({
@@ -85,21 +89,18 @@ class mycoins : Fragment(){
 
         itemClickListener = object : ItemClickListener {
             override fun onItemClick(pos: Int) {
-//                val url = tweets[pos].url
-//                val intent = Intent(Intent.ACTION_VIEW)
-//                intent.data = Uri.parse(url)
-//                startActivity(intent)
+                System.out.println("clicked" + keywords!![pos])
+
 
             }
 
         }
         keyClickListener = object :ItemClickListener{
             override fun onItemClick(pos: Int) {
-                loadquery(keywords!![pos])
             }
         }
         if(activity!=null){
-            val keywordAdapter = KeywordAdapter(activity!!, keywords!!,keyClickListener)
+            val keywordAdapter = KeywordAdapter(activity!!, keywords!!,itemClickListener)
             keywordrecycler?.adapter = keywordAdapter
         }
 

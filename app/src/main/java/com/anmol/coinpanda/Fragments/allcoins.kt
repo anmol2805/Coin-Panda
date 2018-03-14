@@ -69,6 +69,20 @@ class allcoins : Fragment(){
         keywordrecycler?.itemAnimator = DefaultItemAnimator()
         tweets = ArrayList()
         keywords = ArrayList()
+        keywords?.add("win")
+        keywords?.add("partnership")
+        keywords?.add("listing")
+        keywords?.add("mainnet")
+        keywords?.add("announcement")
+        keywords?.add("exchange")
+        keywords?.add("beta")
+        keywords?.add("collaboration")
+        keywords?.add("airdrop")
+        keywords?.add("release")
+        keywords?.add("government")
+        keywords?.add("update")
+        keywords?.add("association")
+        keywords?.add("achievement")
         val handler = Handler()
         handler.postDelayed({
             loadquery(null)
@@ -76,10 +90,8 @@ class allcoins : Fragment(){
 
         itemClickListener = object : ItemClickListener {
             override fun onItemClick(pos: Int) {
-//                val url = tweets[pos].url
-//                val intent = Intent(Intent.ACTION_VIEW)
-//                intent.data = Uri.parse(url)
-//                startActivity(intent)
+
+                loadquery(keywords!![pos])
 
             }
 
@@ -87,11 +99,10 @@ class allcoins : Fragment(){
 
         keyClickListener = object :ItemClickListener{
             override fun onItemClick(pos: Int) {
-                loadquery(keywords!![pos])
             }
         }
         if(activity!=null){
-            val keywordAdapter = KeywordAdapter(activity!!, keywords!!,keyClickListener)
+            val keywordAdapter = KeywordAdapter(activity!!, keywords!!,itemClickListener)
             keywordrecycler?.adapter = keywordAdapter
         }
         sedit?.addTextChangedListener(object : TextWatcher {
@@ -123,7 +134,7 @@ class allcoins : Fragment(){
                 Response.Listener { response ->
 
                     var c = 0
-                    val jsonArray = JSONArray(response)
+                    val jsonArray = response.getJSONArray("tweets")
                     tweets.clear()
                     val bookmarks : ArrayList<String> = ArrayList()
                     db.collection("users").document(auth.currentUser!!.uid).collection("bookmarks").addSnapshotListener { documnentSnapshot, e ->
@@ -141,12 +152,12 @@ class allcoins : Fragment(){
                                 var booked = false
                                 var i = 0
                                 while(i<bookmarks.size){
-                                    if("".contains(bookmarks[i])){
+                                    if(obj.getString("id").contains(bookmarks[i])){
                                         booked = true
                                     }
                                     i++
                                 }
-                                val id = ""
+                                val id = obj.getString("id")
                                 val coin = obj.getString("coin_name")
                                 val coin_symbol = obj.getString("coin_symbol")
                                 val mtweet = obj.getString("tweet")
@@ -172,12 +183,12 @@ class allcoins : Fragment(){
                                 var booked = false
                                 var i = 0
                                 while(i<bookmarks.size){
-                                    if("".contains(bookmarks[i])){
+                                    if(obj.getString("id").contains(bookmarks[i])){
                                         booked = true
                                     }
                                     i++
                                 }
-                                val id = ""
+                                val id = obj.getString("id")
                                 val coin = obj.getString("coin_name")
                                 val coin_symbol = obj.getString("coin_symbol")
                                 val mtweet = obj.getString("tweet")

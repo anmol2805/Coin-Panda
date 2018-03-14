@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import com.anmol.coinpanda.Interfaces.ItemClickListener
 import com.anmol.coinpanda.R
@@ -29,7 +30,7 @@ class KeywordAdapter(internal var c: Context, internal var ketwords: ArrayList<S
 
     inner class MyViewHolder(itemView: View, private val mitemClickListener: ItemClickListener) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
 
-        var text : TextView?=null
+        var text : Button?=null
         init {
             this.text = itemView.findViewById(R.id.key)
             itemView.setOnClickListener(this)

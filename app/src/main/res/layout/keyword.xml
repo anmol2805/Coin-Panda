@@ -10,5 +10,6 @@
         android:layout_margin="5dp"
         android:background="@drawable/round_button2"
         android:text="keyword"
+        android:clickable="false"
         android:textColor="#fff" />
 </RelativeLayout>
