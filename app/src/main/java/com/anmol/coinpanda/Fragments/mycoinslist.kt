@@ -166,6 +166,7 @@ class mycoinslist : Fragment(){
             }
             if(activity!=null){
                 if(!allcoins.isEmpty()){
+                    empty?.visibility = View.GONE
                     gridAdapter = GridnewAdapter(activity!!, allcoins)
                     coingrid?.adapter = gridAdapter
                 }

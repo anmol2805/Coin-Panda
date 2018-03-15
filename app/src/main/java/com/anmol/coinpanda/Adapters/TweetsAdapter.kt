@@ -87,13 +87,21 @@ class TweetsAdapter(internal var c: Context, internal var tweets: List<Tweet>, p
         }).into(holder.image)
         val db = FirebaseFirestore.getInstance()
         holder.bookmark?.setOnClickListener {
-
-            val map = HashMap<String,Any>()
-            map["bookmark"] = true
-            val auth = FirebaseAuth.getInstance()
-            db.collection("users").document(auth.currentUser!!.uid).collection("bookmarks").document(coindata.tweetid!!).set(map).addOnSuccessListener {
-                Glide.with(c).load(R.drawable.starfilled).into(holder.bookmark)
+            if(tweets[position].booked){
+                val auth = FirebaseAuth.getInstance()
+                db.collection("users").document(auth.currentUser!!.uid).collection("bookmarks").document(coindata.tweetid!!).delete().addOnSuccessListener {
+                    Glide.with(c).load(R.drawable.starunfilled).into(holder.bookmark)
+                }
             }
+            else{
+                val map = HashMap<String,Any>()
+                map["bookmark"] = true
+                val auth = FirebaseAuth.getInstance()
+                db.collection("users").document(auth.currentUser!!.uid).collection("bookmarks").document(coindata.tweetid!!).set(map).addOnSuccessListener {
+                    Glide.with(c).load(R.drawable.starfilled).into(holder.bookmark)
+                }
+            }
+
         }
         if(tweets[position].booked){
             Glide.with(c).load(R.drawable.starfilled).into(holder.bookmark)

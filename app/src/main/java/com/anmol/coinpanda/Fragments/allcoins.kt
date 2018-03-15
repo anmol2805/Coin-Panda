@@ -18,6 +18,7 @@ import android.view.WindowManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Switch
+import android.widget.Toast
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
@@ -220,6 +221,7 @@ class allcoins : Fragment(){
 
         }, Response.ErrorListener {error ->
             System.out.println("error:"+error.message)
+            Toast.makeText(activity,"Network Error",Toast.LENGTH_LONG).show()
 
         })
         Mysingleton.getInstance(activity).addToRequestqueue(jsonobjectrequest)

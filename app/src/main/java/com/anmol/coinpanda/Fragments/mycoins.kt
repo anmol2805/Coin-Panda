@@ -183,6 +183,7 @@ class mycoins : Fragment(){
                         System.out.println("logging:$tweets")
                         val tweetsAdapter = TweetsAdapter(activity!!,tweets,itemClickListener)
                         cointweetrecycler?.adapter = tweetsAdapter
+                        empty?.visibility = View.GONE
                         //cointweetrecycler?.addItemDecoration(DividerItemDecoration(ContextCompat.getDrawable(activity!!,R.drawable.item_decorator)!!))
                     }
                     else{
@@ -228,6 +229,7 @@ class mycoins : Fragment(){
                     if(!tweets.isEmpty()){
                         val tweetsAdapter = TweetsAdapter(activity!!,tweets,itemClickListener)
                         cointweetrecycler?.adapter = tweetsAdapter
+                        empty?.visibility = View.GONE
                         //cointweetrecycler?.addItemDecoration(DividerItemDecoration(ContextCompat.getDrawable(activity!!,R.drawable.item_decorator)!!))
                     }
                     else{
