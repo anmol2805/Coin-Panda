@@ -4,6 +4,7 @@ import android.app.Dialog
 import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.os.Handler
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -39,7 +40,11 @@ class mycoinslist : Fragment(){
         empty = vi.findViewById(R.id.empty)
         empty?.visibility = View.GONE
         allcoins = ArrayList()
-        loaddata()
+        val handler = Handler()
+        handler.postDelayed({
+            loaddata()
+        },200)
+
         coingrid?.onItemClickListener = AdapterView.OnItemClickListener { adapterView, view, i, l ->
             val dialog = Dialog(activity)
             dialog.setContentView(R.layout.dialoglayout)
@@ -123,8 +128,9 @@ class mycoinslist : Fragment(){
                 db.collection("users").document(auth.currentUser!!.uid).collection("portfolio").document(allcoins[i].coinname!!)
                         .delete().addOnSuccessListener {
                             Toast.makeText(activity,"Removed from your Portfolio", Toast.LENGTH_SHORT).show()
-                            dialog.dismiss()
                         }
+                dialog.dismiss()
+
             }
             atp?.setOnClickListener {
                 //                val intent = Intent(activity,PaymentActivity::class.java)
@@ -138,8 +144,9 @@ class mycoinslist : Fragment(){
                 map["notify"] = true
                 db.collection("users").document(auth.currentUser!!.uid).collection("portfolio").document(allcoins[i].coinname!!).set(map).addOnSuccessListener {
                     Toast.makeText(activity,"Added to your Portfolio", Toast.LENGTH_SHORT).show()
-                    dialog.dismiss()
+
                 }
+                dialog.dismiss()
             }
             dialog.show()
         }

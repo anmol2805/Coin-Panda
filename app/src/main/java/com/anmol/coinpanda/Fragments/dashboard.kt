@@ -17,9 +17,13 @@ import android.view.WindowManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Switch
+import com.android.volley.Request
+import com.android.volley.Response
+import com.android.volley.toolbox.StringRequest
 import com.anmol.coinpanda.Adapters.TweetsAdapter
 import com.anmol.coinpanda.Interfaces.ItemClickListener
 import com.anmol.coinpanda.Model.Tweet
+import com.anmol.coinpanda.Mysingleton
 import com.anmol.coinpanda.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -45,6 +49,7 @@ class dashboard : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val vi = inflater.inflate(R.layout.dashboard, container, false)
         tweetselect = vi.findViewById(R.id.cointweetselect)
+        updaterequest()
         tweetselect.isChecked = true
         setFragment(mycoins())
         tweetselect.setOnCheckedChangeListener { _, b ->
@@ -63,6 +68,14 @@ class dashboard : Fragment() {
         activity!!.supportFragmentManager.beginTransaction().replace(R.id.coinframe,fragment).commit()
 
 
+    }
+    private fun updaterequest() {
+        val stringRequest = StringRequest(Request.Method.GET,"http://165.227.98.190/update", Response.Listener { response ->
+            System.out.println(response)
+        }, Response.ErrorListener { error->
+            System.out.println(error)
+        })
+        Mysingleton.getInstance(activity).addToRequestqueue(stringRequest)
     }
 
 }

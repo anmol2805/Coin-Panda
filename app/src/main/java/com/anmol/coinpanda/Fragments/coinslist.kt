@@ -4,6 +4,7 @@ import android.app.Dialog
 import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.os.Handler
 import android.support.v4.app.Fragment
 import android.text.Editable
 import android.text.TextWatcher
@@ -11,9 +12,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import com.android.volley.Request
+import com.android.volley.Response
+import com.android.volley.toolbox.StringRequest
 import com.anmol.coinpanda.Adapters.GridnewAdapter
 import com.anmol.coinpanda.Interfaces.ItemClickListener
 import com.anmol.coinpanda.Model.Allcoin
+import com.anmol.coinpanda.Mysingleton
 import com.anmol.coinpanda.R
 import com.anmol.coinpanda.TweetsActivity
 import com.bumptech.glide.Glide
@@ -46,7 +51,10 @@ class coinslist : Fragment(){
         empty = vi.findViewById(R.id.empty)
         empty?.visibility = View.GONE
         allcoins = ArrayList()
-        loadalldata(null)
+        val handler = Handler()
+        handler.postDelayed({
+            loadalldata(null)    
+        },200)
         coingrid?.onItemClickListener = AdapterView.OnItemClickListener { adapterView, view, i, l ->
             val dialog = Dialog(activity)
             dialog.setContentView(R.layout.dialoglayout)
@@ -130,8 +138,8 @@ class coinslist : Fragment(){
                 db.collection("users").document(auth.currentUser!!.uid).collection("portfolio").document(allcoins[i].coinname!!)
                         .delete().addOnSuccessListener {
                             Toast.makeText(activity,"Removed from your Portfolio", Toast.LENGTH_SHORT).show()
-                            dialog.dismiss()
                         }
+                dialog.dismiss()
             }
             atp?.setOnClickListener {
                 //                val intent = Intent(activity,PaymentActivity::class.java)
@@ -144,9 +152,10 @@ class coinslist : Fragment(){
                 map["coinPage"] = allcoins[i].coinpage.toString()
                 map["notify"] = true
                 db.collection("users").document(auth.currentUser!!.uid).collection("portfolio").document(allcoins[i].coinname!!).set(map).addOnSuccessListener {
+                    updaterequest()
                     Toast.makeText(activity,"Added to your Portfolio", Toast.LENGTH_SHORT).show()
-                    dialog.dismiss()
                 }
+                dialog.dismiss()
             }
             dialog.show()
         }
@@ -166,6 +175,16 @@ class coinslist : Fragment(){
         })
         return vi
     }
+
+    private fun updaterequest() {
+        val stringRequest = StringRequest(Request.Method.GET,"http://165.227.98.190/update", Response.Listener { response ->
+            System.out.println(response)
+        }, Response.ErrorListener {error->
+            System.out.println(error)
+        })
+        Mysingleton.getInstance(activity).addToRequestqueue(stringRequest)
+    }
+
     private fun loadalldata(p0: CharSequence?) {
         allcoins.clear()
         db.collection("AllCoins").orderBy("lastUpdate", Query.Direction.DESCENDING).addSnapshotListener{ documentSnapshot, firebaseFirestoreException ->
@@ -194,10 +213,13 @@ class coinslist : Fragment(){
                     val coinname = doc.getString("coin_symbol")
                     val name = doc.getString("coin_name")
                     val coinpage = doc.getString("coinPage")
-                    if (name.toLowerCase().contains(p0) || coinname.toLowerCase().contains(p0) || name.toUpperCase().contains(p0) || coinname.toUpperCase().contains(p0)){
-                        val allcoin = Allcoin(coinname,name,coinpage)
-                        allcoins.add(allcoin)
+                    if(name!=null && coinname!= null){
+                        if (name.toLowerCase().contains(p0) || coinname.toLowerCase().contains(p0) || name.toUpperCase().contains(p0) || coinname.toUpperCase().contains(p0)){
+                            val allcoin = Allcoin(coinname,name,coinpage)
+                            allcoins.add(allcoin)
+                        }
                     }
+
 
                 }
                 if(activity!=null){
