@@ -102,6 +102,7 @@ class bookmarks : Fragment() {
                     val bookmarks : ArrayList<String> = ArrayList()
                     db.collection("users").document(auth.currentUser!!.uid).collection("bookmarks").addSnapshotListener { documnentSnapshot, e ->
                         bookmarks.clear()
+                        tweets.clear()
                         for (doc in documnentSnapshot.documents) {
                             val tweetid = doc.id
                             bookmarks.add(tweetid)
@@ -159,10 +160,13 @@ class bookmarks : Fragment() {
                                 val url = doc.getString("url")
                                 val keyword = doc.getString("keyword")
                                 val dates = doc.getString("dates")
-                                if ((coin.toLowerCase().contains(p0) || coin_symbol.toLowerCase().contains(p0) || mtweet.toLowerCase().contains(p0) || keyword.toLowerCase().contains(p0) || coin.toUpperCase().contains(p0) || coin_symbol.toUpperCase().contains(p0) || mtweet.toUpperCase().contains(p0) || keyword.toUpperCase().contains(p0))&& booked) {
-                                    val tweet = Tweet(coin, coin_symbol, mtweet, url, keyword, id, booked, dates)
-                                    tweets.add(tweet)
+                                if(coin!=null && coin_symbol!=null && mtweet!=null && keyword!=null){
+                                    if ((coin.toLowerCase().contains(p0) || coin_symbol.toLowerCase().contains(p0) || mtweet.toLowerCase().contains(p0) || keyword.toLowerCase().contains(p0) || coin.toUpperCase().contains(p0) || coin_symbol.toUpperCase().contains(p0) || mtweet.toUpperCase().contains(p0) || keyword.toUpperCase().contains(p0))&& booked) {
+                                        val tweet = Tweet(coin, coin_symbol, mtweet, url, keyword, id, booked, dates)
+                                        tweets.add(tweet)
+                                    }
                                 }
+
 
                             }
                             if (activity != null) {
