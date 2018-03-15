@@ -31,6 +31,7 @@ import com.anmol.coinpanda.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
+import kotlinx.android.synthetic.main.tweetrow.*
 import org.json.JSONArray
 import java.lang.reflect.Method
 import java.sql.Timestamp
@@ -91,7 +92,8 @@ class allcoins : Fragment(){
         itemClickListener = object : ItemClickListener {
             override fun onItemClick(pos: Int) {
 
-                loadquery(keywords!![pos])
+                //loadquery(keywords!![pos])
+                sedit?.setText(keywords!![pos])
 
             }
 

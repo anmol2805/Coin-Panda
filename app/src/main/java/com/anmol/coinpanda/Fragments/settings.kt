@@ -80,21 +80,26 @@ class settings : Fragment() {
             val nanoadd : TextView? = dialog.findViewById(R.id.nanoadd)
             btc?.setOnClickListener {
                 ctclip(btcadd?.text.toString().trim())
+                dialog.dismiss()
             }
             eth?.setOnClickListener {
                 ctclip(ethadd?.text.toString().trim())
+                dialog.dismiss()
 
             }
             ltc?.setOnClickListener {
                 ctclip(ltcadd?.text.toString().trim())
+                dialog.dismiss()
 
             }
             neo?.setOnClickListener {
                 ctclip(neoadd?.text.toString().trim())
+                dialog.dismiss()
 
             }
             nano?.setOnClickListener {
                 ctclip(nanoadd?.text.toString().trim())
+                dialog.dismiss()
 
             }
             dialog.show()
@@ -137,6 +142,6 @@ class settings : Fragment() {
         val clipboard = activity?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
         val clip = ClipData.newPlainText("label", address)
         clipboard.primaryClip = clip
-        Toast.makeText(activity,"Address copied to clipboard", Toast.LENGTH_SHORT).show()
+        Toast.makeText(activity,"Address copied to clipboard", Toast.LENGTH_LONG).show()
     }
 }

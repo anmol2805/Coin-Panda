@@ -6,10 +6,11 @@
     <Button
         android:id="@+id/key"
         android:layout_width="wrap_content"
-        android:layout_height="35dp"
+        android:layout_height="25dp"
         android:layout_margin="5dp"
         android:background="@drawable/round_button2"
         android:text="keyword"
+        android:textSize="12sp"
         android:clickable="false"
         android:textColor="#fff" />
 </RelativeLayout>

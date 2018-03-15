@@ -90,6 +90,7 @@ class mycoins : Fragment(){
         itemClickListener = object : ItemClickListener {
             override fun onItemClick(pos: Int) {
                 System.out.println("clicked" + keywords!![pos])
+                sedit?.setText(keywords!![pos])
 
 
             }
@@ -211,14 +212,12 @@ class mycoins : Fragment(){
                             val url = doc.getString("url")
                             val keyword = doc.getString("keyword")
                             val dates = doc.getString("dates")
-                            if(coin!=null && coin_symbol!=null && mtweet!=null && keyword!=null){
-                                if (coin.toLowerCase().contains(p0) || coin_symbol.toLowerCase().contains(p0) || mtweet.toLowerCase().contains(p0) || keyword.toLowerCase().contains(p0) ||coin.toUpperCase().contains(p0) || coin_symbol.toUpperCase().contains(p0) || mtweet.toUpperCase().contains(p0) || keyword.toUpperCase().contains(p0)){
-                                    System.out.println("logging$booked")
-                                    val tweet = Tweet(coin, coin_symbol, mtweet, url,keyword,id,booked,dates)
-                                    tweets.add(tweet)
-                                }
-                            }
 
+                            if (coin.toLowerCase().contains(p0) || coin_symbol.toLowerCase().contains(p0) || mtweet.toLowerCase().contains(p0) || keyword.toLowerCase().contains(p0) ||coin.toUpperCase().contains(p0) || coin_symbol.toUpperCase().contains(p0) || mtweet.toUpperCase().contains(p0) || keyword.toUpperCase().contains(p0)){
+                                System.out.println("logging$booked")
+                                val tweet = Tweet(coin, coin_symbol, mtweet, url,keyword,id,booked,dates)
+                                tweets.add(tweet)
+                            }
 
 
                         }
