@@ -1,6 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/empty"
+        android:layout_width="275dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:fontFamily="casual"
+        android:textAlignment="center"
+        android:text="You haven't added any coins to your portfolio"
+        android:visibility="gone"
+        android:textColor="@color/colorPrimary"
+        android:textSize="20sp"
+        android:textStyle="bold|italic" />
 
-</android.support.constraint.ConstraintLayout>
+    <Button
+        android:id="@+id/scb"
+        android:visibility="gone"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="5dp"
+        android:layout_marginVertical="10dp"
+        android:background="@drawable/search50" />
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/search"
+        android:layout_toLeftOf="@+id/scb"
+        android:layout_toStartOf="@+id/scb"
+        >
+        <EditText
+            android:drawableRight="@drawable/layersearch"
+
+            android:id="@+id/sc"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:hint="Search Coin"
+            android:inputType="text"
+            android:textAlignment="center"
+            android:textColor="#000"
+            android:textColorHint="@color/colorPrimary"
+            />
+
+
+    </android.support.design.widget.TextInputLayout>
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/coinrecycler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="50dp"
+        android:visibility="gone" />
+
+    <GridView
+        android:id="@+id/coingrid"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="60dp"
+        android:columnWidth="100dp"
+        android:gravity="center"
+        android:numColumns="auto_fit"
+        android:layout_below="@+id/search"
+        android:padding="5dp"
+        android:stretchMode="spacingWidthUniform"
+        android:verticalSpacing="5dp" />
+</RelativeLayout>
