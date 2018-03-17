@@ -46,46 +46,49 @@ class bookmarks : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val vi = inflater.inflate(R.layout.bookmarks,
                 container, false)
-        activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
-        val layoutManager = LinearLayoutManager(activity)
-        cointweetrecycler = vi.findViewById(R.id.cointweetrecycler)
-        sedit = vi.findViewById(R.id.sc)
-        srch = vi.findViewById(R.id.scb)
-        empty = vi.findViewById(R.id.empty)
-        empty?.visibility = View.GONE
-        cointweetrecycler?.layoutManager   = layoutManager
-        cointweetrecycler?.setHasFixedSize(true)
-        cointweetrecycler?.itemAnimator   = DefaultItemAnimator()
-        tweets = ArrayList()
-        val handler = Handler()
-        handler.postDelayed({loadquery(null)},200)
+        if(activity!=null) {
+            activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
+            val layoutManager = LinearLayoutManager(activity)
 
-        itemClickListener = object : ItemClickListener {
-            override fun onItemClick(pos: Int) {
+
+            cointweetrecycler = vi.findViewById(R.id.cointweetrecycler)
+            sedit = vi.findViewById(R.id.sc)
+            srch = vi.findViewById(R.id.scb)
+            empty = vi.findViewById(R.id.empty)
+            empty?.visibility = View.GONE
+            cointweetrecycler?.layoutManager = layoutManager
+            cointweetrecycler?.setHasFixedSize(true)
+            cointweetrecycler?.itemAnimator = DefaultItemAnimator()
+            tweets = ArrayList()
+            val handler = Handler()
+            handler.postDelayed({ loadquery(null) }, 200)
+
+            itemClickListener = object : ItemClickListener {
+                override fun onItemClick(pos: Int) {
 //                val url = tweets[pos].url
 //                val intent = Intent(Intent.ACTION_VIEW)
 //                intent.data = Uri.parse(url)
 //                startActivity(intent)
 
+                }
+
             }
+            sedit?.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(p0: Editable?) {
+
+                }
+
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                    loadquery(p0)
+                }
+
+            })
 
         }
-        sedit?.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(p0: Editable?) {
-
-            }
-
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-
-            }
-
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                loadquery(p0)
-            }
-
-        })
-
-
         return vi
     }
 
@@ -135,6 +138,7 @@ class bookmarks : Fragment() {
                             if (activity != null) {
                                 if (!tweets.isEmpty()) {
                                     val tweetsAdapter = TweetsAdapter(activity!!, tweets, itemClickListener)
+                                    tweetsAdapter.notifyDataSetChanged()
                                     cointweetrecycler?.adapter = tweetsAdapter
                                     //cointweetrecycler?.addItemDecoration(DividerItemDecoration(ContextCompat.getDrawable(activity!!,R.drawable.item_decorator)!!))
 
@@ -172,6 +176,7 @@ class bookmarks : Fragment() {
                             if (activity != null) {
                                 if (!tweets.isEmpty()) {
                                     val tweetsAdapter = TweetsAdapter(activity!!, tweets, itemClickListener)
+                                    tweetsAdapter.notifyDataSetChanged()
                                     cointweetrecycler?.adapter = tweetsAdapter
                                     //cointweetrecycler?.addItemDecoration(DividerItemDecoration(ContextCompat.getDrawable(activity!!,R.drawable.item_decorator)!!))
 

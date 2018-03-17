@@ -75,7 +75,10 @@ class dashboard : Fragment() {
         }, Response.ErrorListener { error->
             System.out.println(error)
         })
-        Mysingleton.getInstance(activity).addToRequestqueue(stringRequest)
+        if(activity!=null){
+            Mysingleton.getInstance(activity).addToRequestqueue(stringRequest)
+        }
+
     }
 
 }

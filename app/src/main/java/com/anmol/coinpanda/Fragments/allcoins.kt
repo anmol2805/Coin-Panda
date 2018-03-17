@@ -224,10 +224,17 @@ class allcoins : Fragment(){
 
         }, Response.ErrorListener {error ->
             System.out.println("error:"+error.message)
-            Toast.makeText(activity,"Network Error",Toast.LENGTH_LONG).show()
+            if(activity!=null){
+                Toast.makeText(activity,"Network Error",Toast.LENGTH_LONG).show()
+
+            }
+
 
         })
-        Mysingleton.getInstance(activity).addToRequestqueue(jsonobjectrequest)
+        if(activity!=null){
+            Mysingleton.getInstance(activity).addToRequestqueue(jsonobjectrequest)
+        }
+
 //        db.collection("Tweets").whereGreaterThanOrEqualTo("date",prevtime)
 //                .orderBy("date", Query.Direction.DESCENDING).addSnapshotListener{ documentSnapshot, e->
 //            tweets.clear()

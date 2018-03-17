@@ -52,58 +52,62 @@ class mycoins : Fragment(){
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val vi = inflater.inflate(R.layout.mycoins, container, false)
-        activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
-        val layoutManager = LinearLayoutManager(activity)
-        cointweetrecycler = vi.findViewById(R.id.cointweetrecycler)
-        keywordrecycler = vi.findViewById(R.id.keywordrecycler)
-        sedit = vi.findViewById(R.id.sc)
-        srch = vi.findViewById(R.id.scb)
-        empty = vi.findViewById(R.id.empty)
-        keywordrecycler?.setHasFixedSize(true)
-        keywordrecycler?.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-        empty?.visibility = View.GONE
-        cointweetrecycler?.layoutManager   = layoutManager
-        cointweetrecycler?.setHasFixedSize(true)
-        cointweetrecycler?.itemAnimator   = DefaultItemAnimator()
-        tweets = ArrayList()
-        keywords = ArrayList()
-        keywords?.add("win")
-        keywords?.add("partnership")
-        keywords?.add("listing")
-        keywords?.add("mainnet")
-        keywords?.add("announcement")
-        keywords?.add("exchange")
-        keywords?.add("beta")
-        keywords?.add("collaboration")
-        keywords?.add("airdrop")
-        keywords?.add("release")
-        keywords?.add("government")
-        keywords?.add("update")
-        keywords?.add("association")
-        keywords?.add("achievement")
-        keywordrecycler?.itemAnimator = DefaultItemAnimator()
-        val handler =  Handler()
-        handler.postDelayed({
-            loadquery(null)
-        },200)
-
-        itemClickListener = object : ItemClickListener {
-            override fun onItemClick(pos: Int) {
-
-
-            }
-
-        }
-        keyClickListener = object :ItemClickListener{
-            override fun onItemClick(pos: Int) {
-                System.out.println("clicked" + keywords!![pos])
-                sedit?.setText(keywords!![pos])
-
-            }
-        }
         if(activity!=null){
-            val keywordAdapter = KeywordAdapter(activity!!, keywords!!,keyClickListener)
-            keywordrecycler?.adapter = keywordAdapter
+            activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
+            val layoutManager = LinearLayoutManager(activity)
+            cointweetrecycler = vi.findViewById(R.id.cointweetrecycler)
+            keywordrecycler = vi.findViewById(R.id.keywordrecycler)
+            sedit = vi.findViewById(R.id.sc)
+            srch = vi.findViewById(R.id.scb)
+            empty = vi.findViewById(R.id.empty)
+            keywordrecycler?.setHasFixedSize(true)
+            keywordrecycler?.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+            empty?.visibility = View.GONE
+            cointweetrecycler?.layoutManager   = layoutManager
+            cointweetrecycler?.setHasFixedSize(true)
+            cointweetrecycler?.itemAnimator   = DefaultItemAnimator()
+            tweets = ArrayList()
+            keywords = ArrayList()
+            keywords?.add("win")
+            keywords?.add("partnership")
+            keywords?.add("listing")
+            keywords?.add("mainnet")
+            keywords?.add("announcement")
+            keywords?.add("exchange")
+            keywords?.add("beta")
+            keywords?.add("collaboration")
+            keywords?.add("airdrop")
+            keywords?.add("release")
+            keywords?.add("government")
+            keywords?.add("update")
+            keywords?.add("association")
+            keywords?.add("achievement")
+            keywordrecycler?.itemAnimator = DefaultItemAnimator()
+            val handler =  Handler()
+            handler.postDelayed({
+                loadquery(null)
+            },200)
+
+            itemClickListener = object : ItemClickListener {
+                override fun onItemClick(pos: Int) {
+
+
+                }
+
+            }
+            keyClickListener = object :ItemClickListener{
+                override fun onItemClick(pos: Int) {
+                    System.out.println("clicked" + keywords!![pos])
+                    sedit?.setText(keywords!![pos])
+
+                }
+            }
+            if(activity!=null){
+                val keywordAdapter = KeywordAdapter(activity!!, keywords!!,keyClickListener)
+                keywordAdapter.notifyDataSetChanged()
+                keywordrecycler?.adapter = keywordAdapter
+            }
+
         }
 
         sedit?.addTextChangedListener(object : TextWatcher {
@@ -183,6 +187,7 @@ class mycoins : Fragment(){
                     if(!tweets.isEmpty()){
                         System.out.println("logging:$tweets")
                         val tweetsAdapter = TweetsAdapter(activity!!,tweets,itemClickListener)
+                        tweetsAdapter.notifyDataSetChanged()
                         cointweetrecycler?.adapter = tweetsAdapter
                         empty?.visibility = View.GONE
                         //cointweetrecycler?.addItemDecoration(DividerItemDecoration(ContextCompat.getDrawable(activity!!,R.drawable.item_decorator)!!))
@@ -229,6 +234,7 @@ class mycoins : Fragment(){
                 if(activity!=null){
                     if(!tweets.isEmpty()){
                         val tweetsAdapter = TweetsAdapter(activity!!,tweets,itemClickListener)
+                        tweetsAdapter.notifyDataSetChanged()
                         cointweetrecycler?.adapter = tweetsAdapter
                         empty?.visibility = View.GONE
                         //cointweetrecycler?.addItemDecoration(DividerItemDecoration(ContextCompat.getDrawable(activity!!,R.drawable.item_decorator)!!))

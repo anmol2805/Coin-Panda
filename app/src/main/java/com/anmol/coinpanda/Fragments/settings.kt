@@ -66,82 +66,94 @@ class settings : Fragment() {
 
         }
         donate?.setOnClickListener {
-            val dialog = Dialog(activity)
-            dialog.setContentView(R.layout.donate)
-            val btc : Button? = dialog.findViewById(R.id.btcc)
-            val eth : Button? = dialog.findViewById(R.id.ethc)
-            val ltc : Button? = dialog.findViewById(R.id.ltcc)
-            val neo : Button? = dialog.findViewById(R.id.neoc)
-            val nano : Button? = dialog.findViewById(R.id.nanoc)
-            val btcadd : TextView? = dialog.findViewById(R.id.btcadd)
-            val ethadd : TextView? = dialog.findViewById(R.id.ethadd)
-            val ltcadd : TextView? = dialog.findViewById(R.id.ltcadd)
-            val neoadd : TextView? = dialog.findViewById(R.id.neoadd)
-            val nanoadd : TextView? = dialog.findViewById(R.id.nanoadd)
-            btc?.setOnClickListener {
-                ctclip(btcadd?.text.toString().trim())
-                dialog.dismiss()
-            }
-            eth?.setOnClickListener {
-                ctclip(ethadd?.text.toString().trim())
-                dialog.dismiss()
+            if(activity!=null){
+                val dialog = Dialog(activity)
+                dialog.setContentView(R.layout.donate)
+                val btc : Button? = dialog.findViewById(R.id.btcc)
+                val eth : Button? = dialog.findViewById(R.id.ethc)
+                val ltc : Button? = dialog.findViewById(R.id.ltcc)
+                val neo : Button? = dialog.findViewById(R.id.neoc)
+                val nano : Button? = dialog.findViewById(R.id.nanoc)
+                val btcadd : TextView? = dialog.findViewById(R.id.btcadd)
+                val ethadd : TextView? = dialog.findViewById(R.id.ethadd)
+                val ltcadd : TextView? = dialog.findViewById(R.id.ltcadd)
+                val neoadd : TextView? = dialog.findViewById(R.id.neoadd)
+                val nanoadd : TextView? = dialog.findViewById(R.id.nanoadd)
+                btc?.setOnClickListener {
+                    ctclip(btcadd?.text.toString().trim())
+                    dialog.dismiss()
+                }
+                eth?.setOnClickListener {
+                    ctclip(ethadd?.text.toString().trim())
+                    dialog.dismiss()
 
-            }
-            ltc?.setOnClickListener {
-                ctclip(ltcadd?.text.toString().trim())
-                dialog.dismiss()
+                }
+                ltc?.setOnClickListener {
+                    ctclip(ltcadd?.text.toString().trim())
+                    dialog.dismiss()
 
-            }
-            neo?.setOnClickListener {
-                ctclip(neoadd?.text.toString().trim())
-                dialog.dismiss()
+                }
+                neo?.setOnClickListener {
+                    ctclip(neoadd?.text.toString().trim())
+                    dialog.dismiss()
 
-            }
-            nano?.setOnClickListener {
-                ctclip(nanoadd?.text.toString().trim())
-                dialog.dismiss()
+                }
+                nano?.setOnClickListener {
+                    ctclip(nanoadd?.text.toString().trim())
+                    dialog.dismiss()
 
+                }
+                dialog.show()
             }
-            dialog.show()
+
         }
         request?.setOnClickListener {
-            val dialog = Dialog(activity)
-            dialog.setContentView(R.layout.request)
-            val rc : EditText? = dialog.findViewById(R.id.rc)
-            val submit : Button? = dialog.findViewById(R.id.submit)
-            val pg:ProgressBar? = dialog.findViewById(R.id.pg)
-            submit?.setOnClickListener{
-                if (rc!!.text.isEmpty() || rc.text == null){
-                    rc.error = "Please specify a valid coin name or symbol"
-                }
-                else{
-                    pg?.visibility = View.VISIBLE
-                    submit.visibility = View.GONE
-                    val coin = rc.text.toString().trim()
-                    val db = FirebaseFirestore.getInstance()
-                    val ref = db.collection("request").document()
-                    val id = ref.id
-                    val map = HashMap<String,Any>()
-                    map["coin"] = coin
-                    db.collection("request").document(id).set(map).addOnSuccessListener {
-                        Toast.makeText(activity,"We had received your request",Toast.LENGTH_SHORT).show()
-                        dialog.dismiss()
+            if(activity!=null){
+                val dialog = Dialog(activity)
+                dialog.setContentView(R.layout.request)
+                val rc : EditText? = dialog.findViewById(R.id.rc)
+                val submit : Button? = dialog.findViewById(R.id.submit)
+                val pg:ProgressBar? = dialog.findViewById(R.id.pg)
+                submit?.setOnClickListener{
+                    if (rc!!.text.isEmpty() || rc.text == null){
+                        rc.error = "Please specify a valid coin name or symbol"
+                    }
+                    else{
+                        pg?.visibility = View.VISIBLE
+                        submit.visibility = View.GONE
+                        val coin = rc.text.toString().trim()
+                        val db = FirebaseFirestore.getInstance()
+                        val ref = db.collection("request").document()
+                        val id = ref.id
+                        val map = HashMap<String,Any>()
+                        map["coin"] = coin
+                        db.collection("request").document(id).set(map).addOnSuccessListener {
+                            Toast.makeText(activity,"We had received your request",Toast.LENGTH_SHORT).show()
+                            dialog.dismiss()
+                        }
                     }
                 }
+                dialog.show()
             }
-            dialog.show()
+
         }
         help?.setOnClickListener {
-            startActivity(Intent(activity,SupportActivity::class.java))
+            if(activity!=null){
+                startActivity(Intent(activity,SupportActivity::class.java))
+            }
+
         }
 
         return vi
     }
 
     private fun ctclip(address: String) {
-        val clipboard = activity?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-        val clip = ClipData.newPlainText("label", address)
-        clipboard.primaryClip = clip
-        Toast.makeText(activity,"Address copied to clipboard", Toast.LENGTH_LONG).show()
+        if(activity!=null){
+            val clipboard = activity?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+            val clip = ClipData.newPlainText("label", address)
+            clipboard.primaryClip = clip
+            Toast.makeText(activity,"Address copied to clipboard", Toast.LENGTH_LONG).show()
+        }
+
     }
 }

@@ -56,108 +56,123 @@ class coinslist : Fragment(){
             loadalldata(null)    
         },200)
         coingrid?.onItemClickListener = AdapterView.OnItemClickListener { adapterView, view, i, l ->
-            val dialog = Dialog(activity)
-            dialog.setContentView(R.layout.dialoglayout)
-            val prg : ProgressBar? = dialog.findViewById(R.id.prgbr)
-            val coinimg: ImageView? = dialog.findViewById(R.id.coinimg)
-            val cn :TextView? = dialog.findViewById(R.id.cn)
-            val cs:TextView? = dialog.findViewById(R.id.cs)
-            val cp:TextView? = dialog.findViewById(R.id.cp)
-            val atp:Button? = dialog.findViewById(R.id.atp)
-            val portfoliolay: LinearLayout?= dialog.findViewById(R.id.portfoliolay)
-            val viewtweet:Button?=dialog.findViewById(R.id.viewtweets)
-            val notificationswitch: Switch?= dialog.findViewById(R.id.notification)
-            val remove:Button? = dialog.findViewById(R.id.remove)
-            atp?.visibility = View.VISIBLE
-            portfoliolay?.visibility = View.GONE
-            db.collection("users").document(auth.currentUser!!.uid).collection("portfolio").document(allcoins[i].coinname!!).get().addOnCompleteListener { task ->
-                val snapshot = task.result
-                if(snapshot.exists()){
-                    val notify = snapshot?.getBoolean("notify")
-                    if (notify!!){
-                        notificationswitch?.isChecked = true
-                    }
-                }
-
-            }
-            notificationswitch?.setOnCheckedChangeListener { _, b ->
-                if (b){
-                    val map = HashMap<String,Any>()
-                    map["notify"] = true
-                    db.collection("users").document(auth.currentUser!!.uid).collection("portfolio").document(allcoins[i].coinname!!).update(map)
-                }
-                else{
-                    val map = HashMap<String,Any>()
-                    map["notify"] = false
-                    db.collection("users").document(auth.currentUser!!.uid).collection("portfolio").document(allcoins[i].coinname!!).update(map)
-                }
-            }
-            db.collection("users").document(auth.currentUser!!.uid).collection("portfolio").get().addOnCompleteListener {task ->
-                for(doc in task.result){
-                    if(doc.id.contains(allcoins[i].coinname!!)){
-                        atp?.visibility = View.GONE
-                        portfoliolay?.visibility = View.VISIBLE
-                    }
-                }
-            }
-            cn?.text = allcoins[i].coin
-            cs?.text = allcoins[i].coinname
-            cp?.text = "#"+ allcoins[i].coinpage
-            val urlpng = "https://raw.githubusercontent.com/crypti/cryptocurrencies/master/images/"+ allcoins[i].coinname+".png"
-            val urljpg = "https://raw.githubusercontent.com/crypti/cryptocurrencies/master/images/"+ allcoins[i].coinname+".jpg"
-            val urljpeg = "https://raw.githubusercontent.com/crypti/cryptocurrencies/master/images/"+ allcoins[i].coinname+".jpeg"
-            Glide.with(activity).load(urlpng).listener(object : RequestListener<Drawable> {
-                override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
-
-                    return false
-                }
-
-                override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
-                    Glide.with(activity).load(urljpg).listener(object : RequestListener<Drawable> {
-                        override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
-                            Glide.with(activity).load(urljpeg).into(coinimg)
-                            return true
+            if(activity!=null){
+                val dialog = Dialog(activity)
+                dialog.setContentView(R.layout.dialoglayout)
+                val prg : ProgressBar? = dialog.findViewById(R.id.prgbr)
+                val coinimg: ImageView? = dialog.findViewById(R.id.coinimg)
+                val cn :TextView? = dialog.findViewById(R.id.cn)
+                val cs:TextView? = dialog.findViewById(R.id.cs)
+                val cp:TextView? = dialog.findViewById(R.id.cp)
+                val atp:Button? = dialog.findViewById(R.id.atp)
+                val portfoliolay: LinearLayout?= dialog.findViewById(R.id.portfoliolay)
+                val viewtweet:Button?=dialog.findViewById(R.id.viewtweets)
+                val notificationswitch: Switch?= dialog.findViewById(R.id.notification)
+                val remove:Button? = dialog.findViewById(R.id.remove)
+                atp?.visibility = View.VISIBLE
+                portfoliolay?.visibility = View.GONE
+                db.collection("users").document(auth.currentUser!!.uid).collection("portfolio").document(allcoins[i].coinname!!).get().addOnCompleteListener { task ->
+                    val snapshot = task.result
+                    if(snapshot.exists()){
+                        val notify = snapshot?.getBoolean("notify")
+                        if (notify!!){
+                            notificationswitch?.isChecked = true
                         }
+                    }
 
+                }
+                notificationswitch?.setOnCheckedChangeListener { _, b ->
+                    if (b){
+                        val map = HashMap<String,Any>()
+                        map["notify"] = true
+                        db.collection("users").document(auth.currentUser!!.uid).collection("portfolio").document(allcoins[i].coinname!!).update(map)
+                    }
+                    else{
+                        val map = HashMap<String,Any>()
+                        map["notify"] = false
+                        db.collection("users").document(auth.currentUser!!.uid).collection("portfolio").document(allcoins[i].coinname!!).update(map)
+                    }
+                }
+                db.collection("users").document(auth.currentUser!!.uid).collection("portfolio").get().addOnCompleteListener {task ->
+                    for(doc in task.result){
+                        if(doc.id.contains(allcoins[i].coinname!!)){
+                            atp?.visibility = View.GONE
+                            portfoliolay?.visibility = View.VISIBLE
+                        }
+                    }
+                }
+                cn?.text = allcoins[i].coin
+                cs?.text = allcoins[i].coinname
+                cp?.text = "#"+ allcoins[i].coinpage
+                val urlpng = "https://raw.githubusercontent.com/crypti/cryptocurrencies/master/images/"+ allcoins[i].coinname+".png"
+                val urljpg = "https://raw.githubusercontent.com/crypti/cryptocurrencies/master/images/"+ allcoins[i].coinname+".jpg"
+                val urljpeg = "https://raw.githubusercontent.com/crypti/cryptocurrencies/master/images/"+ allcoins[i].coinname+".jpeg"
+                if(activity!=null){
+                    Glide.with(activity).load(urlpng).listener(object : RequestListener<Drawable> {
                         override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
+
                             return false
                         }
 
+                        override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
+                            Glide.with(activity).load(urljpg).listener(object : RequestListener<Drawable> {
+                                override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
+                                    Glide.with(activity).load(urljpeg).into(coinimg)
+                                    return true
+                                }
+
+                                override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
+                                    return false
+                                }
+
+                            }).into(coinimg)
+                            return true
+                        }
+
                     }).into(coinimg)
-                    return true
+
                 }
 
-            }).into(coinimg)
+                viewtweet?.setOnClickListener {
+                    if(activity!=null){
+                        val intent = Intent(activity, TweetsActivity::class.java)
+                        intent.putExtra("coin", allcoins[i].coinname)
+                        startActivity(intent)
+                    }
 
-            viewtweet?.setOnClickListener {
-                val intent = Intent(activity, TweetsActivity::class.java)
-                intent.putExtra("coin", allcoins[i].coinname)
-                startActivity(intent)
-            }
-            remove?.setOnClickListener {
-                db.collection("users").document(auth.currentUser!!.uid).collection("portfolio").document(allcoins[i].coinname!!)
-                        .delete().addOnSuccessListener {
-                            Toast.makeText(activity,"Removed from your Portfolio", Toast.LENGTH_SHORT).show()
-                        }
-                dialog.dismiss()
-            }
-            atp?.setOnClickListener {
-                //                val intent = Intent(activity,PaymentActivity::class.java)
+                }
+                remove?.setOnClickListener {
+                    db.collection("users").document(auth.currentUser!!.uid).collection("portfolio").document(allcoins[i].coinname!!)
+                            .delete().addOnSuccessListener {
+                                if(activity!=null){
+                                    Toast.makeText(activity,"Removed from your Portfolio", Toast.LENGTH_SHORT).show()
+                                }
+
+                            }
+                    dialog.dismiss()
+                }
+                atp?.setOnClickListener {
+                    //                val intent = Intent(activity,PaymentActivity::class.java)
 //                intent.putExtra("coin",allcoins[i].coin)
 //                startActivity(intent)
-                prg?.visibility = View.VISIBLE
-                atp.visibility = View.GONE
-                val map = HashMap<String,Any>()
-                map["coin_name"] = allcoins[i].coin.toString()
-                map["coinPage"] = allcoins[i].coinpage.toString()
-                map["notify"] = true
-                db.collection("users").document(auth.currentUser!!.uid).collection("portfolio").document(allcoins[i].coinname!!).set(map).addOnSuccessListener {
-                    updaterequest()
-                    Toast.makeText(activity,"Added to your Portfolio", Toast.LENGTH_SHORT).show()
+                    prg?.visibility = View.VISIBLE
+                    atp.visibility = View.GONE
+                    val map = HashMap<String,Any>()
+                    map["coin_name"] = allcoins[i].coin.toString()
+                    map["coinPage"] = allcoins[i].coinpage.toString()
+                    map["notify"] = true
+                    db.collection("users").document(auth.currentUser!!.uid).collection("portfolio").document(allcoins[i].coinname!!).set(map).addOnSuccessListener {
+                        updaterequest()
+                        if(activity!=null){
+                            Toast.makeText(activity,"Added to your Portfolio", Toast.LENGTH_SHORT).show()
+                        }
+
+                    }
+                    dialog.dismiss()
                 }
-                dialog.dismiss()
+                dialog.show()
             }
-            dialog.show()
+
         }
         sedit?.addTextChangedListener(object: TextWatcher {
             override fun afterTextChanged(p0: Editable?) {
@@ -182,7 +197,10 @@ class coinslist : Fragment(){
         }, Response.ErrorListener {error->
             System.out.println(error)
         })
-        Mysingleton.getInstance(activity).addToRequestqueue(stringRequest)
+        if(activity!=null){
+            Mysingleton.getInstance(activity).addToRequestqueue(stringRequest)
+        }
+
     }
 
     private fun loadalldata(p0: CharSequence?) {
@@ -201,6 +219,7 @@ class coinslist : Fragment(){
                     if(!allcoins.isEmpty()){
                         empty?.visibility = View.GONE
                         gridAdapter = GridnewAdapter(activity!!, allcoins)
+                        gridAdapter.notifyDataSetChanged()
                         coingrid?.adapter = gridAdapter
                     }
                     else{
@@ -226,6 +245,7 @@ class coinslist : Fragment(){
                     if(!allcoins.isEmpty()){
                         empty?.visibility = View.GONE
                         gridAdapter = GridnewAdapter(activity!!, allcoins)
+                        gridAdapter.notifyDataSetChanged()
                         coingrid?.adapter = gridAdapter
                     }
                     else{

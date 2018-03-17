@@ -90,6 +90,7 @@ class TweetsActivity : AppCompatActivity() {
 
                         if(!tweets.isEmpty()){
                             val tweetsAdapter = TweetsAdapter(this,tweets,itemClickListener)
+                            tweetsAdapter.notifyDataSetChanged()
                             mtweetrecycler?.adapter = tweetsAdapter
                             //mtweetrecycler?.addItemDecoration(DividerItemDecoration(ContextCompat.getDrawable(applicationContext,R.drawable.item_decorator)!!))
                         }
