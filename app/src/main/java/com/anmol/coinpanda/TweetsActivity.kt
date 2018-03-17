@@ -82,7 +82,7 @@ class TweetsActivity : AppCompatActivity() {
                         val id = doc.id
                         val dates = doc.getString("dates")
                         if(coin_symbol.contains(coin)){
-                            val tweet = Tweet(mcoin,coin_symbol,mtweet,url,keyword,id,booked,dates)
+                            val tweet = Tweet(mcoin,coin_symbol,mtweet,url,keyword,id,booked,dates,"mc")
                             tweets.add(tweet)
                         }
 

@@ -55,36 +55,37 @@ class allcoins : Fragment(){
     var srch: Button? = null
     var db = FirebaseFirestore.getInstance()
     val auth = FirebaseAuth.getInstance()
+    var tweetsAdapter : TweetsAdapter?=null
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val vi = inflater.inflate(R.layout.allcoins, container, false)
         activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
         val layoutManager = LinearLayoutManager(activity)
         cointweetrecycler = vi.findViewById(R.id.cointweetrecycler)
-        keywordrecycler = vi.findViewById(R.id.keywordrecycler)
-        sedit = vi.findViewById(R.id.sc)
-        srch = vi.findViewById(R.id.scb)
-        keywordrecycler?.setHasFixedSize(true)
-        keywordrecycler?.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+//        keywordrecycler = vi.findViewById(R.id.keywordrecycler)
+//        sedit = vi.findViewById(R.id.sc)
+//        srch = vi.findViewById(R.id.scb)
+//        keywordrecycler?.setHasFixedSize(true)
+//        keywordrecycler?.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
         cointweetrecycler?.layoutManager   = layoutManager
         cointweetrecycler?.setHasFixedSize(true)
         cointweetrecycler?.itemAnimator   = DefaultItemAnimator()
-        keywordrecycler?.itemAnimator = DefaultItemAnimator()
+//        keywordrecycler?.itemAnimator = DefaultItemAnimator()
         tweets = ArrayList()
-        keywords = ArrayList()
-        keywords?.add("win")
-        keywords?.add("partnership")
-        keywords?.add("listing")
-        keywords?.add("mainnet")
-        keywords?.add("announcement")
-        keywords?.add("exchange")
-        keywords?.add("beta")
-        keywords?.add("collaboration")
-        keywords?.add("airdrop")
-        keywords?.add("release")
-        keywords?.add("government")
-        keywords?.add("update")
-        keywords?.add("association")
-        keywords?.add("achievement")
+//        keywords = ArrayList()
+//        keywords?.add("win")
+//        keywords?.add("partnership")
+//        keywords?.add("listing")
+//        keywords?.add("mainnet")
+//        keywords?.add("announcement")
+//        keywords?.add("exchange")
+//        keywords?.add("beta")
+//        keywords?.add("collaboration")
+//        keywords?.add("airdrop")
+//        keywords?.add("release")
+//        keywords?.add("government")
+//        keywords?.add("update")
+//        keywords?.add("association")
+//        keywords?.add("achievement")
         val handler = Handler()
         handler.postDelayed({
             loadquery(null)
@@ -94,7 +95,7 @@ class allcoins : Fragment(){
             override fun onItemClick(pos: Int) {
 
                 //loadquery(keywords!![pos])
-                sedit?.setText(keywords!![pos])
+//                sedit?.setText(keywords!![pos])
 
             }
 
@@ -104,24 +105,24 @@ class allcoins : Fragment(){
             override fun onItemClick(pos: Int) {
             }
         }
-        if(activity!=null){
-            val keywordAdapter = KeywordAdapter(activity!!, keywords!!,itemClickListener)
-            keywordrecycler?.adapter = keywordAdapter
-        }
-        sedit?.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(p0: Editable?) {
-
-            }
-
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-
-            }
-
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                loadquery(p0)
-            }
-
-        })
+//        if(activity!=null){
+//            val keywordAdapter = KeywordAdapter(activity!!, keywords!!,itemClickListener)
+//            keywordrecycler?.adapter = keywordAdapter
+//        }
+//        sedit?.addTextChangedListener(object : TextWatcher {
+//            override fun afterTextChanged(p0: Editable?) {
+//
+//            }
+//
+//            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+//
+//            }
+//
+//            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+//                loadquery(p0)
+//            }
+//
+//        })
 
             return vi
     }
@@ -166,13 +167,14 @@ class allcoins : Fragment(){
                                 val url = obj.getString("url")
                                 val keyword = obj.getString("keyword")
                                 val dates = obj.getString("date")
-                                val tweet = Tweet(coin, coin_symbol, mtweet, url, keyword, id, booked, dates)
+                                val tweet = Tweet(coin, coin_symbol, mtweet, url, keyword, id, booked, dates,"ac")
                                 tweets.add(tweet)
                                 c++
                             }
                             if (activity != null) {
                                 if (!tweets.isEmpty()) {
-                                    val tweetsAdapter = TweetsAdapter(activity!!, tweets, itemClickListener)
+                                    tweetsAdapter = TweetsAdapter(activity!!, tweets, itemClickListener)
+                                    tweetsAdapter!!.notifyDataSetChanged()
                                     cointweetrecycler?.adapter = tweetsAdapter
                                     //cointweetrecycler?.addItemDecoration(DividerItemDecoration(ContextCompat.getDrawable(activity!!,R.drawable.item_decorator)!!))
 
@@ -199,7 +201,7 @@ class allcoins : Fragment(){
                                 val dates = obj.getString("date")
                                 if(coin!=null && coin_symbol!=null && mtweet!=null && keyword!=null){
                                     if (coin.toLowerCase().contains(p0) || coin_symbol.toLowerCase().contains(p0) || mtweet.toLowerCase().contains(p0) || keyword.toLowerCase().contains(p0) || coin.toUpperCase().contains(p0) || coin_symbol.toUpperCase().contains(p0) || mtweet.toUpperCase().contains(p0) || keyword.toUpperCase().contains(p0)) {
-                                        val tweet = Tweet(coin, coin_symbol, mtweet, url, keyword, id, booked, dates)
+                                        val tweet = Tweet(coin, coin_symbol, mtweet, url, keyword, id, booked, dates,"ac")
                                         tweets.add(tweet)
                                     }
                                 }
@@ -208,7 +210,8 @@ class allcoins : Fragment(){
                             }
                             if (activity != null) {
                                 if (!tweets.isEmpty()) {
-                                    val tweetsAdapter = TweetsAdapter(activity!!, tweets, itemClickListener)
+                                    tweetsAdapter = TweetsAdapter(activity!!, tweets, itemClickListener)
+                                    tweetsAdapter!!.notifyDataSetChanged()
                                     cointweetrecycler?.adapter = tweetsAdapter
                                     //cointweetrecycler?.addItemDecoration(DividerItemDecoration(ContextCompat.getDrawable(activity!!,R.drawable.item_decorator)!!))
 

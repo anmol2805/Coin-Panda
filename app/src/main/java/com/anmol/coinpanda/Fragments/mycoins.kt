@@ -89,8 +89,6 @@ class mycoins : Fragment(){
 
         itemClickListener = object : ItemClickListener {
             override fun onItemClick(pos: Int) {
-                System.out.println("clicked" + keywords!![pos])
-                sedit?.setText(keywords!![pos])
 
 
             }
@@ -98,10 +96,13 @@ class mycoins : Fragment(){
         }
         keyClickListener = object :ItemClickListener{
             override fun onItemClick(pos: Int) {
+                System.out.println("clicked" + keywords!![pos])
+                sedit?.setText(keywords!![pos])
+
             }
         }
         if(activity!=null){
-            val keywordAdapter = KeywordAdapter(activity!!, keywords!!,itemClickListener)
+            val keywordAdapter = KeywordAdapter(activity!!, keywords!!,keyClickListener)
             keywordrecycler?.adapter = keywordAdapter
         }
 
@@ -172,7 +173,7 @@ class mycoins : Fragment(){
                             val keyword = doc.getString("keyword")
                             val dates = doc.getString("dates")
                             System.out.println("logging$booked")
-                            val tweet = Tweet(coin, coin_symbol, mtweet, url,keyword,id,booked,dates)
+                            val tweet = Tweet(coin, coin_symbol, mtweet, url,keyword,id,booked,dates,"mc")
                             tweets.add(tweet)
                         }
                         i++
@@ -216,7 +217,7 @@ class mycoins : Fragment(){
 
                             if (coin.toLowerCase().contains(p0) || coin_symbol.toLowerCase().contains(p0) || mtweet.toLowerCase().contains(p0) || keyword.toLowerCase().contains(p0) ||coin.toUpperCase().contains(p0) || coin_symbol.toUpperCase().contains(p0) || mtweet.toUpperCase().contains(p0) || keyword.toUpperCase().contains(p0)){
                                 System.out.println("logging$booked")
-                                val tweet = Tweet(coin, coin_symbol, mtweet, url,keyword,id,booked,dates)
+                                val tweet = Tweet(coin, coin_symbol, mtweet, url,keyword,id,booked,dates,"mc")
                                 tweets.add(tweet)
                             }
 

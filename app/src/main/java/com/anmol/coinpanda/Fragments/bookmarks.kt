@@ -127,7 +127,7 @@ class bookmarks : Fragment() {
                                 val keyword = doc.getString("keyword")
                                 val dates = doc.getString("dates")
                                 if(booked){
-                                    val tweet = Tweet(coin, coin_symbol, mtweet, url, keyword, id, booked, dates)
+                                    val tweet = Tweet(coin, coin_symbol, mtweet, url, keyword, id, booked, dates,"mc")
                                     tweets.add(tweet)
                                 }
 
@@ -162,7 +162,7 @@ class bookmarks : Fragment() {
                                 val dates = doc.getString("dates")
                                 if(coin!=null && coin_symbol!=null && mtweet!=null && keyword!=null){
                                     if ((coin.toLowerCase().contains(p0) || coin_symbol.toLowerCase().contains(p0) || mtweet.toLowerCase().contains(p0) || keyword.toLowerCase().contains(p0) || coin.toUpperCase().contains(p0) || coin_symbol.toUpperCase().contains(p0) || mtweet.toUpperCase().contains(p0) || keyword.toUpperCase().contains(p0))&& booked) {
-                                        val tweet = Tweet(coin, coin_symbol, mtweet, url, keyword, id, booked, dates)
+                                        val tweet = Tweet(coin, coin_symbol, mtweet, url, keyword, id, booked, dates,"mc")
                                         tweets.add(tweet)
                                     }
                                 }
