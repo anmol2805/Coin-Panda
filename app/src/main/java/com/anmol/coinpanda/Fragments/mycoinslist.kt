@@ -72,6 +72,7 @@ class mycoinslist : Fragment(){
                     }
 
                 }
+                notificationswitch?.isChecked = true
                 notificationswitch?.setOnCheckedChangeListener { _, b ->
                     if (b){
                         val map = HashMap<String,Any>()
@@ -189,6 +190,7 @@ class mycoinslist : Fragment(){
 
     }
     private fun removetopic(id: String) {
+
         db.collection("topics").document(id).get().addOnCompleteListener{task ->
             val documentSnapshot = task.result
             val count : Int = documentSnapshot.get("count") as Int
@@ -201,13 +203,13 @@ class mycoinslist : Fragment(){
 
             }
         }
-        db.collection("users").document(auth.currentUser!!.uid).collection("topics").document(id).delete()
+        //db.collection("users").document(auth.currentUser!!.uid).collection("topics").document(id).delete()
     }
     private fun topicsearch(i: Int, coinname: String?) {
         db.collection("topics").document(coinname + i.toString()).get().addOnCompleteListener { task->
             val documentSnapshot = task.result
             if(documentSnapshot.exists()){
-                val count : Int = documentSnapshot.get("count") as Int
+                val count = documentSnapshot.getLong("count")
                 if(count > 990){
                     topicsearch(i+1,coinname)
                 }
@@ -230,6 +232,7 @@ class mycoinslist : Fragment(){
                             message.subscribeToTopic(coinname + i.toString())
                             val count = HashMap<String,Any>()
                             count["count"] = i+1
+                            count["coin_symbol"] = coinname.toString()
                             db.collection("topics").document(coinname + i.toString()).set(count)
                         }
             }
