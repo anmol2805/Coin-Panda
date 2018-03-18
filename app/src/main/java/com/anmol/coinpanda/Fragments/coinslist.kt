@@ -30,6 +30,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.google.firebase.messaging.FirebaseMessaging
+import java.util.*
 
 /**
  * Created by anmol on 3/15/2018.
@@ -86,9 +87,18 @@ class coinslist : Fragment(){
                     if (b){
                         val map = HashMap<String,Any>()
                         map["notify"] = true
+                        topicsearch(0,allcoins[i].coinname)
                         db.collection("users").document(auth.currentUser!!.uid).collection("portfolio").document(allcoins[i].coinname!!).update(map)
                     }
                     else{
+                        db.collection("users").document(auth.currentUser!!.uid).collection("topics").get().addOnCompleteListener {task->
+                            val documentSnapshot = task.result
+                            for(doc in documentSnapshot){
+                                if(doc.id.contains(allcoins[i].coinname!!)){
+                                    removetopic(doc.id)
+                                }
+                            }
+                        }
                         val map = HashMap<String,Any>()
                         map["notify"] = false
                         db.collection("users").document(auth.currentUser!!.uid).collection("portfolio").document(allcoins[i].coinname!!).update(map)
@@ -143,6 +153,14 @@ class coinslist : Fragment(){
 
                 }
                 remove?.setOnClickListener {
+                    db.collection("users").document(auth.currentUser!!.uid).collection("topics").get().addOnCompleteListener {task->
+                        val documentSnapshot = task.result
+                        for(doc in documentSnapshot){
+                            if(doc.id.contains(allcoins[i].coinname!!)){
+                                removetopic(doc.id)
+                            }
+                        }
+                    }
                     db.collection("users").document(auth.currentUser!!.uid).collection("portfolio").document(allcoins[i].coinname!!)
                             .delete().addOnSuccessListener {
                                 if(activity!=null){
@@ -193,6 +211,23 @@ class coinslist : Fragment(){
         })
         return vi
     }
+
+    private fun removetopic(id: String) {
+        db.collection("topics").document(id).get().addOnCompleteListener{task ->
+            val documentSnapshot = task.result
+            val count : Int = documentSnapshot.get("count") as Int
+            if (count>0){
+                val map  = HashMap<String,Any>()
+                map["count"] = count - 1
+                db.collection("topics").document(id).set(map)
+            }
+            else{
+
+            }
+        }
+        db.collection("users").document(auth.currentUser!!.uid).collection("topics").document(id).delete()
+    }
+
     private fun topicsearch(i: Int, coinname: String?) {
         db.collection("topics").document(coinname + i.toString()).get().addOnCompleteListener { task->
             val documentSnapshot = task.result
@@ -208,6 +243,9 @@ class coinslist : Fragment(){
                             .set(map).addOnSuccessListener {
                                 val message = FirebaseMessaging.getInstance()
                                 message.subscribeToTopic(coinname + i.toString())
+                                val countmap = HashMap<String,Any>()
+                                countmap["count"] = count+1
+                                db.collection("topics").document(coinname + i.toString()).set(countmap)
                             }
                 }
             }
@@ -219,7 +257,7 @@ class coinslist : Fragment(){
                             val message = FirebaseMessaging.getInstance()
                             message.subscribeToTopic(coinname + i.toString())
                             val count = HashMap<String,Any>()
-                            count["count"] = i+1
+                            count["count"] = 1
                             db.collection("topics").document(coinname + i.toString()).set(count)
                         }
             }

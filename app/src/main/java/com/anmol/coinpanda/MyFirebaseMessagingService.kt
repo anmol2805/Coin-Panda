@@ -26,9 +26,10 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     private fun showNotification(payload: Map<String, String>) {
         val alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
         val builder = NotificationCompat.Builder(this)
-        builder.setSmallIcon(R.drawable.coinintern)
+        builder.setSmallIcon(R.drawable.purple50)
         builder.setContentTitle(payload["title"])
         builder.setContentText(payload["body"])
+        builder.setVibrate(longArrayOf(1000, 1000, 1000, 1000, 1000))
         builder.setSound(alarmSound)
         val resultIntent = Intent(this, HomeActivity::class.java)
         val stackbuilder = TaskStackBuilder.create(this)
