@@ -22,7 +22,6 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:text="CryptoHype"
-        android:textColor="@color/colorPrimary"
-
-        />
+        android:textColor="@color/colorAccent"
+        android:textSize="20sp" />
 </RelativeLayout>
