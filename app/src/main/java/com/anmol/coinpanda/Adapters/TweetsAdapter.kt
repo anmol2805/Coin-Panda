@@ -49,6 +49,12 @@ class TweetsAdapter(internal var c: Context, internal var tweets: List<Tweet>, p
             intent.data = Uri.parse(url)
             c.startActivity(intent)
         }
+        if(coindata.source!!.contains("ac")){
+            holder.bookmark!!.visibility = View.INVISIBLE
+        }
+        else{
+            holder.bookmark!!.visibility = View.VISIBLE
+        }
         holder.sharebtn?.setOnClickListener {
             val shareintent = Intent()
             shareintent.action = Intent.ACTION_SEND

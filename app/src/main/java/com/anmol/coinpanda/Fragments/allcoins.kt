@@ -134,7 +134,7 @@ class allcoins : Fragment(){
         cal.add(Calendar.MONTH,-1)
         val stringtime = format.format(cal.time)
         val prevtime = Timestamp.valueOf(stringtime)
-        val jsonobjectrequest = JsonObjectRequest(Request.Method.GET,"http://165.227.98.190/alldata",null,
+        val jsonobjectrequest = JsonObjectRequest(Request.Method.GET,"http://165.227.98.190/tweets",null,
                 Response.Listener { response ->
 
                     var c = 0
