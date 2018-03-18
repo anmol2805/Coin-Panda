@@ -74,7 +74,7 @@ class TweetsActivity : AppCompatActivity() {
                             }
                             i++
                         }
-                        val mcoin = doc.getString("coin")
+                        val mcoin = doc.getString("coin_name")
                         val coin_symbol = doc.getString("coin_symbol")
                         val mtweet = doc.getString("tweet")
                         val url = doc.getString("url")

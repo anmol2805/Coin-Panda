@@ -170,7 +170,7 @@ class mycoins : Fragment(){
 
                         if (doc.getString("coin_symbol").contains(mycoins[i])) {
                             val id = doc.id
-                            val coin = doc.getString("coin")
+                            val coin = doc.getString("coin_name")
                             val coin_symbol = doc.getString("coin_symbol")
                             val mtweet = doc.getString("tweet")
                             val url = doc.getString("url")
@@ -213,7 +213,7 @@ class mycoins : Fragment(){
 
                         if (doc.getString("coin_symbol").contains(mycoins[i])) {
                             val id = doc.id
-                            val coin = doc.getString("coin")
+                            val coin = doc.getString("coin_name")
                             val coin_symbol = doc.getString("coin_symbol")
                             val mtweet = doc.getString("tweet")
                             val url = doc.getString("url")

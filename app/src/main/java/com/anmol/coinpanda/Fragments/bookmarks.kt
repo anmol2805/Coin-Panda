@@ -123,7 +123,7 @@ class bookmarks : Fragment() {
                                     i++
                                 }
                                 val id = doc.id
-                                val coin = doc.getString("coin")
+                                val coin = doc.getString("coin_name")
                                 val coin_symbol = doc.getString("coin_symbol")
                                 val mtweet = doc.getString("tweet")
                                 val url = doc.getString("url")
@@ -158,7 +158,7 @@ class bookmarks : Fragment() {
                                     i++
                                 }
                                 val id = doc.id
-                                val coin = doc.getString("coin")
+                                val coin = doc.getString("coin_name")
                                 val coin_symbol = doc.getString("coin_symbol")
                                 val mtweet = doc.getString("tweet")
                                 val url = doc.getString("url")
