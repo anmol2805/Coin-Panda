@@ -188,7 +188,6 @@ class coinslist : Fragment(){
                         }
 
                     }
-                    topicsearch(0,allcoins[i].coinname)
                     dialog.dismiss()
                 }
                 dialog.show()
@@ -212,12 +211,13 @@ class coinslist : Fragment(){
         return vi
     }
 
+
     private fun removetopic(id: String) {
         db.collection("topics").document(id).get().addOnCompleteListener{task ->
             val documentSnapshot = task.result
             val count : Int = documentSnapshot.get("count") as Int
             if (count>0){
-                val map  = HashMap<String,Any>()
+                val map  = java.util.HashMap<String, Any>()
                 map["count"] = count - 1
                 db.collection("topics").document(id).set(map)
             }
