@@ -211,7 +211,7 @@ class mycoins : Fragment(){
                     }
                     while (i < mycoins.size) {
 
-                        if (doc.getString("coin_symbol").contains(mycoins[i])) {
+                        if (doc.getString("coin_symbol") == (mycoins[i])) {
                             val id = doc.id
                             val coin = doc.getString("coin_name")
                             val coin_symbol = doc.getString("coin_symbol")

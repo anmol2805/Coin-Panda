@@ -29,6 +29,7 @@ import com.bumptech.glide.request.target.Target
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
+import com.google.firebase.messaging.FirebaseMessaging
 
 /**
  * Created by anmol on 3/15/2018.
@@ -95,7 +96,7 @@ class coinslist : Fragment(){
                 }
                 db.collection("users").document(auth.currentUser!!.uid).collection("portfolio").get().addOnCompleteListener {task ->
                     for(doc in task.result){
-                        if(doc.id.contains(allcoins[i].coinname!!)){
+                        if(doc.id == (allcoins[i].coinname!!)){
                             atp?.visibility = View.GONE
                             portfoliolay?.visibility = View.VISIBLE
                         }
@@ -155,6 +156,7 @@ class coinslist : Fragment(){
                     //                val intent = Intent(activity,PaymentActivity::class.java)
 //                intent.putExtra("coin",allcoins[i].coin)
 //                startActivity(intent)
+                    topicsearch(0,allcoins[i].coinname)
                     prg?.visibility = View.VISIBLE
                     atp.visibility = View.GONE
                     val map = HashMap<String,Any>()
@@ -168,6 +170,7 @@ class coinslist : Fragment(){
                         }
 
                     }
+                    topicsearch(0,allcoins[i].coinname)
                     dialog.dismiss()
                 }
                 dialog.show()
@@ -189,6 +192,39 @@ class coinslist : Fragment(){
 
         })
         return vi
+    }
+    private fun topicsearch(i: Int, coinname: String?) {
+        db.collection("topics").document(coinname + i.toString()).get().addOnCompleteListener { task->
+            val documentSnapshot = task.result
+            if(documentSnapshot.exists()){
+                val count : Int = documentSnapshot.get("count") as Int
+                if(count > 990){
+                    topicsearch(i+1,coinname)
+                }
+                else{
+                    val map  = HashMap<String,Any>()
+                    map["notify"] = true
+                    db.collection("users").document(auth.currentUser!!.uid).collection("topics").document(coinname + i.toString())
+                            .set(map).addOnSuccessListener {
+                                val message = FirebaseMessaging.getInstance()
+                                message.subscribeToTopic(coinname + i.toString())
+                            }
+                }
+            }
+            else{
+                val map  = HashMap<String,Any>()
+                map["notify"] = true
+                db.collection("users").document(auth.currentUser!!.uid).collection("topics").document(coinname + i.toString())
+                        .set(map).addOnSuccessListener {
+                            val message = FirebaseMessaging.getInstance()
+                            message.subscribeToTopic(coinname + i.toString())
+                            val count = HashMap<String,Any>()
+                            count["count"] = i+1
+                            db.collection("topics").document(coinname + i.toString()).set(count)
+                        }
+            }
+
+        }
     }
 
     private fun updaterequest() {
