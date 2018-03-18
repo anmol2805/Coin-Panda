@@ -34,14 +34,16 @@
         <activity android:name=".TweetsActivity" />
         <activity android:name=".AddToPortfolioActivity" />
         <activity android:name=".PaymentActivity" />
-        <activity android:name=".SupportActivity"></activity>
-        <activity android:name=".LoginActivity"></activity>
+        <activity android:name=".SupportActivity" />
+        <activity android:name=".LoginActivity" />
 
-        <service android:name=".MyFirebaseMessagingService" >
+        <service android:name=".MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+
+        <activity android:name=".SplashActivity"></activity>
     </application>
 
 </manifest>
