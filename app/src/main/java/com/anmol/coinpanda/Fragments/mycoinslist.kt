@@ -81,14 +81,14 @@ class mycoinslist : Fragment(){
                         db.collection("users").document(auth.currentUser!!.uid).collection("portfolio").document(allcoins[i].coinname!!).update(map)
                     }
                     else{
-                        db.collection("users").document(auth.currentUser!!.uid).collection("topics").get().addOnCompleteListener {task->
-                            val documentSnapshot = task.result
-                            for(doc in documentSnapshot){
-                                if(doc.id.contains(allcoins[i].coinname!!)){
-                                    removetopic(doc.id)
-                                }
-                            }
-                        }
+//                        db.collection("users").document(auth.currentUser!!.uid).collection("topics").get().addOnCompleteListener {task->
+//                            val documentSnapshot = task.result
+//                            for(doc in documentSnapshot){
+//                                if(doc.id.contains(allcoins[i].coinname!!)){
+//                                    removetopic(doc.id)
+//                                }
+//                            }
+//                        }
                         val map = HashMap<String,Any>()
                         map["notify"] = false
                         db.collection("users").document(auth.currentUser!!.uid).collection("portfolio").document(allcoins[i].coinname!!).update(map)
@@ -143,14 +143,14 @@ class mycoinslist : Fragment(){
 
                 }
                 remove?.setOnClickListener {
-                    db.collection("users").document(auth.currentUser!!.uid).collection("topics").get().addOnCompleteListener {task->
-                        val documentSnapshot = task.result
-                        for(doc in documentSnapshot){
-                            if(doc.id.contains(allcoins[i].coinname!!)){
-                                removetopic(doc.id)
-                            }
-                        }
-                    }
+//                    db.collection("users").document(auth.currentUser!!.uid).collection("topics").get().addOnCompleteListener {task->
+//                        val documentSnapshot = task.result
+//                        for(doc in documentSnapshot){
+//                            if(doc.id.contains(allcoins[i].coinname!!)){
+//                                removetopic(doc.id)
+//                            }
+//                        }
+//                    }
                     db.collection("users").document(auth.currentUser!!.uid).collection("portfolio").document(allcoins[i].coinname!!)
                             .delete().addOnSuccessListener {
                                 if(activity!=null){
@@ -193,7 +193,7 @@ class mycoinslist : Fragment(){
 
         db.collection("topics").document(id).get().addOnCompleteListener{task ->
             val documentSnapshot = task.result
-            val count : Int = documentSnapshot.get("count") as Int
+            val count = documentSnapshot.getLong("count")
             if (count>0){
                 val map  = java.util.HashMap<String, Any>()
                 map["count"] = count - 1
@@ -203,7 +203,7 @@ class mycoinslist : Fragment(){
 
             }
         }
-        //db.collection("users").document(auth.currentUser!!.uid).collection("topics").document(id).delete()
+        db.collection("users").document(auth.currentUser!!.uid).collection("topics").document(id).delete()
     }
     private fun topicsearch(i: Int, coinname: String?) {
         db.collection("topics").document(coinname + i.toString()).get().addOnCompleteListener { task->
