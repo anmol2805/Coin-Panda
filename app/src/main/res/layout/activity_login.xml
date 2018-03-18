@@ -8,15 +8,31 @@
     android:background="#fff"
     >
 
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/textView10"
+        android:layout_marginBottom="20dp"
+        app:srcCompat="@drawable/alpha" />
 
-
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:text="CryptoHype"
+        android:textColor="@color/colorAccent"
+        android:textSize="20sp" />
     <Button
         android:id="@+id/google_sign_in"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/imageView3"
-        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/textView10"
         android:layout_marginTop="50dp"
+        android:layout_centerHorizontal="true"
         android:background="@drawable/common_google_signin_btn_text_light_focused"
         android:text="Sign in with Google"
         android:textAppearance="@style/TextAppearance.AppCompat" />
