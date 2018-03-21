@@ -15,6 +15,7 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
         updaterequest()
+        moverequest()
         if(auth!=null){
             val handler = Handler()
             handler.postDelayed({
@@ -31,6 +32,16 @@ class SplashActivity : AppCompatActivity() {
     }
     private fun updaterequest() {
         val stringRequest = StringRequest(Request.Method.GET,"http://165.227.98.190/update", Response.Listener { response ->
+            System.out.println(response)
+        }, Response.ErrorListener { error->
+            System.out.println(error)
+        })
+        Mysingleton.getInstance(this).addToRequestqueue(stringRequest)
+
+
+    }
+    private fun moverequest() {
+        val stringRequest = StringRequest(Request.Method.GET,"http://165.227.98.190/move", Response.Listener { response ->
             System.out.println(response)
         }, Response.ErrorListener { error->
             System.out.println(error)

@@ -50,6 +50,7 @@ class dashboard : Fragment() {
         val vi = inflater.inflate(R.layout.dashboard, container, false)
         tweetselect = vi.findViewById(R.id.cointweetselect)
         updaterequest()
+        moverequest()
         tweetselect.isChecked = true
         setFragment(mycoins())
         tweetselect.setOnCheckedChangeListener { _, b ->
@@ -71,6 +72,17 @@ class dashboard : Fragment() {
     }
     private fun updaterequest() {
         val stringRequest = StringRequest(Request.Method.GET,"http://165.227.98.190/update", Response.Listener { response ->
+            System.out.println(response)
+        }, Response.ErrorListener { error->
+            System.out.println(error)
+        })
+        if(activity!=null){
+            Mysingleton.getInstance(activity).addToRequestqueue(stringRequest)
+        }
+
+    }
+    private fun moverequest() {
+        val stringRequest = StringRequest(Request.Method.GET,"http://165.227.98.190/move", Response.Listener { response ->
             System.out.println(response)
         }, Response.ErrorListener { error->
             System.out.println(error)
