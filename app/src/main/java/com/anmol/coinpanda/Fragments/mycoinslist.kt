@@ -35,6 +35,7 @@ class mycoinslist : Fragment(){
     var db = FirebaseFirestore.getInstance()
     var empty: TextView? = null
     val auth = FirebaseAuth.getInstance()
+    val messaging = FirebaseMessaging.getInstance()
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val vi = inflater.inflate(R.layout.mycoinslist, container, false)
         coingrid = vi.findViewById(R.id.coingrid)
@@ -77,18 +78,36 @@ class mycoinslist : Fragment(){
                     if (b){
                         val map = HashMap<String,Any>()
                         map["notify"] = true
-                        topicsearch(0,allcoins[i].coinname)
+                        topicsearch(0,allcoins[i].coinname,allcoins[i].coin)
                         db.collection("users").document(auth.currentUser!!.uid).collection("portfolio").document(allcoins[i].coinname!!).update(map)
                     }
                     else{
-//                        db.collection("users").document(auth.currentUser!!.uid).collection("topics").get().addOnCompleteListener {task->
-//                            val documentSnapshot = task.result
-//                            for(doc in documentSnapshot){
-//                                if(doc.id.contains(allcoins[i].coinname!!)){
-//                                    removetopic(doc.id)
-//                                }
-//                            }
-//                        }
+                        db.collection("users").document(auth.currentUser!!.uid).collection("topics").addSnapshotListener{ documenSnapshot,e->
+                            for(doc in documenSnapshot){
+                                if(doc.id.contains(allcoins[i].coinname!!) && doc.getString("coinname") == allcoins[i].coin){
+                                    db.collection("users").document(auth.currentUser!!.uid).collection("topics").document(doc.id).delete().addOnSuccessListener{
+                                        messaging.unsubscribeFromTopic(doc.id)
+                                        db.collection("topics").document(doc.id).get().addOnCompleteListener{task ->
+                                            val documentSnapshot = task.result
+                                            val count = documentSnapshot.getLong("count")
+                                            if (count>0){
+                                                val map  = java.util.HashMap<String, Any>()
+                                                map["count"] = count - 1
+                                                db.collection("topics").document(doc.id).set(map)
+                                            }
+                                            else{
+
+                                            }
+                                        }
+
+
+                                    }
+
+                                }
+
+                            }
+
+                        }
                         val map = HashMap<String,Any>()
                         map["notify"] = false
                         db.collection("users").document(auth.currentUser!!.uid).collection("portfolio").document(allcoins[i].coinname!!).update(map)
@@ -143,21 +162,40 @@ class mycoinslist : Fragment(){
 
                 }
                 remove?.setOnClickListener {
-//                    db.collection("users").document(auth.currentUser!!.uid).collection("topics").get().addOnCompleteListener {task->
-//                        val documentSnapshot = task.result
-//                        for(doc in documentSnapshot){
-//                            if(doc.id.contains(allcoins[i].coinname!!)){
-//                                removetopic(doc.id)
-//                            }
-//                        }
-//                    }
-                    db.collection("users").document(auth.currentUser!!.uid).collection("portfolio").document(allcoins[i].coinname!!)
-                            .delete().addOnSuccessListener {
-                                if(activity!=null){
-                                    Toast.makeText(activity,"Removed from your Portfolio", Toast.LENGTH_SHORT).show()
+                    db.collection("users").document(auth.currentUser!!.uid).collection("topics").addSnapshotListener{ documenSnapshot,e->
+                        for(doc in documenSnapshot){
+                            if(doc.id.contains(allcoins[i].coinname!!) && doc.getString("coinname") == allcoins[i].coin){
+                                db.collection("users").document(auth.currentUser!!.uid).collection("topics").document(doc.id).delete().addOnSuccessListener{
+                                    messaging.unsubscribeFromTopic(doc.id)
+                                    db.collection("users").document(auth.currentUser!!.uid).collection("portfolio").document(allcoins[i].coinname!!)
+                                            .delete().addOnSuccessListener {
+                                                if(activity!=null){
+                                                    Toast.makeText(activity,"Removed from your Portfolio", Toast.LENGTH_SHORT).show()
+                                                }
+
+                                            }
+                                    db.collection("topics").document(doc.id).get().addOnCompleteListener{task ->
+                                        val documentSnapshot = task.result
+                                        val count = documentSnapshot.getLong("count")
+                                        if (count>0){
+                                            val map  = java.util.HashMap<String, Any>()
+                                            map["count"] = count - 1
+                                            db.collection("topics").document(doc.id).set(map)
+                                        }
+                                        else{
+
+                                        }
+                                    }
+
+
                                 }
 
                             }
+
+                        }
+
+                    }
+
                     dialog.dismiss()
 
                 }
@@ -165,7 +203,7 @@ class mycoinslist : Fragment(){
                     //                val intent = Intent(activity,PaymentActivity::class.java)
 //                intent.putExtra("coin",allcoins[i].coin)
 //                startActivity(intent)
-                    topicsearch(0,allcoins[i].coinname)
+                    topicsearch(0, allcoins[i].coinname, allcoins[i].coin)
                     prg?.visibility = View.VISIBLE
                     atp.visibility = View.GONE
                     val map = HashMap<String,Any>()
@@ -179,7 +217,7 @@ class mycoinslist : Fragment(){
 
 
                     }
-                    topicsearch(0,allcoins[i].coinname)
+                    topicsearch(0, allcoins[i].coinname, allcoins[i].coin)
                     dialog.dismiss()
                 }
                 dialog.show()
@@ -205,31 +243,31 @@ class mycoinslist : Fragment(){
         }
         db.collection("users").document(auth.currentUser!!.uid).collection("topics").document(id).delete()
     }
-    private fun topicsearch(i: Int, coinname: String?) {
+    private fun topicsearch(i: Int, coinname: String?, coin: String?) {
         db.collection("topics").document(coinname + i.toString()).get().addOnCompleteListener { task->
             val documentSnapshot = task.result
             if(documentSnapshot.exists()){
                 val count = documentSnapshot.getLong("count")
                 if(count > 990){
-                    topicsearch(i+1,coinname)
+                    topicsearch(i+1, coinname, allcoins[i].coin)
                 }
                 else{
                     val map  = HashMap<String,Any>()
                     map["notify"] = true
+                    map["coinname"] = coin!!
                     db.collection("users").document(auth.currentUser!!.uid).collection("topics").document(coinname + i.toString())
                             .set(map).addOnSuccessListener {
-                                val message = FirebaseMessaging.getInstance()
-                                message.subscribeToTopic(coinname + i.toString())
+                                messaging.subscribeToTopic(coinname + i.toString())
                             }
                 }
             }
             else{
                 val map  = HashMap<String,Any>()
                 map["notify"] = true
+                map["coinname"] = coin!!
                 db.collection("users").document(auth.currentUser!!.uid).collection("topics").document(coinname + i.toString())
                         .set(map).addOnSuccessListener {
-                            val message = FirebaseMessaging.getInstance()
-                            message.subscribeToTopic(coinname + i.toString())
+                            messaging.subscribeToTopic(coinname + i.toString())
                             val count = HashMap<String,Any>()
                             count["count"] = i+1
                             count["coin_symbol"] = coinname.toString()
