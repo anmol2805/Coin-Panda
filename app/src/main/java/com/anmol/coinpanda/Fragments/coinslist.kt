@@ -74,13 +74,16 @@ class coinslist : Fragment(){
                 val remove:Button? = dialog.findViewById(R.id.remove)
                 atp?.visibility = View.VISIBLE
                 portfoliolay?.visibility = View.GONE
-                db.collection("users").document(auth.currentUser!!.uid).collection("portfolio").document(allcoins[i].coinname!!).get().addOnCompleteListener { task ->
+                db.collection("users").document(auth.currentUser!!.uid).collection("topics").get().addOnCompleteListener { task ->
                     val snapshot = task.result
-                    if(snapshot.exists()){
-                        val notify = snapshot?.getBoolean("notify")
-                        if (notify!!){
-                            notificationswitch?.isChecked = true
+                    for(doc in snapshot){
+                        if(doc.id.contains(allcoins[i].coinname!!) && doc.getString("coinname").contains(allcoins[i].coin!!)){
+                            val notify = doc.getBoolean("notify")
+                            if (!notify!!){
+                                notificationswitch?.isChecked = false
+                            }
                         }
+
                     }
 
                 }
@@ -93,7 +96,8 @@ class coinslist : Fragment(){
                         db.collection("users").document(auth.currentUser!!.uid).collection("portfolio").document(allcoins[i].coinname!!).update(map)
                     }
                     else{
-                        db.collection("users").document(auth.currentUser!!.uid).collection("topics").addSnapshotListener{ documenSnapshot,e->
+                        db.collection("users").document(auth.currentUser!!.uid).collection("topics").get().addOnCompleteListener{task->
+                            val documenSnapshot = task.result
                             for(doc in documenSnapshot){
                                 if(doc.id.contains(allcoins[i].coinname!!) && doc.getString("coinname") == allcoins[i].coin){
                                     db.collection("users").document(auth.currentUser!!.uid).collection("topics").document(doc.id).delete().addOnSuccessListener{
@@ -104,7 +108,7 @@ class coinslist : Fragment(){
                                             if (count>0){
                                                 val map  = java.util.HashMap<String, Any>()
                                                 map["count"] = count - 1
-                                                db.collection("topics").document(doc.id).set(map)
+                                                db.collection("topics").document(doc.id).update(map)
                                             }
                                             else{
 
@@ -119,9 +123,7 @@ class coinslist : Fragment(){
                             }
 
                         }
-                        val map = HashMap<String,Any>()
-                        map["notify"] = false
-                        db.collection("users").document(auth.currentUser!!.uid).collection("portfolio").document(allcoins[i].coinname!!).update(map)
+
                     }
                 }
                 db.collection("users").document(auth.currentUser!!.uid).collection("portfolio").get().addOnCompleteListener {task ->
@@ -173,7 +175,8 @@ class coinslist : Fragment(){
 
                 }
                 remove?.setOnClickListener {
-                    db.collection("users").document(auth.currentUser!!.uid).collection("topics").addSnapshotListener{ documenSnapshot,e->
+                    db.collection("users").document(auth.currentUser!!.uid).collection("topics").get().addOnCompleteListener{task->
+                        val documenSnapshot = task.result
                         for(doc in documenSnapshot){
                             if(doc.id.contains(allcoins[i].coinname!!) && doc.getString("coinname") == allcoins[i].coin){
                                 db.collection("users").document(auth.currentUser!!.uid).collection("topics").document(doc.id).delete().addOnSuccessListener{
@@ -191,7 +194,7 @@ class coinslist : Fragment(){
                                         if (count>0){
                                             val map  = java.util.HashMap<String, Any>()
                                             map["count"] = count - 1
-                                            db.collection("topics").document(doc.id).set(map)
+                                            db.collection("topics").document(doc.id).update(map)
                                         }
                                         else{
 
