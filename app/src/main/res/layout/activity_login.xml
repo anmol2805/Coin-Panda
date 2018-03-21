@@ -54,6 +54,16 @@
         android:visibility="invisible"
         android:text="To continue with facebook, please make sure that you have facebook app installed on your device." />
 
+    <ProgressBar
+        android:id="@+id/pgr"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_alignTop="@+id/textView11"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="35dp"
+        android:visibility="gone" />
+
     <!--<Button-->
         <!--android:id="@+id/loginmail"-->
         <!--android:layout_width="wrap_content"-->

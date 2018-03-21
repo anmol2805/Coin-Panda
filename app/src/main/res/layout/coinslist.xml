@@ -10,7 +10,7 @@
         android:layout_centerVertical="true"
         android:fontFamily="casual"
         android:textAlignment="center"
-        android:text="You haven't added any coins to your portfolio"
+        android:text="No Coins to show"
         android:visibility="gone"
         android:textColor="@color/colorPrimary"
         android:textSize="20sp"
@@ -69,5 +69,13 @@
         android:layout_below="@+id/search"
         android:padding="5dp"
         android:stretchMode="spacingWidthUniform"
-        android:verticalSpacing="5dp" />
+        android:verticalSpacing="5dp" >
+
+    </GridView>
+    <ProgressBar
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:id="@+id/pgr"
+        android:layout_centerInParent="true"
+        />
 </RelativeLayout>

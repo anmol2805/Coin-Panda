@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.facebook.AccessToken;
@@ -47,7 +48,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private Button googleSignIn;
     private static final int RC_SIGN_IN = 9001;
     private GoogleApiClient mGoogleApiClient;
-
+    ProgressBar pgr;
 
     //Data retrieved from social media method of sign in
 
@@ -56,7 +57,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         setTitle("Login");
-
+        pgr = (ProgressBar)findViewById(R.id.pgr);
         //Instantiate Google Login
         instantiateGoogleLogin();
 
@@ -82,6 +83,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
                 startActivityForResult(signInIntent, RC_SIGN_IN);
                 Toast.makeText(LoginActivity.this,"Please wait while we are authenticating your credentials",Toast.LENGTH_LONG).show();
+                pgr.setVisibility(View.VISIBLE);
             }
         });
     }
@@ -162,11 +164,13 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                             Log.d(TAG, "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             updateUI(user);
+                            pgr.setVisibility(View.GONE);
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
                             Toast.makeText(LoginActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
+                            pgr.setVisibility(View.GONE);
 
                         }
 
