@@ -4,15 +4,26 @@
     android:layout_width="300dp"
     android:layout_height="wrap_content"
     app:cardBackgroundColor="#fff"
-    app:cardCornerRadius="16dp">
+    >
 
    <RelativeLayout
        android:layout_width="match_parent"
        android:layout_height="wrap_content">
+       <Button
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:background="@color/colorPrimary"
+           android:text="Request a coin"
+           android:textColor="#fff"
+           android:id="@+id/head"
+           />
        <android.support.design.widget.TextInputLayout
            android:id="@+id/search"
            android:layout_width="match_parent"
-           android:layout_height="wrap_content">
+           android:layout_height="wrap_content"
+           android:layout_marginTop="10dp"
+           android:layout_below="@+id/head"
+           >
 
 
            <EditText
@@ -32,12 +43,15 @@
        </android.support.design.widget.TextInputLayout>
        <Button
            android:id="@+id/submit"
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
+           android:layout_width="wrap_content"
+           android:layout_height="30dp"
            android:layout_below="@+id/search"
-           android:background="@color/colorPrimary"
+           android:background="@drawable/round_button"
            android:text="Request"
-           android:textColor="#fff"
+           android:textSize="12sp"
+           android:layout_marginBottom="5dp"
+           android:layout_centerHorizontal="true"
+           android:textColor="#000"
            android:textStyle="bold" />
 
        <ProgressBar
