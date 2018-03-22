@@ -48,7 +48,7 @@ class allcoins : Fragment(){
     lateinit var tweets : MutableList<Tweet>
     lateinit var itemClickListener : ItemClickListener
     lateinit var keyClickListener : ItemClickListener
-
+    var retry:Button?=null
     var sedit: EditText? = null
     var srch: Button? = null
     var db = FirebaseFirestore.getInstance()
@@ -63,6 +63,8 @@ class allcoins : Fragment(){
         cointweetrecycler = vi.findViewById(R.id.cointweetrecycler)
         pgr = vi.findViewById(R.id.pgr)
         empty = vi.findViewById(R.id.empty)
+        retry = vi.findViewById(R.id.retry)
+        retry?.visibility = View.GONE
         empty?.visibility = View.GONE
 //        keywordrecycler = vi.findViewById(R.id.keywordrecycler)
 //        sedit = vi.findViewById(R.id.sc)
@@ -126,12 +128,16 @@ class allcoins : Fragment(){
 //            }
 //
 //        })
-
+            retry?.setOnClickListener{
+                loadquery(null)
+            }
             return vi
     }
 
     private fun loadquery(p0: CharSequence?) {
         pgr?.visibility = View.VISIBLE
+        retry?.visibility = View.GONE
+        empty?.visibility = View.GONE
         tweets.clear()
         val format = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
         val cal = Calendar.getInstance()
@@ -178,6 +184,8 @@ class allcoins : Fragment(){
                             if (activity != null) {
                                 if (!tweets.isEmpty()) {
                                     pgr?.visibility = View.GONE
+                                    retry?.visibility = View.GONE
+                                    empty?.visibility = View.GONE
                                     tweetsAdapter = TweetsAdapter(activity!!, tweets, itemClickListener)
                                     tweetsAdapter!!.notifyDataSetChanged()
                                     cointweetrecycler?.adapter = tweetsAdapter
@@ -185,6 +193,7 @@ class allcoins : Fragment(){
 
                                 }
                                 else{
+                                    retry?.visibility = View.VISIBLE
                                     empty?.visibility = View.VISIBLE
                                 }
                             }
@@ -237,6 +246,7 @@ class allcoins : Fragment(){
         }, Response.ErrorListener {error ->
             System.out.println("error:"+error.message)
             empty?.visibility = View.VISIBLE
+            retry?.visibility = View.VISIBLE
             pgr?.visibility = View.GONE
             if(activity!=null){
                 Toast.makeText(activity,"Network Error",Toast.LENGTH_LONG).show()
