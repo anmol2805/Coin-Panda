@@ -60,6 +60,7 @@ class allcoins : Fragment(){
         activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
         val layoutManager = LinearLayoutManager(activity)
         cointweetrecycler = vi.findViewById(R.id.cointweetrecycler)
+        pgr = vi.findViewById(R.id.pgr)
 //        keywordrecycler = vi.findViewById(R.id.keywordrecycler)
 //        sedit = vi.findViewById(R.id.sc)
 //        srch = vi.findViewById(R.id.scb)

@@ -216,6 +216,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
+            finish();
             overridePendingTransition(R.anim.slide_left_in,R.anim.slide_left_out);
 
         }
