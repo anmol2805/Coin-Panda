@@ -61,9 +61,9 @@
 
     <ProgressBar
         android:id="@+id/pgr"
-        android:elevation="8dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:elevation="64dp"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true" />
 
