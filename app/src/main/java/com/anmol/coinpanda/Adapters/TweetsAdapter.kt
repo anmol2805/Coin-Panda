@@ -66,7 +66,7 @@ class TweetsAdapter(internal var c: Context, internal var tweets: List<Tweet>, p
         }
         holder.mcoin?.text = coindata.coin
         holder.coinname?.text = coindata.coin_symbol
-        holder.keyword?.text = coindata.keyword
+        holder.keyword?.text = "# " + coindata.keyword
         holder.timestamp?.text = coindata.dates + "(GMT)"
         val urlpng = "https://raw.githubusercontent.com/crypti/cryptocurrencies/master/images/"+coindata.coin_symbol+".png"
         val urljpg = "https://raw.githubusercontent.com/crypti/cryptocurrencies/master/images/"+coindata.coin_symbol+".jpg"

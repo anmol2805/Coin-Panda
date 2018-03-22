@@ -24,11 +24,10 @@
         android:layout_centerHorizontal="true"
 
         android:layout_marginBottom="125dp"
-        android:fontFamily="casual"
+        android:fontFamily="sans-serif-smallcaps"
         android:text="Coming soon!!!"
         android:textColor="@color/colorPrimary"
-        android:textSize="20sp"
-        android:textStyle="bold|italic" />
+        android:textSize="20sp" />
 
     <ImageView
         android:id="@+id/imageView4"

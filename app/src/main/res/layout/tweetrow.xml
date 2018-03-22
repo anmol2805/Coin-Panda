@@ -78,27 +78,20 @@
         android:textColor="#000"
         android:textSize="16sp"
         android:textStyle="bold" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toStartOf="@+id/keyword"
-                android:layout_toLeftOf="@+id/keyword"
-                android:text="#"
-                />
 
     <TextView
         android:id="@+id/keyword"
-        android:layout_width="110dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/coin"
+        android:layout_below="@+id/time"
+        android:layout_toLeftOf="@+id/sharebtn"
+        android:layout_toStartOf="@+id/sharebtn"
         android:layout_marginEnd="5dp"
         android:layout_marginRight="5dp"
         android:fontFamily="sans-serif-condensed"
         android:gravity="end"
-        android:text="beta - collaboration - meetup - allocation"
-        android:textAlignment="center"
+        android:textAlignment="viewEnd"
         android:textColor="#3498db" />
 
     <TextView

@@ -25,19 +25,18 @@
                 android:id="@+id/pgr"
                 android:layout_centerInParent="true"
                 />
+
             <TextView
                 android:id="@+id/empty"
                 android:layout_width="275dp"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
-                android:fontFamily="casual"
-                android:textAlignment="center"
+                android:fontFamily="sans-serif-smallcaps"
                 android:text="You don't have any bookmarks yet"
-                android:visibility="gone"
-                android:textColor="@color/colorPrimary"
+                android:textAlignment="center"
                 android:textSize="20sp"
-                android:textStyle="bold|italic" />
+                android:visibility="gone" />
 
             <Button
                 android:id="@+id/scb"

@@ -55,12 +55,15 @@ class allcoins : Fragment(){
     val auth = FirebaseAuth.getInstance()
     var tweetsAdapter : TweetsAdapter?=null
     var pgr:ProgressBar?=null
+    var empty:ImageView?=null
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val vi = inflater.inflate(R.layout.allcoins, container, false)
         activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
         val layoutManager = LinearLayoutManager(activity)
         cointweetrecycler = vi.findViewById(R.id.cointweetrecycler)
         pgr = vi.findViewById(R.id.pgr)
+        empty = vi.findViewById(R.id.empty)
+        empty?.visibility = View.GONE
 //        keywordrecycler = vi.findViewById(R.id.keywordrecycler)
 //        sedit = vi.findViewById(R.id.sc)
 //        srch = vi.findViewById(R.id.scb)
@@ -181,6 +184,9 @@ class allcoins : Fragment(){
                                     //cointweetrecycler?.addItemDecoration(DividerItemDecoration(ContextCompat.getDrawable(activity!!,R.drawable.item_decorator)!!))
 
                                 }
+                                else{
+                                    empty?.visibility = View.VISIBLE
+                                }
                             }
                         } else {
                             while (c<jsonArray.length()) {
@@ -219,6 +225,9 @@ class allcoins : Fragment(){
                                     //cointweetrecycler?.addItemDecoration(DividerItemDecoration(ContextCompat.getDrawable(activity!!,R.drawable.item_decorator)!!))
 
                                 }
+                                else{
+                                    empty?.visibility = View.VISIBLE
+                                }
                             }
                         }
                     }
@@ -227,6 +236,7 @@ class allcoins : Fragment(){
 
         }, Response.ErrorListener {error ->
             System.out.println("error:"+error.message)
+            empty?.visibility = View.VISIBLE
             pgr?.visibility = View.GONE
             if(activity!=null){
                 Toast.makeText(activity,"Network Error",Toast.LENGTH_LONG).show()
