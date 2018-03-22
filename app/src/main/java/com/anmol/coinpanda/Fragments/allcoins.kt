@@ -15,10 +15,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
-import android.widget.Button
-import android.widget.EditText
-import android.widget.Switch
-import android.widget.Toast
+import android.widget.*
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
@@ -32,6 +29,7 @@ import com.anmol.coinpanda.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
+import kotlinx.android.synthetic.main.request.*
 import kotlinx.android.synthetic.main.tweetrow.*
 import org.json.JSONArray
 import java.lang.reflect.Method
@@ -56,6 +54,7 @@ class allcoins : Fragment(){
     var db = FirebaseFirestore.getInstance()
     val auth = FirebaseAuth.getInstance()
     var tweetsAdapter : TweetsAdapter?=null
+    var pgr:ProgressBar?=null
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val vi = inflater.inflate(R.layout.allcoins, container, false)
         activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
@@ -128,6 +127,7 @@ class allcoins : Fragment(){
     }
 
     private fun loadquery(p0: CharSequence?) {
+        pgr?.visibility = View.VISIBLE
         tweets.clear()
         val format = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
         val cal = Calendar.getInstance()
@@ -173,6 +173,7 @@ class allcoins : Fragment(){
                             }
                             if (activity != null) {
                                 if (!tweets.isEmpty()) {
+                                    pgr?.visibility = View.GONE
                                     tweetsAdapter = TweetsAdapter(activity!!, tweets, itemClickListener)
                                     tweetsAdapter!!.notifyDataSetChanged()
                                     cointweetrecycler?.adapter = tweetsAdapter
@@ -210,6 +211,7 @@ class allcoins : Fragment(){
                             }
                             if (activity != null) {
                                 if (!tweets.isEmpty()) {
+                                    pgr?.visibility = View.GONE
                                     tweetsAdapter = TweetsAdapter(activity!!, tweets, itemClickListener)
                                     tweetsAdapter!!.notifyDataSetChanged()
                                     cointweetrecycler?.adapter = tweetsAdapter
@@ -224,6 +226,7 @@ class allcoins : Fragment(){
 
         }, Response.ErrorListener {error ->
             System.out.println("error:"+error.message)
+            pgr?.visibility = View.GONE
             if(activity!=null){
                 Toast.makeText(activity,"Network Error",Toast.LENGTH_LONG).show()
 

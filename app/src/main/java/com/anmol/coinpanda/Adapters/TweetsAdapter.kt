@@ -1,5 +1,6 @@
 package com.anmol.coinpanda.Adapters
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.Drawable
@@ -40,6 +41,7 @@ class TweetsAdapter(internal var c: Context, internal var tweets: List<Tweet>, p
         return tweets.size
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val coindata = tweets[position] 
         holder.mtweet?.text = coindata.tweet
@@ -65,7 +67,7 @@ class TweetsAdapter(internal var c: Context, internal var tweets: List<Tweet>, p
         holder.mcoin?.text = coindata.coin
         holder.coinname?.text = coindata.coin_symbol
         holder.keyword?.text = coindata.keyword
-        holder.timestamp?.text = coindata.dates
+        holder.timestamp?.text = coindata.dates + "(GMT)"
         val urlpng = "https://raw.githubusercontent.com/crypti/cryptocurrencies/master/images/"+coindata.coin_symbol+".png"
         val urljpg = "https://raw.githubusercontent.com/crypti/cryptocurrencies/master/images/"+coindata.coin_symbol+".jpg"
         val urljpeg = "https://raw.githubusercontent.com/crypti/cryptocurrencies/master/images/"+coindata.coin_symbol+".jpeg"

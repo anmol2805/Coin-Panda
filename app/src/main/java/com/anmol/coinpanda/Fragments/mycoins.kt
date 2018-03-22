@@ -15,10 +15,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
-import android.widget.Button
-import android.widget.EditText
-import android.widget.Switch
-import android.widget.TextView
+import android.widget.*
 import com.anmol.coinpanda.Adapters.DividerItemDecoration
 import com.anmol.coinpanda.Adapters.KeywordAdapter
 import com.anmol.coinpanda.Adapters.TweetsAdapter
@@ -48,7 +45,7 @@ class mycoins : Fragment(){
     val auth = FirebaseAuth.getInstance()
     var empty: TextView? = null
     lateinit var keyClickListener : ItemClickListener
-
+    var pgr :ProgressBar?=null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val vi = inflater.inflate(R.layout.mycoins, container, false)
@@ -60,6 +57,7 @@ class mycoins : Fragment(){
             sedit = vi.findViewById(R.id.sc)
             srch = vi.findViewById(R.id.scb)
             empty = vi.findViewById(R.id.empty)
+            pgr = vi.findViewById(R.id.pgr)
             keywordrecycler?.setHasFixedSize(true)
             keywordrecycler?.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
             empty?.visibility = View.GONE
@@ -129,6 +127,7 @@ class mycoins : Fragment(){
     }
 
     private fun loadquery(p0: CharSequence?) {
+        pgr?.visibility = View.VISIBLE
         val format = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
         val cal = Calendar.getInstance()
         cal.add(Calendar.MONTH,-1)
@@ -185,6 +184,7 @@ class mycoins : Fragment(){
                 }
                 if(activity!=null){
                     if(!tweets.isEmpty()){
+                        pgr?.visibility = View.GONE
                         System.out.println("logging:$tweets")
                         val tweetsAdapter = TweetsAdapter(activity!!,tweets,itemClickListener)
                         tweetsAdapter.notifyDataSetChanged()
@@ -193,6 +193,7 @@ class mycoins : Fragment(){
                         //cointweetrecycler?.addItemDecoration(DividerItemDecoration(ContextCompat.getDrawable(activity!!,R.drawable.item_decorator)!!))
                     }
                     else{
+                        pgr?.visibility = View.GONE
                         empty?.visibility = View.VISIBLE
                     }
                 }
@@ -237,9 +238,12 @@ class mycoins : Fragment(){
                         tweetsAdapter.notifyDataSetChanged()
                         cointweetrecycler?.adapter = tweetsAdapter
                         empty?.visibility = View.GONE
+                        pgr?.visibility = View.GONE
                         //cointweetrecycler?.addItemDecoration(DividerItemDecoration(ContextCompat.getDrawable(activity!!,R.drawable.item_decorator)!!))
                     }
                     else{
+                        pgr?.visibility = View.GONE
+                        empty?.text = "No tweets found"
                         empty?.visibility = View.VISIBLE
                     }
                 }

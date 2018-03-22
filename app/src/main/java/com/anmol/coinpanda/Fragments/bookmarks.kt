@@ -17,6 +17,7 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ProgressBar
 import android.widget.TextView
 import com.anmol.coinpanda.Adapters.DividerItemDecoration
 import com.anmol.coinpanda.Adapters.TweetsAdapter
@@ -42,7 +43,7 @@ class bookmarks : Fragment() {
     var db = FirebaseFirestore.getInstance()
     val auth = FirebaseAuth.getInstance()
     var empty: TextView? = null
-
+    var pgr :ProgressBar?=null
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val vi = inflater.inflate(R.layout.bookmarks,
                 container, false)
@@ -55,6 +56,7 @@ class bookmarks : Fragment() {
             sedit = vi.findViewById(R.id.sc)
             srch = vi.findViewById(R.id.scb)
             empty = vi.findViewById(R.id.empty)
+            pgr = vi.findViewById(R.id.pgr)
             empty?.visibility = View.GONE
             cointweetrecycler?.layoutManager = layoutManager
             cointweetrecycler?.setHasFixedSize(true)
@@ -94,6 +96,7 @@ class bookmarks : Fragment() {
 
     private fun loadquery(p0: CharSequence?) {
         tweets.clear()
+        pgr?.visibility = View.VISIBLE
         val format = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
         val cal = Calendar.getInstance()
         cal.add(Calendar.MONTH,-1)
@@ -137,6 +140,7 @@ class bookmarks : Fragment() {
                             }
                             if (activity != null) {
                                 if (!tweets.isEmpty()) {
+                                    pgr?.visibility = View.GONE
                                     val tweetsAdapter = TweetsAdapter(activity!!, tweets, itemClickListener)
                                     tweetsAdapter.notifyDataSetChanged()
                                     cointweetrecycler?.adapter = tweetsAdapter
@@ -144,6 +148,7 @@ class bookmarks : Fragment() {
 
                                 }
                                 else{
+                                    pgr?.visibility = View.GONE
                                     empty?.visibility = View.VISIBLE
                                 }
                             }
@@ -175,6 +180,7 @@ class bookmarks : Fragment() {
                             }
                             if (activity != null) {
                                 if (!tweets.isEmpty()) {
+                                    pgr?.visibility = View.GONE
                                     val tweetsAdapter = TweetsAdapter(activity!!, tweets, itemClickListener)
                                     tweetsAdapter.notifyDataSetChanged()
                                     cointweetrecycler?.adapter = tweetsAdapter
@@ -182,6 +188,8 @@ class bookmarks : Fragment() {
 
                                 }
                                 else{
+                                    pgr?.visibility = View.GONE
+                                    empty?.text = "No results found"
                                     empty?.visibility = View.VISIBLE
                                 }
                             }

@@ -36,10 +36,12 @@ class mycoinslist : Fragment(){
     var empty: TextView? = null
     val auth = FirebaseAuth.getInstance()
     val messaging = FirebaseMessaging.getInstance()
+    var pgr :ProgressBar?=null
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val vi = inflater.inflate(R.layout.mycoinslist, container, false)
         coingrid = vi.findViewById(R.id.coingrid)
         empty = vi.findViewById(R.id.empty)
+        pgr = vi.findViewById(R.id.pgr)
         empty?.visibility = View.GONE
         allcoins = ArrayList()
         val handler = Handler()
@@ -291,6 +293,7 @@ class mycoinslist : Fragment(){
 
     private fun loaddata() {
         allcoins.clear()
+        pgr?.visibility = View.VISIBLE
         db.collection("users").document(auth.currentUser!!.uid).collection("portfolio").addSnapshotListener{documentSnapshot, e ->
             allcoins.clear()
             for(doc in documentSnapshot.documents){
@@ -302,12 +305,14 @@ class mycoinslist : Fragment(){
             }
             if(activity!=null){
                 if(!allcoins.isEmpty()){
+                    pgr?.visibility = View.GONE
                     empty?.visibility = View.GONE
                     gridAdapter = GridnewAdapter(activity!!, allcoins)
                     gridAdapter.notifyDataSetChanged()
                     coingrid?.adapter = gridAdapter
                 }
                 else{
+                    pgr?.visibility = View.GONE
                     empty?.visibility = View.VISIBLE
                 }
             }

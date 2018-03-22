@@ -16,7 +16,12 @@
         android:textSize="20sp"
         android:textStyle="bold|italic" />
 
-
+    <ProgressBar
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:id="@+id/pgr"
+        android:layout_centerInParent="true"
+        />
     <android.support.v7.widget.RecyclerView
         android:id="@+id/coinrecycler"
         android:layout_width="match_parent"

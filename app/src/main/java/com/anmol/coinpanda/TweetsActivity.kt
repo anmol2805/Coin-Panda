@@ -9,6 +9,7 @@ import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
+import android.widget.ProgressBar
 import android.widget.TextView
 import com.anmol.coinpanda.Adapters.DividerItemDecoration
 import com.anmol.coinpanda.Adapters.TweetsAdapter
@@ -27,6 +28,7 @@ class TweetsActivity : AppCompatActivity() {
     var db = FirebaseFirestore.getInstance()
     val auth = FirebaseAuth.getInstance()
     var empty: TextView? = null
+    var pgr:ProgressBar? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tweets)
@@ -62,6 +64,7 @@ class TweetsActivity : AppCompatActivity() {
     }
 
     private fun loadtweets(coin: String, bookmarks: ArrayList<String>) {
+        pgr?.visibility = View.VISIBLE
         db.collection("Tweets")
                 .orderBy("date",Query.Direction.DESCENDING).addSnapshotListener{documentSnapshot,e->
                     tweets.clear()
@@ -92,9 +95,11 @@ class TweetsActivity : AppCompatActivity() {
                             val tweetsAdapter = TweetsAdapter(this,tweets,itemClickListener)
                             tweetsAdapter.notifyDataSetChanged()
                             mtweetrecycler?.adapter = tweetsAdapter
+                            pgr?.visibility = View.GONE
                             //mtweetrecycler?.addItemDecoration(DividerItemDecoration(ContextCompat.getDrawable(applicationContext,R.drawable.item_decorator)!!))
                         }
                         else{
+                            pgr?.visibility = View.GONE
                             empty?.visibility = View.VISIBLE
                         }
 
