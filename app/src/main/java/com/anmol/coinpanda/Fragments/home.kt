@@ -36,14 +36,27 @@ import com.google.firebase.firestore.Query
 class home : Fragment() {
 
     private lateinit var mcoinselect: Switch
-
+    val db = FirebaseFirestore.getInstance()
+    val auth = FirebaseAuth.getInstance()
     @SuppressLint("SetTextI18n")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val vi = inflater.inflate(R.layout.home,
                 container, false)
         mcoinselect = vi.findViewById(R.id.coinselect)
-        mcoinselect.isChecked = true
-        setFragment(mycoinslist())
+        db.collection("users").document(auth.currentUser!!.uid).collection("portfolio").get().addOnCompleteListener {
+            task ->
+            val documentSnapshot = task.result
+            val s = documentSnapshot.size()
+            if(s!=0){
+                mcoinselect.isChecked = true
+                setFragment(mycoinslist())
+            }
+            else{
+                mcoinselect.isChecked = false
+                setFragment(coinslist())
+            }
+        }
+
 
         mcoinselect.setOnCheckedChangeListener({ compoundButton, b ->
             if (b){

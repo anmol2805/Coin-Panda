@@ -51,8 +51,20 @@ class dashboard : Fragment() {
         tweetselect = vi.findViewById(R.id.cointweetselect)
         updaterequest()
         moverequest()
-        tweetselect.isChecked = true
-        setFragment(mycoins())
+        db.collection("users").document(auth.currentUser!!.uid).collection("portfolio").get().addOnCompleteListener {
+            task ->
+            val documentSnapshot = task.result
+            val s = documentSnapshot.size()
+            if(s!=0){
+                tweetselect.isChecked = true
+                setFragment(mycoins())
+            }
+            else{
+                tweetselect.isChecked = false
+                setFragment(allcoins())
+            }
+        }
+
         tweetselect.setOnCheckedChangeListener { _, b ->
             if(b){
                 setFragment(mycoins())
