@@ -38,20 +38,25 @@ class home : Fragment() {
     private lateinit var mcoinselect: Switch
     val db = FirebaseFirestore.getInstance()
     val auth = FirebaseAuth.getInstance()
+    var pgr : ProgressBar?=null
     @SuppressLint("SetTextI18n")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val vi = inflater.inflate(R.layout.home,
                 container, false)
         mcoinselect = vi.findViewById(R.id.coinselect)
+        pgr = vi.findViewById(R.id.pgr)
+        pgr?.visibility = View.VISIBLE
         db.collection("users").document(auth.currentUser!!.uid).collection("portfolio").get().addOnCompleteListener {
             task ->
             val documentSnapshot = task.result
             val s = documentSnapshot.size()
             if(s!=0){
+                pgr?.visibility = View.GONE
                 mcoinselect.isChecked = true
                 setFragment(mycoinslist())
             }
             else{
+                pgr?.visibility = View.GONE
                 mcoinselect.isChecked = false
                 setFragment(coinslist())
             }

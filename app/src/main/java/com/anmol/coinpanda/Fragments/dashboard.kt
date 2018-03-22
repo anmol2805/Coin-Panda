@@ -16,6 +16,7 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ProgressBar
 import android.widget.Switch
 import com.android.volley.Request
 import com.android.volley.Response
@@ -46,9 +47,12 @@ class dashboard : Fragment() {
     var srch: Button? = null
     var db = FirebaseFirestore.getInstance()
     val auth = FirebaseAuth.getInstance()
+    var pgr :ProgressBar?=null
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val vi = inflater.inflate(R.layout.dashboard, container, false)
         tweetselect = vi.findViewById(R.id.cointweetselect)
+        pgr = vi.findViewById(R.id.pgr)
+        pgr?.visibility = View.VISIBLE
         updaterequest()
         moverequest()
         db.collection("users").document(auth.currentUser!!.uid).collection("portfolio").get().addOnCompleteListener {
@@ -56,10 +60,12 @@ class dashboard : Fragment() {
             val documentSnapshot = task.result
             val s = documentSnapshot.size()
             if(s!=0){
+                pgr?.visibility = View.GONE
                 tweetselect.isChecked = true
                 setFragment(mycoins())
             }
             else{
+                pgr?.visibility = View.GONE
                 tweetselect.isChecked = false
                 setFragment(allcoins())
             }
