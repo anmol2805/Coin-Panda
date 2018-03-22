@@ -19,7 +19,11 @@ class SplashActivity : AppCompatActivity() {
         if(auth!=null){
             val handler = Handler()
             handler.postDelayed({
-                startActivity(Intent(this,HomeActivity::class.java))
+                val intent = Intent(this,HomeActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                startActivity(intent)
+                finish()
             },3000)
         }
         else{
@@ -53,5 +57,12 @@ class SplashActivity : AppCompatActivity() {
         Mysingleton.getInstance(this).addToRequestqueue(stringRequest)
 
 
+    }
+
+    override fun onPause() {
+        // TODO Auto-generated method stub
+        super.onPause()
+        finish()
+        overridePendingTransition(R.anim.still, R.anim.slide_in_up)
     }
 }

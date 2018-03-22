@@ -21,9 +21,13 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import android.widget.Toast
+
+
 
 
 class HomeActivity : AppCompatActivity() {
+    private var back_pressed: Long = 0
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
@@ -166,4 +170,16 @@ class HomeActivity : AppCompatActivity() {
         })
     }
 
+    override fun onBackPressed() {
+        if (back_pressed + 2000 > System.currentTimeMillis()) {
+            super.onBackPressed()
+            finish()
+            overridePendingTransition(R.anim.still, R.anim.slide_out_down)
+        } else {
+            back_pressed = System.currentTimeMillis()
+            Toast.makeText(baseContext, "Double tap to exit!", Toast.LENGTH_SHORT).show();
+
+        }
+
+    }
 }
