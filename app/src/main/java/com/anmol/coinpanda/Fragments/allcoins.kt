@@ -177,7 +177,8 @@ class allcoins : Fragment(){
                                 val url = obj.getString("url")
                                 val keyword = obj.getString("keyword")
                                 val dates = obj.getString("date")
-                                val tweet = Tweet(coin, coin_symbol, mtweet, url, keyword, id, booked, dates,"ac")
+                                val coinpage = obj.getString("coin_handle")
+                                val tweet = Tweet(coin, coin_symbol, mtweet, url, keyword, id, booked, dates,"ac",coinpage)
                                 tweets.add(tweet)
                                 c++
                             }
@@ -216,9 +217,10 @@ class allcoins : Fragment(){
                                 val url = obj.getString("url")
                                 val keyword = obj.getString("keyword")
                                 val dates = obj.getString("date")
+                                val coinpage = obj.getString("coin_handle")
                                 if(coin!=null && coin_symbol!=null && mtweet!=null && keyword!=null){
                                     if (coin.toLowerCase().contains(p0) || coin_symbol.toLowerCase().contains(p0) || mtweet.toLowerCase().contains(p0) || keyword.toLowerCase().contains(p0) || coin.toUpperCase().contains(p0) || coin_symbol.toUpperCase().contains(p0) || mtweet.toUpperCase().contains(p0) || keyword.toUpperCase().contains(p0)) {
-                                        val tweet = Tweet(coin, coin_symbol, mtweet, url, keyword, id, booked, dates,"ac")
+                                        val tweet = Tweet(coin, coin_symbol, mtweet, url, keyword, id, booked, dates,"ac",coinpage)
                                         tweets.add(tweet)
                                     }
                                 }

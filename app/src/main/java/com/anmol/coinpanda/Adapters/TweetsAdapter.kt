@@ -66,33 +66,10 @@ class TweetsAdapter(internal var c: Context, internal var tweets: List<Tweet>, p
         }
         holder.mcoin?.text = coindata.coin
         holder.coinname?.text = coindata.coin_symbol
-        holder.keyword?.text = "# " + coindata.keyword
+        holder.keyword?.text = "#" + coindata.keyword
         holder.timestamp?.text = coindata.dates + "(GMT)"
-        val urlpng = "https://raw.githubusercontent.com/crypti/cryptocurrencies/master/images/"+coindata.coin_symbol+".png"
-        val urljpg = "https://raw.githubusercontent.com/crypti/cryptocurrencies/master/images/"+coindata.coin_symbol+".jpg"
-        val urljpeg = "https://raw.githubusercontent.com/crypti/cryptocurrencies/master/images/"+coindata.coin_symbol+".jpeg"
-        Glide.with(c).load(urlpng).listener(object : RequestListener<Drawable> {
-            override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
-
-                return false
-            }
-
-            override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
-                Glide.with(c).load(urljpg).listener(object : RequestListener<Drawable> {
-                    override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
-                        Glide.with(c).load(urljpeg).into(holder.image)
-                        return true
-                    }
-
-                    override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
-                        return false
-                    }
-
-                }).into(holder.image)
-                return true
-            }
-
-        }).into(holder.image)
+        val testurl = "https://twitter.com/" + coindata.coinpage + "/profile_image?size=original"
+        Glide.with(c).load(testurl).into(holder.image)
         val db = FirebaseFirestore.getInstance()
         holder.bookmark?.setOnClickListener {
             if(tweets[position].booked){

@@ -132,40 +132,10 @@ class mycoinslist : Fragment(){
                 cn?.text = allcoins[i].coin
                 cs?.text = allcoins[i].coinname
                 cp?.text = "#"+ allcoins[i].coinpage
-                val urlpng = "https://raw.githubusercontent.com/crypti/cryptocurrencies/master/images/"+ allcoins[i].coinname+".png"
-                val urljpg = "https://raw.githubusercontent.com/crypti/cryptocurrencies/master/images/"+ allcoins[i].coinname+".jpg"
-                val urljpeg = "https://raw.githubusercontent.com/crypti/cryptocurrencies/master/images/"+ allcoins[i].coinname+".jpeg"
+                val testurl = "https://twitter.com/" + allcoins[i].coinpage + "/profile_image?size=original"
                 if(activity!=null){
-                    Glide.with(activity).load(urlpng).listener(object : RequestListener<Drawable> {
-                        override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
-
-                            return false
-                        }
-
-                        override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
-                            if(activity!=null){
-                                Glide.with(activity).load(urljpg).listener(object : RequestListener<Drawable> {
-                                    override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
-                                        if(activity!=null){
-                                            Glide.with(activity).load(urljpeg).into(coinimg)
-                                        }
-                                        return true
-                                    }
-
-                                    override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
-                                        return false
-                                    }
-
-                                }).into(coinimg)
-                            }
-
-                            return true
-                        }
-
-                    }).into(coinimg)
-
+                    Glide.with(activity).load(testurl).into(coinimg)
                 }
-
                 viewtweet?.setOnClickListener {
                     if(activity!=null){
                         val intent = Intent(activity, TweetsActivity::class.java)

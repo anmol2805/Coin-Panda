@@ -175,8 +175,9 @@ class mycoins : Fragment(){
                             val url = doc.getString("url")
                             val keyword = doc.getString("keyword")
                             val dates = doc.getString("dates")
+                            val coinpage = doc.getString("coin_page")
                             System.out.println("logging$booked")
-                            val tweet = Tweet(coin, coin_symbol, mtweet, url,keyword,id,booked,dates,"mc")
+                            val tweet = Tweet(coin, coin_symbol, mtweet, url,keyword,id,booked,dates,"mc",coinpage)
                             tweets.add(tweet)
                         }
                         i++
@@ -220,10 +221,10 @@ class mycoins : Fragment(){
                             val url = doc.getString("url")
                             val keyword = doc.getString("keyword")
                             val dates = doc.getString("dates")
-
+                            val coinpage = doc.getString("coin_page")
                             if (coin.toLowerCase().contains(p0) || coin_symbol.toLowerCase().contains(p0) || mtweet.toLowerCase().contains(p0) || keyword.toLowerCase().contains(p0) ||coin.toUpperCase().contains(p0) || coin_symbol.toUpperCase().contains(p0) || mtweet.toUpperCase().contains(p0) || keyword.toUpperCase().contains(p0)){
                                 System.out.println("logging$booked")
-                                val tweet = Tweet(coin, coin_symbol, mtweet, url,keyword,id,booked,dates,"mc")
+                                val tweet = Tweet(coin, coin_symbol, mtweet, url,keyword,id,booked,dates,"mc",coinpage)
                                 tweets.add(tweet)
                             }
 
