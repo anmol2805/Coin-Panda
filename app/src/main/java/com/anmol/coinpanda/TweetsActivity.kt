@@ -34,6 +34,7 @@ class TweetsActivity : AppCompatActivity() {
         setContentView(R.layout.activity_tweets)
         val coin : String = intent.getStringExtra("coin")
         title = coin
+        pgr = findViewById(R.id.pgr)
         val layoutManager = LinearLayoutManager(this)
         mtweetrecycler = findViewById(R.id.tweetrecycler)
         mtweetrecycler?.layoutManager = layoutManager
