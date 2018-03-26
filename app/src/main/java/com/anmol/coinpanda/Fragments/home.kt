@@ -77,7 +77,10 @@ class home : Fragment() {
         return vi
     }
     private fun setFragment(fragment: Fragment) {
-        activity!!.supportFragmentManager.beginTransaction().replace(R.id.fragment,fragment).commit()
+        if(activity!=null){
+            activity!!.supportFragmentManager.beginTransaction().replace(R.id.fragment,fragment).commit()
+        }
+
 
 
     }

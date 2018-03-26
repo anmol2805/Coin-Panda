@@ -84,7 +84,10 @@ class dashboard : Fragment() {
     }
 
     private fun setFragment(fragment: Fragment) {
-        activity!!.supportFragmentManager.beginTransaction().replace(R.id.coinframe,fragment).commit()
+        if(activity!=null){
+            activity!!.supportFragmentManager.beginTransaction().replace(R.id.coinframe,fragment).commit()
+        }
+
 
 
     }

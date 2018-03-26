@@ -27,33 +27,34 @@ class GridnewAdapter(internal var c: Context, internal var allcoins: List<Allcoi
         val v = inflate(c, R.layout.coinlayout,null)
         val imageicon:ImageView? = v.findViewById(R.id.imageView3)
         val nametext:TextView? = v.findViewById(R.id.namecoinall)
-        val urlpng = "https://raw.githubusercontent.com/crypti/cryptocurrencies/master/images/"+allcoins[p0].coinname+".png"
-        val urljpg = "https://raw.githubusercontent.com/crypti/cryptocurrencies/master/images/"+allcoins[p0].coinname+".jpg"
-        val urljpeg = "https://raw.githubusercontent.com/crypti/cryptocurrencies/master/images/"+allcoins[p0].coinname+".jpeg"
-
+//        val urlpng = "https://raw.githubusercontent.com/crypti/cryptocurrencies/master/images/"+allcoins[p0].coinname+".png"
+//        val urljpg = "https://raw.githubusercontent.com/crypti/cryptocurrencies/master/images/"+allcoins[p0].coinname+".jpg"
+//        val urljpeg = "https://raw.githubusercontent.com/crypti/cryptocurrencies/master/images/"+allcoins[p0].coinname+".jpeg"
+        val testurl = "https://twitter.com/" + allcoins[p0].coinpage + "/profile_image?size=original"
+        Glide.with(c).load(testurl).into(imageicon)
         nametext?.text = allcoins[p0].coin
-        Glide.with(c).load(urlpng).apply(RequestOptions().diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)).listener(object : RequestListener<Drawable>{
-            override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
-
-                return false
-            }
-
-            override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
-                Glide.with(c).load(urljpg).apply(RequestOptions().diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)).listener(object : RequestListener<Drawable>{
-                    override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
-                        Glide.with(c).load(urljpeg).apply(RequestOptions().diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)).into(imageicon)
-                        return true
-                    }
-
-                    override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
-                        return false
-                    }
-
-                }).into(imageicon)
-                return true
-            }
-
-        }).into(imageicon)
+//        Glide.with(c).load(urlpng).apply(RequestOptions().diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)).listener(object : RequestListener<Drawable>{
+//            override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
+//
+//                return false
+//            }
+//
+//            override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
+//                Glide.with(c).load(urljpg).apply(RequestOptions().diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)).listener(object : RequestListener<Drawable>{
+//                    override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
+//                        Glide.with(c).load(urljpeg).apply(RequestOptions().diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)).into(imageicon)
+//                        return true
+//                    }
+//
+//                    override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
+//                        return false
+//                    }
+//
+//                }).into(imageicon)
+//                return true
+//            }
+//
+//        }).into(imageicon)
 
         return v
     }

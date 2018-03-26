@@ -143,17 +143,22 @@ class mycoinslist : Fragment(){
                         }
 
                         override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
-                            Glide.with(activity).load(urljpg).listener(object : RequestListener<Drawable> {
-                                override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
-                                    Glide.with(activity).load(urljpeg).into(coinimg)
-                                    return true
-                                }
+                            if(activity!=null){
+                                Glide.with(activity).load(urljpg).listener(object : RequestListener<Drawable> {
+                                    override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
+                                        if(activity!=null){
+                                            Glide.with(activity).load(urljpeg).into(coinimg)
+                                        }
+                                        return true
+                                    }
 
-                                override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
-                                    return false
-                                }
+                                    override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
+                                        return false
+                                    }
 
-                            }).into(coinimg)
+                                }).into(coinimg)
+                            }
+
                             return true
                         }
 
