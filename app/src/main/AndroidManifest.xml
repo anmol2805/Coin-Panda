@@ -3,7 +3,6 @@
     package="com.anmol.coinpanda">
     <permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
-
     <application
         android:name=".FireApp"
         android:allowBackup="true"
@@ -12,6 +11,7 @@
         android:roundIcon="@drawable/purple100"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <meta-data android:name="com.onesignal.NotificationAccentColor.DEFAULT" android:value="#673AB7" />
         <activity android:name=".MainActivity" />
 
         <provider

@@ -4,6 +4,7 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.media.RingtoneManager
 import android.net.Uri
 import android.support.v4.app.NotificationCompat
@@ -26,7 +27,10 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     private fun showNotification(payload: Map<String, String>) {
         val alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
         val builder = NotificationCompat.Builder(this)
-        builder.setSmallIcon(R.drawable.purple50)
+
+        builder.setSmallIcon(R.drawable.alpha)
+        builder.color = getColor(R.color.colorPrimary)
+        builder.setWhen(System.currentTimeMillis())
         builder.setContentTitle(payload["title"])
         builder.setContentText(payload["body"])
         builder.setVibrate(longArrayOf(1000, 1000, 1000, 1000, 1000))
