@@ -218,7 +218,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             startActivity(intent);
             finish();
             overridePendingTransition(R.anim.slide_left_in,R.anim.slide_left_out);
-
         }
         else
         {
