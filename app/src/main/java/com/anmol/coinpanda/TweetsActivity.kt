@@ -32,35 +32,38 @@ class TweetsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tweets)
-        val coin : String = intent.getStringExtra("coin")
-        title = coin
-        pgr = findViewById(R.id.pgr)
-        val layoutManager = LinearLayoutManager(this)
-        mtweetrecycler = findViewById(R.id.tweetrecycler)
-        mtweetrecycler?.layoutManager = layoutManager
-        mtweetrecycler?.setHasFixedSize(true)
-        mtweetrecycler?.itemAnimator = DefaultItemAnimator()
-        tweets = ArrayList()
-        empty = findViewById(R.id.empty)
-        empty?.visibility = View.GONE
-        itemClickListener = object : ItemClickListener {
-            override fun onItemClick(pos: Int) {
+        if(intent.getStringExtra("coin")!=null){
+            val coin : String = intent.getStringExtra("coin")
+            title = coin
+            pgr = findViewById(R.id.pgr)
+            val layoutManager = LinearLayoutManager(this)
+            mtweetrecycler = findViewById(R.id.tweetrecycler)
+            mtweetrecycler?.layoutManager = layoutManager
+            mtweetrecycler?.setHasFixedSize(true)
+            mtweetrecycler?.itemAnimator = DefaultItemAnimator()
+            tweets = ArrayList()
+            empty = findViewById(R.id.empty)
+            empty?.visibility = View.GONE
+            itemClickListener = object : ItemClickListener {
+                override fun onItemClick(pos: Int) {
 //                val url = tweets[pos].url
 //                val intent = Intent(Intent.ACTION_VIEW)
 //                intent.data = Uri.parse(url)
 //                startActivity(intent)
-            }
+                }
 
-        }
-        val bookmarks : ArrayList<String> = ArrayList()
-        db.collection("users").document(auth.currentUser!!.uid).collection("bookmarks").addSnapshotListener{documnentSnapshot,e->
-            bookmarks.clear()
-            for (doc in documnentSnapshot.documents){
-                val tweetid = doc.id
-                bookmarks.add(tweetid)
             }
-            loadtweets(coin,bookmarks)
+            val bookmarks : ArrayList<String> = ArrayList()
+            db.collection("users").document(auth.currentUser!!.uid).collection("bookmarks").addSnapshotListener{documnentSnapshot,e->
+                bookmarks.clear()
+                for (doc in documnentSnapshot.documents){
+                    val tweetid = doc.id
+                    bookmarks.add(tweetid)
+                }
+                loadtweets(coin,bookmarks)
+            }
         }
+
 
     }
 

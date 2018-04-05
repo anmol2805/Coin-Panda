@@ -144,9 +144,9 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 // [END_EXCLUDE]
             }
         }
-        else {
-            callbackManager.onActivityResult(requestCode, resultCode, data);
-        }
+//        else {
+//            callbackManager.onActivityResult(requestCode, resultCode, data);
+//        }
     }
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
         Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
