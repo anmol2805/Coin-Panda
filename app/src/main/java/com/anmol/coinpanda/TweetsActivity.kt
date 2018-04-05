@@ -11,6 +11,10 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.TextView
+import android.widget.Toast
+import com.android.volley.Request
+import com.android.volley.Response
+import com.android.volley.toolbox.JsonArrayRequest
 import com.anmol.coinpanda.Adapters.DividerItemDecoration
 import com.anmol.coinpanda.Adapters.TweetsAdapter
 import com.anmol.coinpanda.Interfaces.ItemClickListener
@@ -18,6 +22,7 @@ import com.anmol.coinpanda.Model.Tweet
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
+import java.lang.reflect.Method
 import java.sql.Date
 
 class TweetsActivity : AppCompatActivity() {
@@ -53,6 +58,7 @@ class TweetsActivity : AppCompatActivity() {
                 }
 
             }
+
             val bookmarks : ArrayList<String> = ArrayList()
             db.collection("users").document(auth.currentUser!!.uid).collection("bookmarks")
                     .get().addOnCompleteListener{task->
@@ -70,47 +76,48 @@ class TweetsActivity : AppCompatActivity() {
 
     private fun loadtweets(coin: String, bookmarks: ArrayList<String>) {
         pgr?.visibility = View.VISIBLE
-        db.collection("Tweets")
-                .orderBy("date",Query.Direction.DESCENDING)
-                .get().addOnCompleteListener{
-                    task ->
-                    tweets.clear()
-                    for(doc in task.result.documents){
-                        var i = 0
-                        var booked = false
-                        while (i<bookmarks.size){
-                            if(doc.id.contains(bookmarks[i])){
-                                booked = true
-                            }
-                            i++
-                        }
-                        val mcoin = doc.getString("coin_name")
-                        val coin_symbol = doc.getString("coin_symbol")
-                        val mtweet = doc.getString("tweet")
-                        val url = doc.getString("url")
-                        val keyword = doc.getString("keyword")
-                        val id = doc.id
-                        val dates = doc.getString("dates")
-                        val coinpage = doc.getString("coin_page")
-                        if(coin_symbol == (coin)){
-                            val tweet = Tweet(mcoin,coin_symbol,mtweet,url,keyword,id,booked,dates,"mc",coinpage)
-                            tweets.add(tweet)
-                        }
-
+        val url = "http://165.227.98.190/tweets/$coin"
+        val jsonObject = JsonArrayRequest(Request.Method.GET,url,null,Response.Listener {
+            response ->
+            tweets.clear()
+            var i = 0
+            while (i<response.length()){
+                val doc = response.getJSONObject(i)
+                val mcoin = doc.getString("coin_name")
+                val coin_symbol = doc.getString("coin_symbol")
+                val mtweet = doc.getString("tweet")
+                val url = doc.getString("url")
+                val keyword = doc.getString("keyword")
+                val id = doc.getString("id")
+                val dates = doc.getString("date")
+                val coinpage = doc.getString("coin_handle")
+                var j = 0
+                var booked = false
+                while (j<bookmarks.size){
+                    if(id.contains(bookmarks[j])){
+                        booked = true
                     }
-
-                    if(!tweets.isEmpty()){
-                        val tweetsAdapter = TweetsAdapter(this,tweets,itemClickListener)
-                        tweetsAdapter.notifyDataSetChanged()
-                        mtweetrecycler?.adapter = tweetsAdapter
-                        pgr?.visibility = View.GONE
-                        //mtweetrecycler?.addItemDecoration(DividerItemDecoration(ContextCompat.getDrawable(applicationContext,R.drawable.item_decorator)!!))
-                    }
-                    else{
-                        pgr?.visibility = View.GONE
-                        empty?.visibility = View.VISIBLE
-                    }
-
+                    j++
                 }
+                val tweet = Tweet(mcoin,coin_symbol,mtweet,url,keyword,id,booked,dates,"mc",coinpage)
+                tweets.add(tweet)
+                i++
+            }
+            if(!tweets.isEmpty()){
+                val tweetsAdapter = TweetsAdapter(this,tweets,itemClickListener)
+                tweetsAdapter.notifyDataSetChanged()
+                mtweetrecycler?.adapter = tweetsAdapter
+                pgr?.visibility = View.GONE
+                //mtweetrecycler?.addItemDecoration(DividerItemDecoration(ContextCompat.getDrawable(applicationContext,R.drawable.item_decorator)!!))
+            }
+            else{
+                pgr?.visibility = View.GONE
+                empty?.visibility = View.VISIBLE
+            }
+        },Response.ErrorListener {
+            Toast.makeText(this,"Network Error", Toast.LENGTH_LONG).show()
+        })
+        Mysingleton.getInstance(this).addToRequestqueue(jsonObject)
+
     }
 }
