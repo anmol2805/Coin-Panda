@@ -150,26 +150,9 @@ class allcoins : Fragment(){
                     var c = 0
                     val jsonArray = response.getJSONArray("tweets")
                     tweets.clear()
-                    val bookmarks : ArrayList<String> = ArrayList()
-                    db.collection("users").document(auth.currentUser!!.uid).collection("bookmarks").addSnapshotListener { documnentSnapshot, e ->
-                        bookmarks.clear()
-                        for (doc in documnentSnapshot.documents) {
-                            val tweetid = doc.id
-                            bookmarks.add(tweetid)
-                        }
 
-
-                        if (p0 == null) {
-                            while (c<jsonArray.length()){
+                    while (c<jsonArray.length()){
                                 val obj = jsonArray.getJSONObject(c)
-                                var booked = false
-                                var i = 0
-                                while(i<bookmarks.size){
-                                    if(obj.getString("id").contains(bookmarks[i])){
-                                        booked = true
-                                    }
-                                    i++
-                                }
                                 val id = obj.getString("id")
                                 val coin = obj.getString("coin_name")
                                 val coin_symbol = obj.getString("coin_symbol")
@@ -178,11 +161,11 @@ class allcoins : Fragment(){
                                 val keyword = obj.getString("keyword")
                                 val dates = obj.getString("date")
                                 val coinpage = obj.getString("coin_handle")
-                                val tweet = Tweet(coin, coin_symbol, mtweet, url, keyword, id, booked, dates,"ac",coinpage)
+                                val tweet = Tweet(coin, coin_symbol, mtweet, url, keyword, id, false, dates,"ac",coinpage)
                                 tweets.add(tweet)
                                 c++
                             }
-                            if (activity != null) {
+                    if (activity != null) {
                                 if (!tweets.isEmpty()) {
                                     pgr?.visibility = View.GONE
                                     retry?.visibility = View.GONE
@@ -198,50 +181,8 @@ class allcoins : Fragment(){
                                     empty?.visibility = View.VISIBLE
                                 }
                             }
-                        } else {
-                            while (c<jsonArray.length()) {
-                                val obj = jsonArray.getJSONObject(c)
 
-                                var booked = false
-                                var i = 0
-                                while(i<bookmarks.size){
-                                    if(obj.getString("id").contains(bookmarks[i])){
-                                        booked = true
-                                    }
-                                    i++
-                                }
-                                val id = obj.getString("id")
-                                val coin = obj.getString("coin_name")
-                                val coin_symbol = obj.getString("coin_symbol")
-                                val mtweet = obj.getString("tweet")
-                                val url = obj.getString("url")
-                                val keyword = obj.getString("keyword")
-                                val dates = obj.getString("date")
-                                val coinpage = obj.getString("coin_handle")
-                                if(coin!=null && coin_symbol!=null && mtweet!=null && keyword!=null){
-                                    if (coin.toLowerCase().contains(p0) || coin_symbol.toLowerCase().contains(p0) || mtweet.toLowerCase().contains(p0) || keyword.toLowerCase().contains(p0) || coin.toUpperCase().contains(p0) || coin_symbol.toUpperCase().contains(p0) || mtweet.toUpperCase().contains(p0) || keyword.toUpperCase().contains(p0)) {
-                                        val tweet = Tweet(coin, coin_symbol, mtweet, url, keyword, id, booked, dates,"ac",coinpage)
-                                        tweets.add(tweet)
-                                    }
-                                }
 
-                                c++
-                            }
-                            if (activity != null) {
-                                if (!tweets.isEmpty()) {
-                                    pgr?.visibility = View.GONE
-                                    tweetsAdapter = TweetsAdapter(activity!!, tweets, itemClickListener)
-                                    tweetsAdapter!!.notifyDataSetChanged()
-                                    cointweetrecycler?.adapter = tweetsAdapter
-                                    //cointweetrecycler?.addItemDecoration(DividerItemDecoration(ContextCompat.getDrawable(activity!!,R.drawable.item_decorator)!!))
-
-                                }
-                                else{
-                                    empty?.visibility = View.VISIBLE
-                                }
-                            }
-                        }
-                    }
 
 
 
