@@ -312,63 +312,63 @@ class coinslist : Fragment(){
     private fun loadalldata(p0: CharSequence?) {
         pgr?.visibility = View.VISIBLE
         allcoins.clear()
-        db.collection("AllCoins").orderBy("lastUpdate", Query.Direction.DESCENDING).addSnapshotListener{ documentSnapshot, firebaseFirestoreException ->
-            allcoins.clear()
-            if(p0 == null){
-                for(doc in documentSnapshot.documents){
-                    val coinname = doc.getString("coin_symbol")
-                    val name = doc.getString("coin_name")
-                    val coinpage = doc.getString("coinPage")
-                    val allcoin = Allcoin(coinname,name,coinpage)
-                    allcoins.add(allcoin)
-                }
-                if(activity!=null){
-                    if(!allcoins.isEmpty()){
-                        pgr?.visibility = View.GONE
-                        empty?.visibility = View.GONE
-                        gridAdapter = GridnewAdapter(activity!!, allcoins)
-                        gridAdapter.notifyDataSetChanged()
-                        coingrid?.adapter = gridAdapter
-                    }
-                    else{
-                        pgr?.visibility = View.GONE
-                        empty?.visibility = View.VISIBLE
-                    }
-                }
-            }
-            else{
-                for(doc in documentSnapshot.documents){
-                    val coinname = doc.getString("coin_symbol")
-                    val name = doc.getString("coin_name")
-                    val coinpage = doc.getString("coinPage")
-                    if(name!=null && coinname!= null){
-                        if (name.toLowerCase().contains(p0) || coinname.toLowerCase().contains(p0) || name.toUpperCase().contains(p0) || coinname.toUpperCase().contains(p0)){
+        db.collection("AllCoins").orderBy("lastUpdate", Query.Direction.DESCENDING)
+                .get().addOnCompleteListener{task ->
+                    allcoins.clear()
+                    if(p0 == null){
+                        for(doc in task.result.documents){
+                            val coinname = doc.getString("coin_symbol")
+                            val name = doc.getString("coin_name")
+                            val coinpage = doc.getString("coinPage")
                             val allcoin = Allcoin(coinname,name,coinpage)
                             allcoins.add(allcoin)
                         }
-                    }
-
-
-                }
-                if(activity!=null){
-                    if(!allcoins.isEmpty()){
-                        pgr?.visibility = View.GONE
-                        empty?.visibility = View.GONE
-                        gridAdapter = GridnewAdapter(activity!!, allcoins)
-                        gridAdapter.notifyDataSetChanged()
-                        coingrid?.adapter = gridAdapter
+                        if(activity!=null){
+                            if(!allcoins.isEmpty()){
+                                pgr?.visibility = View.GONE
+                                empty?.visibility = View.GONE
+                                gridAdapter = GridnewAdapter(activity!!, allcoins)
+                                gridAdapter.notifyDataSetChanged()
+                                coingrid?.adapter = gridAdapter
+                            }
+                            else{
+                                pgr?.visibility = View.GONE
+                                empty?.visibility = View.VISIBLE
+                            }
+                        }
                     }
                     else{
-                        pgr?.visibility = View.GONE
-                        empty?.text = "No Results found"
-                        empty?.visibility = View.VISIBLE
+                        for(doc in task.result.documents){
+                            val coinname = doc.getString("coin_symbol")
+                            val name = doc.getString("coin_name")
+                            val coinpage = doc.getString("coinPage")
+                            if(name!=null && coinname!= null){
+                                if (name.toLowerCase().contains(p0) || coinname.toLowerCase().contains(p0) || name.toUpperCase().contains(p0) || coinname.toUpperCase().contains(p0)){
+                                    val allcoin = Allcoin(coinname,name,coinpage)
+                                    allcoins.add(allcoin)
+                                }
+                            }
 
+
+                        }
+                        if(activity!=null){
+                            if(!allcoins.isEmpty()){
+                                pgr?.visibility = View.GONE
+                                empty?.visibility = View.GONE
+                                gridAdapter = GridnewAdapter(activity!!, allcoins)
+                                gridAdapter.notifyDataSetChanged()
+                                coingrid?.adapter = gridAdapter
+                            }
+                            else{
+                                pgr?.visibility = View.GONE
+                                empty?.text = "No Results found"
+                                empty?.visibility = View.VISIBLE
+
+                            }
+                        }
                     }
                 }
-            }
 
-
-        }
     }
 
 }
