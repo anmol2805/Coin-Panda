@@ -54,14 +54,15 @@ class TweetsActivity : AppCompatActivity() {
 
             }
             val bookmarks : ArrayList<String> = ArrayList()
-            db.collection("users").document(auth.currentUser!!.uid).collection("bookmarks").addSnapshotListener{documnentSnapshot,e->
-                bookmarks.clear()
-                for (doc in documnentSnapshot.documents){
-                    val tweetid = doc.id
-                    bookmarks.add(tweetid)
-                }
-                loadtweets(coin,bookmarks)
-            }
+            db.collection("users").document(auth.currentUser!!.uid).collection("bookmarks")
+                    .get().addOnCompleteListener{task->
+                        bookmarks.clear()
+                        for (doc in task.result.documents){
+                            val tweetid = doc.id
+                            bookmarks.add(tweetid)
+                        }
+                        loadtweets(coin,bookmarks)
+                    }
         }
 
 
@@ -70,9 +71,11 @@ class TweetsActivity : AppCompatActivity() {
     private fun loadtweets(coin: String, bookmarks: ArrayList<String>) {
         pgr?.visibility = View.VISIBLE
         db.collection("Tweets")
-                .orderBy("date",Query.Direction.DESCENDING).addSnapshotListener{documentSnapshot,e->
+                .orderBy("date",Query.Direction.DESCENDING)
+                .get().addOnCompleteListener{
+                    task ->
                     tweets.clear()
-                    for(doc in documentSnapshot.documents){
+                    for(doc in task.result.documents){
                         var i = 0
                         var booked = false
                         while (i<bookmarks.size){
@@ -96,17 +99,17 @@ class TweetsActivity : AppCompatActivity() {
 
                     }
 
-                        if(!tweets.isEmpty()){
-                            val tweetsAdapter = TweetsAdapter(this,tweets,itemClickListener)
-                            tweetsAdapter.notifyDataSetChanged()
-                            mtweetrecycler?.adapter = tweetsAdapter
-                            pgr?.visibility = View.GONE
-                            //mtweetrecycler?.addItemDecoration(DividerItemDecoration(ContextCompat.getDrawable(applicationContext,R.drawable.item_decorator)!!))
-                        }
-                        else{
-                            pgr?.visibility = View.GONE
-                            empty?.visibility = View.VISIBLE
-                        }
+                    if(!tweets.isEmpty()){
+                        val tweetsAdapter = TweetsAdapter(this,tweets,itemClickListener)
+                        tweetsAdapter.notifyDataSetChanged()
+                        mtweetrecycler?.adapter = tweetsAdapter
+                        pgr?.visibility = View.GONE
+                        //mtweetrecycler?.addItemDecoration(DividerItemDecoration(ContextCompat.getDrawable(applicationContext,R.drawable.item_decorator)!!))
+                    }
+                    else{
+                        pgr?.visibility = View.GONE
+                        empty?.visibility = View.VISIBLE
+                    }
 
                 }
     }

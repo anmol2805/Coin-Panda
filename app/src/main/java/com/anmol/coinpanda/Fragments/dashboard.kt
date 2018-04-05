@@ -53,26 +53,26 @@ class dashboard : Fragment() {
         tweetselect = vi.findViewById(R.id.cointweetselect)
         pgr = vi.findViewById(R.id.pgr)
         pgr?.visibility = View.VISIBLE
-        updaterequest()
-        moverequest()
-        pgr?.visibility = View.GONE
-        tweetselect.isChecked = false
-        setFragment(allcoins())
-//        db.collection("users").document(auth.currentUser!!.uid).collection("portfolio").get().addOnCompleteListener {
-//            task ->
-//            val documentSnapshot = task.result
-//            val s = documentSnapshot.size()
-//            if(s!=0){
-//                pgr?.visibility = View.GONE
-//                tweetselect.isChecked = true
-//                setFragment(mycoins())
-//            }
-//            else{
-//                pgr?.visibility = View.GONE
-//                tweetselect.isChecked = false
-//                setFragment(allcoins())
-//            }
-//        }
+        //updaterequest()
+        //moverequest()
+//        pgr?.visibility = View.GONE
+//        tweetselect.isChecked = false
+//        setFragment(allcoins())
+        db.collection("users").document(auth.currentUser!!.uid).collection("portfolio").get().addOnCompleteListener {
+            task ->
+            val documentSnapshot = task.result
+            val s = documentSnapshot.size()
+            if(s!=0){
+                pgr?.visibility = View.GONE
+                tweetselect.isChecked = true
+                setFragment(mycoins())
+            }
+            else{
+                pgr?.visibility = View.GONE
+                tweetselect.isChecked = false
+                setFragment(allcoins())
+            }
+        }
 
         tweetselect.setOnCheckedChangeListener { _, b ->
             if(b){
