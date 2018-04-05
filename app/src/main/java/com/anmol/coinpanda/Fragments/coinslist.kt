@@ -14,6 +14,8 @@ import android.view.ViewGroup
 import android.widget.*
 import com.android.volley.Request
 import com.android.volley.Response
+import com.android.volley.toolbox.JsonArrayRequest
+import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.StringRequest
 import com.anmol.coinpanda.Adapters.GridnewAdapter
 import com.anmol.coinpanda.Interfaces.ItemClickListener
@@ -312,16 +314,19 @@ class coinslist : Fragment(){
     private fun loadalldata(p0: CharSequence?) {
         pgr?.visibility = View.VISIBLE
         allcoins.clear()
-        db.collection("AllCoins").orderBy("lastUpdate", Query.Direction.DESCENDING)
-                .get().addOnCompleteListener{task ->
+        val jsonobjectrequest = JsonArrayRequest(Request.Method.GET,"http://165.227.98.190/coins",null,
+                Response.Listener {response ->
                     allcoins.clear()
                     if(p0 == null){
-                        for(doc in task.result.documents){
+                        var i = 0
+                        while (i<response.length()){
+                            val doc = response.getJSONObject(i)
                             val coinname = doc.getString("coin_symbol")
                             val name = doc.getString("coin_name")
-                            val coinpage = doc.getString("coinPage")
+                            val coinpage = doc.getString("coin_handle")
                             val allcoin = Allcoin(coinname,name,coinpage)
                             allcoins.add(allcoin)
+                            i++
                         }
                         if(activity!=null){
                             if(!allcoins.isEmpty()){
@@ -336,19 +341,20 @@ class coinslist : Fragment(){
                                 empty?.visibility = View.VISIBLE
                             }
                         }
-                    }
-                    else{
-                        for(doc in task.result.documents){
+                    }else{
+                        var i = 0
+                        while (i<response.length()){
+                            val doc = response.getJSONObject(i)
                             val coinname = doc.getString("coin_symbol")
                             val name = doc.getString("coin_name")
-                            val coinpage = doc.getString("coinPage")
+                            val coinpage = doc.getString("coin_handle")
                             if(name!=null && coinname!= null){
                                 if (name.toLowerCase().contains(p0) || coinname.toLowerCase().contains(p0) || name.toUpperCase().contains(p0) || coinname.toUpperCase().contains(p0)){
                                     val allcoin = Allcoin(coinname,name,coinpage)
                                     allcoins.add(allcoin)
                                 }
                             }
-
+                            i++
 
                         }
                         if(activity!=null){
@@ -361,13 +367,72 @@ class coinslist : Fragment(){
                             }
                             else{
                                 pgr?.visibility = View.GONE
-                                empty?.text = "No Results found"
                                 empty?.visibility = View.VISIBLE
-
                             }
                         }
                     }
-                }
+
+
+        }, Response.ErrorListener {
+            System.out.println("Response error")
+        })
+        Mysingleton.getInstance(activity).addToRequestqueue(jsonobjectrequest)
+//        db.collection("AllCoins").orderBy("lastUpdate", Query.Direction.DESCENDING)
+//                .get().addOnCompleteListener{task ->
+//                    allcoins.clear()
+//                    if(p0 == null){
+//                        for(doc in task.result.documents){
+//                            val coinname = doc.getString("coin_symbol")
+//                            val name = doc.getString("coin_name")
+//                            val coinpage = doc.getString("coinPage")
+//                            val allcoin = Allcoin(coinname,name,coinpage)
+//                            allcoins.add(allcoin)
+//                        }
+//                        if(activity!=null){
+//                            if(!allcoins.isEmpty()){
+//                                pgr?.visibility = View.GONE
+//                                empty?.visibility = View.GONE
+//                                gridAdapter = GridnewAdapter(activity!!, allcoins)
+//                                gridAdapter.notifyDataSetChanged()
+//                                coingrid?.adapter = gridAdapter
+//                            }
+//                            else{
+//                                pgr?.visibility = View.GONE
+//                                empty?.visibility = View.VISIBLE
+//                            }
+//                        }
+//                    }
+//                    else{
+//                        for(doc in task.result.documents){
+//                            val coinname = doc.getString("coin_symbol")
+//                            val name = doc.getString("coin_name")
+//                            val coinpage = doc.getString("coinPage")
+//                            if(name!=null && coinname!= null){
+//                                if (name.toLowerCase().contains(p0) || coinname.toLowerCase().contains(p0) || name.toUpperCase().contains(p0) || coinname.toUpperCase().contains(p0)){
+//                                    val allcoin = Allcoin(coinname,name,coinpage)
+//                                    allcoins.add(allcoin)
+//                                }
+//                            }
+//
+//
+//                        }
+//                        if(activity!=null){
+//                            if(!allcoins.isEmpty()){
+//                                pgr?.visibility = View.GONE
+//                                empty?.visibility = View.GONE
+//                                gridAdapter = GridnewAdapter(activity!!, allcoins)
+//                                gridAdapter.notifyDataSetChanged()
+//                                coingrid?.adapter = gridAdapter
+//                            }
+//                            else{
+//                                pgr?.visibility = View.GONE
+//                                empty?.text = "No Results found"
+//                                empty?.visibility = View.VISIBLE
+//
+//                            }
+//                        }
+//                    }
+//                }
 
     }
 
