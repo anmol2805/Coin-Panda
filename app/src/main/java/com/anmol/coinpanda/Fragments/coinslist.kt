@@ -368,6 +368,7 @@ class coinslist : Fragment(){
                             else{
                                 pgr?.visibility = View.GONE
                                 empty?.visibility = View.VISIBLE
+                                empty?.text = "No Results found"
                             }
                         }
                     }

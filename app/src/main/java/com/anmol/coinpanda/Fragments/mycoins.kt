@@ -16,11 +16,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.*
+import com.android.volley.Request
+import com.android.volley.Response
+import com.android.volley.toolbox.JsonObjectRequest
 import com.anmol.coinpanda.Adapters.DividerItemDecoration
 import com.anmol.coinpanda.Adapters.KeywordAdapter
 import com.anmol.coinpanda.Adapters.TweetsAdapter
 import com.anmol.coinpanda.Interfaces.ItemClickListener
 import com.anmol.coinpanda.Model.Tweet
+import com.anmol.coinpanda.Mysingleton
 import com.anmol.coinpanda.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -133,132 +137,143 @@ class mycoins : Fragment(){
         cal.add(Calendar.MONTH,-1)
         val stringtime = format.format(cal.time)
         val prevtime = Timestamp.valueOf(stringtime)
-        db.collection("Tweets").whereGreaterThanOrEqualTo("date",prevtime).orderBy("date", Query.Direction.DESCENDING)
-                .get().addOnCompleteListener{ds1->
-                    tweets.clear()
-                    val mycoins :ArrayList<String> = ArrayList()
-                    db.collection("users").document(auth.currentUser!!.uid).collection("portfolio")
-                            .get().addOnCompleteListener{ds ->
-                                mycoins.clear()
-                                for(docs in ds.result.documents){
-                                    val name  = docs.id
-                                    mycoins.add(name)
-                                }
-                                val bookmarks : ArrayList<String> = ArrayList()
-                                db.collection("users").document(auth.currentUser!!.uid).collection("bookmarks")
-                                        .get().addOnCompleteListener{ds2->
-                                            bookmarks.clear()
-                                            tweets.clear()
-                                            for (doc in ds2.result.documents){
-                                                val tweetid = doc.id
-                                                bookmarks.add(tweetid)
+        val jsonobjectrequest = JsonObjectRequest(Request.Method.GET,"http://165.227.98.190/tweets",null, Response.Listener {
+            response ->
+            tweets.clear()
+            val mycoins :ArrayList<String> = ArrayList()
+            db.collection("users").document(auth.currentUser!!.uid).collection("portfolio")
+                    .get().addOnCompleteListener{ds ->
+                        mycoins.clear()
+                        for(docs in ds.result.documents){
+                            val name  = docs.id
+                            mycoins.add(name)
+                        }
+                        val bookmarks : ArrayList<String> = ArrayList()
+                        db.collection("users").document(auth.currentUser!!.uid).collection("bookmarks")
+                                .get().addOnCompleteListener{ds2->
+                                    bookmarks.clear()
+                                    for (doc in ds2.result.documents){
+                                        val tweetid = doc.id
+                                        bookmarks.add(tweetid)
+                                    }
+                                    if (p0 == null){
+
+
+                                        val tweetarray = response.getJSONArray("tweets")
+                                        var i = 0
+                                        while (i<tweetarray.length()){
+                                            val doc = tweetarray.getJSONObject(i)
+                                            val id = doc.getString("id")
+                                            val coin = doc.getString("coin_name")
+                                            val coin_symbol = doc.getString("coin_symbol")
+                                            val mtweet = doc.getString("tweet")
+                                            val url = doc.getString("url")
+                                            val keyword = doc.getString("keyword")
+                                            val dates = doc.getString("date")
+                                            val coinpage = doc.getString("coin_handle")
+                                            var k = 0
+                                            var booked = false
+                                            while (k< bookmarks.size){
+                                                if(id.contains(bookmarks[k])){
+                                                    booked = true
+                                                }
+                                                k++
                                             }
-                                            System.out.println("bookmarks$bookmarks")
-                                            if(p0 == null){
-                                                for(doc in ds1.result.documents) {
-                                                    var i = 0
-                                                    var j = 0
-                                                    var booked = false
-                                                    while (j< bookmarks.size){
-                                                        if(doc.id.contains(bookmarks[j])){
-                                                            booked = true
-                                                            System.out.println("booked:$booked" + doc.id)
-                                                        }
-                                                        j++
-                                                    }
-                                                    System.out.println("bookedstatus:$booked")
-
-                                                    while (i < mycoins.size) {
-
-                                                        if (doc.getString("coin_symbol").contains(mycoins[i])) {
-                                                            val id = doc.id
-                                                            val coin = doc.getString("coin_name")
-                                                            val coin_symbol = doc.getString("coin_symbol")
-                                                            val mtweet = doc.getString("tweet")
-                                                            val url = doc.getString("url")
-                                                            val keyword = doc.getString("keyword")
-                                                            val dates = doc.getString("dates")
-                                                            val coinpage = doc.getString("coin_page")
-                                                            System.out.println("logging$booked")
-                                                            val tweet = Tweet(coin, coin_symbol, mtweet, url,keyword,id,booked,dates,"mc",coinpage)
-                                                            tweets.add(tweet)
-                                                        }
-                                                        i++
-                                                    }
+                                            var j = 0
+                                            while (j<mycoins.size){
+                                                if (mycoins[j] == coin_symbol) {
+                                                    val tweet = Tweet(coin, coin_symbol, mtweet, url,keyword,id,booked,dates,"mc",coinpage)
+                                                    tweets.add(tweet)
                                                 }
-                                                if(activity!=null){
-                                                    if(!tweets.isEmpty()){
-                                                        pgr?.visibility = View.GONE
-                                                        System.out.println("logging:$tweets")
-                                                        val tweetsAdapter = TweetsAdapter(activity!!,tweets,itemClickListener)
-                                                        tweetsAdapter.notifyDataSetChanged()
-                                                        cointweetrecycler?.adapter = tweetsAdapter
-                                                        empty?.visibility = View.GONE
-                                                        //cointweetrecycler?.addItemDecoration(DividerItemDecoration(ContextCompat.getDrawable(activity!!,R.drawable.item_decorator)!!))
-                                                    }
-                                                    else{
-                                                        pgr?.visibility = View.GONE
-                                                        empty?.visibility = View.VISIBLE
-                                                    }
-                                                }
+                                                j++
 
+                                            }
+                                            i++
+                                        }
+                                        if(activity!=null){
+                                            if(!tweets.isEmpty()){
+                                                pgr?.visibility = View.GONE
+                                                System.out.println("logging:$tweets")
+                                                val tweetsAdapter = TweetsAdapter(activity!!,tweets,itemClickListener)
+                                                tweetsAdapter.notifyDataSetChanged()
+                                                cointweetrecycler?.adapter = tweetsAdapter
+                                                empty?.visibility = View.GONE
+                                                //cointweetrecycler?.addItemDecoration(DividerItemDecoration(ContextCompat.getDrawable(activity!!,R.drawable.item_decorator)!!))
                                             }
                                             else{
-                                                for(doc in ds1.result.documents) {
-                                                    var i = 0
-                                                    var j = 0
-                                                    var booked = false
-                                                    while (j< bookmarks.size){
-                                                        if(doc.id.contains(bookmarks[i])){
-                                                            booked = true
-                                                        }
-                                                        j++
-                                                    }
-                                                    while (i < mycoins.size) {
-
-                                                        if (doc.getString("coin_symbol") == (mycoins[i])) {
-                                                            val id = doc.id
-                                                            val coin = doc.getString("coin_name")
-                                                            val coin_symbol = doc.getString("coin_symbol")
-                                                            val mtweet = doc.getString("tweet")
-                                                            val url = doc.getString("url")
-                                                            val keyword = doc.getString("keyword")
-                                                            val dates = doc.getString("dates")
-                                                            val coinpage = doc.getString("coin_page")
-                                                            if (coin.toLowerCase().contains(p0) || coin_symbol.toLowerCase().contains(p0) || mtweet.toLowerCase().contains(p0) || keyword.toLowerCase().contains(p0) ||coin.toUpperCase().contains(p0) || coin_symbol.toUpperCase().contains(p0) || mtweet.toUpperCase().contains(p0) || keyword.toUpperCase().contains(p0)){
-                                                                System.out.println("logging$booked")
-                                                                val tweet = Tweet(coin, coin_symbol, mtweet, url,keyword,id,booked,dates,"mc",coinpage)
-                                                                tweets.add(tweet)
-                                                            }
-
-
-                                                        }
-                                                        i++
-                                                    }
-                                                }
-                                                if(activity!=null){
-                                                    if(!tweets.isEmpty()){
-                                                        val tweetsAdapter = TweetsAdapter(activity!!,tweets,itemClickListener)
-                                                        tweetsAdapter.notifyDataSetChanged()
-                                                        cointweetrecycler?.adapter = tweetsAdapter
-                                                        empty?.visibility = View.GONE
-                                                        pgr?.visibility = View.GONE
-                                                        //cointweetrecycler?.addItemDecoration(DividerItemDecoration(ContextCompat.getDrawable(activity!!,R.drawable.item_decorator)!!))
-                                                    }
-                                                    else{
-                                                        pgr?.visibility = View.GONE
-                                                        empty?.text = "No tweets found"
-                                                        empty?.visibility = View.VISIBLE
-                                                    }
-                                                }
-
+                                                pgr?.visibility = View.GONE
+                                                empty?.visibility = View.VISIBLE
                                             }
                                         }
+                                    }else{
+
+                                        val tweetarray = response.getJSONArray("tweets")
+                                        var i = 0
+                                        while (i<tweetarray.length()){
+                                            val doc = tweetarray.getJSONObject(i)
+                                            val id = doc.getString("id")
+                                            val coin = doc.getString("coin_name")
+                                            val coin_symbol = doc.getString("coin_symbol")
+                                            val mtweet = doc.getString("tweet")
+                                            val url = doc.getString("url")
+                                            val keyword = doc.getString("keyword")
+                                            val dates = doc.getString("date")
+                                            val coinpage = doc.getString("coin_handle")
+                                            var k = 0
+                                            var booked = false
+                                            while (k< bookmarks.size){
+                                                if(id.contains(bookmarks[k])){
+                                                    booked = true
+                                                }
+                                                k++
+                                            }
+                                            var j = 0
+                                            while (j<mycoins.size){
+                                                if (mycoins[j] == coin_symbol) {
+                                                    if (coin.toLowerCase().contains(p0) || coin_symbol.toLowerCase().contains(p0) || mtweet.toLowerCase().contains(p0) || keyword.toLowerCase().contains(p0) ||coin.toUpperCase().contains(p0) || coin_symbol.toUpperCase().contains(p0) || mtweet.toUpperCase().contains(p0) || keyword.toUpperCase().contains(p0)){
+                                                        val tweet = Tweet(coin, coin_symbol, mtweet, url,keyword,id,booked,dates,"mc",coinpage)
+                                                        tweets.add(tweet)
+                                                    }
+                                                }
+                                                j++
+
+                                            }
+
+                                            i++
+                                        }
+                                        if(activity!=null){
+                                            if(!tweets.isEmpty()){
+                                                pgr?.visibility = View.GONE
+                                                System.out.println("logging:$tweets")
+                                                val tweetsAdapter = TweetsAdapter(activity!!,tweets,itemClickListener)
+                                                tweetsAdapter.notifyDataSetChanged()
+                                                cointweetrecycler?.adapter = tweetsAdapter
+                                                empty?.visibility = View.GONE
+                                                //cointweetrecycler?.addItemDecoration(DividerItemDecoration(ContextCompat.getDrawable(activity!!,R.drawable.item_decorator)!!))
+                                            }
+                                            else{
+                                                pgr?.visibility = View.GONE
+                                                empty?.text = "No Results found"
+                                                empty?.visibility = View.VISIBLE
+                                            }
+                                        }
+                                    }
+
+                                }
 
 
-                            }
+                    }
 
-                }
+
+        }, Response.ErrorListener {
+            Toast.makeText(activity,"Network Error",Toast.LENGTH_LONG).show()
+        })
+        Mysingleton.getInstance(activity).addToRequestqueue(jsonobjectrequest)
+//        db.collection("Tweets").whereGreaterThanOrEqualTo("date",prevtime).orderBy("date", Query.Direction.DESCENDING)
+//                .get().addOnCompleteListener{ds1->
+//                    tweets.clear()
+//
+//                }
 
     }
 }

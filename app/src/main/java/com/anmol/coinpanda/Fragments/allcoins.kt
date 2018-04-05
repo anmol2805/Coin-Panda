@@ -153,7 +153,7 @@ class allcoins : Fragment(){
 
                     while (c<jsonArray.length()){
                                 val obj = jsonArray.getJSONObject(c)
-                                val id = obj.getString("id")
+                                                                val id = obj.getString("id")
                                 val coin = obj.getString("coin_name")
                                 val coin_symbol = obj.getString("coin_symbol")
                                 val mtweet = obj.getString("tweet")
