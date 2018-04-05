@@ -63,27 +63,27 @@ class coinslist : Fragment(){
             loadalldata(null)    
         },200)
         coingrid?.onItemClickListener = AdapterView.OnItemClickListener { adapterView, view, i, l ->
-            if(activity!=null){
+            if(activity!=null) {
                 val dialog = Dialog(activity)
                 dialog.setContentView(R.layout.dialoglayout)
-                val prg : ProgressBar? = dialog.findViewById(R.id.prgbr)
+                val prg: ProgressBar? = dialog.findViewById(R.id.prgbr)
                 val coinimg: ImageView? = dialog.findViewById(R.id.coinimg)
-                val cn :TextView? = dialog.findViewById(R.id.cn)
-                val cs:TextView? = dialog.findViewById(R.id.cs)
-                val cp:TextView? = dialog.findViewById(R.id.cp)
-                val atp:Button? = dialog.findViewById(R.id.atp)
-                val portfoliolay: LinearLayout?= dialog.findViewById(R.id.portfoliolay)
-                val viewtweet:Button?=dialog.findViewById(R.id.viewtweets)
-                val notificationswitch: Switch?= dialog.findViewById(R.id.notification)
-                val remove:Button? = dialog.findViewById(R.id.remove)
+                val cn: TextView? = dialog.findViewById(R.id.cn)
+                val cs: TextView? = dialog.findViewById(R.id.cs)
+                val cp: TextView? = dialog.findViewById(R.id.cp)
+                val atp: Button? = dialog.findViewById(R.id.atp)
+                val portfoliolay: LinearLayout? = dialog.findViewById(R.id.portfoliolay)
+                val viewtweet: Button? = dialog.findViewById(R.id.viewtweets)
+                val notificationswitch: Switch? = dialog.findViewById(R.id.notification)
+                val remove: Button? = dialog.findViewById(R.id.remove)
                 atp?.visibility = View.VISIBLE
                 portfoliolay?.visibility = View.GONE
                 db.collection("users").document(auth.currentUser!!.uid).collection("topics").get().addOnCompleteListener { task ->
                     val snapshot = task.result
-                    for(doc in snapshot){
-                        if(doc.id.contains(allcoins[i].coinname!!) && doc.getString("coinname").contains(allcoins[i].coin!!)){
+                    for (doc in snapshot) {
+                        if (doc.id.contains(allcoins[i].coinname!!) && doc.getString("coinname").contains(allcoins[i].coin!!)) {
                             val notify = doc.getBoolean("notify")
-                            if (!notify!!){
+                            if (!notify!!) {
                                 notificationswitch?.isChecked = false
                             }
                         }
@@ -93,28 +93,26 @@ class coinslist : Fragment(){
                 }
                 notificationswitch?.isChecked = true
                 notificationswitch?.setOnCheckedChangeListener { _, b ->
-                    if (b){
-                        val map = HashMap<String,Any>()
+                    if (b) {
+                        val map = HashMap<String, Any>()
                         map["notify"] = true
                         topicsearch(0, allcoins[i].coinname, allcoins[i].coin)
                         db.collection("users").document(auth.currentUser!!.uid).collection("portfolio").document(allcoins[i].coinname!!).update(map)
-                    }
-                    else{
-                        db.collection("users").document(auth.currentUser!!.uid).collection("topics").get().addOnCompleteListener{task->
+                    } else {
+                        db.collection("users").document(auth.currentUser!!.uid).collection("topics").get().addOnCompleteListener { task ->
                             val documenSnapshot = task.result
-                            for(doc in documenSnapshot){
-                                if(doc.id.contains(allcoins[i].coinname!!) && doc.getString("coinname") == allcoins[i].coin){
-                                    db.collection("users").document(auth.currentUser!!.uid).collection("topics").document(doc.id).delete().addOnSuccessListener{
+                            for (doc in documenSnapshot) {
+                                if (doc.id.contains(allcoins[i].coinname!!) && doc.getString("coinname") == allcoins[i].coin) {
+                                    db.collection("users").document(auth.currentUser!!.uid).collection("topics").document(doc.id).delete().addOnSuccessListener {
                                         messaging.unsubscribeFromTopic(doc.id)
-                                        db.collection("topics").document(doc.id).get().addOnCompleteListener{task ->
+                                        db.collection("topics").document(doc.id).get().addOnCompleteListener { task ->
                                             val documentSnapshot = task.result
                                             val count = documentSnapshot.getLong("count")
-                                            if (count>0){
-                                                val map  = java.util.HashMap<String, Any>()
+                                            if (count > 0) {
+                                                val map = java.util.HashMap<String, Any>()
                                                 map["count"] = count - 1
                                                 db.collection("topics").document(doc.id).update(map)
-                                            }
-                                            else{
+                                            } else {
 
                                             }
                                         }
@@ -126,10 +124,11 @@ class coinslist : Fragment(){
 
                             }
 
-                        }
+
 
                     }
                 }
+            }
                 db.collection("users").document(auth.currentUser!!.uid).collection("portfolio").get().addOnCompleteListener {task ->
                     for(doc in task.result){
                         if(doc.id == (allcoins[i].coinname!!)){
@@ -215,20 +214,20 @@ class coinslist : Fragment(){
             }
 
         }
-        sedit?.addTextChangedListener(object: TextWatcher {
-            override fun afterTextChanged(p0: Editable?) {
-
-            }
-
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-            }
-
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                System.out.println("textchange:$p0")
-                loadalldata(p0)
-            }
-
-        })
+//        sedit?.addTextChangedListener(object: TextWatcher {
+//            override fun afterTextChanged(p0: Editable?) {
+//
+//            }
+//
+//            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+//            }
+//
+//            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+//                System.out.println("textchange:$p0")
+//                loadalldata(p0)
+//            }
+//
+//        })
         return vi
     }
 
@@ -341,37 +340,80 @@ class coinslist : Fragment(){
                                 empty?.visibility = View.VISIBLE
                             }
                         }
-                    }else{
-                        var i = 0
-                        while (i<response.length()){
-                            val doc = response.getJSONObject(i)
-                            val coinname = doc.getString("coin_symbol")
-                            val name = doc.getString("coin_name")
-                            val coinpage = doc.getString("coin_handle")
-                            if(name!=null && coinname!= null){
-                                if (name.toLowerCase().contains(p0) || coinname.toLowerCase().contains(p0) || name.toUpperCase().contains(p0) || coinname.toUpperCase().contains(p0)){
-                                    val allcoin = Allcoin(coinname,name,coinpage)
-                                    allcoins.add(allcoin)
+                        sedit?.addTextChangedListener(object :TextWatcher{
+                            override fun afterTextChanged(p0: Editable?) {
+                                
+                            }
+
+                            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                                
+                            }
+
+                            override fun onTextChanged(cointext: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                                allcoins.clear()
+                                var j = 0
+                                while (j<response.length()){
+                                    val doc = response.getJSONObject(j)
+                                    val coinname = doc.getString("coin_symbol")
+                                    val name = doc.getString("coin_name")
+                                    val coinpage = doc.getString("coin_handle")
+                                    if(name!=null && coinname!= null){
+                                        if (name.toLowerCase().contains(cointext!!) || coinname.toLowerCase().contains(cointext) || name.toUpperCase().contains(cointext) || coinname.toUpperCase().contains(cointext)){
+                                            val allcoin = Allcoin(coinname,name,coinpage)
+                                            allcoins.add(allcoin)
+                                        }
+                                    }
+                                    j++
+                                }
+                                if(activity!=null){
+                                    if(!allcoins.isEmpty()){
+                                        pgr?.visibility = View.GONE
+                                        empty?.visibility = View.GONE
+                                        gridAdapter = GridnewAdapter(activity!!, allcoins)
+                                        gridAdapter.notifyDataSetChanged()
+                                        coingrid?.adapter = gridAdapter
+                                    }
+                                    else{
+                                        pgr?.visibility = View.GONE
+                                        empty?.visibility = View.VISIBLE
+                                        empty?.text = "No Results found"
+                                    }
                                 }
                             }
-                            i++
 
-                        }
-                        if(activity!=null){
-                            if(!allcoins.isEmpty()){
-                                pgr?.visibility = View.GONE
-                                empty?.visibility = View.GONE
-                                gridAdapter = GridnewAdapter(activity!!, allcoins)
-                                gridAdapter.notifyDataSetChanged()
-                                coingrid?.adapter = gridAdapter
-                            }
-                            else{
-                                pgr?.visibility = View.GONE
-                                empty?.visibility = View.VISIBLE
-                                empty?.text = "No Results found"
-                            }
-                        }
-                    }
+                        })
+                   }
+// else{
+//                        var i = 0
+//                        while (i<response.length()){
+//                            val doc = response.getJSONObject(i)
+//                            val coinname = doc.getString("coin_symbol")
+//                            val name = doc.getString("coin_name")
+//                            val coinpage = doc.getString("coin_handle")
+//                            if(name!=null && coinname!= null){
+//                                if (name.toLowerCase().contains(p0) || coinname.toLowerCase().contains(p0) || name.toUpperCase().contains(p0) || coinname.toUpperCase().contains(p0)){
+//                                    val allcoin = Allcoin(coinname,name,coinpage)
+//                                    allcoins.add(allcoin)
+//                                }
+//                            }
+//                            i++
+//
+//                        }
+//                        if(activity!=null){
+//                            if(!allcoins.isEmpty()){
+//                                pgr?.visibility = View.GONE
+//                                empty?.visibility = View.GONE
+//                                gridAdapter = GridnewAdapter(activity!!, allcoins)
+//                                gridAdapter.notifyDataSetChanged()
+//                                coingrid?.adapter = gridAdapter
+//                            }
+//                            else{
+//                                pgr?.visibility = View.GONE
+//                                empty?.visibility = View.VISIBLE
+//                                empty?.text = "No Results found"
+//                            }
+//                        }
+//                    }
 
 
         }, Response.ErrorListener {
