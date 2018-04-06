@@ -201,8 +201,8 @@ class coinslist : Fragment(){
                     map["coinPage"] = allcoins[i].coinpage.toString()
                     map["notify"] = true
                     db.collection("users").document(auth.currentUser!!.uid).collection("portfolio").document(allcoins[i].coinname!!).set(map).addOnSuccessListener {
-                        updaterequest()
-                        moverequest()
+                        //updaterequest()
+                        //moverequest()
                         if(activity!=null){
                             Toast.makeText(activity,"Added to your Portfolio", Toast.LENGTH_SHORT).show()
                         }
@@ -287,28 +287,28 @@ class coinslist : Fragment(){
         }
     }
 
-    private fun updaterequest() {
-        val stringRequest = StringRequest(Request.Method.GET,"http://165.227.98.190/update", Response.Listener { response ->
-            System.out.println(response)
-        }, Response.ErrorListener {error->
-            System.out.println(error)
-        })
-        if(activity!=null){
-            Mysingleton.getInstance(activity).addToRequestqueue(stringRequest)
-        }
-
-    }
-    private fun moverequest() {
-        val stringRequest = StringRequest(Request.Method.GET,"http://165.227.98.190/move", Response.Listener { response ->
-            System.out.println(response)
-        }, Response.ErrorListener {error->
-            System.out.println(error)
-        })
-        if(activity!=null){
-            Mysingleton.getInstance(activity).addToRequestqueue(stringRequest)
-        }
-
-    }
+//    private fun updaterequest() {
+//        val stringRequest = StringRequest(Request.Method.GET,"http://165.227.98.190/update", Response.Listener { response ->
+//            System.out.println(response)
+//        }, Response.ErrorListener {error->
+//            System.out.println(error)
+//        })
+//        if(activity!=null){
+//            Mysingleton.getInstance(activity).addToRequestqueue(stringRequest)
+//        }
+//
+//    }
+//    private fun moverequest() {
+//        val stringRequest = StringRequest(Request.Method.GET,"http://165.227.98.190/move", Response.Listener { response ->
+//            System.out.println(response)
+//        }, Response.ErrorListener {error->
+//            System.out.println(error)
+//        })
+//        if(activity!=null){
+//            Mysingleton.getInstance(activity).addToRequestqueue(stringRequest)
+//        }
+//
+//    }
 
     private fun loadalldata(p0: CharSequence?) {
         pgr?.visibility = View.VISIBLE
