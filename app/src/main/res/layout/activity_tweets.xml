@@ -12,6 +12,15 @@
         android:id="@+id/pgr"
         android:layout_centerInParent="true"
         />
+    <Button
+        android:id="@+id/retry"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="125dp"
+        android:text="retry"
+        android:visibility="gone" />
+
 
     <TextView
         android:id="@+id/empty"

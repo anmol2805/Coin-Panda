@@ -9,6 +9,7 @@ import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
+import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
@@ -34,6 +35,8 @@ class TweetsActivity : AppCompatActivity() {
     val auth = FirebaseAuth.getInstance()
     var empty: TextView? = null
     var pgr:ProgressBar? = null
+    var retry: Button?=null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tweets)
@@ -43,6 +46,8 @@ class TweetsActivity : AppCompatActivity() {
             pgr = findViewById(R.id.pgr)
             val layoutManager = LinearLayoutManager(this)
             mtweetrecycler = findViewById(R.id.tweetrecycler)
+            retry = findViewById(R.id.retry)
+            retry?.visibility = View.GONE
             mtweetrecycler?.layoutManager = layoutManager
             mtweetrecycler?.setHasFixedSize(true)
             mtweetrecycler?.itemAnimator = DefaultItemAnimator()
@@ -68,6 +73,9 @@ class TweetsActivity : AppCompatActivity() {
                             bookmarks.add(tweetid)
                         }
                         loadtweets(coin,bookmarks)
+                        retry?.setOnClickListener{
+                            loadtweets(coin,bookmarks)
+                        }
                     }
         }
 
@@ -76,6 +84,8 @@ class TweetsActivity : AppCompatActivity() {
 
     private fun loadtweets(coin: String, bookmarks: ArrayList<String>) {
         pgr?.visibility = View.VISIBLE
+        retry?.visibility = View.GONE
+        empty?.visibility = View.GONE
         val url = "http://165.227.98.190/tweets/$coin"
         val jsonObject = JsonArrayRequest(Request.Method.GET,url,null,Response.Listener {
             response ->
@@ -115,7 +125,10 @@ class TweetsActivity : AppCompatActivity() {
                 empty?.visibility = View.VISIBLE
             }
         },Response.ErrorListener {
-            Toast.makeText(this,"Network Error", Toast.LENGTH_LONG).show()
+            retry?.visibility = View.VISIBLE
+            empty?.visibility = View.VISIBLE
+            empty?.text = "Network Error"
+
         })
         Mysingleton.getInstance(this).addToRequestqueue(jsonObject)
 
