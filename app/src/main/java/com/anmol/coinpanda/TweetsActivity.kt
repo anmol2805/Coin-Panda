@@ -128,6 +128,7 @@ class TweetsActivity : AppCompatActivity() {
             retry?.visibility = View.VISIBLE
             empty?.visibility = View.VISIBLE
             empty?.text = "Network Error"
+            pgr?.visibility = View.GONE
 
         })
         Mysingleton.getInstance(this).addToRequestqueue(jsonObject)

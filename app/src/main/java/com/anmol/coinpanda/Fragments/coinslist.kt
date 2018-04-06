@@ -429,8 +429,12 @@ class coinslist : Fragment(){
             retry?.visibility = View.VISIBLE
             empty?.visibility = View.VISIBLE
             empty?.text = "Network Error"
+            pgr?.visibility = View.GONE
         })
-        Mysingleton.getInstance(activity).addToRequestqueue(jsonobjectrequest)
+        if(activity!=null){
+            Mysingleton.getInstance(activity).addToRequestqueue(jsonobjectrequest)
+        }
+
 //        db.collection("AllCoins").orderBy("lastUpdate", Query.Direction.DESCENDING)
 //                .get().addOnCompleteListener{task ->
 //                    allcoins.clear()

@@ -23,6 +23,7 @@ import com.anmol.coinpanda.Adapters.DividerItemDecoration
 import com.anmol.coinpanda.Adapters.TweetsAdapter
 import com.anmol.coinpanda.Interfaces.ItemClickListener
 import com.anmol.coinpanda.Model.Tweet
+import com.anmol.coinpanda.Mysingleton
 import com.anmol.coinpanda.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthCredential
@@ -268,7 +269,13 @@ class bookmarks : Fragment() {
             retry?.visibility = View.VISIBLE
             empty?.visibility = View.VISIBLE
             empty?.text = "Network Error"
+            pgr?.visibility = View.GONE
         })
+        if(activity!=null){
+            Mysingleton.getInstance(activity).addToRequestqueue(jsonobjectrequest)
+        }
+
+
 
 
     }

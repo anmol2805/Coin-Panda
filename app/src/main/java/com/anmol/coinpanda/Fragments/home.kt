@@ -46,24 +46,24 @@ class home : Fragment() {
         mcoinselect = vi.findViewById(R.id.coinselect)
         pgr = vi.findViewById(R.id.pgr)
         pgr?.visibility = View.VISIBLE
-        pgr?.visibility = View.GONE
-        mcoinselect.isChecked = false
-        setFragment(coinslist())
-//        db.collection("users").document(auth.currentUser!!.uid).collection("portfolio").get().addOnCompleteListener {
-//            task ->
-//            val documentSnapshot = task.result
-//            val s = documentSnapshot.size()
-//            if(s!=0){
-//                pgr?.visibility = View.GONE
-//                mcoinselect.isChecked = true
-//                setFragment(mycoinslist())
-//            }
-//            else{
-//                pgr?.visibility = View.GONE
-//                mcoinselect.isChecked = false
-//                setFragment(coinslist())
-//            }
-//        }
+//        pgr?.visibility = View.GONE
+//        mcoinselect.isChecked = false
+//        setFragment(coinslist())
+        db.collection("users").document(auth.currentUser!!.uid).collection("portfolio").get().addOnCompleteListener {
+            task ->
+            val documentSnapshot = task.result
+            val s = documentSnapshot.size()
+            if(s!=0){
+                pgr?.visibility = View.GONE
+                mcoinselect.isChecked = true
+                setFragment(mycoinslist())
+            }
+            else{
+                pgr?.visibility = View.GONE
+                mcoinselect.isChecked = false
+                setFragment(coinslist())
+            }
+        }
 
 
         mcoinselect.setOnCheckedChangeListener({ compoundButton, b ->

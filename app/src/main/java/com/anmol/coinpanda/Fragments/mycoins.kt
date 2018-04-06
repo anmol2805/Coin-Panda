@@ -328,9 +328,13 @@ class mycoins : Fragment(){
             retry?.visibility = View.VISIBLE
             empty?.visibility = View.VISIBLE
             empty?.text = "Network Error"
+            pgr?.visibility = View.GONE
             //Toast.makeText(activity,"Network Error",Toast.LENGTH_LONG).show()
         })
-        Mysingleton.getInstance(activity).addToRequestqueue(jsonobjectrequest)
+        if(activity!=null){
+            Mysingleton.getInstance(activity).addToRequestqueue(jsonobjectrequest)
+        }
+
 //        db.collection("Tweets").whereGreaterThanOrEqualTo("date",prevtime).orderBy("date", Query.Direction.DESCENDING)
 //                .get().addOnCompleteListener{ds1->
 //                    tweets.clear()
