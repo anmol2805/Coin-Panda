@@ -25,6 +25,7 @@ import com.anmol.coinpanda.Interfaces.ItemClickListener
 import com.anmol.coinpanda.Model.Tweet
 import com.anmol.coinpanda.R
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.GoogleAuthCredential
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import java.sql.Timestamp
@@ -44,6 +45,8 @@ class bookmarks : Fragment() {
     val auth = FirebaseAuth.getInstance()
     var empty: TextView? = null
     var pgr :ProgressBar?=null
+    var retry:Button?=null
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val vi = inflater.inflate(R.layout.bookmarks,
                 container, false)
@@ -57,6 +60,8 @@ class bookmarks : Fragment() {
             srch = vi.findViewById(R.id.scb)
             empty = vi.findViewById(R.id.empty)
             pgr = vi.findViewById(R.id.pgr)
+            retry = vi.findViewById(R.id.retry)
+            retry?.visibility = View.GONE
             empty?.visibility = View.GONE
             cointweetrecycler?.layoutManager = layoutManager
             cointweetrecycler?.setHasFixedSize(true)
@@ -77,11 +82,16 @@ class bookmarks : Fragment() {
             }
             
         }
+        retry?.setOnClickListener{
+            loadquery(null)
+        }
         return vi
     }
 
     private fun loadquery(p0: CharSequence?) {
         tweets.clear()
+        retry?.visibility = View.GONE
+        empty?.visibility = View.GONE
         pgr?.visibility = View.VISIBLE
         val format = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
         val cal = Calendar.getInstance()
@@ -255,8 +265,9 @@ class bookmarks : Fragment() {
 //                        }
                     }
         },Response.ErrorListener {
-            Toast.makeText(activity,"Network Error", Toast.LENGTH_LONG).show()
-
+            retry?.visibility = View.VISIBLE
+            empty?.visibility = View.VISIBLE
+            empty?.text = "Network Error"
         })
 
 

@@ -49,6 +49,7 @@ class coinslist : Fragment(){
     val auth = FirebaseAuth.getInstance()
     val messaging = FirebaseMessaging.getInstance()
     var pgr :ProgressBar? = null
+    var retry:Button?=null
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val vi = inflater.inflate(R.layout.coinslist, container, false)
         coingrid = vi.findViewById(R.id.coingrid)
@@ -57,6 +58,8 @@ class coinslist : Fragment(){
         empty = vi.findViewById(R.id.empty)
         pgr = vi.findViewById(R.id.pgr)
         empty?.visibility = View.GONE
+        retry = vi.findViewById(R.id.retry)
+        retry?.visibility = View.GONE
         allcoins = ArrayList()
         val handler = Handler()
         handler.postDelayed({
@@ -228,6 +231,10 @@ class coinslist : Fragment(){
 //            }
 //
 //        })
+
+        retry?.setOnClickListener{
+            loadalldata(null)
+        }
         return vi
     }
 
@@ -312,6 +319,8 @@ class coinslist : Fragment(){
 
     private fun loadalldata(p0: CharSequence?) {
         pgr?.visibility = View.VISIBLE
+        retry?.visibility = View.GONE
+        empty?.visibility = View.GONE
         allcoins.clear()
         val jsonobjectrequest = JsonArrayRequest(Request.Method.GET,"http://165.227.98.190/coins",null,
                 Response.Listener {response ->
@@ -417,7 +426,9 @@ class coinslist : Fragment(){
 
 
         }, Response.ErrorListener {
-            System.out.println("Response error")
+            retry?.visibility = View.VISIBLE
+            empty?.visibility = View.VISIBLE
+            empty?.text = "Network Error"
         })
         Mysingleton.getInstance(activity).addToRequestqueue(jsonobjectrequest)
 //        db.collection("AllCoins").orderBy("lastUpdate", Query.Direction.DESCENDING)
