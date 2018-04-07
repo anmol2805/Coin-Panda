@@ -87,8 +87,8 @@ class dashboard : Fragment() {
     }
 
     private fun setFragment(fragment: Fragment) {
-        if(activity!=null){
-            activity!!.supportFragmentManager.beginTransaction().replace(R.id.coinframe,fragment).commit()
+        if(activity!=null && !activity!!.isFinishing){
+            activity!!.supportFragmentManager.beginTransaction().replace(R.id.coinframe,fragment).commitAllowingStateLoss()
         }
 
 

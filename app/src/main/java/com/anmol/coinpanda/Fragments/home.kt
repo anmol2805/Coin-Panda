@@ -80,8 +80,8 @@ class home : Fragment() {
         return vi
     }
     private fun setFragment(fragment: Fragment) {
-        if(activity!=null){
-            activity!!.supportFragmentManager.beginTransaction().replace(R.id.fragment,fragment).commit()
+        if(activity!=null && !activity!!.isFinishing){
+            activity!!.supportFragmentManager.beginTransaction().replace(R.id.fragment,fragment).commitAllowingStateLoss()
         }
 
 

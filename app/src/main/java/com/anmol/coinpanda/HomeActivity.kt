@@ -87,44 +87,49 @@ class HomeActivity : AppCompatActivity() {
                         val pInfo = packageManager.getPackageInfo(packageName, 0)
                         val version = pInfo.versionName.toString().trim()
                         System.out.println("version $updateversion $version")
+                        val dialog = AlertDialog.Builder(this@HomeActivity)
+                                .setTitle("New version available")
+                                .setMessage("Please, update app to new version to continue our services")
+                                .setCancelable(false)
+                                .setPositiveButton("Update"
+                                ) { dialog, which -> val uri = Uri.parse("market://details?id=" + "com.anmol.coinpanda")
+                                    val goToMarket = Intent(Intent.ACTION_VIEW, uri)
+                                    // To count with Play market backstack, After pressing back button,
+                                    // to taken back to our application, we need to add following flags to intent.
+                                    goToMarket.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY or
+                                            Intent.FLAG_ACTIVITY_NEW_DOCUMENT or
+                                            Intent.FLAG_ACTIVITY_MULTIPLE_TASK)
+                                    try {
+                                        startActivity(goToMarket)
+                                    } catch (e: ActivityNotFoundException) {
+                                        startActivity(Intent(Intent.ACTION_VIEW,
+                                                Uri.parse("http://play.google.com/store/apps/details?id=" + "com.anmol.coinpanda")))
+                                    } }.create()
                         if (version == updateversion){
                             System.out.println("update not needed")
+                            dialog.cancel()
+                            dialog.dismiss()
                         }
                         else{
-                            val dialog = AlertDialog.Builder(this@HomeActivity)
-                                    .setTitle("New version available")
-                                    .setMessage("Please, update app to new version to continue our services")
-                                    .setCancelable(false)
-                                    .setPositiveButton("Update"
-                                    ) { dialog, which -> val uri = Uri.parse("market://details?id=" + "com.anmol.coinpanda")
-                                        val goToMarket = Intent(Intent.ACTION_VIEW, uri)
-                                        // To count with Play market backstack, After pressing back button,
-                                        // to taken back to our application, we need to add following flags to intent.
-                                        goToMarket.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY or
-                                                Intent.FLAG_ACTIVITY_NEW_DOCUMENT or
-                                                Intent.FLAG_ACTIVITY_MULTIPLE_TASK)
-                                        try {
-                                            startActivity(goToMarket)
-                                        } catch (e: ActivityNotFoundException) {
-                                            startActivity(Intent(Intent.ACTION_VIEW,
-                                                    Uri.parse("http://play.google.com/store/apps/details?id=" + "com.anmol.coinpanda")))
-                                        } }.create()
+
                             dialog.show()
                         }
 
                     }
                     if(p0.child("maintainence").value!=null){
                         val status:Boolean = p0.child("maintainence").value as Boolean
-
+                        val dialog = AlertDialog.Builder(this@HomeActivity)
+                                .setTitle("Maintainence downtime")
+                                .setMessage("Server is undergoing some maintainence procedures.Stay tuned, we'll be back after some time")
+                                .setCancelable(false)
+                                .create()
                         if (!status){
+                            dialog.cancel()
+                            dialog.dismiss()
                             System.out.println("update not needed")
                         }
                         else{
-                            val dialog = AlertDialog.Builder(this@HomeActivity)
-                                    .setTitle("Maintainence downtime")
-                                    .setMessage("Server is undergoing some maintainence procedures.Stay tuned, we'll be back after some time")
-                                    .setCancelable(false)
-                                    .create()
+
                             dialog.show()
                         }
 
