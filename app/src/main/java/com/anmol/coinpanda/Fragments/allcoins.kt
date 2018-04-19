@@ -1,6 +1,9 @@
 package com.anmol.coinpanda.Fragments
 
+import android.content.Context
 import android.content.Intent
+import android.database.sqlite.SQLiteDatabase
+import android.database.sqlite.SQLiteDatabase.openOrCreateDatabase
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
@@ -56,9 +59,12 @@ class allcoins : Fragment(){
     var tweetsAdapter : TweetsAdapter?=null
     var pgr:ProgressBar?=null
     var empty:ImageView?=null
+    var allcoinsdb:SQLiteDatabase?=null
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val vi = inflater.inflate(R.layout.allcoins, container, false)
         activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
+        allcoinsdb = activity?.openOrCreateDatabase("person.db",Context.MODE_PRIVATE, null)
+        allcoinsdb?.execSQL("CREATE TABLE IF NOT EXISTS COINS (coinName TEXT,coinHandle TEXT,coinSymbol TEXT,tweet TEXT)")
         val layoutManager = LinearLayoutManager(activity)
         cointweetrecycler = vi.findViewById(R.id.cointweetrecycler)
         pgr = vi.findViewById(R.id.pgr)
