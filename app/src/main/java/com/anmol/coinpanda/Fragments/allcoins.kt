@@ -25,7 +25,9 @@ import com.android.volley.toolbox.JsonObjectRequest
 import com.anmol.coinpanda.Adapters.DividerItemDecoration
 import com.anmol.coinpanda.Adapters.KeywordAdapter
 import com.anmol.coinpanda.Adapters.TweetsAdapter
+import com.anmol.coinpanda.Helper.Dbhelper
 import com.anmol.coinpanda.Interfaces.ItemClickListener
+import com.anmol.coinpanda.Model.Sqltweet
 import com.anmol.coinpanda.Model.Tweet
 import com.anmol.coinpanda.Mysingleton
 import com.anmol.coinpanda.R
@@ -59,12 +61,10 @@ class allcoins : Fragment(){
     var tweetsAdapter : TweetsAdapter?=null
     var pgr:ProgressBar?=null
     var empty:ImageView?=null
-    var allcoinsdb:SQLiteDatabase?=null
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val vi = inflater.inflate(R.layout.allcoins, container, false)
         activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
-        allcoinsdb = activity?.openOrCreateDatabase("person.db",Context.MODE_PRIVATE, null)
-        allcoinsdb?.execSQL("CREATE TABLE IF NOT EXISTS COINS (coinName TEXT,coinHandle TEXT,coinSymbol TEXT,tweet TEXT)")
+
         val layoutManager = LinearLayoutManager(activity)
         cointweetrecycler = vi.findViewById(R.id.cointweetrecycler)
         pgr = vi.findViewById(R.id.pgr)
@@ -167,26 +167,29 @@ class allcoins : Fragment(){
                                 val keyword = obj.getString("keyword")
                                 val dates = obj.getString("date")
                                 val coinpage = obj.getString("coin_handle")
-                                val tweet = Tweet(coin, coin_symbol, mtweet, url, keyword, id, false, dates,"ac",coinpage)
-                                tweets.add(tweet)
+                                val sqltweet = Sqltweet(coin,coin_symbol,mtweet,url,keyword,id,dates,coinpage)
+                                val db = Dbhelper(activity!!)
+                                db.insertData(sqltweet)
+
                                 c++
                             }
                     if (activity != null) {
-                                if (!tweets.isEmpty()) {
-                                    pgr?.visibility = View.GONE
-                                    retry?.visibility = View.GONE
-                                    empty?.visibility = View.GONE
-                                    tweetsAdapter = TweetsAdapter(activity!!, tweets, itemClickListener)
-                                    tweetsAdapter!!.notifyDataSetChanged()
-                                    cointweetrecycler?.adapter = tweetsAdapter
-                                    //cointweetrecycler?.addItemDecoration(DividerItemDecoration(ContextCompat.getDrawable(activity!!,R.drawable.item_decorator)!!))
+                        if (!tweets.isEmpty()) {
+                            pgr?.visibility = View.GONE
+                            retry?.visibility = View.GONE
+                            empty?.visibility = View.GONE
+                            tweetsAdapter = TweetsAdapter(activity!!, tweets, itemClickListener)
+                            tweetsAdapter!!.notifyDataSetChanged()
+                            cointweetrecycler?.adapter = tweetsAdapter
+                            //cointweetrecycler?.addItemDecoration(DividerItemDecoration(ContextCompat.getDrawable(activity!!,R.drawable.item_decorator)!!))
 
-                                }
-                                else{
-                                    retry?.visibility = View.VISIBLE
-                                    empty?.visibility = View.VISIBLE
-                                }
-                            }
+                        }
+                        else{
+                            retry?.visibility = View.VISIBLE
+                            empty?.visibility = View.VISIBLE
+                        }
+                    }
+
 
 
 
