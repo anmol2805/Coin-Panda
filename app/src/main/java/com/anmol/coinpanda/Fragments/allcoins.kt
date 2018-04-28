@@ -157,7 +157,7 @@ class allcoins : Fragment(){
                     val jsonArray = response.getJSONArray("tweets")
                     tweets.clear()
 
-                    while (c<jsonArray.length()){
+                    while (c<999){
                                 val obj = jsonArray.getJSONObject(c)
                                 val id = obj.getString("id")
                                 val coin = obj.getString("coin_name")
@@ -168,8 +168,10 @@ class allcoins : Fragment(){
                                 val dates = obj.getString("date")
                                 val coinpage = obj.getString("coin_handle")
                                 val sqltweet = Sqltweet(coin,coin_symbol,mtweet,url,keyword,id,dates,coinpage)
-                                val db = Dbhelper(activity!!)
-                                db.insertData(sqltweet)
+                                if(activity!=null){
+                                    val db = Dbhelper(activity!!)
+                                    db.insertData(sqltweet)
+                                }
 
                                 c++
                             }
@@ -185,6 +187,7 @@ class allcoins : Fragment(){
 
                         }
                         else{
+                            pgr?.visibility = View.GONE
                             retry?.visibility = View.VISIBLE
                             empty?.visibility = View.VISIBLE
                         }

@@ -21,7 +21,7 @@ val COL_DATES = "dates"
 class Dbhelper (context: Context):SQLiteOpenHelper(context, DATABASE_NAME,null,1){
     override fun onCreate(p0: SQLiteDatabase?) {
         val createtable = "CREATE TABLE " + TABLE_NAME + " (" +
-                COL_ID + " VARCHAR(256) PRIMARY KEY NOT NULL," +
+                COL_ID + " VARCHAR(256) PRIMARY KEY NOT NULL UNIQUE," +
                 COL_COIN + " VARCHAR(256)," +
                 COL_COIN_SYMBOL + " VARCHAR(256)," +
                 COL_COIN_HANDLE + " VARCHAR(256)," +
@@ -34,7 +34,8 @@ class Dbhelper (context: Context):SQLiteOpenHelper(context, DATABASE_NAME,null,1
     }
 
     override fun onUpgrade(p0: SQLiteDatabase?, p1: Int, p2: Int) {
-
+        p0?.execSQL("DROP TABLE IF EXISTS $TABLE_NAME")
+        onCreate(p0)
     }
 
     fun insertData(sqltweet: Sqltweet){
