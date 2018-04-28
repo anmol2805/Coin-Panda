@@ -119,8 +119,8 @@ class HomeActivity : AppCompatActivity() {
                     if(p0.child("maintainence").value!=null){
                         val status:Boolean = p0.child("maintainence").value as Boolean
                         val dialog = AlertDialog.Builder(this@HomeActivity)
-                                .setTitle("Maintainence downtime")
-                                .setMessage("Server is undergoing some maintainence procedures.Stay tuned, we'll be back after some time")
+                                .setTitle("Maintenance downtime")
+                                .setMessage("Server is undergoing some maintenance procedures.Stay tuned, we'll be back after some time")
                                 .setCancelable(false)
                                 .create()
                         if (!status){
@@ -192,8 +192,8 @@ class HomeActivity : AppCompatActivity() {
                 if(p0.child("maintainence").value!=null){
                     val status:Boolean = p0.child("maintainence").value as Boolean
                     val dialog = AlertDialog.Builder(this@HomeActivity)
-                            .setTitle("Maintainence downtime")
-                            .setMessage("Server is undergoing some maintainence procedures.Stay tuned, we'll be back after some time")
+                            .setTitle("Maintenance downtime")
+                            .setMessage("Server is undergoing some maintenance procedures.Stay tuned, we'll be back after some time")
                             .setCancelable(false)
                             .create()
                     if (!status){

@@ -7,6 +7,7 @@ import android.os.Handler
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
+import com.anmol.coinpanda.Services.TweetsdbService
 import com.google.firebase.auth.FirebaseAuth
 
 class SplashActivity : AppCompatActivity() {
@@ -36,7 +37,8 @@ class SplashActivity : AppCompatActivity() {
                 finish()
             },3000)
         }
-
+        val intent = Intent(this,TweetsdbService::class.java)
+        startService(intent)
     }
     private fun updaterequest() {
         val stringRequest = StringRequest(Request.Method.GET,"http://165.227.98.190/update", Response.Listener { response ->

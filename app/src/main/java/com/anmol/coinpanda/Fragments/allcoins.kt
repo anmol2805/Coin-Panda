@@ -99,7 +99,7 @@ class allcoins : Fragment(){
 //        keywords?.add("achievement")
         val handler = Handler()
         handler.postDelayed({
-            loadquery(null)
+           // loadquery(null)
         },200)
 
         itemClickListener = object : ItemClickListener {
@@ -135,7 +135,7 @@ class allcoins : Fragment(){
 //
 //        })
             retry?.setOnClickListener{
-                loadquery(null)
+                //loadquery(null)
             }
             return vi
     }

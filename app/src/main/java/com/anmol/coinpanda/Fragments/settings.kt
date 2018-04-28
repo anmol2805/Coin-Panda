@@ -59,7 +59,7 @@ class settings : Fragment() {
 
         }
         telegram?.setOnClickListener{
-            val url = "https://t.me/joinchat/GNRigg78ssytJs22torR0Q"
+            val url = "https://t.me/joinchat/GNRigk-eugnxC1dMcW1dyQ"
             val intent = Intent(Intent.ACTION_VIEW)
             intent.data = Uri.parse(url)
             startActivity(intent)
