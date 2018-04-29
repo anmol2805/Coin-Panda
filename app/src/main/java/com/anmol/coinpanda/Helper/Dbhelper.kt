@@ -2,7 +2,9 @@ package com.anmol.coinpanda.Helper
 
 import android.content.ContentValues
 import android.content.Context
+import android.database.sqlite.SQLiteCantOpenDatabaseException
 import android.database.sqlite.SQLiteDatabase
+import android.database.sqlite.SQLiteDatabase.openOrCreateDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.widget.Toast
 import com.anmol.coinpanda.Model.Sqltweet
@@ -19,6 +21,7 @@ val COL_ID = "tweet_id"
 val COL_DATES = "dates"
 
 class Dbhelper (context: Context):SQLiteOpenHelper(context, DATABASE_NAME,null,1){
+
     override fun onCreate(p0: SQLiteDatabase?) {
         val createtable = "CREATE TABLE " + TABLE_NAME + " (" +
                 COL_ID + " VARCHAR(256) PRIMARY KEY NOT NULL UNIQUE," +
@@ -39,6 +42,7 @@ class Dbhelper (context: Context):SQLiteOpenHelper(context, DATABASE_NAME,null,1
     }
 
     fun insertData(sqltweet: Sqltweet){
+        try{
         val db = this.writableDatabase
         val cv = ContentValues()
         cv.put(COL_ID,sqltweet.tweetid)
@@ -49,12 +53,17 @@ class Dbhelper (context: Context):SQLiteOpenHelper(context, DATABASE_NAME,null,1
         cv.put(COL_URL,sqltweet.url)
         cv.put(COL_KEYWORD,sqltweet.keyword)
         cv.put(COL_DATES,sqltweet.dates)
-        var result = db.insert(TABLE_NAME,null,cv)
-        if(result == (-1).toLong())
-            System.out.println("sqlstatus is failed")
-        else
-            System.out.println("sqlstatus is successs")
+            val result = db.insert(TABLE_NAME,null,cv)
+            if(result == (-1).toLong())
+                System.out.println("sqlstatus is failed")
+            else
+                System.out.println("sqlstatus is successs")
+        }catch (e:SQLiteCantOpenDatabaseException){
+            e.printStackTrace()
+        }
+
     }
+
 
 }
 
