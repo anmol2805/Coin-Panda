@@ -22,8 +22,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import android.widget.Toast
-
-
+import com.anmol.coinpanda.Services.TweetsdbService
 
 
 class HomeActivity : AppCompatActivity() {
@@ -75,6 +74,8 @@ class HomeActivity : AppCompatActivity() {
             startActivity(Intent(this,LoginActivity::class.java))
         }
         else{
+            val intent = Intent(this, TweetsdbService::class.java)
+            startService(intent)
             val databaseReference = FirebaseDatabase.getInstance().reference
             databaseReference.root.addValueEventListener(object : ValueEventListener{
                 override fun onCancelled(p0: DatabaseError?) {

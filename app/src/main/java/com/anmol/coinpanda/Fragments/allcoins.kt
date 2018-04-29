@@ -99,7 +99,7 @@ class allcoins : Fragment(){
 //        keywords?.add("achievement")
         val handler = Handler()
         handler.postDelayed({
-           // loadquery(null)
+            loadquery(null)
         },200)
 
         itemClickListener = object : ItemClickListener {
@@ -135,7 +135,7 @@ class allcoins : Fragment(){
 //
 //        })
             retry?.setOnClickListener{
-                //loadquery(null)
+                loadquery(null)
             }
             return vi
     }
@@ -150,69 +150,89 @@ class allcoins : Fragment(){
         cal.add(Calendar.MONTH,-1)
         val stringtime = format.format(cal.time)
         val prevtime = Timestamp.valueOf(stringtime)
-        val jsonobjectrequest = JsonObjectRequest(Request.Method.GET,"http://165.227.98.190/tweets",null,
-                Response.Listener { response ->
-
-                    var c = 0
-                    val jsonArray = response.getJSONArray("tweets")
-                    tweets.clear()
-
-                    while (c<999){
-                                val obj = jsonArray.getJSONObject(c)
-                                val id = obj.getString("id")
-                                val coin = obj.getString("coin_name")
-                                val coin_symbol = obj.getString("coin_symbol")
-                                val mtweet = obj.getString("tweet")
-                                val url = obj.getString("url")
-                                val keyword = obj.getString("keyword")
-                                val dates = obj.getString("date")
-                                val coinpage = obj.getString("coin_handle")
-                                val sqltweet = Sqltweet(coin,coin_symbol,mtweet,url,keyword,id,dates,coinpage)
-                                if(activity!=null){
-                                    val db = Dbhelper(activity!!)
-                                    db.insertData(sqltweet)
-                                }
-
-                                c++
-                            }
-                    if (activity != null) {
-                        if (!tweets.isEmpty()) {
-                            pgr?.visibility = View.GONE
-                            retry?.visibility = View.GONE
-                            empty?.visibility = View.GONE
-                            tweetsAdapter = TweetsAdapter(activity!!, tweets, itemClickListener)
-                            tweetsAdapter!!.notifyDataSetChanged()
-                            cointweetrecycler?.adapter = tweetsAdapter
-                            //cointweetrecycler?.addItemDecoration(DividerItemDecoration(ContextCompat.getDrawable(activity!!,R.drawable.item_decorator)!!))
-
-                        }
-                        else{
-                            pgr?.visibility = View.GONE
-                            retry?.visibility = View.VISIBLE
-                            empty?.visibility = View.VISIBLE
-                        }
-                    }
-
-
-
-
-
-
-        }, Response.ErrorListener {error ->
-            System.out.println("error:"+error.message)
-            empty?.visibility = View.VISIBLE
-            retry?.visibility = View.VISIBLE
-            pgr?.visibility = View.GONE
-            if(activity!=null){
-                Toast.makeText(activity,"Network Error",Toast.LENGTH_LONG).show()
+        if(activity!=null){
+            val db = Dbhelper(activity!!)
+            val data = db.readData()
+            if (!data.isEmpty()) {
+                pgr?.visibility = View.GONE
+                retry?.visibility = View.GONE
+                empty?.visibility = View.GONE
+                tweetsAdapter = TweetsAdapter(activity!!, data, itemClickListener)
+                tweetsAdapter!!.notifyDataSetChanged()
+                cointweetrecycler?.adapter = tweetsAdapter
+                //cointweetrecycler?.addItemDecoration(DividerItemDecoration(ContextCompat.getDrawable(activity!!,R.drawable.item_decorator)!!))
 
             }
-
-
-        })
-        if(activity!=null){
-            Mysingleton.getInstance(activity).addToRequestqueue(jsonobjectrequest)
+            else{
+                pgr?.visibility = View.GONE
+                retry?.visibility = View.VISIBLE
+                empty?.visibility = View.VISIBLE
+            }
         }
+
+//        val jsonobjectrequest = JsonObjectRequest(Request.Method.GET,"http://165.227.98.190/tweets",null,
+//                Response.Listener { response ->
+//
+//                    var c = 0
+//                    val jsonArray = response.getJSONArray("tweets")
+//                    tweets.clear()
+//
+//                    while (c<999){
+//                                val obj = jsonArray.getJSONObject(c)
+//                                val id = obj.getString("id")
+//                                val coin = obj.getString("coin_name")
+//                                val coin_symbol = obj.getString("coin_symbol")
+//                                val mtweet = obj.getString("tweet")
+//                                val url = obj.getString("url")
+//                                val keyword = obj.getString("keyword")
+//                                val dates = obj.getString("date")
+//                                val coinpage = obj.getString("coin_handle")
+//                                val sqltweet = Sqltweet(coin,coin_symbol,mtweet,url,keyword,id,dates,coinpage)
+//                                if(activity!=null){
+//                                    val db = Dbhelper(activity!!)
+//                                    db.insertData(sqltweet)
+//                                }
+//
+//                                c++
+//                            }
+//                    if (activity != null) {
+//                        if (!tweets.isEmpty()) {
+//                            pgr?.visibility = View.GONE
+//                            retry?.visibility = View.GONE
+//                            empty?.visibility = View.GONE
+//                            tweetsAdapter = TweetsAdapter(activity!!, tweets, itemClickListener)
+//                            tweetsAdapter!!.notifyDataSetChanged()
+//                            cointweetrecycler?.adapter = tweetsAdapter
+//                            //cointweetrecycler?.addItemDecoration(DividerItemDecoration(ContextCompat.getDrawable(activity!!,R.drawable.item_decorator)!!))
+//
+//                        }
+//                        else{
+//                            pgr?.visibility = View.GONE
+//                            retry?.visibility = View.VISIBLE
+//                            empty?.visibility = View.VISIBLE
+//                        }
+//                    }
+//
+//
+//
+//
+//
+//
+//        }, Response.ErrorListener {error ->
+//            System.out.println("error:"+error.message)
+//            empty?.visibility = View.VISIBLE
+//            retry?.visibility = View.VISIBLE
+//            pgr?.visibility = View.GONE
+//            if(activity!=null){
+//                Toast.makeText(activity,"Network Error",Toast.LENGTH_LONG).show()
+//
+//            }
+//
+//
+//        })
+//        if(activity!=null){
+//            Mysingleton.getInstance(activity).addToRequestqueue(jsonobjectrequest)
+//        }
 
 //        db.collection("Tweets").whereGreaterThanOrEqualTo("date",prevtime)
 //                .orderBy("date", Query.Direction.DESCENDING).addSnapshotListener{ documentSnapshot, e->

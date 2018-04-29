@@ -26,6 +26,7 @@ class SplashActivity : AppCompatActivity() {
                 startActivity(intent)
                 finish()
             },3000)
+
         }
         else{
             val handler = Handler()
@@ -37,8 +38,7 @@ class SplashActivity : AppCompatActivity() {
                 finish()
             },3000)
         }
-        val intent = Intent(this,TweetsdbService::class.java)
-        startService(intent)
+
     }
     private fun updaterequest() {
         val stringRequest = StringRequest(Request.Method.GET,"http://165.227.98.190/update", Response.Listener { response ->
