@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteDatabase.openOrCreateDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.widget.Toast
+import com.anmol.coinpanda.Model.Allcoin
 import com.anmol.coinpanda.Model.Sqlcoin
 import com.anmol.coinpanda.Model.Sqltweet
 import com.anmol.coinpanda.Model.Tweet
@@ -23,7 +24,7 @@ class Dbcoinshelper (context: Context):SQLiteOpenHelper(context, DB_NAME,null,1)
         val createtable = "CREATE TABLE " + TB_NAME + " (" +
                 COIN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                 COIN + " VARCHAR(256)," +
-                COIN_SYMBOL + " VARCHAR(256)," +
+                COIN_SYMBOL + " VARCHAR(256) NOT NULL UNIQUE," +
                 COIN_HANDLE + " VARCHAR(256))"
 
         p0?.execSQL(createtable)
@@ -52,36 +53,29 @@ class Dbcoinshelper (context: Context):SQLiteOpenHelper(context, DB_NAME,null,1)
         }
 
     }
-    fun readData():MutableList<Tweet>{
-        val tweets : MutableList<Tweet> = ArrayList()
+    fun readData():MutableList<Allcoin>{
+        val allcoins : MutableList<Allcoin> = ArrayList()
         try {
             val db = this.readableDatabase
-            val query = "Select * from $TABLE_NAME"
+            val query = "Select * from $TB_NAME"
             val result = db.rawQuery(query,null)
             if(result.moveToFirst()){
                 do{
-                    val mcoin = result.getString(result.getColumnIndex(COL_COIN))
-                    val coin_symbol = result.getString(result.getColumnIndex(COL_COIN_SYMBOL))
-                    val mtweet = result.getString(result.getColumnIndex(COL_TWEET))
-                    val url = result.getString(result.getColumnIndex(COL_URL))
-                    val keyword = result.getString(result.getColumnIndex(COL_KEYWORD))
-                    val id = result.getString(result.getColumnIndex(COL_ID))
-                    val dates = result.getString(result.getColumnIndex(COL_DATES))
-                    val coinpage = result.getString(result.getColumnIndex(COL_COIN_HANDLE))
-                    val tweet = Tweet(mcoin,coin_symbol,mtweet,url,keyword,id,false,dates,"mc",coinpage)
-                    tweets.add(tweet)
+                    val mcoin = result.getString(result.getColumnIndex(COIN))
+                    val coin_symbol = result.getString(result.getColumnIndex(COIN_SYMBOL))
+                    val coinpage = result.getString(result.getColumnIndex(COIN_HANDLE))
+                    val allcoin = Allcoin(coin_symbol,mcoin,coinpage)
+                    allcoins.add(allcoin)
                 }while (result.moveToNext())
             }
             result.close()
             db.close()
-            System.out.println("inside:$tweets")
 
         }
         catch (e:SQLiteCantOpenDatabaseException){
             e.printStackTrace()
         }
-        System.out.println("outside:$tweets")
-        return tweets
+        return allcoins
     }
 
 }

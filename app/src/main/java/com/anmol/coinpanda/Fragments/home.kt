@@ -15,8 +15,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import com.anmol.coinpanda.Adapters.GridnewAdapter
+import com.anmol.coinpanda.Helper.Dbcoinshelper
 import com.anmol.coinpanda.Interfaces.ItemClickListener
 import com.anmol.coinpanda.Model.Allcoin
+import com.anmol.coinpanda.Model.Sqlcoin
 import com.anmol.coinpanda.PaymentActivity
 import com.anmol.coinpanda.R
 import com.anmol.coinpanda.TweetsActivity
@@ -52,11 +54,21 @@ class home : Fragment() {
         db.collection("users").document(auth.currentUser!!.uid).collection("portfolio").get().addOnCompleteListener {
             task ->
             val documentSnapshot = task.result
+
             val s = documentSnapshot.size()
             if(s!=0){
                 pgr?.visibility = View.GONE
                 mcoinselect.isChecked = true
                 setFragment(mycoinslist())
+                val dcb = Dbcoinshelper(activity!!)
+                for(doc in documentSnapshot){
+                    val coinname = doc.getString("coin_name")
+                    val coinsymbol = doc.id
+                    val coinpage = doc.getString("coinPage")
+                    val sqlcoin = Sqlcoin(coinname,coinsymbol,coinpage)
+                    dcb.insertData(sqlcoin)
+                }
+
             }
             else{
                 pgr?.visibility = View.GONE
