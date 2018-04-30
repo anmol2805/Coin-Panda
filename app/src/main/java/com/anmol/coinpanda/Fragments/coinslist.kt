@@ -18,8 +18,12 @@ import com.android.volley.toolbox.JsonArrayRequest
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.StringRequest
 import com.anmol.coinpanda.Adapters.GridnewAdapter
+import com.anmol.coinpanda.Helper.Dbcoinshelper
+import com.anmol.coinpanda.Helper.Dbhelper
 import com.anmol.coinpanda.Interfaces.ItemClickListener
 import com.anmol.coinpanda.Model.Allcoin
+import com.anmol.coinpanda.Model.Sqlcoin
+import com.anmol.coinpanda.Model.Sqltweet
 import com.anmol.coinpanda.Mysingleton
 import com.anmol.coinpanda.R
 import com.anmol.coinpanda.TweetsActivity
@@ -193,7 +197,9 @@ class coinslist : Fragment(){
                     dialog.dismiss()
                 }
                 atp?.setOnClickListener {
-
+                    val sqlcoin = Sqlcoin(allcoins[i].coin, allcoins[i].coinname, allcoins[i].coinpage)
+                    val dcb = Dbcoinshelper(activity!!)
+                    dcb.insertData(sqlcoin)
                     topicsearch(0,allcoins[i].coinname,allcoins[i].coin)
                     prg?.visibility = View.VISIBLE
                     atp.visibility = View.GONE

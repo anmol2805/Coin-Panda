@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteDatabase.openOrCreateDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.widget.Toast
+import com.anmol.coinpanda.Model.Sqlcoin
 import com.anmol.coinpanda.Model.Sqltweet
 import com.anmol.coinpanda.Model.Tweet
 
@@ -33,23 +34,19 @@ class Dbcoinshelper (context: Context):SQLiteOpenHelper(context, DB_NAME,null,1)
         onCreate(p0)
     }
 
-    fun insertData(sqltweet: Sqltweet){
+    fun insertData(sqlcoin: Sqlcoin){
         try{
         val db = this.writableDatabase
         val cv = ContentValues()
-        cv.put(COL_ID,sqltweet.tweetid)
-        cv.put(COL_COIN,sqltweet.coin)
-        cv.put(COL_COIN_SYMBOL,sqltweet.coin_symbol)
-        cv.put(COL_COIN_HANDLE,sqltweet.coinpage)
-        cv.put(COL_TWEET,sqltweet.tweet)
-        cv.put(COL_URL,sqltweet.url)
-        cv.put(COL_KEYWORD,sqltweet.keyword)
-        cv.put(COL_DATES,sqltweet.dates)
-            val result = db.insert(TABLE_NAME,null,cv)
+        cv.put(COIN,sqlcoin.coin)
+        cv.put(COIN_SYMBOL,sqlcoin.coin_symbol)
+        cv.put(COIN_HANDLE,sqlcoin.coinpage)
+
+            val result = db.insert(TB_NAME,null,cv)
             if(result == (-1).toLong())
-                System.out.println("sqlstatus is failed")
+                System.out.println("coinstatus is failed")
             else
-                System.out.println("sqlstatus is successs")
+                System.out.println("coinstatus is successs")
         }catch (e:SQLiteCantOpenDatabaseException){
             e.printStackTrace()
         }
