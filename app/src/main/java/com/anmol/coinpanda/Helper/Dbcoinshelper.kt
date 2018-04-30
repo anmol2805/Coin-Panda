@@ -17,14 +17,12 @@ val TB_NAME = "coins_table"
 val COIN = "coin"
 val COIN_SYMBOL = "coin_symbol"
 val COIN_HANDLE = "coin_handle"
-val COIN_ID = "id"
 class Dbcoinshelper (context: Context):SQLiteOpenHelper(context, DB_NAME,null,1){
 
     override fun onCreate(p0: SQLiteDatabase?) {
         val createtable = "CREATE TABLE " + TB_NAME + " (" +
-                COIN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                 COIN + " VARCHAR(256)," +
-                COIN_SYMBOL + " VARCHAR(256) NOT NULL UNIQUE," +
+                COIN_SYMBOL + " VARCHAR(256) PRIMARY KEY NOT NULL UNIQUE," +
                 COIN_HANDLE + " VARCHAR(256))"
 
         p0?.execSQL(createtable)

@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import com.anmol.coinpanda.Adapters.GridnewAdapter
+import com.anmol.coinpanda.Helper.Dbcoinshelper
 import com.anmol.coinpanda.Interfaces.ItemClickListener
 import com.anmol.coinpanda.Model.Allcoin
 import com.anmol.coinpanda.R
@@ -269,32 +270,48 @@ class mycoinslist : Fragment(){
     private fun loaddata() {
         allcoins.clear()
         pgr?.visibility = View.VISIBLE
-        db.collection("users").document(auth.currentUser!!.uid).collection("portfolio")
-                .get().addOnCompleteListener{
-                    task ->
-                    allcoins.clear()
-                    for(doc in task.result.documents){
-                        val coinname = doc.id
-                        val name = doc.getString("coin_name")
-                        val coinpage = doc.getString("coinPage")
-                        val allcoin = Allcoin(coinname,name,coinpage)
-                        allcoins.add(allcoin)
-                    }
-                    if(activity!=null){
-                        if(!allcoins.isEmpty()){
-                            pgr?.visibility = View.GONE
-                            empty?.visibility = View.GONE
-                            gridAdapter = GridnewAdapter(activity!!, allcoins)
-                            gridAdapter.notifyDataSetChanged()
-                            coingrid?.adapter = gridAdapter
-                        }
-                        else{
-                            pgr?.visibility = View.GONE
-                            empty?.visibility = View.VISIBLE
-                        }
-                    }
-
-                }
+        if(activity!=null){
+            val dcb = Dbcoinshelper(activity!!)
+            val data = dcb.readData()
+            allcoins = data
+            if(!allcoins.isEmpty()){
+                pgr?.visibility = View.GONE
+                empty?.visibility = View.GONE
+                gridAdapter = GridnewAdapter(activity!!, allcoins)
+                gridAdapter.notifyDataSetChanged()
+                coingrid?.adapter = gridAdapter
+            }
+            else{
+                pgr?.visibility = View.GONE
+                empty?.visibility = View.VISIBLE
+            }
+        }
+//        db.collection("users").document(auth.currentUser!!.uid).collection("portfolio")
+//                .get().addOnCompleteListener{
+//                    task ->
+//                    allcoins.clear()
+//                    for(doc in task.result.documents){
+//                        val coinname = doc.id
+//                        val name = doc.getString("coin_name")
+//                        val coinpage = doc.getString("coinPage")
+//                        val allcoin = Allcoin(coinname,name,coinpage)
+//                        allcoins.add(allcoin)
+//                    }
+//                    if(activity!=null){
+//                        if(!allcoins.isEmpty()){
+//                            pgr?.visibility = View.GONE
+//                            empty?.visibility = View.GONE
+//                            gridAdapter = GridnewAdapter(activity!!, allcoins)
+//                            gridAdapter.notifyDataSetChanged()
+//                            coingrid?.adapter = gridAdapter
+//                        }
+//                        else{
+//                            pgr?.visibility = View.GONE
+//                            empty?.visibility = View.VISIBLE
+//                        }
+//                    }
+//
+//                }
     }
 
 }
