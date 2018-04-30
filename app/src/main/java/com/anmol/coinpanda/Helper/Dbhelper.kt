@@ -68,7 +68,7 @@ class Dbhelper (context: Context):SQLiteOpenHelper(context, DATABASE_NAME,null,1
         val tweets : MutableList<Tweet> = ArrayList()
         try {
             val db = this.readableDatabase
-            val query = "Select * from $TABLE_NAME"
+            val query = "Select * from $TABLE_NAME ORDER BY $COL_ID DESC"
             val result = db.rawQuery(query,null)
             if(result.moveToFirst()){
                 do{

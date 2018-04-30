@@ -11,8 +11,8 @@ import com.anmol.coinpanda.Model.Sqlcoin
 import com.anmol.coinpanda.Model.Sqltweet
 import com.anmol.coinpanda.Model.Tweet
 
-val DB_NAME = "tweetsdb"
-val TB_NAME = "tweets_table"
+val DB_NAME = "coinsdb"
+val TB_NAME = "coins_table"
 val COIN = "coin"
 val COIN_SYMBOL = "coin_symbol"
 val COIN_HANDLE = "coin_handle"
