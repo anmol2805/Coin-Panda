@@ -193,9 +193,7 @@ class coinslist : Fragment(){
                     dialog.dismiss()
                 }
                 atp?.setOnClickListener {
-                    //                val intent = Intent(activity,PaymentActivity::class.java)
-//                intent.putExtra("coin",allcoins[i].coin)
-//                startActivity(intent)
+
                     topicsearch(0,allcoins[i].coinname,allcoins[i].coin)
                     prg?.visibility = View.VISIBLE
                     atp.visibility = View.GONE
@@ -217,20 +215,6 @@ class coinslist : Fragment(){
             }
 
         }
-//        sedit?.addTextChangedListener(object: TextWatcher {
-//            override fun afterTextChanged(p0: Editable?) {
-//
-//            }
-//
-//            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-//            }
-//
-//            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-//                System.out.println("textchange:$p0")
-//                loadalldata(p0)
-//            }
-//
-//        })
 
         retry?.setOnClickListener{
             loadalldata(null)
@@ -294,28 +278,6 @@ class coinslist : Fragment(){
         }
     }
 
-//    private fun updaterequest() {
-//        val stringRequest = StringRequest(Request.Method.GET,"http://165.227.98.190/update", Response.Listener { response ->
-//            System.out.println(response)
-//        }, Response.ErrorListener {error->
-//            System.out.println(error)
-//        })
-//        if(activity!=null){
-//            Mysingleton.getInstance(activity).addToRequestqueue(stringRequest)
-//        }
-//
-//    }
-//    private fun moverequest() {
-//        val stringRequest = StringRequest(Request.Method.GET,"http://165.227.98.190/move", Response.Listener { response ->
-//            System.out.println(response)
-//        }, Response.ErrorListener {error->
-//            System.out.println(error)
-//        })
-//        if(activity!=null){
-//            Mysingleton.getInstance(activity).addToRequestqueue(stringRequest)
-//        }
-//
-//    }
 
     private fun loadalldata(p0: CharSequence?) {
         pgr?.visibility = View.VISIBLE
