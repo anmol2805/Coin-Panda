@@ -14,6 +14,7 @@ import com.anmol.coinpanda.Adapters.GridnewAdapter
 import com.anmol.coinpanda.Helper.Dbcoinshelper
 import com.anmol.coinpanda.Interfaces.ItemClickListener
 import com.anmol.coinpanda.Model.Allcoin
+import com.anmol.coinpanda.Model.Sqlcoin
 import com.anmol.coinpanda.R
 import com.anmol.coinpanda.TweetsActivity
 import com.bumptech.glide.Glide
@@ -146,6 +147,9 @@ class mycoinslist : Fragment(){
 
                 }
                 remove?.setOnClickListener {
+                    val sqlcoin = Sqlcoin(allcoins[i].coin, allcoins[i].coinname, allcoins[i].coinpage)
+                    val dcb = Dbcoinshelper(activity!!)
+                    dcb.deleteCoin(sqlcoin)
                     db.collection("users").document(auth.currentUser!!.uid).collection("topics").get().addOnCompleteListener{task->
                         val documenSnapshot = task.result
                         for(doc in documenSnapshot){
@@ -188,6 +192,9 @@ class mycoinslist : Fragment(){
                     //                val intent = Intent(activity,PaymentActivity::class.java)
 //                intent.putExtra("coin",allcoins[i].coin)
 //                startActivity(intent)
+                    val sqlcoin = Sqlcoin(allcoins[i].coin, allcoins[i].coinname, allcoins[i].coinpage)
+                    val dcb = Dbcoinshelper(activity!!)
+                    dcb.insertData(sqlcoin)
                     topicsearch(0, allcoins[i].coinname, allcoins[i].coin)
                     prg?.visibility = View.VISIBLE
                     atp.visibility = View.GONE

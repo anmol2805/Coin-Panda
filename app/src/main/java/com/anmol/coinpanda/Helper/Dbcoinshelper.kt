@@ -76,5 +76,11 @@ class Dbcoinshelper (context: Context):SQLiteOpenHelper(context, DB_NAME,null,1)
         return allcoins
     }
 
+    fun deleteCoin(sqlcoin: Sqlcoin) {
+        val db = this.writableDatabase
+        db.delete(TB_NAME, "$COIN_SYMBOL = ?", arrayOf(sqlcoin.coin_symbol))
+        db.close()
+    }
+
 }
 

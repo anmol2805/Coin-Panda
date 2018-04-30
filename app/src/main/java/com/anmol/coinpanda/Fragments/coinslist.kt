@@ -160,6 +160,9 @@ class coinslist : Fragment(){
 
                 }
                 remove?.setOnClickListener {
+                    val sqlcoin = Sqlcoin(allcoins[i].coin, allcoins[i].coinname, allcoins[i].coinpage)
+                    val dcb = Dbcoinshelper(activity!!)
+                    dcb.deleteCoin(sqlcoin)
                     db.collection("users").document(auth.currentUser!!.uid).collection("topics").get().addOnCompleteListener{task->
                         val documenSnapshot = task.result
                         for(doc in documenSnapshot){
