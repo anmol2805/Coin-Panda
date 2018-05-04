@@ -51,31 +51,40 @@ class home : Fragment() {
 //        pgr?.visibility = View.GONE
 //        mcoinselect.isChecked = false
 //        setFragment(coinslist())
-        db.collection("users").document(auth.currentUser!!.uid).collection("portfolio").get().addOnCompleteListener {
-            task ->
-            val documentSnapshot = task.result
+        val dcb = Dbcoinshelper(activity!!)
+        val data = dcb.readData()
+        if(!data.isEmpty()){
+            pgr?.visibility = View.GONE
+            mcoinselect.isChecked = true
+            setFragment(mycoinslist())
+        }
+        else{
+            db.collection("users").document(auth.currentUser!!.uid).collection("portfolio").get().addOnCompleteListener {
+                task ->
+                val documentSnapshot = task.result
 
-            val s = documentSnapshot.size()
-            if(s!=0){
-                pgr?.visibility = View.GONE
-                mcoinselect.isChecked = true
-                setFragment(mycoinslist())
-                val dcb = Dbcoinshelper(activity!!)
-                for(doc in documentSnapshot){
-                    val coinname = doc.getString("coin_name")
-                    val coinsymbol = doc.id
-                    val coinpage = doc.getString("coinPage")
-                    val sqlcoin = Sqlcoin(coinname,coinsymbol,coinpage)
-                    dcb.insertData(sqlcoin)
+                val s = documentSnapshot.size()
+                if(s!=0){
+                    for(doc in documentSnapshot){
+                        val coinname = doc.getString("coin_name")
+                        val coinsymbol = doc.id
+                        val coinpage = doc.getString("coinPage")
+                        val sqlcoin = Sqlcoin(coinname,coinsymbol,coinpage)
+                        dcb.insertData(sqlcoin)
+                    }
+                    pgr?.visibility = View.GONE
+                    mcoinselect.isChecked = false
+                    setFragment(coinslist())
+
                 }
-
-            }
-            else{
-                pgr?.visibility = View.GONE
-                mcoinselect.isChecked = false
-                setFragment(coinslist())
+                else{
+                    pgr?.visibility = View.GONE
+                    mcoinselect.isChecked = false
+                    setFragment(coinslist())
+                }
             }
         }
+
 
 
         mcoinselect.setOnCheckedChangeListener({ compoundButton, b ->
