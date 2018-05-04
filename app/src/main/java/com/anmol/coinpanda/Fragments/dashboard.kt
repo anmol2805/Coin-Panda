@@ -22,7 +22,9 @@ import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.anmol.coinpanda.Adapters.TweetsAdapter
+import com.anmol.coinpanda.Helper.Dbcoinshelper
 import com.anmol.coinpanda.Interfaces.ItemClickListener
+import com.anmol.coinpanda.Model.Sqlcoin
 import com.anmol.coinpanda.Model.Tweet
 import com.anmol.coinpanda.Mysingleton
 import com.anmol.coinpanda.R
@@ -58,21 +60,55 @@ class dashboard : Fragment() {
 //        pgr?.visibility = View.GONE
 //        tweetselect.isChecked = false
 //        setFragment(allcoins())
-        db.collection("users").document(auth.currentUser!!.uid).collection("portfolio").get().addOnCompleteListener {
-            task ->
-            val documentSnapshot = task.result
-            val s = documentSnapshot.size()
-            if(s!=0){
-                pgr?.visibility = View.GONE
-                tweetselect.isChecked = true
-                setFragment(mycoins())
-            }
-            else{
-                pgr?.visibility = View.GONE
-                tweetselect.isChecked = false
-                setFragment(allcoins())
+        val dcb = Dbcoinshelper(activity!!)
+        val data = dcb.readData()
+        if(!data.isEmpty()){
+            pgr?.visibility = View.GONE
+            tweetselect.isChecked = true
+            setFragment(mycoins())
+        }
+        else{
+            db.collection("users").document(auth.currentUser!!.uid).collection("portfolio").get().addOnCompleteListener {
+                task ->
+                val documentSnapshot = task.result
+
+                val s = documentSnapshot.size()
+                if(s!=0){
+                    for(doc in documentSnapshot){
+                        val coinname = doc.getString("coin_name")
+                        val coinsymbol = doc.id
+                        val coinpage = doc.getString("coinPage")
+                        val sqlcoin = Sqlcoin(coinname,coinsymbol,coinpage)
+                        dcb.insertData(sqlcoin)
+                    }
+                    pgr?.visibility = View.GONE
+                    tweetselect.isChecked = false
+                    setFragment(allcoins())
+
+                }
+                else{
+                    pgr?.visibility = View.GONE
+                    tweetselect.isChecked = false
+                    setFragment(allcoins())
+                }
             }
         }
+
+//        db.collection("users").document(auth.currentUser!!.uid).collection("portfolio").get().addOnCompleteListener {
+//            task ->
+//            val documentSnapshot = task.result
+//            val s = documentSnapshot.size()
+//            if(s!=0){
+//                pgr?.visibility = View.GONE
+//                tweetselect.isChecked = true
+//                setFragment(mycoins())
+//            }
+//            else{
+//                pgr?.visibility = View.GONE
+//                tweetselect.isChecked = false
+//                setFragment(allcoins())
+//            }
+//        }
 
         tweetselect.setOnCheckedChangeListener { _, b ->
             if(b){
