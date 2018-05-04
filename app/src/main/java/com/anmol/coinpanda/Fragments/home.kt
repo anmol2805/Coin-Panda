@@ -21,6 +21,7 @@ import com.anmol.coinpanda.Model.Allcoin
 import com.anmol.coinpanda.Model.Sqlcoin
 import com.anmol.coinpanda.PaymentActivity
 import com.anmol.coinpanda.R
+import com.anmol.coinpanda.Services.CoinsdbService
 import com.anmol.coinpanda.TweetsActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
@@ -31,6 +32,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
+import org.jetbrains.anko.support.v4.startService
 
 /**
  * Created by anmol on 2/26/2018.
@@ -59,30 +61,11 @@ class home : Fragment() {
             setFragment(mycoinslist())
         }
         else{
-            db.collection("users").document(auth.currentUser!!.uid).collection("portfolio").get().addOnCompleteListener {
-                task ->
-                val documentSnapshot = task.result
-
-                val s = documentSnapshot.size()
-                if(s!=0){
-                    for(doc in documentSnapshot){
-                        val coinname = doc.getString("coin_name")
-                        val coinsymbol = doc.id
-                        val coinpage = doc.getString("coinPage")
-                        val sqlcoin = Sqlcoin(coinname,coinsymbol,coinpage)
-                        dcb.insertData(sqlcoin)
-                    }
-                    pgr?.visibility = View.GONE
-                    mcoinselect.isChecked = false
-                    setFragment(coinslist())
-
-                }
-                else{
-                    pgr?.visibility = View.GONE
-                    mcoinselect.isChecked = false
-                    setFragment(coinslist())
-                }
-            }
+            val intent = Intent(activity,CoinsdbService::class.java)
+            activity!!.startService(intent)
+            pgr?.visibility = View.GONE
+            mcoinselect.isChecked = false
+            setFragment(coinslist())
         }
 
 
