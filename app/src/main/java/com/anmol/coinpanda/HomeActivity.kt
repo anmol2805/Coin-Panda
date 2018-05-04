@@ -22,6 +22,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import android.widget.Toast
+import com.anmol.coinpanda.Services.CoinsdbService
 import com.anmol.coinpanda.Services.TweetsdbService
 
 
@@ -76,6 +77,8 @@ class HomeActivity : AppCompatActivity() {
         else{
             val intent = Intent(this, TweetsdbService::class.java)
             startService(intent)
+            val intent2 = Intent(this,CoinsdbService::class.java)
+            startService(intent2)
             val databaseReference = FirebaseDatabase.getInstance().reference
             databaseReference.root.addValueEventListener(object : ValueEventListener{
                 override fun onCancelled(p0: DatabaseError?) {
@@ -117,8 +120,8 @@ class HomeActivity : AppCompatActivity() {
                         }
 
                     }
-                    if(p0.child("maintainence").value!=null){
-                        val status:Boolean = p0.child("maintainence").value as Boolean
+                    if(p0.child("maintenance").value!=null){
+                        val status:Boolean = p0.child("maintenance").value as Boolean
                         val dialog = AlertDialog.Builder(this@HomeActivity)
                                 .setTitle("Maintenance downtime")
                                 .setMessage("Server is undergoing some maintenance procedures.Stay tuned, we'll be back after some time")
@@ -190,8 +193,8 @@ class HomeActivity : AppCompatActivity() {
                     }
 
                 }
-                if(p0.child("maintainence").value!=null){
-                    val status:Boolean = p0.child("maintainence").value as Boolean
+                if(p0.child("maintenance").value!=null){
+                    val status:Boolean = p0.child("maintenance").value as Boolean
                     val dialog = AlertDialog.Builder(this@HomeActivity)
                             .setTitle("Maintenance downtime")
                             .setMessage("Server is undergoing some maintenance procedures.Stay tuned, we'll be back after some time")
