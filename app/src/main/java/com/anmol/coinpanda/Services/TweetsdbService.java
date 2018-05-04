@@ -30,9 +30,6 @@ public class TweetsdbService extends IntentService {
 
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
-        final SQLiteDatabase myDataBase;
-        myDataBase = openOrCreateDatabase("person.db", Context.MODE_PRIVATE, null);
-        myDataBase.execSQL("CREATE TABLE IF NOT EXISTS COINS (coinName TEXT,coinHandle TEXT,coinSymbol TEXT,tweet TEXT,url TEXT,keyword TEXT,dates TEXT)");
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, "http://165.227.98.190/tweets", null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -41,6 +38,7 @@ public class TweetsdbService extends IntentService {
                     JSONArray jsonArray = response.getJSONArray("tweets");
                     List<Sqltweet> sqltweets = new ArrayList<>();
                     sqltweets.clear();
+
                     while (c<450){
                         JSONObject obj = jsonArray.getJSONObject(c);
                         String id = obj.getString("id");
@@ -51,14 +49,6 @@ public class TweetsdbService extends IntentService {
                         String keyword = obj.getString("keyword");
                         String dates = obj.getString("date");
                         String coinpage = obj.getString("coin_handle");
-//                        try {
-//                            myDataBase.execSQL("INSERT INTO COINS (coinName,coinHandle,coinSymbol,tweet,url,keyword,dates) VALUES('" + coin + "','" + coinpage + "','" + coin_symbol + "','" + mtweet + "','" + url + "','" + keyword + "','" + dates + "');");
-//                            System.out.println("tweetno" + c);
-//                        }
-//                        catch (Exception e){
-//                            e.printStackTrace();
-//                        }
-
                         Sqltweet sqltweet = new Sqltweet(coin,coin_symbol,mtweet,url,keyword,id,dates,coinpage);
                         Dbhelper db = new Dbhelper(getBaseContext());
                         db.insertData(sqltweet);
