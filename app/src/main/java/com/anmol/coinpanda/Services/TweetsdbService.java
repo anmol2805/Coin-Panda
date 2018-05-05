@@ -37,10 +37,12 @@ public class TweetsdbService extends IntentService {
         allcoins.clear();
         allcoins = dcb.readData();
         if(!allcoins.isEmpty()){
+            System.out.println("not empty");
             final ArrayList<String> coins = new ArrayList<>();
             for(int i = 0;i<allcoins.size();i++){
                 coins.add(allcoins.get(i).getCoinname());
             }
+            System.out.println("coinarray" + coins);
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, "http://165.227.98.190/tweets", null, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
@@ -81,11 +83,13 @@ public class TweetsdbService extends IntentService {
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-
+                    System.out.println("network error");
                 }
             });
             Mysingleton.getInstance(getBaseContext()).addToRequestqueue(jsonObjectRequest);
         }
+        else
+            System.out.println("allcoins empty");
 
     }
 }
