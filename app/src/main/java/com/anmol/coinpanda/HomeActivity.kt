@@ -75,10 +75,10 @@ class HomeActivity : AppCompatActivity() {
             startActivity(Intent(this,LoginActivity::class.java))
         }
         else{
-            val intent = Intent(this, TweetsdbService::class.java)
-            startService(intent)
             val intent2 = Intent(this,CoinsdbService::class.java)
             startService(intent2)
+            val intent = Intent(this, TweetsdbService::class.java)
+            startService(intent)
             val databaseReference = FirebaseDatabase.getInstance().reference
             databaseReference.root.addValueEventListener(object : ValueEventListener{
                 override fun onCancelled(p0: DatabaseError?) {
