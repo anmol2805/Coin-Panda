@@ -98,6 +98,37 @@ class Dbhelper (context: Context):SQLiteOpenHelper(context, DATABASE_NAME,null,1
         System.out.println("outside:$tweets")
         return tweets
     }
+    fun readmyData():MutableList<Tweet>{
+        val tweets : MutableList<Tweet> = ArrayList()
+        try {
+            val db = this.readableDatabase
+            val query = "Select * from $TABLE_NAME where $COL_MYTWEET=1 ORDER BY $COL_ID DESC"
+            val result = db.rawQuery(query,null)
+            if(result.moveToFirst()){
+                do{
+                    val mcoin = result.getString(result.getColumnIndex(COL_COIN))
+                    val coin_symbol = result.getString(result.getColumnIndex(COL_COIN_SYMBOL))
+                    val mtweet = result.getString(result.getColumnIndex(COL_TWEET))
+                    val url = result.getString(result.getColumnIndex(COL_URL))
+                    val keyword = result.getString(result.getColumnIndex(COL_KEYWORD))
+                    val id = result.getString(result.getColumnIndex(COL_ID))
+                    val dates = result.getString(result.getColumnIndex(COL_DATES))
+                    val coinpage = result.getString(result.getColumnIndex(COL_COIN_HANDLE))
+                    val tweet = Tweet(mcoin,coin_symbol,mtweet,url,keyword,id,false,dates,"mc",coinpage)
+                    tweets.add(tweet)
+                }while (result.moveToNext())
+            }
+            result.close()
+            db.close()
+            System.out.println("inside:$tweets")
+
+        }
+        catch (e:SQLiteCantOpenDatabaseException){
+            e.printStackTrace()
+        }
+        System.out.println("outside:$tweets")
+        return tweets
+    }
 
 }
 
