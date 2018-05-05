@@ -20,6 +20,7 @@ val COL_URL = "url"
 val COL_KEYWORD = "keyword"
 val COL_ID = "tweet_id"
 val COL_DATES = "dates"
+val COL_MYTWEET = "mytweet"
 
 class Dbhelper (context: Context):SQLiteOpenHelper(context, DATABASE_NAME,null,1){
 
@@ -32,7 +33,8 @@ class Dbhelper (context: Context):SQLiteOpenHelper(context, DATABASE_NAME,null,1
                 COL_TWEET + " TEXT," +
                 COL_URL + " TEXT," +
                 COL_KEYWORD + " VARCHAR(256)," +
-                COL_DATES + " TEXT)"
+                COL_DATES + " TEXT," +
+                COL_MYTWEET + " INTEGER)"
 
         p0?.execSQL(createtable)
     }
@@ -54,6 +56,7 @@ class Dbhelper (context: Context):SQLiteOpenHelper(context, DATABASE_NAME,null,1
         cv.put(COL_URL,sqltweet.url)
         cv.put(COL_KEYWORD,sqltweet.keyword)
         cv.put(COL_DATES,sqltweet.dates)
+        cv.put(COL_MYTWEET,sqltweet.mytweet)
             val result = db.insert(TABLE_NAME,null,cv)
             if(result == (-1).toLong())
                 System.out.println("sqlstatus is failed")
