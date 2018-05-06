@@ -21,6 +21,10 @@ import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.anmol.coinpanda.Adapters.DividerItemDecoration
 import com.anmol.coinpanda.Adapters.TweetsAdapter
+import com.anmol.coinpanda.Helper.COL_ID
+import com.anmol.coinpanda.Helper.COL_MYTWEET
+import com.anmol.coinpanda.Helper.Dbhelper
+import com.anmol.coinpanda.Helper.TABLE_NAME
 import com.anmol.coinpanda.Interfaces.ItemClickListener
 import com.anmol.coinpanda.Model.Tweet
 import com.anmol.coinpanda.Mysingleton
@@ -47,7 +51,7 @@ class bookmarks : Fragment() {
     var empty: TextView? = null
     var pgr :ProgressBar?=null
     var retry:Button?=null
-
+    var tweetsAdapter : TweetsAdapter?=null
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val vi = inflater.inflate(R.layout.bookmarks,
                 container, false)
@@ -99,123 +103,85 @@ class bookmarks : Fragment() {
         cal.add(Calendar.MONTH,-1)
         val stringtime = format.format(cal.time)
         val prevtime = Timestamp.valueOf(stringtime)
-        val jsonobjectrequest = JsonObjectRequest(Request.Method.GET,"http://165.227.98.190/tweets",null, Response.Listener {
-            response ->
+        if(activity!=null){
+            val db = Dbhelper(activity!!)
+            val dataquery = "Select * from $TABLE_NAME where $COL_MYTWEET=1 ORDER BY $COL_ID DESC"
+            val data = db.readData(dataquery)
+            var serachtweet:MutableList<Tweet>  = ArrayList()
+            serachtweet.clear()
+            serachtweet = data
             tweets.clear()
-            val bookmarks : ArrayList<String> = ArrayList()
-            db.collection("users").document(auth.currentUser!!.uid).collection("bookmarks")
-                    .get().addOnCompleteListener{
-                        task2->
-                        bookmarks.clear()
-                        for (doc in task2.result.documents) {
-                            val tweetid = doc.id
-                            bookmarks.add(tweetid)
+            tweets = data
+            if (!tweets.isEmpty()) {
+                pgr?.visibility = View.GONE
+                retry?.visibility = View.GONE
+                empty?.visibility = View.GONE
+                tweetsAdapter = TweetsAdapter(activity!!, tweets, itemClickListener)
+                tweetsAdapter!!.notifyDataSetChanged()
+                cointweetrecycler?.adapter = tweetsAdapter
+                //cointweetrecycler?.addItemDecoration(DividerItemDecoration(ContextCompat.getDrawable(activity!!,R.drawable.item_decorator)!!))
+
+
+            }
+            else{
+                pgr?.visibility = View.GONE
+                retry?.visibility = View.VISIBLE
+                empty?.visibility = View.VISIBLE
+            }
+
+            sedit?.addTextChangedListener(object :TextWatcher{
+                override fun afterTextChanged(p0: Editable?) {
+
+                }
+
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun onTextChanged(booktext: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                    tweets.clear()
+                    var b=0
+                    while(b<serachtweet.size) {
+                        if (serachtweet[b].coin!!.toLowerCase().contains(booktext!!) || serachtweet[b].coin_symbol!!.toLowerCase().contains(booktext) || serachtweet[b].tweet!!.toLowerCase().contains(booktext) || serachtweet[b].keyword!!.toLowerCase().contains(booktext) || serachtweet[b].coin!!.toUpperCase().contains(booktext) || serachtweet[b].coin_symbol!!.toUpperCase().contains(booktext) || serachtweet[b].tweet!!.toUpperCase().contains(booktext) || serachtweet[b].keyword!!.toUpperCase().contains(booktext)) {
+                            tweets.add(serachtweet[b])
                         }
+                        b++
 
-
-                        if (p0 == null) {
-                            val tweetarray = response.getJSONArray("tweets")
-                            var j = 0
-                            while (j<tweetarray.length()){
-                                val doc = tweetarray.getJSONObject(j)
-                                val id = doc.getString("id")
-                                val coin = doc.getString("coin_name")
-                                val coin_symbol = doc.getString("coin_symbol")
-                                val mtweet = doc.getString("tweet")
-                                val url = doc.getString("url")
-                                val keyword = doc.getString("keyword")
-                                val dates = doc.getString("date")
-                                val coinpage = doc.getString("coin_handle")
-                                var booked = false
-                                var i = 0
-                                while(i<bookmarks.size){
-                                    if(id.contains(bookmarks[i])){
-                                        booked = true
-                                    }
-                                    i++
-                                }
-                                if(booked){
-                                    val tweet = Tweet(coin, coin_symbol, mtweet, url, keyword, id, booked, dates,"mc",coinpage)
-                                    tweets.add(tweet)
-                                }
-                                j++
-                            }
-                            if (activity != null) {
-                                if (!tweets.isEmpty()) {
-                                    pgr?.visibility = View.GONE
-                                    val tweetsAdapter = TweetsAdapter(activity!!, tweets, itemClickListener)
-                                    tweetsAdapter.notifyDataSetChanged()
-                                    cointweetrecycler?.adapter = tweetsAdapter
-                                    //cointweetrecycler?.addItemDecoration(DividerItemDecoration(ContextCompat.getDrawable(activity!!,R.drawable.item_decorator)!!))
-
-                                }
-                                else{
-                                    pgr?.visibility = View.GONE
-                                    empty?.visibility = View.VISIBLE
-                                }
-                            }
-                            sedit?.addTextChangedListener(object : TextWatcher {
-                                override fun afterTextChanged(p0: Editable?) {
-
-                                }
-
-                                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-
-                                }
-
-                                override fun onTextChanged(brk: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                                    tweets.clear()
-                                    val tweetarray3 = response.getJSONArray("tweets")
-                                    var bk = 0
-                                    while (bk<tweetarray3.length()){
-                                        val doc = tweetarray.getJSONObject(bk)
-                                        val id = doc.getString("id")
-                                        val coin = doc.getString("coin_name")
-                                        val coin_symbol = doc.getString("coin_symbol")
-                                        val mtweet = doc.getString("tweet")
-                                        val url = doc.getString("url")
-                                        val keyword = doc.getString("keyword")
-                                        val dates = doc.getString("date")
-                                        val coinpage = doc.getString("coin_handle")
-                                        var booked = false
-                                        var i = 0
-                                        while(i<bookmarks.size){
-                                            if(id.contains(bookmarks[i])){
-                                                booked = true
-                                            }
-                                            i++
-                                        }
-                                        if(booked){
-                                            if(coin!=null && coin_symbol!=null && mtweet!=null && keyword!=null){
-                                                if ((coin.toLowerCase().contains(brk!!) || coin_symbol.toLowerCase().contains(brk) || mtweet.toLowerCase().contains(brk) || keyword.toLowerCase().contains(brk) || coin.toUpperCase().contains(brk) || coin_symbol.toUpperCase().contains(brk) || mtweet.toUpperCase().contains(brk) || keyword.toUpperCase().contains(brk))&& booked) {
-                                                    val tweet = Tweet(coin, coin_symbol, mtweet, url, keyword, id, booked, dates,"mc",coinpage)
-                                                    tweets.add(tweet)
-                                                }
-                                            }
-                                        }
-                                        bk++
-                                    }
-                                    if (activity != null) {
-                                        if (!tweets.isEmpty()) {
-                                            pgr?.visibility = View.GONE
-                                            val tweetsAdapter = TweetsAdapter(activity!!, tweets, itemClickListener)
-                                            tweetsAdapter.notifyDataSetChanged()
-                                            cointweetrecycler?.adapter = tweetsAdapter
-                                            //cointweetrecycler?.addItemDecoration(DividerItemDecoration(ContextCompat.getDrawable(activity!!,R.drawable.item_decorator)!!))
-
-                                        }
-                                        else{
-                                            pgr?.visibility = View.GONE
-                                            empty?.visibility = View.VISIBLE
-                                            empty?.text = "No Results found"
-                                        }
-                                    }
-                                }
-
-                            })
-
+                    }
+                    if(activity!=null){
+                        if(!tweets.isEmpty()){
+                            pgr?.visibility = View.GONE
+                            System.out.println("logging:$tweets")
+                            val tweetsAdapter = TweetsAdapter(activity!!,tweets,itemClickListener)
+                            tweetsAdapter.notifyDataSetChanged()
+                            cointweetrecycler?.adapter = tweetsAdapter
+                            empty?.visibility = View.GONE
+                            //cointweetrecycler?.addItemDecoration(DividerItemDecoration(ContextCompat.getDrawable(activity!!,R.drawable.item_decorator)!!))
                         }
-//                        else {
+                        else{
+                            pgr?.visibility = View.GONE
+                            empty?.visibility = View.VISIBLE
+                            empty?.text = "No Results found"
+                        }
+                    }
+                }
+
+            })
+        }
+//        val jsonobjectrequest = JsonObjectRequest(Request.Method.GET,"http://165.227.98.190/tweets",null, Response.Listener {
+//            response ->
+//            tweets.clear()
+//            val bookmarks : ArrayList<String> = ArrayList()
+//            db.collection("users").document(auth.currentUser!!.uid).collection("bookmarks")
+//                    .get().addOnCompleteListener{
+//                        task2->
+//                        bookmarks.clear()
+//                        for (doc in task2.result.documents) {
+//                            val tweetid = doc.id
+//                            bookmarks.add(tweetid)
+//                        }
+//
+//
+//                        if (p0 == null) {
 //                            val tweetarray = response.getJSONArray("tweets")
 //                            var j = 0
 //                            while (j<tweetarray.length()){
@@ -237,12 +203,8 @@ class bookmarks : Fragment() {
 //                                    i++
 //                                }
 //                                if(booked){
-//                                    if(coin!=null && coin_symbol!=null && mtweet!=null && keyword!=null){
-//                                        if ((coin.toLowerCase().contains(p0) || coin_symbol.toLowerCase().contains(p0) || mtweet.toLowerCase().contains(p0) || keyword.toLowerCase().contains(p0) || coin.toUpperCase().contains(p0) || coin_symbol.toUpperCase().contains(p0) || mtweet.toUpperCase().contains(p0) || keyword.toUpperCase().contains(p0))&& booked) {
-//                                            val tweet = Tweet(coin, coin_symbol, mtweet, url, keyword, id, booked, dates,"mc",coinpage)
-//                                            tweets.add(tweet)
-//                                        }
-//                                    }
+//                                    val tweet = Tweet(coin, coin_symbol, mtweet, url, keyword, id, booked, dates,"mc",coinpage)
+//                                    tweets.add(tweet)
 //                                }
 //                                j++
 //                            }
@@ -258,22 +220,128 @@ class bookmarks : Fragment() {
 //                                else{
 //                                    pgr?.visibility = View.GONE
 //                                    empty?.visibility = View.VISIBLE
-//                                    empty?.text = "No results found"
-//
 //                                }
 //                            }
+//                            sedit?.addTextChangedListener(object : TextWatcher {
+//                                override fun afterTextChanged(p0: Editable?) {
+//
+//                                }
+//
+//                                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+//
+//                                }
+//
+//                                override fun onTextChanged(brk: CharSequence?, p1: Int, p2: Int, p3: Int) {
+//                                    tweets.clear()
+//                                    val tweetarray3 = response.getJSONArray("tweets")
+//                                    var bk = 0
+//                                    while (bk<tweetarray3.length()){
+//                                        val doc = tweetarray.getJSONObject(bk)
+//                                        val id = doc.getString("id")
+//                                        val coin = doc.getString("coin_name")
+//                                        val coin_symbol = doc.getString("coin_symbol")
+//                                        val mtweet = doc.getString("tweet")
+//                                        val url = doc.getString("url")
+//                                        val keyword = doc.getString("keyword")
+//                                        val dates = doc.getString("date")
+//                                        val coinpage = doc.getString("coin_handle")
+//                                        var booked = false
+//                                        var i = 0
+//                                        while(i<bookmarks.size){
+//                                            if(id.contains(bookmarks[i])){
+//                                                booked = true
+//                                            }
+//                                            i++
+//                                        }
+//                                        if(booked){
+//                                            if(coin!=null && coin_symbol!=null && mtweet!=null && keyword!=null){
+//                                                if ((coin.toLowerCase().contains(brk!!) || coin_symbol.toLowerCase().contains(brk) || mtweet.toLowerCase().contains(brk) || keyword.toLowerCase().contains(brk) || coin.toUpperCase().contains(brk) || coin_symbol.toUpperCase().contains(brk) || mtweet.toUpperCase().contains(brk) || keyword.toUpperCase().contains(brk))&& booked) {
+//                                                    val tweet = Tweet(coin, coin_symbol, mtweet, url, keyword, id, booked, dates,"mc",coinpage)
+//                                                    tweets.add(tweet)
+//                                                }
+//                                            }
+//                                        }
+//                                        bk++
+//                                    }
+//                                    if (activity != null) {
+//                                        if (!tweets.isEmpty()) {
+//                                            pgr?.visibility = View.GONE
+//                                            val tweetsAdapter = TweetsAdapter(activity!!, tweets, itemClickListener)
+//                                            tweetsAdapter.notifyDataSetChanged()
+//                                            cointweetrecycler?.adapter = tweetsAdapter
+//                                            //cointweetrecycler?.addItemDecoration(DividerItemDecoration(ContextCompat.getDrawable(activity!!,R.drawable.item_decorator)!!))
+//
+//                                        }
+//                                        else{
+//                                            pgr?.visibility = View.GONE
+//                                            empty?.visibility = View.VISIBLE
+//                                            empty?.text = "No Results found"
+//                                        }
+//                                    }
+//                                }
+//
+//                            })
 //
 //                        }
-                    }
-        },Response.ErrorListener {
-            retry?.visibility = View.VISIBLE
-            empty?.visibility = View.VISIBLE
-            empty?.text = "Network Error"
-            pgr?.visibility = View.GONE
-        })
-        if(activity!=null){
-            Mysingleton.getInstance(activity).addToRequestqueue(jsonobjectrequest)
-        }
+////                        else {
+////                            val tweetarray = response.getJSONArray("tweets")
+////                            var j = 0
+////                            while (j<tweetarray.length()){
+////                                val doc = tweetarray.getJSONObject(j)
+////                                val id = doc.getString("id")
+////                                val coin = doc.getString("coin_name")
+////                                val coin_symbol = doc.getString("coin_symbol")
+////                                val mtweet = doc.getString("tweet")
+////                                val url = doc.getString("url")
+////                                val keyword = doc.getString("keyword")
+////                                val dates = doc.getString("date")
+////                                val coinpage = doc.getString("coin_handle")
+////                                var booked = false
+////                                var i = 0
+////                                while(i<bookmarks.size){
+////                                    if(id.contains(bookmarks[i])){
+////                                        booked = true
+////                                    }
+////                                    i++
+////                                }
+////                                if(booked){
+////                                    if(coin!=null && coin_symbol!=null && mtweet!=null && keyword!=null){
+////                                        if ((coin.toLowerCase().contains(p0) || coin_symbol.toLowerCase().contains(p0) || mtweet.toLowerCase().contains(p0) || keyword.toLowerCase().contains(p0) || coin.toUpperCase().contains(p0) || coin_symbol.toUpperCase().contains(p0) || mtweet.toUpperCase().contains(p0) || keyword.toUpperCase().contains(p0))&& booked) {
+////                                            val tweet = Tweet(coin, coin_symbol, mtweet, url, keyword, id, booked, dates,"mc",coinpage)
+////                                            tweets.add(tweet)
+////                                        }
+////                                    }
+////                                }
+////                                j++
+////                            }
+////                            if (activity != null) {
+////                                if (!tweets.isEmpty()) {
+////                                    pgr?.visibility = View.GONE
+////                                    val tweetsAdapter = TweetsAdapter(activity!!, tweets, itemClickListener)
+////                                    tweetsAdapter.notifyDataSetChanged()
+////                                    cointweetrecycler?.adapter = tweetsAdapter
+////                                    //cointweetrecycler?.addItemDecoration(DividerItemDecoration(ContextCompat.getDrawable(activity!!,R.drawable.item_decorator)!!))
+////
+////                                }
+////                                else{
+////                                    pgr?.visibility = View.GONE
+////                                    empty?.visibility = View.VISIBLE
+////                                    empty?.text = "No results found"
+////
+////                                }
+////                            }
+////
+////                        }
+//                    }
+//        },Response.ErrorListener {
+//            retry?.visibility = View.VISIBLE
+//            empty?.visibility = View.VISIBLE
+//            empty?.text = "Network Error"
+//            pgr?.visibility = View.GONE
+//        })
+//        if(activity!=null){
+//            Mysingleton.getInstance(activity).addToRequestqueue(jsonobjectrequest)
+//        }
 
 
 

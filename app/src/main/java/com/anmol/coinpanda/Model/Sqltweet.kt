@@ -12,7 +12,7 @@ class Sqltweet {
     var mytweet: Int?=null
     var booked:Int?=null
 
-    constructor(coin: String?, coin_symbol: String?, tweet: String?, url: String?, keyword: String?, tweetid: String?, dates: String?, coinpage: String?, mytweet: Int?) {
+    constructor(coin: String?, coin_symbol: String?, tweet: String?, url: String?, keyword: String?, tweetid: String?, dates: String?, coinpage: String?, mytweet: Int?,booked:Int?) {
         this.coin = coin
         this.coin_symbol = coin_symbol
         this.tweet = tweet

@@ -69,7 +69,7 @@ public class TweetsdbService extends IntentService {
                                     mytweet = 1;
                                 }
                             }
-                            Sqltweet sqltweet = new Sqltweet(coin,coin_symbol,mtweet,url,keyword,id,dates,coinpage,mytweet);
+                            Sqltweet sqltweet = new Sqltweet(coin,coin_symbol,mtweet,url,keyword,id,dates,coinpage,mytweet,0);
                             Dbhelper db = new Dbhelper(getBaseContext());
                             db.insertData(sqltweet);
                             System.out.println("tweetno" + c);
