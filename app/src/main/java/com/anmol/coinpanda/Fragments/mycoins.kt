@@ -22,7 +22,10 @@ import com.android.volley.toolbox.JsonObjectRequest
 import com.anmol.coinpanda.Adapters.DividerItemDecoration
 import com.anmol.coinpanda.Adapters.KeywordAdapter
 import com.anmol.coinpanda.Adapters.TweetsAdapter
+import com.anmol.coinpanda.Helper.COL_ID
+import com.anmol.coinpanda.Helper.COL_MYTWEET
 import com.anmol.coinpanda.Helper.Dbhelper
+import com.anmol.coinpanda.Helper.TABLE_NAME
 import com.anmol.coinpanda.Interfaces.ItemClickListener
 import com.anmol.coinpanda.Model.Tweet
 import com.anmol.coinpanda.Mysingleton
@@ -136,7 +139,8 @@ class mycoins : Fragment(){
         val prevtime = Timestamp.valueOf(stringtime)
         if(activity!=null){
             val db = Dbhelper(activity!!)
-            val data = db.readmyData()
+            val dataquery = "Select * from $TABLE_NAME where $COL_MYTWEET=1 ORDER BY $COL_ID DESC"
+            val data = db.readData(dataquery)
             var serachtweet:MutableList<Tweet>  = ArrayList()
             serachtweet.clear()
             serachtweet = data

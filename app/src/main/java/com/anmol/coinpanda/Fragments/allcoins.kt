@@ -1,19 +1,11 @@
 package com.anmol.coinpanda.Fragments
 
-import android.content.Context
-import android.content.Intent
-import android.database.sqlite.SQLiteDatabase
-import android.database.sqlite.SQLiteDatabase.openOrCreateDatabase
-import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.support.v4.app.Fragment
-import android.support.v4.content.ContextCompat
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,22 +14,16 @@ import android.widget.*
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
-import com.anmol.coinpanda.Adapters.DividerItemDecoration
-import com.anmol.coinpanda.Adapters.KeywordAdapter
 import com.anmol.coinpanda.Adapters.TweetsAdapter
+import com.anmol.coinpanda.Helper.COL_ID
 import com.anmol.coinpanda.Helper.Dbhelper
+import com.anmol.coinpanda.Helper.TABLE_NAME
 import com.anmol.coinpanda.Interfaces.ItemClickListener
-import com.anmol.coinpanda.Model.Sqltweet
 import com.anmol.coinpanda.Model.Tweet
 import com.anmol.coinpanda.Mysingleton
 import com.anmol.coinpanda.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.Query
-import kotlinx.android.synthetic.main.request.*
-import kotlinx.android.synthetic.main.tweetrow.*
-import org.json.JSONArray
-import java.lang.reflect.Method
 import java.sql.Timestamp
 import java.text.SimpleDateFormat
 import java.util.*
@@ -152,7 +138,8 @@ class allcoins : Fragment(){
         val prevtime = Timestamp.valueOf(stringtime)
         if(activity!=null){
             val db = Dbhelper(activity!!)
-            val data = db.readData()
+            val dataquery = "Select * from $TABLE_NAME ORDER BY $COL_ID DESC"
+            val data = db.readData(dataquery)
             if (!data.isEmpty()) {
                 pgr?.visibility = View.GONE
                 retry?.visibility = View.GONE

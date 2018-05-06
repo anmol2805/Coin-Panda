@@ -2,18 +2,12 @@ package com.anmol.coinpanda.Fragments
 
 
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v7.widget.DefaultItemAnimator
-import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ProgressBar
@@ -21,23 +15,14 @@ import android.widget.Switch
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
-import com.anmol.coinpanda.Adapters.TweetsAdapter
-import com.anmol.coinpanda.Helper.Dbcoinshelper
 import com.anmol.coinpanda.Helper.Dbhelper
 import com.anmol.coinpanda.Interfaces.ItemClickListener
-import com.anmol.coinpanda.Model.Sqlcoin
 import com.anmol.coinpanda.Model.Tweet
 import com.anmol.coinpanda.Mysingleton
 import com.anmol.coinpanda.R
 import com.anmol.coinpanda.Services.TweetsdbService
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.Query
-import org.jetbrains.anko.support.v4.startService
-import java.sql.Timestamp
-import java.text.SimpleDateFormat
-import java.util.*
-import kotlin.collections.ArrayList
 
 /**
  * Created by anmol on 2/26/2018.
@@ -64,7 +49,7 @@ class dashboard : Fragment() {
 //        tweetselect.isChecked = false
 //        setFragment(allcoins())
         val dcb = Dbhelper(activity!!)
-        val data = dcb.readData()
+        val data = dcb.readData(dataquery)
         if(!data.isEmpty()){
             pgr?.visibility = View.GONE
             tweetselect.isChecked = true

@@ -10,6 +10,7 @@ class Sqltweet {
     var dates : String? = null
     var coinpage : String?=null
     var mytweet: Int?=null
+    var booked:Int?=null
 
     constructor(coin: String?, coin_symbol: String?, tweet: String?, url: String?, keyword: String?, tweetid: String?, dates: String?, coinpage: String?, mytweet: Int?) {
         this.coin = coin
@@ -21,6 +22,7 @@ class Sqltweet {
         this.dates = dates
         this.coinpage = coinpage
         this.mytweet = mytweet
+        this.booked = booked
     }
 
     constructor()
