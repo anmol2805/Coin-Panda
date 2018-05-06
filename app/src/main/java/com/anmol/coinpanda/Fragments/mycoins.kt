@@ -30,9 +30,11 @@ import com.anmol.coinpanda.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
+import kotlinx.android.synthetic.main.tweetrow.*
 import java.sql.Timestamp
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 /**
  * Created by anmol on 3/11/2018.
@@ -135,14 +137,20 @@ class mycoins : Fragment(){
         if(activity!=null){
             val db = Dbhelper(activity!!)
             val data = db.readmyData()
-            if (!data.isEmpty()) {
+            var serachtweet:MutableList<Tweet>  = ArrayList()
+            serachtweet.clear()
+            serachtweet = data
+            tweets.clear()
+            tweets = data
+            if (!tweets.isEmpty()) {
                 pgr?.visibility = View.GONE
                 retry?.visibility = View.GONE
                 empty?.visibility = View.GONE
-                tweetsAdapter = TweetsAdapter(activity!!, data, itemClickListener)
+                tweetsAdapter = TweetsAdapter(activity!!, tweets, itemClickListener)
                 tweetsAdapter!!.notifyDataSetChanged()
                 cointweetrecycler?.adapter = tweetsAdapter
                 //cointweetrecycler?.addItemDecoration(DividerItemDecoration(ContextCompat.getDrawable(activity!!,R.drawable.item_decorator)!!))
+
 
             }
             else{
@@ -150,6 +158,44 @@ class mycoins : Fragment(){
                 retry?.visibility = View.VISIBLE
                 empty?.visibility = View.VISIBLE
             }
+
+            sedit?.addTextChangedListener(object :TextWatcher{
+                override fun afterTextChanged(p0: Editable?) {
+
+                }
+
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun onTextChanged(booktext: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                    tweets.clear()
+                    var b=0
+                    while(b<serachtweet.size) {
+                        if (serachtweet[b].coin!!.toLowerCase().contains(booktext!!) || serachtweet[b].coin_symbol!!.toLowerCase().contains(booktext) || serachtweet[b].tweet!!.toLowerCase().contains(booktext) || serachtweet[b].keyword!!.toLowerCase().contains(booktext) || serachtweet[b].coin!!.toUpperCase().contains(booktext) || serachtweet[b].coin_symbol!!.toUpperCase().contains(booktext) || serachtweet[b].tweet!!.toUpperCase().contains(booktext) || serachtweet[b].keyword!!.toUpperCase().contains(booktext)) {
+                            tweets.add(serachtweet[b])
+                        }
+                        b++
+
+                    }
+                    if(activity!=null){
+                                                    if(!tweets.isEmpty()){
+                                                        pgr?.visibility = View.GONE
+                                                        System.out.println("logging:$tweets")
+                                                        val tweetsAdapter = TweetsAdapter(activity!!,tweets,itemClickListener)
+                                                        tweetsAdapter.notifyDataSetChanged()
+                                                        cointweetrecycler?.adapter = tweetsAdapter
+                                                        empty?.visibility = View.GONE
+                                                        //cointweetrecycler?.addItemDecoration(DividerItemDecoration(ContextCompat.getDrawable(activity!!,R.drawable.item_decorator)!!))
+                                                    }
+                                                    else{
+                                                        pgr?.visibility = View.GONE
+                                                        empty?.visibility = View.VISIBLE
+                                                        empty?.text = "No Results found"
+                                                    }
+                                                }
+                }
+
+            })
         }
 
 //        val jsonobjectrequest = JsonObjectRequest(Request.Method.GET,"http://165.227.98.190/tweets",null, Response.Listener {
