@@ -184,5 +184,13 @@ class Dbhelper (context: Context):SQLiteOpenHelper(context, DATABASE_NAME,null,1
         return tweets
     }
 
+    fun updatetweet(sqltweet: Sqltweet){
+        val db = this.writableDatabase
+        val cv = ContentValues()
+        cv.put(COL_BOOKMARK,sqltweet.booked)
+        db.update(TABLE_NAME,cv,"$COL_ID = ?", arrayOf(sqltweet.tweetid))
+        db.close()
+    }
+
 }
 
