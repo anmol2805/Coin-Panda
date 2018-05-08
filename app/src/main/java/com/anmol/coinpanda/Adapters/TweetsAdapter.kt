@@ -13,9 +13,12 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import com.anmol.coinpanda.Helper.Dbcoinshelper
+import com.anmol.coinpanda.Helper.Dbhelper
 import com.anmol.coinpanda.Interfaces.ItemClickListener
 import com.anmol.coinpanda.Model.Allcoin
 import com.anmol.coinpanda.Model.Coin
+import com.anmol.coinpanda.Model.Sqltweet
 import com.anmol.coinpanda.Model.Tweet
 import com.anmol.coinpanda.R
 import com.bumptech.glide.Glide
@@ -72,30 +75,56 @@ class TweetsAdapter(internal var c: Context, internal var tweets: List<Tweet>, p
         Glide.with(c).load(testurl).into(holder.image)
         val db = FirebaseFirestore.getInstance()
         holder.bookmark?.setOnClickListener {
-            if(tweets[position].booked){
-                Glide.with(c).load(R.drawable.starunfilled).into(holder.bookmark)
-                val auth = FirebaseAuth.getInstance()
-                db.collection("users").document(auth.currentUser!!.uid).collection("bookmarks").document(coindata.tweetid!!).delete().addOnSuccessListener {
-                    Glide.with(c).load(R.drawable.starunfilled).into(holder.bookmark)
+            val dcb = Dbcoinshelper(c)
+            var allcoins: MutableList<Allcoin> = ArrayList()
+            allcoins.clear()
+            allcoins = dcb.readData()
+            if (!allcoins.isEmpty()) {
+                println("not empty")
+                val coins = ArrayList<String>()
+                for (i in allcoins.indices) {
+                    coins.add(allcoins[i].coinname!!)
                 }
+                var mytweet = 0
+                for (j in coins.indices) {
+                    if (coins[j] == tweets[position].coin_symbol) {
+                        mytweet = 1
+                    }
+                }
+                val dbc = Dbhelper(c)
+                if(tweets[position].booked){
+                    val sqltweet = Sqltweet(tweets[position].coin,tweets[position].coin_symbol,tweets[position].tweet,tweets[position].url,tweets[position].keyword,tweets[position].tweetid,tweets[position].dates,tweets[position].coin_symbol,mytweet,0)
+                    dbc.updatetweet(sqltweet)
+                    Glide.with(c).load(R.drawable.starunfilled).into(holder.bookmark)
+                    val auth = FirebaseAuth.getInstance()
+                    db.collection("users").document(auth.currentUser!!.uid).collection("bookmarks").document(coindata.tweetid!!).delete().addOnSuccessListener {
+                        Glide.with(c).load(R.drawable.starunfilled).into(holder.bookmark)
+                    }
+                }
+                else{
+                    val sqltweet = Sqltweet(tweets[position].coin,tweets[position].coin_symbol,tweets[position].tweet,tweets[position].url,tweets[position].keyword,tweets[position].tweetid,tweets[position].dates,tweets[position].coin_symbol,mytweet,1)
+                    dbc.updatetweet(sqltweet)
+                    Glide.with(c).load(R.drawable.starfilled).into(holder.bookmark)
+                    val map = HashMap<String,Any>()
+                    map["bookmark"] = true
+                    val auth = FirebaseAuth.getInstance()
+                    db.collection("users").document(auth.currentUser!!.uid).collection("bookmarks").document(coindata.tweetid!!).set(map).addOnSuccessListener {
+                        Glide.with(c).load(R.drawable.starfilled).into(holder.bookmark)
+                    }
+                }
+
+            }
+            if(tweets[position].booked){
+                Glide.with(c).load(R.drawable.starfilled).into(holder.bookmark)
             }
             else{
-                Glide.with(c).load(R.drawable.starfilled).into(holder.bookmark)
-                val map = HashMap<String,Any>()
-                map["bookmark"] = true
-                val auth = FirebaseAuth.getInstance()
-                db.collection("users").document(auth.currentUser!!.uid).collection("bookmarks").document(coindata.tweetid!!).set(map).addOnSuccessListener {
-                    Glide.with(c).load(R.drawable.starfilled).into(holder.bookmark)
-                }
+                Glide.with(c).load(R.drawable.starunfilled).into(holder.bookmark)
             }
 
+
         }
-        if(tweets[position].booked){
-            Glide.with(c).load(R.drawable.starfilled).into(holder.bookmark)
-        }
-        else{
-            Glide.with(c).load(R.drawable.starunfilled).into(holder.bookmark)
-        }
+
+
 
 
 
