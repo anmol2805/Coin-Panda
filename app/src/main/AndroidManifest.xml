@@ -42,6 +42,7 @@
         </service>
         <service android:name=".Services.TweetsdbService" />
         <service android:name=".Services.CoinsdbService" />
+        <service android:name=".Services.BookmarkService" />
 
         <activity android:name=".SplashActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" >
