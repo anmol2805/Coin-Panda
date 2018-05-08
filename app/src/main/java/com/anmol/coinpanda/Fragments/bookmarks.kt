@@ -21,10 +21,7 @@ import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.anmol.coinpanda.Adapters.DividerItemDecoration
 import com.anmol.coinpanda.Adapters.TweetsAdapter
-import com.anmol.coinpanda.Helper.COL_ID
-import com.anmol.coinpanda.Helper.COL_MYTWEET
-import com.anmol.coinpanda.Helper.Dbhelper
-import com.anmol.coinpanda.Helper.TABLE_NAME
+import com.anmol.coinpanda.Helper.*
 import com.anmol.coinpanda.Interfaces.ItemClickListener
 import com.anmol.coinpanda.Model.Tweet
 import com.anmol.coinpanda.Mysingleton
@@ -105,7 +102,7 @@ class bookmarks : Fragment() {
         val prevtime = Timestamp.valueOf(stringtime)
         if(activity!=null){
             val db = Dbhelper(activity!!)
-            val dataquery = "Select * from $TABLE_NAME where $COL_MYTWEET=1 ORDER BY $COL_ID DESC"
+            val dataquery = "Select * from $TABLE_NAME where $COL_BOOKMARK=1 ORDER BY $COL_ID DESC"
             val data = db.readData(dataquery)
             var serachtweet:MutableList<Tweet>  = ArrayList()
             serachtweet.clear()

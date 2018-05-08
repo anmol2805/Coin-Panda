@@ -15,7 +15,9 @@ import android.widget.Switch
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
+import com.anmol.coinpanda.Helper.COL_ID
 import com.anmol.coinpanda.Helper.Dbhelper
+import com.anmol.coinpanda.Helper.TABLE_NAME
 import com.anmol.coinpanda.Interfaces.ItemClickListener
 import com.anmol.coinpanda.Model.Tweet
 import com.anmol.coinpanda.Mysingleton
@@ -49,6 +51,7 @@ class dashboard : Fragment() {
 //        tweetselect.isChecked = false
 //        setFragment(allcoins())
         val dcb = Dbhelper(activity!!)
+        val dataquery = "Select * from $TABLE_NAME ORDER BY $COL_ID DESC"
         val data = dcb.readData(dataquery)
         if(!data.isEmpty()){
             pgr?.visibility = View.GONE
