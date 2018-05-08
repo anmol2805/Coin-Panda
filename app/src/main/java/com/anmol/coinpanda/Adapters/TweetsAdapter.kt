@@ -67,6 +67,7 @@ class TweetsAdapter(internal var c: Context, internal var tweets: List<Tweet>, p
             shareintent.putExtra(Intent.EXTRA_TEXT,tweets[position].url)
             c.startActivity(Intent.createChooser(shareintent,"Share tweet"))
         }
+
         holder.mcoin?.text = coindata.coin
         holder.coinname?.text = coindata.coin_symbol
         holder.keyword?.text = "#" + coindata.keyword
@@ -114,16 +115,16 @@ class TweetsAdapter(internal var c: Context, internal var tweets: List<Tweet>, p
                 }
 
             }
-            if(tweets[position].booked){
-                Glide.with(c).load(R.drawable.starfilled).into(holder.bookmark)
-            }
-            else{
-                Glide.with(c).load(R.drawable.starunfilled).into(holder.bookmark)
-            }
+
 
 
         }
-
+        if(tweets[position].booked){
+            Glide.with(c).load(R.drawable.starfilled).into(holder.bookmark)
+        }
+        else{
+            Glide.with(c).load(R.drawable.starunfilled).into(holder.bookmark)
+        }
 
 
 
