@@ -12,36 +12,30 @@ import com.anmol.coinpanda.Model.Sqlcoin
 import com.anmol.coinpanda.Model.Sqltweet
 import com.anmol.coinpanda.Model.Tweet
 
-val DB_NAME = "coinsdb"
-val TB_NAME = "coins_table"
-val COIN = "coin"
-val COIN_SYMBOL = "coin_symbol"
-val COIN_HANDLE = "coin_handle"
-class Dbcoinshelper (context: Context):SQLiteOpenHelper(context, DB_NAME,null,1){
+val DB = "booksdb"
+val TB = "books_table"
+val TWEETID = "tweetid"
+class Dbbookshelper (context: Context):SQLiteOpenHelper(context, DB,null,1){
 
     override fun onCreate(p0: SQLiteDatabase?) {
-        val createtable = "CREATE TABLE " + TB_NAME + " (" +
-                COIN + " VARCHAR(256)," +
-                COIN_SYMBOL + " VARCHAR(256) PRIMARY KEY NOT NULL UNIQUE," +
-                COIN_HANDLE + " VARCHAR(256))"
+        val createtable = "CREATE TABLE " + TB + " (" +
+                TWEETID + " VARCHAR(256) PRIMARY KEY NOT NULL UNIQUE)"
 
         p0?.execSQL(createtable)
     }
 
     override fun onUpgrade(p0: SQLiteDatabase?, p1: Int, p2: Int) {
-        p0?.execSQL("DROP TABLE IF EXISTS $TB_NAME")
+        p0?.execSQL("DROP TABLE IF EXISTS $TB")
         onCreate(p0)
     }
 
-    fun insertData(sqlcoin: Sqlcoin){
+    fun insertData(tweetid:String){
         try{
         val db = this.writableDatabase
         val cv = ContentValues()
-        cv.put(COIN,sqlcoin.coin)
-        cv.put(COIN_SYMBOL,sqlcoin.coin_symbol)
-        cv.put(COIN_HANDLE,sqlcoin.coinpage)
+        cv.put(TWEETID,tweetid)
 
-            val result = db.insert(TB_NAME,null,cv)
+            val result = db.insert(TB,null,cv)
             if(result == (-1).toLong())
                 System.out.println("coinstatus is failed")
             else
@@ -51,19 +45,16 @@ class Dbcoinshelper (context: Context):SQLiteOpenHelper(context, DB_NAME,null,1)
         }
 
     }
-    fun readData():MutableList<Allcoin>{
-        val allcoins : MutableList<Allcoin> = ArrayList()
+    fun readbook():ArrayList<String>{
+        val tweets :ArrayList<String> = ArrayList()
         try {
             val db = this.readableDatabase
-            val query = "Select * from $TB_NAME"
+            val query = "Select * from $TB"
             val result = db.rawQuery(query,null)
             if(result.moveToFirst()){
                 do{
-                    val mcoin = result.getString(result.getColumnIndex(COIN))
-                    val coin_symbol = result.getString(result.getColumnIndex(COIN_SYMBOL))
-                    val coinpage = result.getString(result.getColumnIndex(COIN_HANDLE))
-                    val allcoin = Allcoin(coin_symbol,mcoin,coinpage)
-                    allcoins.add(allcoin)
+                    val mtweetid = result.getString(result.getColumnIndex(TWEETID))
+                    tweets.add(mtweetid)
                 }while (result.moveToNext())
             }
             result.close()
@@ -73,12 +64,12 @@ class Dbcoinshelper (context: Context):SQLiteOpenHelper(context, DB_NAME,null,1)
         catch (e:SQLiteCantOpenDatabaseException){
             e.printStackTrace()
         }
-        return allcoins
+        return tweets
     }
 
-    fun deleteCoin(sqlcoin: Sqlcoin) {
+    fun deletebook(tweetid:String) {
         val db = this.writableDatabase
-        db.delete(TB_NAME, "$COIN_SYMBOL = ?", arrayOf(sqlcoin.coin_symbol))
+        db.delete(TB, "$TWEETID = ?", arrayOf(tweetid))
         db.close()
     }
 
