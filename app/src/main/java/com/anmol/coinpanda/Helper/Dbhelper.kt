@@ -18,8 +18,7 @@ val COL_URL = "url"
 val COL_KEYWORD = "keyword"
 val COL_ID = "tweet_id"
 val COL_DATES = "dates"
-val COL_MYTWEET = "mytweet"
-val COL_BOOKMARK = "bookmarks"
+
 
 class Dbhelper (context: Context):SQLiteOpenHelper(context, DATABASE_NAME,null,1){
 
@@ -32,9 +31,7 @@ class Dbhelper (context: Context):SQLiteOpenHelper(context, DATABASE_NAME,null,1
                 COL_TWEET + " TEXT," +
                 COL_URL + " TEXT," +
                 COL_KEYWORD + " VARCHAR(256)," +
-                COL_DATES + " TEXT," +
-                COL_BOOKMARK + " INTEGER," +
-                COL_MYTWEET + " INTEGER)"
+                COL_DATES + " TEXT)"
 
         p0?.execSQL(createtable)
     }
@@ -56,8 +53,6 @@ class Dbhelper (context: Context):SQLiteOpenHelper(context, DATABASE_NAME,null,1
         cv.put(COL_URL,sqltweet.url)
         cv.put(COL_KEYWORD,sqltweet.keyword)
         cv.put(COL_DATES,sqltweet.dates)
-        cv.put(COL_MYTWEET,sqltweet.mytweet)
-        cv.put(COL_BOOKMARK,sqltweet.booked)
             val result = db.insert(TABLE_NAME,null,cv)
             if(result == (-1).toLong())
                 System.out.println("sqlstatus is failed")
@@ -84,15 +79,16 @@ class Dbhelper (context: Context):SQLiteOpenHelper(context, DATABASE_NAME,null,1
                     val id = result.getString(result.getColumnIndex(COL_ID))
                     val dates = result.getString(result.getColumnIndex(COL_DATES))
                     val coinpage = result.getString(result.getColumnIndex(COL_COIN_HANDLE))
-                    val booked = result.getString(result.getColumnIndex(COL_BOOKMARK))
-                    if(booked.contains("0")){
-                        val tweet = Tweet(mcoin,coin_symbol,mtweet,url,keyword,id,false,dates,"mc",coinpage)
-                        tweets.add(tweet)
-                    }
-                    else{
-                        val tweet = Tweet(mcoin,coin_symbol,mtweet,url,keyword,id,true,dates,"mc",coinpage)
-                        tweets.add(tweet)
-                    }
+                    val tweet = Tweet(mcoin,coin_symbol,mtweet,url,keyword,id,false,dates,"mc",coinpage)
+                    tweets.add(tweet)
+//                    if(booked.contains("0")){
+//                        val tweet = Tweet(mcoin,coin_symbol,mtweet,url,keyword,id,false,dates,"mc",coinpage)
+//                        tweets.add(tweet)
+//                    }
+//                    else{
+//                        val tweet = Tweet(mcoin,coin_symbol,mtweet,url,keyword,id,true,dates,"mc",coinpage)
+//                        tweets.add(tweet)
+//                    }
 
                 }while (result.moveToNext())
             }
@@ -107,90 +103,90 @@ class Dbhelper (context: Context):SQLiteOpenHelper(context, DATABASE_NAME,null,1
         System.out.println("outside:$tweets")
         return tweets
     }
-    fun readmyData():MutableList<Tweet>{
-        val tweets : MutableList<Tweet> = ArrayList()
-        try {
-            val db = this.readableDatabase
-            val query = "Select * from $TABLE_NAME where $COL_MYTWEET=1 ORDER BY $COL_ID DESC"
-            val result = db.rawQuery(query,null)
-            if(result.moveToFirst()){
-                do{
-                    val mcoin = result.getString(result.getColumnIndex(COL_COIN))
-                    val coin_symbol = result.getString(result.getColumnIndex(COL_COIN_SYMBOL))
-                    val mtweet = result.getString(result.getColumnIndex(COL_TWEET))
-                    val url = result.getString(result.getColumnIndex(COL_URL))
-                    val keyword = result.getString(result.getColumnIndex(COL_KEYWORD))
-                    val id = result.getString(result.getColumnIndex(COL_ID))
-                    val dates = result.getString(result.getColumnIndex(COL_DATES))
-                    val coinpage = result.getString(result.getColumnIndex(COL_COIN_HANDLE))
-                    val booked = result.getString(result.getColumnIndex(COL_BOOKMARK))
-                    if(booked.contains("0")){
-                        val tweet = Tweet(mcoin,coin_symbol,mtweet,url,keyword,id,false,dates,"mc",coinpage)
-                        tweets.add(tweet)
-                    }
-                    else{
-                        val tweet = Tweet(mcoin,coin_symbol,mtweet,url,keyword,id,true,dates,"mc",coinpage)
-                        tweets.add(tweet)
-                    }
-                }while (result.moveToNext())
-            }
-            result.close()
-            db.close()
-            System.out.println("inside:$tweets")
-
-        }
-        catch (e:SQLiteCantOpenDatabaseException){
-            e.printStackTrace()
-        }
-        System.out.println("outside:$tweets")
-        return tweets
-    }
-    fun readBookmarks():MutableList<Tweet>{
-        val tweets : MutableList<Tweet> = ArrayList()
-        try {
-            val db = this.readableDatabase
-            val query = "Select * from $TABLE_NAME where $COL_BOOKMARK=1 ORDER BY $COL_ID DESC"
-            val result = db.rawQuery(query,null)
-            if(result.moveToFirst()){
-                do{
-                    val mcoin = result.getString(result.getColumnIndex(COL_COIN))
-                    val coin_symbol = result.getString(result.getColumnIndex(COL_COIN_SYMBOL))
-                    val mtweet = result.getString(result.getColumnIndex(COL_TWEET))
-                    val url = result.getString(result.getColumnIndex(COL_URL))
-                    val keyword = result.getString(result.getColumnIndex(COL_KEYWORD))
-                    val id = result.getString(result.getColumnIndex(COL_ID))
-                    val dates = result.getString(result.getColumnIndex(COL_DATES))
-                    val coinpage = result.getString(result.getColumnIndex(COL_COIN_HANDLE))
-                    val booked = result.getString(result.getColumnIndex(COL_BOOKMARK))
-                    if(booked.contains("0")){
-                        val tweet = Tweet(mcoin,coin_symbol,mtweet,url,keyword,id,false,dates,"mc",coinpage)
-                        tweets.add(tweet)
-                    }
-                    else{
-                        val tweet = Tweet(mcoin,coin_symbol,mtweet,url,keyword,id,true,dates,"mc",coinpage)
-                        tweets.add(tweet)
-                    }
-                }while (result.moveToNext())
-            }
-            result.close()
-            db.close()
-            System.out.println("inside:$tweets")
-
-        }
-        catch (e:SQLiteCantOpenDatabaseException){
-            e.printStackTrace()
-        }
-        System.out.println("outside:$tweets")
-        return tweets
-    }
-
-    fun updatetweet(sqltweet: Sqltweet){
-        val db = this.writableDatabase
-        val cv = ContentValues()
-        cv.put(COL_BOOKMARK,sqltweet.booked)
-        db.update(TABLE_NAME,cv,"$COL_ID = ?", arrayOf(sqltweet.tweetid))
-        db.close()
-    }
+//    fun readmyData():MutableList<Tweet>{
+//        val tweets : MutableList<Tweet> = ArrayList()
+//        try {
+//            val db = this.readableDatabase
+//            val query = "Select * from $TABLE_NAME where $COL_MYTWEET=1 ORDER BY $COL_ID DESC"
+//            val result = db.rawQuery(query,null)
+//            if(result.moveToFirst()){
+//                do{
+//                    val mcoin = result.getString(result.getColumnIndex(COL_COIN))
+//                    val coin_symbol = result.getString(result.getColumnIndex(COL_COIN_SYMBOL))
+//                    val mtweet = result.getString(result.getColumnIndex(COL_TWEET))
+//                    val url = result.getString(result.getColumnIndex(COL_URL))
+//                    val keyword = result.getString(result.getColumnIndex(COL_KEYWORD))
+//                    val id = result.getString(result.getColumnIndex(COL_ID))
+//                    val dates = result.getString(result.getColumnIndex(COL_DATES))
+//                    val coinpage = result.getString(result.getColumnIndex(COL_COIN_HANDLE))
+//                    val booked = result.getString(result.getColumnIndex(COL_BOOKMARK))
+//                    if(booked.contains("0")){
+//                        val tweet = Tweet(mcoin,coin_symbol,mtweet,url,keyword,id,false,dates,"mc",coinpage)
+//                        tweets.add(tweet)
+//                    }
+//                    else{
+//                        val tweet = Tweet(mcoin,coin_symbol,mtweet,url,keyword,id,true,dates,"mc",coinpage)
+//                        tweets.add(tweet)
+//                    }
+//                }while (result.moveToNext())
+//            }
+//            result.close()
+//            db.close()
+//            System.out.println("inside:$tweets")
+//
+//        }
+//        catch (e:SQLiteCantOpenDatabaseException){
+//            e.printStackTrace()
+//        }
+//        System.out.println("outside:$tweets")
+//        return tweets
+//    }
+//    fun readBookmarks():MutableList<Tweet>{
+//        val tweets : MutableList<Tweet> = ArrayList()
+//        try {
+//            val db = this.readableDatabase
+//            val query = "Select * from $TABLE_NAME where $COL_BOOKMARK=1 ORDER BY $COL_ID DESC"
+//            val result = db.rawQuery(query,null)
+//            if(result.moveToFirst()){
+//                do{
+//                    val mcoin = result.getString(result.getColumnIndex(COL_COIN))
+//                    val coin_symbol = result.getString(result.getColumnIndex(COL_COIN_SYMBOL))
+//                    val mtweet = result.getString(result.getColumnIndex(COL_TWEET))
+//                    val url = result.getString(result.getColumnIndex(COL_URL))
+//                    val keyword = result.getString(result.getColumnIndex(COL_KEYWORD))
+//                    val id = result.getString(result.getColumnIndex(COL_ID))
+//                    val dates = result.getString(result.getColumnIndex(COL_DATES))
+//                    val coinpage = result.getString(result.getColumnIndex(COL_COIN_HANDLE))
+//                    val booked = result.getString(result.getColumnIndex(COL_BOOKMARK))
+//                    if(booked.contains("0")){
+//                        val tweet = Tweet(mcoin,coin_symbol,mtweet,url,keyword,id,false,dates,"mc",coinpage)
+//                        tweets.add(tweet)
+//                    }
+//                    else{
+//                        val tweet = Tweet(mcoin,coin_symbol,mtweet,url,keyword,id,true,dates,"mc",coinpage)
+//                        tweets.add(tweet)
+//                    }
+//                }while (result.moveToNext())
+//            }
+//            result.close()
+//            db.close()
+//            System.out.println("inside:$tweets")
+//
+//        }
+//        catch (e:SQLiteCantOpenDatabaseException){
+//            e.printStackTrace()
+//        }
+//        System.out.println("outside:$tweets")
+//        return tweets
+//    }
+//
+//    fun updatetweet(sqltweet: Sqltweet){
+//        val db = this.writableDatabase
+//        val cv = ContentValues()
+//        cv.put(COL_BOOKMARK,sqltweet.booked)
+//        db.update(TABLE_NAME,cv,"$COL_ID = ?", arrayOf(sqltweet.tweetid))
+//        db.close()
+//    }
 
 }
 

@@ -32,17 +32,7 @@ public class TweetsdbService extends IntentService {
 
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
-        Dbcoinshelper dcb = new Dbcoinshelper(getBaseContext());
-        List<Allcoin> allcoins = new ArrayList<>();
-        allcoins.clear();
-        allcoins = dcb.readData();
-        if(!allcoins.isEmpty()){
-            System.out.println("not empty");
-            final ArrayList<String> coins = new ArrayList<>();
-            for(int i = 0;i<allcoins.size();i++){
-                coins.add(allcoins.get(i).getCoinname());
-            }
-            System.out.println("coinarray" + coins);
+
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, "http://165.227.98.190/tweets", null, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
@@ -63,13 +53,8 @@ public class TweetsdbService extends IntentService {
                             String keyword = obj.getString("keyword");
                             String dates = obj.getString("date");
                             String coinpage = obj.getString("coin_handle");
-                            int mytweet = 0;
-                            for(int j=0;j<coins.size();j++){
-                                if(coins.get(j).equals(coin_symbol)){
-                                    mytweet = 1;
-                                }
-                            }
-                            Sqltweet sqltweet = new Sqltweet(coin,coin_symbol,mtweet,url,keyword,id,dates,coinpage,mytweet,0);
+
+                            Sqltweet sqltweet = new Sqltweet(coin,coin_symbol,mtweet,url,keyword,id,dates,coinpage);
                             Dbhelper db = new Dbhelper(getBaseContext());
                             db.insertData(sqltweet);
                             System.out.println("tweetno" + c);
@@ -88,8 +73,4 @@ public class TweetsdbService extends IntentService {
             });
             Mysingleton.getInstance(getBaseContext()).addToRequestqueue(jsonObjectRequest);
         }
-        else
-            System.out.println("allcoins empty");
-
-    }
 }
