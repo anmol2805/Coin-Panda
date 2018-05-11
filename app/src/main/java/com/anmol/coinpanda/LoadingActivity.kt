@@ -92,7 +92,16 @@ class LoadingActivity : AppCompatActivity() {
             }
             else{
                 if(bookmarkdata.isEmpty()){
-                    
+                    val db = FirebaseFirestore.getInstance()
+                    val auth = FirebaseAuth.getInstance()
+                    db.collection("users").document(auth.currentUser!!.uid).collection("bookmarks").get().addOnCompleteListener {
+                        task ->
+                        for (doc in task.result.documents){
+                            val tweetid = doc.id
+                            dbb.insertData(tweetid)
+                        }
+
+                    }
                 }
                 else{
                     startActivity(Intent(this,HomeActivity::class.java))
