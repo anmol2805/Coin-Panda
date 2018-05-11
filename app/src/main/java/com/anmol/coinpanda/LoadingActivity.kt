@@ -3,6 +3,10 @@ package com.anmol.coinpanda
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import android.widget.Button
+import android.widget.ProgressBar
+import android.widget.TextView
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.VolleyError
@@ -16,13 +20,30 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import org.json.JSONException
 import org.json.JSONObject
+import org.w3c.dom.Text
 import java.util.ArrayList
 
 class LoadingActivity : AppCompatActivity() {
-
+    var retry:Button?=null
+    var loadpgr:ProgressBar?=null
+    var pw:TextView?=null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_loading)
+        retry = findViewById<Button>(R.id.retry)
+        loadpgr = findViewById<ProgressBar>(R.id.loadpgr)
+        pw = findViewById<TextView>(R.id.pw)
+        startloading()
+        retry?.setOnClickListener({
+            startloading()
+        })
+
+    }
+
+    private fun startloading() {
+        retry?.visibility = View.GONE
+        loadpgr?.visibility = View.VISIBLE
+        pw?.visibility = View.VISIBLE
         val dcb = Dbcoinshelper(this)
         val dtb = Dbhelper(this)
         val dbb = Dbbookshelper(this)
@@ -87,7 +108,12 @@ class LoadingActivity : AppCompatActivity() {
                     } catch (e: JSONException) {
                         e.printStackTrace()
                     }
-                }, Response.ErrorListener { println("network error") })
+                }, Response.ErrorListener {
+                    println("network error")
+                    retry?.visibility = View.VISIBLE
+                    loadpgr?.visibility = View.GONE
+                    pw?.visibility = View.GONE
+                })
                 Mysingleton.getInstance(baseContext).addToRequestqueue(jsonObjectRequest)
             }
             else{
@@ -109,8 +135,6 @@ class LoadingActivity : AppCompatActivity() {
             }
         }
     }
-
-
 
 
 }
