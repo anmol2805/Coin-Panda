@@ -102,18 +102,33 @@ class bookmarks : Fragment() {
         val prevtime = Timestamp.valueOf(stringtime)
         if(activity!=null){
             val db = Dbhelper(activity!!)
-            val dataquery = "Select * from $TABLE_NAME where $COL_BOOKMARK=1 ORDER BY $COL_ID DESC"
+            val dataquery = "Select * from $TABLE_NAME ORDER BY $COL_ID DESC"
+            var bookmarks = ArrayList<String>()
+            val dbb = Dbbookshelper(activity!!)
+            bookmarks = dbb.readbook()
+            val loadtweets = ArrayList<Tweet>()
+            loadtweets.clear()
             val data = db.readData(dataquery)
-            var serachtweet:MutableList<Tweet>  = ArrayList()
-            serachtweet.clear()
-            serachtweet = data
-            tweets.clear()
             tweets = data
             if (!tweets.isEmpty()) {
+                var i = 0
+                while (i<data.size){
+                    var j = 0
+                    while (j<bookmarks.size){
+                        if(bookmarks[j] == tweets[i].tweetid){
+                            val tweet = Tweet(tweets[i].coin,tweets[i].coin_symbol,tweets[i].tweet,tweets[i].url,tweets[i].keyword,tweets[i].tweetid,true,tweets[i].dates,"mc",tweets[i].coin_symbol)
+                            loadtweets.add(tweet)        
+                        }
+                        j++
+
+                    }
+                    
+                    i++
+                }
                 pgr?.visibility = View.GONE
                 retry?.visibility = View.GONE
                 empty?.visibility = View.GONE
-                tweetsAdapter = TweetsAdapter(activity!!, tweets, itemClickListener)
+                tweetsAdapter = TweetsAdapter(activity!!, loadtweets, itemClickListener)
                 tweetsAdapter!!.notifyDataSetChanged()
                 cointweetrecycler?.adapter = tweetsAdapter
                 //cointweetrecycler?.addItemDecoration(DividerItemDecoration(ContextCompat.getDrawable(activity!!,R.drawable.item_decorator)!!))
@@ -137,9 +152,9 @@ class bookmarks : Fragment() {
                 override fun onTextChanged(booktext: CharSequence?, p1: Int, p2: Int, p3: Int) {
                     tweets.clear()
                     var b=0
-                    while(b<serachtweet.size) {
-                        if (serachtweet[b].coin!!.toLowerCase().contains(booktext!!) || serachtweet[b].coin_symbol!!.toLowerCase().contains(booktext) || serachtweet[b].tweet!!.toLowerCase().contains(booktext) || serachtweet[b].keyword!!.toLowerCase().contains(booktext) || serachtweet[b].coin!!.toUpperCase().contains(booktext) || serachtweet[b].coin_symbol!!.toUpperCase().contains(booktext) || serachtweet[b].tweet!!.toUpperCase().contains(booktext) || serachtweet[b].keyword!!.toUpperCase().contains(booktext)) {
-                            tweets.add(serachtweet[b])
+                    while(b<loadtweets.size) {
+                        if (loadtweets[b].coin!!.toLowerCase().contains(booktext!!) || loadtweets[b].coin_symbol!!.toLowerCase().contains(booktext) || loadtweets[b].tweet!!.toLowerCase().contains(booktext) || loadtweets[b].keyword!!.toLowerCase().contains(booktext) || loadtweets[b].coin!!.toUpperCase().contains(booktext) || loadtweets[b].coin_symbol!!.toUpperCase().contains(booktext) || loadtweets[b].tweet!!.toUpperCase().contains(booktext) || loadtweets[b].keyword!!.toUpperCase().contains(booktext)) {
+                            tweets.add(loadtweets[b])
                         }
                         b++
 
