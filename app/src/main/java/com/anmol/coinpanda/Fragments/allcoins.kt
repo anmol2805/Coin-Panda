@@ -16,6 +16,7 @@ import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.anmol.coinpanda.Adapters.TweetsAdapter
 import com.anmol.coinpanda.Helper.COL_ID
+import com.anmol.coinpanda.Helper.Dbbookshelper
 import com.anmol.coinpanda.Helper.Dbhelper
 import com.anmol.coinpanda.Helper.TABLE_NAME
 import com.anmol.coinpanda.Interfaces.ItemClickListener
@@ -139,12 +140,34 @@ class allcoins : Fragment(){
         if(activity!=null){
             val db = Dbhelper(activity!!)
             val dataquery = "Select * from $TABLE_NAME ORDER BY $COL_ID DESC"
+            var bookmarks = ArrayList<String>()
+            val dbb = Dbbookshelper(activity!!)
+            bookmarks = dbb.readbook()
+            val loadtweets = ArrayList<Tweet>()
+            loadtweets.clear()
             val data = db.readData(dataquery)
-            if (!data.isEmpty()) {
+            tweets = data
+            if (!tweets.isEmpty()) {
+                var i = 0
+                while (i<data.size){
+                    var booked = false
+                    var j = 0
+                    while (j<bookmarks.size){
+                        if(bookmarks[j] == tweets[i].tweetid){
+                            booked = true
+                        }
+                        j++
+
+                    }
+                    val tweet = Tweet(tweets[i].coin,tweets[i].coin_symbol,tweets[i].tweet,tweets[i].url,tweets[i].keyword,tweets[i].tweetid,booked,tweets[i].dates,"mc",tweets[i].coin_symbol)
+                    loadtweets.add(tweet)
+                    i++
+                }
+
                 pgr?.visibility = View.GONE
                 retry?.visibility = View.GONE
                 empty?.visibility = View.GONE
-                tweetsAdapter = TweetsAdapter(activity!!, data, itemClickListener)
+                tweetsAdapter = TweetsAdapter(activity!!, loadtweets, itemClickListener)
                 tweetsAdapter!!.notifyDataSetChanged()
                 cointweetrecycler?.adapter = tweetsAdapter
                 //cointweetrecycler?.addItemDecoration(DividerItemDecoration(ContextCompat.getDrawable(activity!!,R.drawable.item_decorator)!!))
