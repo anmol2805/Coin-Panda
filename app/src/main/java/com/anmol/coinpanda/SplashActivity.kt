@@ -20,7 +20,7 @@ class SplashActivity : AppCompatActivity() {
         if(auth!=null){
             val handler = Handler()
             handler.postDelayed({
-                val intent = Intent(this,HomeActivity::class.java)
+                val intent = Intent(this,LoadingActivity::class.java)
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
                 startActivity(intent)
