@@ -117,7 +117,6 @@ class LoadingActivity : AppCompatActivity() {
                         }
                         startloading()
                     } catch (e: JSONException) {
-                        startloading()
                         e.printStackTrace()
                     }
                 }, Response.ErrorListener {
