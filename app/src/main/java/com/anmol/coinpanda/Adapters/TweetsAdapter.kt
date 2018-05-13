@@ -13,6 +13,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import com.anmol.coinpanda.Helper.Dbbookshelper
 import com.anmol.coinpanda.Helper.Dbcoinshelper
 import com.anmol.coinpanda.Helper.Dbhelper
 import com.anmol.coinpanda.Interfaces.ItemClickListener
@@ -93,9 +94,11 @@ class TweetsAdapter(internal var c: Context, internal var tweets: List<Tweet>, p
                     }
                 }
                 val dbc = Dbhelper(c)
+                val dbb = Dbbookshelper(c)
                 if(tweets[position].booked){
-                    val sqltweet = Sqltweet(tweets[position].coin,tweets[position].coin_symbol,tweets[position].tweet,tweets[position].url,tweets[position].keyword,tweets[position].tweetid,tweets[position].dates,tweets[position].coin_symbol,mytweet,0)
-                    dbc.updatetweet(sqltweet)
+                    dbb.deletebook(tweets[position].tweetid!!)
+//                    val sqltweet = Sqltweet(tweets[position].coin,tweets[position].coin_symbol,tweets[position].tweet,tweets[position].url,tweets[position].keyword,tweets[position].tweetid,tweets[position].dates,tweets[position].coin_symbol,mytweet,0)
+//                    dbc.updatetweet(sqltweet)
                     Glide.with(c).load(R.drawable.starunfilled).into(holder.bookmark)
                     val auth = FirebaseAuth.getInstance()
                     db.collection("users").document(auth.currentUser!!.uid).collection("bookmarks").document(coindata.tweetid!!).delete().addOnSuccessListener {
@@ -103,8 +106,9 @@ class TweetsAdapter(internal var c: Context, internal var tweets: List<Tweet>, p
                     }
                 }
                 else{
-                    val sqltweet = Sqltweet(tweets[position].coin,tweets[position].coin_symbol,tweets[position].tweet,tweets[position].url,tweets[position].keyword,tweets[position].tweetid,tweets[position].dates,tweets[position].coin_symbol,mytweet,1)
-                    dbc.updatetweet(sqltweet)
+                    dbb.insertData(tweets[position].tweetid!!)
+//                    val sqltweet = Sqltweet(tweets[position].coin,tweets[position].coin_symbol,tweets[position].tweet,tweets[position].url,tweets[position].keyword,tweets[position].tweetid,tweets[position].dates,tweets[position].coin_symbol,mytweet,1)
+//                    dbc.updatetweet(sqltweet)
                     Glide.with(c).load(R.drawable.starfilled).into(holder.bookmark)
                     val map = HashMap<String,Any>()
                     map["bookmark"] = true
