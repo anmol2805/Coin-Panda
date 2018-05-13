@@ -18,6 +18,7 @@ import com.android.volley.Response
 import com.android.volley.toolbox.JsonArrayRequest
 import com.anmol.coinpanda.Adapters.DividerItemDecoration
 import com.anmol.coinpanda.Adapters.TweetsAdapter
+import com.anmol.coinpanda.Helper.*
 import com.anmol.coinpanda.Interfaces.ItemClickListener
 import com.anmol.coinpanda.Model.Tweet
 import com.google.firebase.auth.FirebaseAuth
@@ -40,8 +41,8 @@ class TweetsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tweets)
-        if(intent.getStringExtra("coin")!=null){
-            val coin : String = intent.getStringExtra("coin")
+        if (intent.getStringExtra("coin") != null) {
+            val coin: String = intent.getStringExtra("coin")
             title = coin
             pgr = findViewById(R.id.pgr)
             val layoutManager = LinearLayoutManager(this)
@@ -63,75 +64,97 @@ class TweetsActivity : AppCompatActivity() {
                 }
 
             }
-
-            val bookmarks : ArrayList<String> = ArrayList()
-            db.collection("users").document(auth.currentUser!!.uid).collection("bookmarks")
-                    .get().addOnCompleteListener{task->
-                        bookmarks.clear()
-                        for (doc in task.result.documents){
-                            val tweetid = doc.id
-                            bookmarks.add(tweetid)
+            val db = Dbhelper(this)
+            val dataquery = "Select * from $TABLE_NAME where $COL_COIN_SYMBOL=$coin ORDER BY $COL_ID DESC"
+            var bookmarks: ArrayList<String>
+            val dbb = Dbbookshelper(this)
+            bookmarks = dbb.readbook()
+            val loadtweets = ArrayList<Tweet>()
+            loadtweets.clear()
+            val data = db.readData(dataquery)
+            tweets = data
+            if (!tweets.isEmpty()) {
+                var i = 0
+                while (i < data.size) {
+                    var booked = false
+                    var j = 0
+                    while (j < bookmarks.size) {
+                        if (bookmarks[j] == tweets[i].tweetid) {
+                            booked = true
                         }
-                        loadtweets(coin,bookmarks)
-                        retry?.setOnClickListener{
-                            loadtweets(coin,bookmarks)
-                        }
+                        j++
+
                     }
-        }
-
-
-    }
-
-    private fun loadtweets(coin: String, bookmarks: ArrayList<String>) {
-        pgr?.visibility = View.VISIBLE
-        retry?.visibility = View.GONE
-        empty?.visibility = View.GONE
-        val url = "http://165.227.98.190/tweets/$coin"
-        val jsonObject = JsonArrayRequest(Request.Method.GET,url,null,Response.Listener {
-            response ->
-            tweets.clear()
-            var i = 0
-            while (i<response.length()){
-                val doc = response.getJSONObject(i)
-                val mcoin = doc.getString("coin_name")
-                val coin_symbol = doc.getString("coin_symbol")
-                val mtweet = doc.getString("tweet")
-                val url = doc.getString("url")
-                val keyword = doc.getString("keyword")
-                val id = doc.getString("id")
-                val dates = doc.getString("date")
-                val coinpage = doc.getString("coin_handle")
-                var j = 0
-                var booked = false
-                while (j<bookmarks.size){
-                    if(id.contains(bookmarks[j])){
-                        booked = true
-                    }
-                    j++
+                    val tweet = Tweet(tweets[i].coin, tweets[i].coin_symbol, tweets[i].tweet, tweets[i].url, tweets[i].keyword, tweets[i].tweetid, booked, tweets[i].dates, "mc", tweets[i].coin_symbol)
+                    loadtweets.add(tweet)
+                    i++
                 }
-                val tweet = Tweet(mcoin,coin_symbol,mtweet,url,keyword,id,booked,dates,"mc",coinpage)
-                tweets.add(tweet)
-                i++
-            }
-            if(!tweets.isEmpty()){
-                val tweetsAdapter = TweetsAdapter(this,tweets,itemClickListener)
+
+                pgr?.visibility = View.GONE
+                retry?.visibility = View.GONE
+                empty?.visibility = View.GONE
+                tweetsAdapter = TweetsAdapter(this, loadtweets, itemClickListener)
                 tweetsAdapter.notifyDataSetChanged()
                 mtweetrecycler?.adapter = tweetsAdapter
-                pgr?.visibility = View.GONE
-                //mtweetrecycler?.addItemDecoration(DividerItemDecoration(ContextCompat.getDrawable(applicationContext,R.drawable.item_decorator)!!))
             }
             else{
                 pgr?.visibility = View.GONE
                 empty?.visibility = View.VISIBLE
             }
-        },Response.ErrorListener {
-            retry?.visibility = View.VISIBLE
-            empty?.visibility = View.VISIBLE
-            empty?.text = "Network Error"
-            pgr?.visibility = View.GONE
 
-        })
-        Mysingleton.getInstance(this).addToRequestqueue(jsonObject)
 
+        }
     }
+//    private fun loadtweet(coin: String, bookmarks: ArrayList<String>) {
+//        pgr?.visibility = View.VISIBLE
+//        retry?.visibility = View.GONE
+//        empty?.visibility = View.GONE
+//        val url = "http://165.227.98.190/tweets/$coin"
+//        val jsonObject = JsonArrayRequest(Request.Method.GET,url,null,Response.Listener {
+//            response ->
+//            tweets.clear()
+//            var i = 0
+//            while (i<response.length()){
+//                val doc = response.getJSONObject(i)
+//                val mcoin = doc.getString("coin_name")
+//                val coin_symbol = doc.getString("coin_symbol")
+//                val mtweet = doc.getString("tweet")
+//                val url = doc.getString("url")
+//                val keyword = doc.getString("keyword")
+//                val id = doc.getString("id")
+//                val dates = doc.getString("date")
+//                val coinpage = doc.getString("coin_handle")
+//                var j = 0
+//                var booked = false
+//                while (j<bookmarks.size){
+//                    if(id.contains(bookmarks[j])){
+//                        booked = true
+//                    }
+//                    j++
+//                }
+//                val tweet = Tweet(mcoin,coin_symbol,mtweet,url,keyword,id,booked,dates,"mc",coinpage)
+//                tweets.add(tweet)
+//                i++
+//            }
+//            if(!tweets.isEmpty()){
+//                val tweetsAdapter = TweetsAdapter(this,tweets,itemClickListener)
+//                tweetsAdapter.notifyDataSetChanged()
+//                mtweetrecycler?.adapter = tweetsAdapter
+//                pgr?.visibility = View.GONE
+//                //mtweetrecycler?.addItemDecoration(DividerItemDecoration(ContextCompat.getDrawable(applicationContext,R.drawable.item_decorator)!!))
+//            }
+//            else{
+//                pgr?.visibility = View.GONE
+//                empty?.visibility = View.VISIBLE
+//            }
+//        },Response.ErrorListener {
+//            retry?.visibility = View.VISIBLE
+//            empty?.visibility = View.VISIBLE
+//            empty?.text = "Network Error"
+//            pgr?.visibility = View.GONE
+//
+//        })
+//        Mysingleton.getInstance(this).addToRequestqueue(jsonObject)
+//
+//    }
 }
