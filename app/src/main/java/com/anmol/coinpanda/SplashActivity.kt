@@ -17,7 +17,7 @@ class SplashActivity : AppCompatActivity() {
         setContentView(R.layout.activity_splash)
         updaterequest()
         moverequest()
-        if(auth!=null){
+        if(auth.currentUser!=null){
             val handler = Handler()
             handler.postDelayed({
                 val intent = Intent(this,LoadingActivity::class.java)

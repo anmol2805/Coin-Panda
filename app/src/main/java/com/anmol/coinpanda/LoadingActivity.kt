@@ -33,10 +33,17 @@ class LoadingActivity : AppCompatActivity() {
         retry = findViewById<Button>(R.id.retry)
         loadpgr = findViewById<ProgressBar>(R.id.loadpgr)
         pw = findViewById<TextView>(R.id.pw)
-        startloading()
-        retry?.setOnClickListener({
+        val auth = FirebaseAuth.getInstance()
+        if(auth.currentUser == null){
+            startActivity(Intent(this,LoginActivity::class.java))
+        }
+        else{
             startloading()
-        })
+            retry?.setOnClickListener({
+                startloading()
+            })
+        }
+
 
     }
 
@@ -44,6 +51,7 @@ class LoadingActivity : AppCompatActivity() {
         retry?.visibility = View.GONE
         loadpgr?.visibility = View.VISIBLE
         pw?.visibility = View.VISIBLE
+        pw?.text = "Please Wait!!!"
         val dcb = Dbcoinshelper(this)
         val dtb = Dbhelper(this)
         val dbb = Dbbookshelper(this)
@@ -66,6 +74,8 @@ class LoadingActivity : AppCompatActivity() {
                         val sqlcoin = Sqlcoin(coinname,coinsymbol,coinpage)
                         dcb.insertData(sqlcoin)
                     }
+                    startloading()
+
                 }
                 else{
                     val intent = Intent(this,TweetsdbService::class.java)
@@ -105,14 +115,16 @@ class LoadingActivity : AppCompatActivity() {
                             println("tweetno$c")
                             c++
                         }
+                        startloading()
                     } catch (e: JSONException) {
+                        startloading()
                         e.printStackTrace()
                     }
                 }, Response.ErrorListener {
                     println("network error")
                     retry?.visibility = View.VISIBLE
                     loadpgr?.visibility = View.GONE
-                    pw?.visibility = View.GONE
+                    pw?.text = "Network Error"
                 })
                 Mysingleton.getInstance(baseContext).addToRequestqueue(jsonObjectRequest)
             }
@@ -127,6 +139,7 @@ class LoadingActivity : AppCompatActivity() {
                             dbb.insertData(tweetid)
                         }
 
+                        startActivity(Intent(this,HomeActivity::class.java))
                     }
                 }
                 else{
