@@ -170,13 +170,19 @@ class mycoins : Fragment(){
                     }
                     
                     i++
-                } 
-                pgr?.visibility = View.GONE
-                retry?.visibility = View.GONE
-                empty?.visibility = View.GONE
-                tweetsAdapter = TweetsAdapter(activity!!, loadtweets, itemClickListener)
-                tweetsAdapter!!.notifyDataSetChanged()
-                cointweetrecycler?.adapter = tweetsAdapter
+                }
+                if (!loadtweets.isEmpty()){
+                    pgr?.visibility = View.GONE
+                    retry?.visibility = View.GONE
+                    empty?.visibility = View.GONE
+                    tweetsAdapter = TweetsAdapter(activity!!, loadtweets, itemClickListener)
+                    tweetsAdapter!!.notifyDataSetChanged()
+                    cointweetrecycler?.adapter = tweetsAdapter
+                }
+                else{
+                    pgr?.visibility = View.GONE
+                    empty?.visibility = View.VISIBLE
+                }
                 //cointweetrecycler?.addItemDecoration(DividerItemDecoration(ContextCompat.getDrawable(activity!!,R.drawable.item_decorator)!!))
 
 
