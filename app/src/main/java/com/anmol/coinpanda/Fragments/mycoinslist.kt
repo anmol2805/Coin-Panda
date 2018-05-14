@@ -123,14 +123,24 @@ class mycoinslist : Fragment(){
                         db.collection("users").document(auth.currentUser!!.uid).collection("portfolio").document(allcoins[i].coinname!!).update(map)
                     }
                 }
-                db.collection("users").document(auth.currentUser!!.uid).collection("portfolio").get().addOnCompleteListener {task ->
-                    for(doc in task.result){
-                        if(doc.id == allcoins[i].coinname!!){
-                            atp?.visibility = View.GONE
-                            portfoliolay?.visibility = View.VISIBLE
-                        }
+                val dcb = Dbcoinshelper(activity!!)
+                val coins = dcb.readData()
+                var j = 0
+                while (j<coins.size){
+                    if(allcoins[i].coinname == coins[j].coinname){
+                        atp?.visibility = View.GONE
+                        portfoliolay?.visibility = View.VISIBLE
                     }
+                    j++
                 }
+//                db.collection("users").document(auth.currentUser!!.uid).collection("portfolio").get().addOnCompleteListener {task ->
+//                    for(doc in task.result){
+//                        if(doc.id == allcoins[i].coinname!!){
+//                            atp?.visibility = View.GONE
+//                            portfoliolay?.visibility = View.VISIBLE
+//                        }
+//                    }
+//                }
                 cn?.text = allcoins[i].coin
                 cs?.text = allcoins[i].coinname
                 cp?.text = "#"+ allcoins[i].coinpage
