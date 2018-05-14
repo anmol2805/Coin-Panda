@@ -86,11 +86,17 @@ class LoadingActivity : AppCompatActivity() {
                     startActivity(intent2)
                 }
 
+            }.addOnFailureListener {
+                retry?.visibility = View.VISIBLE
+                loadpgr?.visibility = View.GONE
+                pw?.text = "Network Error"
             }
         }
         else{
             if(tweetdata.isEmpty()){
+                pw?.text = "We're setting up few things for you..."
                 val jsonObjectRequest = JsonObjectRequest(Request.Method.GET, "http://165.227.98.190/tweets", null, Response.Listener { response ->
+
                     var c = 0
                     try {
                         val jsonArray = response.getJSONArray("tweets")
@@ -128,6 +134,7 @@ class LoadingActivity : AppCompatActivity() {
                 Mysingleton.getInstance(baseContext).addToRequestqueue(jsonObjectRequest)
             }
             else{
+                pw?.text = "We're almost done...!"
                 if(bookmarkdata.isEmpty()){
                     val db = FirebaseFirestore.getInstance()
                     val auth = FirebaseAuth.getInstance()
@@ -138,6 +145,8 @@ class LoadingActivity : AppCompatActivity() {
                             dbb.insertData(tweetid)
                         }
 
+                        startActivity(Intent(this,HomeActivity::class.java))
+                    }.addOnFailureListener {
                         startActivity(Intent(this,HomeActivity::class.java))
                     }
                 }
