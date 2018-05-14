@@ -65,8 +65,8 @@ class TweetsActivity : AppCompatActivity() {
 
             }
             val db = Dbhelper(this)
-            val dataquery = "Select * from $TABLE_NAME where $COL_COIN_SYMBOL=$coin ORDER BY $COL_ID DESC"
-            var bookmarks: ArrayList<String>
+            val dataquery = "Select * from $TABLE_NAME ORDER BY $COL_ID DESC"
+            val bookmarks: ArrayList<String>
             val dbb = Dbbookshelper(this)
             bookmarks = dbb.readbook()
             val loadtweets = ArrayList<Tweet>()
@@ -85,8 +85,11 @@ class TweetsActivity : AppCompatActivity() {
                         j++
 
                     }
-                    val tweet = Tweet(tweets[i].coin, tweets[i].coin_symbol, tweets[i].tweet, tweets[i].url, tweets[i].keyword, tweets[i].tweetid, booked, tweets[i].dates, "mc", tweets[i].coin_symbol)
-                    loadtweets.add(tweet)
+                    if(tweets[i].coin_symbol == coin){
+                        val tweet = Tweet(tweets[i].coin, tweets[i].coin_symbol, tweets[i].tweet, tweets[i].url, tweets[i].keyword, tweets[i].tweetid, booked, tweets[i].dates, "mc", tweets[i].coin_symbol)
+                        loadtweets.add(tweet)
+                    }
+
                     i++
                 }
 
