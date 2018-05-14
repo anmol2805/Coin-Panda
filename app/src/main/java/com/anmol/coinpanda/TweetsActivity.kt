@@ -92,13 +92,19 @@ class TweetsActivity : AppCompatActivity() {
 
                     i++
                 }
+                if (!loadtweets.isEmpty()){
+                    pgr?.visibility = View.GONE
+                    retry?.visibility = View.GONE
+                    empty?.visibility = View.GONE
+                    tweetsAdapter = TweetsAdapter(this, loadtweets, itemClickListener)
+                    tweetsAdapter.notifyDataSetChanged()
+                    mtweetrecycler?.adapter = tweetsAdapter
+                }
+                else{
+                    pgr?.visibility = View.GONE
+                    empty?.visibility = View.VISIBLE
+                }
 
-                pgr?.visibility = View.GONE
-                retry?.visibility = View.GONE
-                empty?.visibility = View.GONE
-                tweetsAdapter = TweetsAdapter(this, loadtweets, itemClickListener)
-                tweetsAdapter.notifyDataSetChanged()
-                mtweetrecycler?.adapter = tweetsAdapter
             }
             else{
                 pgr?.visibility = View.GONE
