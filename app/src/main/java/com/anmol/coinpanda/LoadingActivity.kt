@@ -84,7 +84,10 @@ class LoadingActivity : AppCompatActivity() {
                     val intent = Intent(this,TweetsdbService::class.java)
                     startService(intent)
                     val intent2 = Intent(this,HomeActivity::class.java)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
                     startActivity(intent2)
+                    finish()
                 }
 
             }.addOnFailureListener {
@@ -122,7 +125,11 @@ class LoadingActivity : AppCompatActivity() {
                             println("tweetno$c")
                             c++
                         }
-                        startActivity(Intent(this,HomeActivity::class.java))
+                        val intent = Intent(this,HomeActivity::class.java)
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                        startActivity(intent)
+                        finish()
                     } catch (e: JSONException) {
                         e.printStackTrace()
                     }
@@ -135,8 +142,11 @@ class LoadingActivity : AppCompatActivity() {
                 Mysingleton.getInstance(baseContext).addToRequestqueue(jsonObjectRequest)
             }
             else{
-
-                startActivity(Intent(this,HomeActivity::class.java))
+                val intent = Intent(this,HomeActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                startActivity(intent)
+                finish()
 
             }
         }
