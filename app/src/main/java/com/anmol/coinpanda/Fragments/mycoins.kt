@@ -163,7 +163,7 @@ class mycoins : Fragment(){
                     var k = 0
                     while (k<coins.size){
                         if(coins[k].coinname == tweets[i].coin_symbol){
-                            val tweet = Tweet(tweets[i].coin,tweets[i].coin_symbol,tweets[i].tweet,tweets[i].url,tweets[i].keyword,tweets[i].tweetid,booked,tweets[i].dates,"mc",tweets[i].coin_symbol)
+                            val tweet = Tweet(tweets[i].coin,tweets[i].coin_symbol,tweets[i].tweet,tweets[i].url,tweets[i].keyword,tweets[i].tweetid,booked,tweets[i].dates,"mc",tweets[i].coinpage)
                             loadtweets.add(tweet)        
                         }
                         k++

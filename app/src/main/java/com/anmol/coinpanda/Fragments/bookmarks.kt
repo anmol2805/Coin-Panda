@@ -116,7 +116,7 @@ class bookmarks : Fragment() {
                     var j = 0
                     while (j<bookmarks.size){
                         if(bookmarks[j] == tweets[i].tweetid){
-                            val tweet = Tweet(tweets[i].coin,tweets[i].coin_symbol,tweets[i].tweet,tweets[i].url,tweets[i].keyword,tweets[i].tweetid,true,tweets[i].dates,"mc",tweets[i].coin_symbol)
+                            val tweet = Tweet(tweets[i].coin,tweets[i].coin_symbol,tweets[i].tweet,tweets[i].url,tweets[i].keyword,tweets[i].tweetid,true,tweets[i].dates,"mc",tweets[i].coinpage)
                             loadtweets.add(tweet)        
                         }
                         j++

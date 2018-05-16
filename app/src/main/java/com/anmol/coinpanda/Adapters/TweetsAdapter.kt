@@ -74,6 +74,7 @@ class TweetsAdapter(internal var c: Context, internal var tweets: List<Tweet>, p
         holder.keyword?.text = "#" + coindata.keyword
         holder.timestamp?.text = coindata.dates + "(GMT)"
         val testurl = "https://twitter.com/" + coindata.coinpage + "/profile_image?size=original"
+        println("testurltweets$testurl")
         Glide.with(c).load(testurl).into(holder.image)
         val db = FirebaseFirestore.getInstance()
         holder.bookmark?.setOnClickListener {

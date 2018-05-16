@@ -159,6 +159,7 @@ class coinslist : Fragment(){
                 cp?.text = "#"+ allcoins[i].coinpage
                 val testurl = "https://twitter.com/" + allcoins[i].coinpage + "/profile_image?size=original"
                 if(activity!=null){
+                    println("testurl$testurl")
                     Glide.with(activity).load(testurl).into(coinimg)
                 }
                 viewtweet?.setOnClickListener {
