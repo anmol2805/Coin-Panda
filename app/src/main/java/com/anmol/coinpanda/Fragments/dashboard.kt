@@ -16,12 +16,14 @@ import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.anmol.coinpanda.Helper.COL_ID
+import com.anmol.coinpanda.Helper.Dbcoinshelper
 import com.anmol.coinpanda.Helper.Dbhelper
 import com.anmol.coinpanda.Helper.TABLE_NAME
 import com.anmol.coinpanda.Interfaces.ItemClickListener
 import com.anmol.coinpanda.Model.Tweet
 import com.anmol.coinpanda.Mysingleton
 import com.anmol.coinpanda.R
+import com.anmol.coinpanda.Services.CoinsdbService
 import com.anmol.coinpanda.Services.TweetsdbService
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -50,22 +52,26 @@ class dashboard : Fragment() {
 //        pgr?.visibility = View.GONE
 //        tweetselect.isChecked = false
 //        setFragment(allcoins())
-        val dcb = Dbhelper(activity!!)
+        val dtb = Dbhelper(activity!!)
         val dataquery = "Select * from $TABLE_NAME ORDER BY $COL_ID DESC"
-        val data = dcb.readData(dataquery)
-        if(!data.isEmpty()){
+        val data = dtb.readData(dataquery)
+        if(data.isEmpty()){
+            val intent = Intent(activity,TweetsdbService::class.java)
+            activity!!.startService(intent)
+        }
+
+        val dcb = Dbcoinshelper(activity!!)
+        val coins = dcb.readData()
+        if(!coins.isEmpty()){
             pgr?.visibility = View.GONE
             tweetselect.isChecked = true
             setFragment(mycoins())
         }
         else{
-            val intent = Intent(activity,TweetsdbService::class.java)
-            activity!!.startService(intent)
             pgr?.visibility = View.GONE
             tweetselect.isChecked = false
             setFragment(allcoins())
         }
-
 
         tweetselect.setOnCheckedChangeListener { _, b ->
             if(b){
