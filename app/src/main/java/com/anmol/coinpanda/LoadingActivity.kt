@@ -61,6 +61,7 @@ class LoadingActivity : AppCompatActivity() {
         val dataquery = "Select * from $TABLE_NAME ORDER BY $COL_ID DESC"
         val tweetdata = dtb.readData(dataquery)
         val bookmarkdata = dbb.readbook()
+        pw?.text = "Please Wait!!!"
         if(data.isEmpty()){
             val db = FirebaseFirestore.getInstance()
             val auth = FirebaseAuth.getInstance()
