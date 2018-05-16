@@ -188,7 +188,7 @@ class allcoins : Fragment(){
                             val jsonArray = response.getJSONArray("tweets")
                             tweets.clear()
 
-                            while (c<999){
+                            while (c<450){
                                 val obj = jsonArray.getJSONObject(c)
                                 val id = obj.getString("id")
                                 val coin = obj.getString("coin_name")
