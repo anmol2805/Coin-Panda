@@ -33,6 +33,7 @@ class LoadingActivity : AppCompatActivity() {
         retry = findViewById<Button>(R.id.retry)
         loadpgr = findViewById<ProgressBar>(R.id.loadpgr)
         pw = findViewById<TextView>(R.id.pw)
+        pw?.text = "Welcome to Cryptohype...!!!"
         val auth = FirebaseAuth.getInstance()
         if(auth.currentUser == null){
             startActivity(Intent(this,LoginActivity::class.java))
@@ -40,7 +41,9 @@ class LoadingActivity : AppCompatActivity() {
         else{
             startloading()
             retry?.setOnClickListener({
+                pw?.text = "Please Wait!!!"
                 startloading()
+
             })
         }
 
@@ -51,7 +54,6 @@ class LoadingActivity : AppCompatActivity() {
         retry?.visibility = View.GONE
         loadpgr?.visibility = View.VISIBLE
         pw?.visibility = View.VISIBLE
-        pw?.text = "Please Wait!!!"
         val dcb = Dbcoinshelper(this)
         val dtb = Dbhelper(this)
         val dbb = Dbbookshelper(this)
@@ -64,6 +66,7 @@ class LoadingActivity : AppCompatActivity() {
             val auth = FirebaseAuth.getInstance()
             db.collection("users").document(auth.currentUser!!.uid).collection("portfolio").get().addOnCompleteListener {
                 task ->
+                pw?.text = "Please Wait!!!"
                 val documentSnapshot = task.result
                 val s = documentSnapshot.size()
                 if(s!=0){
