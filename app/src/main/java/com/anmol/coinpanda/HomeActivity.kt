@@ -22,6 +22,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import android.widget.Toast
+import com.anmol.coinpanda.Helper.Dbbookshelper
 import com.anmol.coinpanda.Services.BookmarksdbService
 import com.anmol.coinpanda.Services.CoinsdbService
 import com.anmol.coinpanda.Services.TweetsdbService
@@ -76,12 +77,15 @@ class HomeActivity : AppCompatActivity() {
             startActivity(Intent(this,LoginActivity::class.java))
         }
         else{
-            val intent2 = Intent(this,CoinsdbService::class.java)
-            startService(intent2)
+
             val intent = Intent(this, TweetsdbService::class.java)
             startService(intent)
-            val intent1 = Intent(this,BookmarksdbService::class.java)
-            startService(intent1)
+            val dbb = Dbbookshelper(this)
+            val bookmarkdata = dbb.readbook()
+            if(bookmarkdata.isEmpty()){
+                val intent1 = Intent(this,BookmarksdbService::class.java)
+                startService(intent1)
+            }
             val databaseReference = FirebaseDatabase.getInstance().reference
             databaseReference.root.addValueEventListener(object : ValueEventListener{
                 override fun onCancelled(p0: DatabaseError?) {

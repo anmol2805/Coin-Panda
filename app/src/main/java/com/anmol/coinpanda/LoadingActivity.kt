@@ -83,8 +83,6 @@ class LoadingActivity : AppCompatActivity() {
                 else{
                     val intent = Intent(this,TweetsdbService::class.java)
                     startService(intent)
-                    val intent1 = Intent(this,BookmarksdbService::class.java)
-                    startService(intent1)
                     val intent2 = Intent(this,HomeActivity::class.java)
                     startActivity(intent2)
                 }
@@ -99,7 +97,7 @@ class LoadingActivity : AppCompatActivity() {
             if(tweetdata.isEmpty()){
                 pw?.text = "We're setting up few things for you..."
                 val jsonObjectRequest = JsonObjectRequest(Request.Method.GET, "http://165.227.98.190/tweets", null, Response.Listener { response ->
-
+                    pw?.text = "We're almost done...!"
                     var c = 0
                     try {
                         val jsonArray = response.getJSONArray("tweets")
@@ -124,7 +122,7 @@ class LoadingActivity : AppCompatActivity() {
                             println("tweetno$c")
                             c++
                         }
-                        startloading()
+                        startActivity(Intent(this,HomeActivity::class.java))
                     } catch (e: JSONException) {
                         e.printStackTrace()
                     }
@@ -137,25 +135,9 @@ class LoadingActivity : AppCompatActivity() {
                 Mysingleton.getInstance(baseContext).addToRequestqueue(jsonObjectRequest)
             }
             else{
-                pw?.text = "We're almost done...!"
-                if(bookmarkdata.isEmpty()){
-                    val db = FirebaseFirestore.getInstance()
-                    val auth = FirebaseAuth.getInstance()
-                    db.collection("users").document(auth.currentUser!!.uid).collection("bookmarks").get().addOnCompleteListener {
-                        task ->
-                        for (doc in task.result.documents){
-                            val tweetid = doc.id
-                            dbb.insertData(tweetid)
-                        }
 
-                        startActivity(Intent(this,HomeActivity::class.java))
-                    }.addOnFailureListener {
-                        startActivity(Intent(this,HomeActivity::class.java))
-                    }
-                }
-                else{
-                    startActivity(Intent(this,HomeActivity::class.java))
-                }
+                startActivity(Intent(this,HomeActivity::class.java))
+
             }
         }
     }
