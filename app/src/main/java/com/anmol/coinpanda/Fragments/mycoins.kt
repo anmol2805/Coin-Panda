@@ -160,7 +160,7 @@ class mycoins : Fragment(){
                     e.printStackTrace()
                 }
             }, Response.ErrorListener {
-                println("network error")
+                Toast.makeText(activity,"Unable to refresh tweets",Toast.LENGTH_SHORT).show()
 
             })
             Mysingleton.getInstance(activity!!).addToRequestqueue(jsonObjectRequest)
