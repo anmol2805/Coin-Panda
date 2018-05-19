@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
+import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -25,6 +26,7 @@ import com.anmol.coinpanda.Adapters.TweetsAdapter
 import com.anmol.coinpanda.Helper.*
 import com.anmol.coinpanda.Interfaces.ItemClickListener
 import com.anmol.coinpanda.Model.Allcoin
+import com.anmol.coinpanda.Model.Sqltweet
 import com.anmol.coinpanda.Model.Tweet
 import com.anmol.coinpanda.Mysingleton
 import com.anmol.coinpanda.R
@@ -32,6 +34,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import kotlinx.android.synthetic.main.tweetrow.*
+import org.json.JSONException
 import java.sql.Timestamp
 import java.text.SimpleDateFormat
 import java.util.*
@@ -56,6 +59,7 @@ class mycoins : Fragment(){
     var pgr :ProgressBar?=null
     var retry:Button?=null
     var tweetsAdapter : TweetsAdapter?=null
+    var srl:SwipeRefreshLayout?=null
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val vi = inflater.inflate(R.layout.mycoins, container, false)
         if(activity!=null){
@@ -69,6 +73,7 @@ class mycoins : Fragment(){
             retry = vi.findViewById(R.id.retry)
             retry?.visibility = View.GONE
             pgr = vi.findViewById(R.id.pgr)
+            srl = vi.findViewById(R.id.srl)
             keywordrecycler?.setHasFixedSize(true)
             keywordrecycler?.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
             empty?.visibility = View.GONE
@@ -122,7 +127,44 @@ class mycoins : Fragment(){
         retry?.setOnClickListener{
             loadquery(null)
         }
+        srl?.setOnRefreshListener {
+            val jsonObjectRequest = JsonObjectRequest(Request.Method.GET, "http://165.227.98.190/tweets", null, Response.Listener { response ->
+                var c = 0
+                try {
+                    val jsonArray = response.getJSONArray("tweets")
+                    val sqltweets = java.util.ArrayList<Sqltweet>()
+                    sqltweets.clear()
 
+
+                    while (c < 10) {
+                        val obj = jsonArray.getJSONObject(c)
+                        val id = obj.getString("id")
+                        val coin = obj.getString("coin_name")
+                        val coin_symbol = obj.getString("coin_symbol")
+                        val mtweet = obj.getString("tweet")
+                        val url = obj.getString("url")
+                        val keyword = obj.getString("keyword")
+                        val dates = obj.getString("date")
+                        val coinpage = obj.getString("coin_handle")
+
+                        val sqltweet = Sqltweet(coin, coin_symbol, mtweet, url, keyword, id, dates, coinpage)
+                        val db = Dbhelper(activity!!)
+                        db.insertData(sqltweet)
+                        println("tweetno$c")
+                        c++
+                    }
+                    srl?.isRefreshing = false
+                    loadquery(null)
+
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                }
+            }, Response.ErrorListener {
+                println("network error")
+
+            })
+            Mysingleton.getInstance(activity!!).addToRequestqueue(jsonObjectRequest)
+        }
         return vi
     }
 
