@@ -127,6 +127,9 @@ class mycoins : Fragment(){
         retry?.setOnClickListener{
             loadquery(null)
         }
+        srl?.setColorSchemeColors(
+                resources.getColor(R.color.colorAccent)
+        )
         srl?.setOnRefreshListener {
             val jsonObjectRequest = JsonObjectRequest(Request.Method.GET, "http://165.227.98.190/tweets", null, Response.Listener { response ->
                 var c = 0
