@@ -24,7 +24,7 @@ class Dbhelper (context: Context):SQLiteOpenHelper(context, DATABASE_NAME,null,1
 
     override fun onCreate(p0: SQLiteDatabase?) {
         val createtable = "CREATE TABLE " + TABLE_NAME + " (" +
-                COL_ID + " VARCHAR(256) PRIMARY KEY NOT NULL UNIQUE," +
+                COL_ID + " INTEGER PRIMARY KEY NOT NULL UNIQUE," +
                 COL_COIN + " VARCHAR(256)," +
                 COL_COIN_SYMBOL + " VARCHAR(256)," +
                 COL_COIN_HANDLE + " VARCHAR(256)," +

@@ -19,7 +19,7 @@ class Dbbookshelper (context: Context):SQLiteOpenHelper(context, DB,null,1){
 
     override fun onCreate(p0: SQLiteDatabase?) {
         val createtable = "CREATE TABLE " + TB + " (" +
-                TWEETID + " VARCHAR(256) PRIMARY KEY NOT NULL UNIQUE)"
+                TWEETID + " INTEGER PRIMARY KEY NOT NULL UNIQUE)"
 
         p0?.execSQL(createtable)
     }
