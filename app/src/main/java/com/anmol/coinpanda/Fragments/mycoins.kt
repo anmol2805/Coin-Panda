@@ -308,6 +308,9 @@ class mycoins : Fragment(){
                                                         //cointweetrecycler?.addItemDecoration(DividerItemDecoration(ContextCompat.getDrawable(activity!!,R.drawable.item_decorator)!!))
                                                     }
                                                     else{
+                                                        val tweetsAdapter = TweetsAdapter(activity!!,tweets,itemClickListener)
+                                                        tweetsAdapter.notifyDataSetChanged()
+                                                        cointweetrecycler?.adapter = tweetsAdapter
                                                         pgr?.visibility = View.GONE
                                                         empty?.visibility = View.VISIBLE
                                                         empty?.text = "No Results found"
