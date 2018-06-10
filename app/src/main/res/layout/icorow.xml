@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="35dp"
+    >
+
+    <Button
+        android:id="@+id/sharebtn"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        android:background="@drawable/shareapp"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/bookmark"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        android:elevation="8dp"
+        android:scaleType="fitStart"
+        android:visibility="gone"
+        app:srcCompat="@drawable/starunfilled" />
+
+
+    <ImageView
+        android:id="@+id/coinicon"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginHorizontal="5dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        app:srcCompat="@drawable/btc" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/coinlay"
+                android:orientation="vertical"
+                >
+
+                <TextView
+                    android:id="@+id/coinname"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="monospace"
+                    android:text=""
+                    android:layout_gravity="center"
+                    android:textColor="#000"
+                    android:textStyle="bold"
+                    android:layout_marginTop="5dp"
+                    android:visibility="gone"
+                    />
+
+            </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/coin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/coinicon"
+        android:layout_toRightOf="@+id/coinicon"
+        android:layout_alignTop="@+id/coinlay"
+        android:fontFamily="sans-serif-smallcaps"
+        android:text="TextView"
+        android:textAllCaps="false"
+        android:textColor="#000"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/keyword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/coin"
+        android:layout_below="@+id/time"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_toLeftOf="@+id/sharebtn"
+        android:layout_toStartOf="@+id/sharebtn"
+        android:fontFamily="sans-serif-condensed"
+        android:gravity="end"
+        android:textAlignment="viewEnd"
+        android:textColor="#3498db"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/tweet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/keyword"
+        android:layout_toEndOf="@+id/coinlay"
+        android:layout_toLeftOf="@+id/bookmark"
+        android:layout_toRightOf="@+id/coinlay"
+        android:layout_toStartOf="@+id/bookmark"
+        android:autoLink="web"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:text="tweet"
+        android:textColor="#000"
+        android:textAlignment="textStart"
+        android:layout_gravity="start" />
+
+    <TextView
+        android:id="@+id/time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/coin"
+        android:layout_alignLeft="@+id/coin"
+        android:layout_below="@+id/coin"
+        android:fontFamily="monospace"
+        android:text="timestamp"
+        android:textSize="10sp"
+        android:textStyle="bold" />
+
+
+</RelativeLayout>
