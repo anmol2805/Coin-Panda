@@ -6,6 +6,8 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.anmol.coinpanda.Adapters.IcoAdapter
+import com.anmol.coinpanda.Interfaces.ItemClickListener
 import com.anmol.coinpanda.Model.Iconew
 import com.anmol.coinpanda.R
 
@@ -15,6 +17,9 @@ import com.anmol.coinpanda.R
 class ico : Fragment(){
     private var cointweetrecycler: RecyclerView?=null
     lateinit var iconews : MutableList<Iconew>
+    var icoAdapter : IcoAdapter?=null
+    lateinit var itemClickListener : ItemClickListener
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val vi = inflater.inflate(R.layout.ico, container, false)
         cointweetrecycler = vi.findViewById(R.id.cointweetrecycler)
@@ -35,7 +40,16 @@ class ico : Fragment(){
         iconews.add(iconew6)
         iconews.add(iconew7)
         iconews.add(iconew8)
+        itemClickListener = object : ItemClickListener {
+            override fun onItemClick(pos: Int) {
 
+
+            }
+
+        }
+        icoAdapter = IcoAdapter(activity!!,iconews,itemClickListener)
+        icoAdapter!!.notifyDataSetChanged()
+        cointweetrecycler?.adapter = icoAdapter
         return vi
     }
 }
