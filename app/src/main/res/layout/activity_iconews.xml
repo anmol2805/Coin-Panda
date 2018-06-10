@@ -1,9 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".IconewsActivity">
+    tools:context="com.anmol.coinpanda.IconewsActivity"
+    android:background="#fff"
+    android:orientation="vertical"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="5dp"
+        >
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:id="@+id/icoimage"
+            android:layout_margin="5dp"
+            android:layout_gravity="center"
+            />
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
 
-</android.support.constraint.ConstraintLayout>
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:text="TextView"
+            android:textColor="@color/colorPrimary"
+            android:textStyle="bold"
+            android:layout_gravity="center"
+            />
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:background="@color/colorPrimary"
+            />
+
+        <TextView
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:textAlignment="center"
+            android:text="An Initial Coin Offering, also commonly referred to as an ICO, is a fundraising mechanism in which new projects sell their underlying crypto tokens in exchange for bitcoin and ether. ... ICOs are a relatively new phenomenon but have quickly become a dominant topic of discussion within the blockchain community"
+            android:textSize="12sp"
+            android:textColor="#000"
+            />
+
+        <ProgressBar
+            android:id="@+id/pn"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_gravity="center"
+            android:visibility="gone" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/retry"
+            android:text="retry"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            />
+        <ImageView
+            android:id="@+id/fail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/sadcloud"
+            android:layout_marginTop="100dp"
+            android:visibility="gone"
+            />
+
+
+    </LinearLayout>
+
+
+</LinearLayout>
