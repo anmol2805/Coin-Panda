@@ -1,5 +1,6 @@
 package com.anmol.coinpanda.Fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.DefaultItemAnimator
@@ -9,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.anmol.coinpanda.Adapters.IcoAdapter
+import com.anmol.coinpanda.IconewsActivity
 import com.anmol.coinpanda.Interfaces.ItemClickListener
 import com.anmol.coinpanda.Model.Iconew
 import com.anmol.coinpanda.R
@@ -49,7 +51,9 @@ class ico : Fragment(){
         iconews.add(iconew8)
         itemClickListener = object : ItemClickListener {
             override fun onItemClick(pos: Int) {
-
+                val intent = Intent(activity,IconewsActivity::class.java)
+                intent.putExtra("iconame",iconews[pos].iconame)
+                startActivity(intent)
 
             }
 

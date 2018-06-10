@@ -8,5 +8,7 @@ class IconewsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_iconews)
+        val iconame = intent.getStringExtra("iconame")
+        title = iconame
     }
 }
