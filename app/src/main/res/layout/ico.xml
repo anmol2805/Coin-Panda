@@ -1,39 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent" android:layout_height="match_parent">
-    <TextView
-        android:id="@+id/textView4"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    >
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="ICO"
-        android:textAlignment="center"
-        android:textStyle="bold"
-        android:textColor="#fff"
-        android:textSize="18sp"
-        android:padding="10dp"
-        android:fontFamily="monospace"
-        android:background="@color/colorPrimary"
-        />
+        android:layout_height="match_parent"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="50dp"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="48dp"
+        android:id="@+id/cardView">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
+            <ProgressBar
+                android:id="@+id/pgr"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_centerInParent="true"
+                android:visibility="gone" />
+            <Button
+                android:id="@+id/retry"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="retry"
+                android:visibility="gone" />
+            <android.support.v4.widget.SwipeRefreshLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/srl"
+                android:layout_marginBottom="60dp"
 
-        android:layout_marginBottom="125dp"
-        android:fontFamily="sans-serif-smallcaps"
-        android:text="Coming soon!!!"
-        android:textColor="@color/colorPrimary"
-        android:textSize="20sp" />
+                android:layout_below="@+id/keywordrecycler"
+                >
+                <android.support.v7.widget.RecyclerView
 
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/cointweetrecycler"
+
+                    />
+            </android.support.v4.widget.SwipeRefreshLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/search"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@+id/scb"
+                android:layout_toStartOf="@+id/scb"
+                android:visibility="gone">
+
+                <EditText
+                    android:id="@+id/sc"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginTop="5dp"
+                    android:drawableRight="@drawable/layersearch"
+                    android:hint="Search Coin"
+
+                    android:inputType="text"
+                    android:textAlignment="center"
+                    android:textColor="#000"
+                    android:textColorHint="@color/colorPrimary" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/keywordrecycler"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/search"
+                android:visibility="gone">
+
+            </android.support.v7.widget.RecyclerView>
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
     <ImageView
-        android:id="@+id/imageView4"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        app:srcCompat="@drawable/alpha" />
+        android:id="@+id/imageView"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_alignLeft="@+id/cardView"
+        android:layout_alignStart="@+id/cardView"
+        android:layout_marginLeft="5dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        app:srcCompat="@drawable/white50" />
+
 </RelativeLayout>
