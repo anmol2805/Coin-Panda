@@ -35,11 +35,10 @@
                 android:layout_height="match_parent"
                 android:id="@+id/srl"
                 android:layout_marginBottom="60dp"
-
+                android:layout_marginTop="10dp"
                 android:layout_below="@+id/keywordrecycler"
                 >
                 <android.support.v7.widget.RecyclerView
-
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:id="@+id/cointweetrecycler"
