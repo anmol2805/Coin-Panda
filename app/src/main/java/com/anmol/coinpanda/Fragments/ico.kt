@@ -53,6 +53,8 @@ class ico : Fragment(){
             override fun onItemClick(pos: Int) {
                 val intent = Intent(activity,IconewsActivity::class.java)
                 intent.putExtra("iconame",iconews[pos].iconame)
+                intent.putExtra("icotitle",iconews[pos].news)
+                intent.putExtra("iconlink",iconews[pos].link)
                 startActivity(intent)
 
             }
