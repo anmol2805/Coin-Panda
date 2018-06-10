@@ -32,7 +32,7 @@
 
         <activity
             android:name=".HomeActivity"
-            android:label="@string/app_name"></activity>
+            android:label="@string/app_name" />
         <activity android:name=".TweetsActivity" />
         <activity android:name=".AddToPortfolioActivity" />
         <activity android:name=".PaymentActivity" />
@@ -57,7 +57,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LoadingActivity"></activity>
+        <activity android:name=".LoadingActivity" />
+        <activity android:name=".IconewsActivity"></activity>
     </application>
 
 </manifest>
