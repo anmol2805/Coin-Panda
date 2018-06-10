@@ -134,6 +134,44 @@ class allcoins : Fragment(){
             srl?.setColorSchemeColors(
                     resources.getColor(R.color.colorAccent)
             )
+            srl?.isRefreshing = true
+        val jsonObjectrefRequest = JsonObjectRequest(Request.Method.GET, "http://165.227.98.190/tweets", null, Response.Listener { response ->
+            var c = 0
+            try {
+                val jsonArray = response.getJSONArray("tweets")
+                val sqltweets = java.util.ArrayList<Sqltweet>()
+                sqltweets.clear()
+
+
+                while (c < 50) {
+                    val obj = jsonArray.getJSONObject(c)
+                    val id = obj.getString("id")
+                    val coin = obj.getString("coin_name")
+                    val coin_symbol = obj.getString("coin_symbol")
+                    val mtweet = obj.getString("tweet")
+                    val url = obj.getString("url")
+                    val keyword = obj.getString("keyword")
+                    val dates = obj.getString("date")
+                    val coinpage = obj.getString("coin_handle")
+
+                    val sqltweet = Sqltweet(coin, coin_symbol, mtweet, url, keyword, id, dates, coinpage)
+                    val db = Dbhelper(activity!!)
+                    db.insertData(sqltweet)
+                    println("tweetno$c")
+                    c++
+                }
+                srl?.isRefreshing = false
+                loadquery(null)
+
+            } catch (e: JSONException) {
+                e.printStackTrace()
+            }
+        }, Response.ErrorListener {
+            srl?.isRefreshing = false
+            Toast.makeText(activity,"Unable to refresh tweets",Toast.LENGTH_SHORT).show()
+
+        })
+        Mysingleton.getInstance(activity!!).addToRequestqueue(jsonObjectrefRequest)
             srl?.setOnRefreshListener {
                 val jsonObjectRequest = JsonObjectRequest(Request.Method.GET, "http://165.227.98.190/tweets", null, Response.Listener { response ->
                     var c = 0
