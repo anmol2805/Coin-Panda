@@ -205,6 +205,7 @@ class allcoins : Fragment(){
                         e.printStackTrace()
                     }
                 }, Response.ErrorListener {
+                    srl?.isRefreshing = false
                     Toast.makeText(activity,"Unable to refresh tweets",Toast.LENGTH_SHORT).show()
 
                 })

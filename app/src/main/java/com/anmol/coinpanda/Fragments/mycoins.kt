@@ -202,6 +202,7 @@ class mycoins : Fragment(){
                     e.printStackTrace()
                 }
             }, Response.ErrorListener {
+                srl?.isRefreshing = false
                 Toast.makeText(activity,"Unable to refresh tweets",Toast.LENGTH_SHORT).show()
 
             })
@@ -211,6 +212,7 @@ class mycoins : Fragment(){
     }
 
     private fun loadquery(p0: CharSequence?) {
+        tweets.clear()
         pgr?.visibility = View.VISIBLE
         retry?.visibility = View.GONE
         empty?.visibility = View.GONE
