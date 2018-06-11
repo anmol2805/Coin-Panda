@@ -58,7 +58,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".LoadingActivity" />
-        <activity android:name=".IconewsActivity"></activity>
+        <activity android:name=".IconewsActivity" />
+        <activity android:name=".Home2Activity"></activity>
     </application>
 
 </manifest>
