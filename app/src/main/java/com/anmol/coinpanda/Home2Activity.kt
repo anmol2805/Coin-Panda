@@ -10,10 +10,11 @@ import android.support.v7.app.AlertDialog
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.Toast
-import com.anmol.coinpanda.Fragments.dashboard
+import com.anmol.coinpanda.Fragments.*
 import com.anmol.coinpanda.Helper.Dbbookshelper
 import com.anmol.coinpanda.Services.BookmarksdbService
 import com.anmol.coinpanda.Services.TweetsdbService
+import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -125,21 +126,51 @@ class Home2Activity : AppCompatActivity() {
             })
 
             setFragment(dashboard())
+            Glide.with(this).load(R.drawable.newsfilled).into(tweeticon)
+            Glide.with(this).load(R.drawable.mycoinsunfilled).into(porticon)
+            Glide.with(this).load(R.drawable.bookmarksunfilled).into(bookmarksicon)
+            Glide.with(this).load(R.drawable.icounfilled).into(icoicon)
+            Glide.with(this).load(R.drawable.settingsunfiled).into(settingsicon)
         }
         coinslayout?.setOnClickListener{
-
+            setFragment(home())
+            Glide.with(this).load(R.drawable.newsunfilled).into(tweeticon)
+            Glide.with(this).load(R.drawable.mycoinsfilled).into(porticon)
+            Glide.with(this).load(R.drawable.bookmarksunfilled).into(bookmarksicon)
+            Glide.with(this).load(R.drawable.icounfilled).into(icoicon)
+            Glide.with(this).load(R.drawable.settingsunfiled).into(settingsicon)
         }
         bookmarkslayout?.setOnClickListener{
-
+            setFragment(bookmarks())
+            Glide.with(this).load(R.drawable.newsunfilled).into(tweeticon)
+            Glide.with(this).load(R.drawable.mycoinsunfilled).into(porticon)
+            Glide.with(this).load(R.drawable.bookmarksfilled).into(bookmarksicon)
+            Glide.with(this).load(R.drawable.icounfilled).into(icoicon)
+            Glide.with(this).load(R.drawable.settingsunfiled).into(settingsicon)
         }
         tweetslayout?.setOnClickListener{
-
+            setFragment(dashboard())
+            Glide.with(this).load(R.drawable.newsfilled).into(tweeticon)
+            Glide.with(this).load(R.drawable.mycoinsunfilled).into(porticon)
+            Glide.with(this).load(R.drawable.bookmarksunfilled).into(bookmarksicon)
+            Glide.with(this).load(R.drawable.icounfilled).into(icoicon)
+            Glide.with(this).load(R.drawable.settingsunfiled).into(settingsicon)
         }
         icolayout?.setOnClickListener{
-
+            setFragment(ico())
+            Glide.with(this).load(R.drawable.newsunfilled).into(tweeticon)
+            Glide.with(this).load(R.drawable.mycoinsunfilled).into(porticon)
+            Glide.with(this).load(R.drawable.bookmarksunfilled).into(bookmarksicon)
+            Glide.with(this).load(R.drawable.icofilled).into(icoicon)
+            Glide.with(this).load(R.drawable.settingsunfiled).into(settingsicon)
         }
         settingslayout?.setOnClickListener {
-
+            setFragment(settings())
+            Glide.with(this).load(R.drawable.newsunfilled).into(tweeticon)
+            Glide.with(this).load(R.drawable.mycoinsunfilled).into(porticon)
+            Glide.with(this).load(R.drawable.bookmarksunfilled).into(bookmarksicon)
+            Glide.with(this).load(R.drawable.icounfilled).into(icoicon)
+            Glide.with(this).load(R.drawable.settingsfilled).into(settingsicon)
         }
 
     }
