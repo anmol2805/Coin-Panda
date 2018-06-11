@@ -175,7 +175,7 @@ class Home2Activity : AppCompatActivity() {
 
     }
     private fun setFragment(fragment: Fragment) {
-        supportFragmentManager.beginTransaction().replace(R.id.appframe,fragment).commit()
+        supportFragmentManager.beginTransaction().replace(R.id.appframe,fragment).commitAllowingStateLoss()
         supportFragmentManager.executePendingTransactions()
 
     }
