@@ -35,7 +35,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         builder.setContentText(payload["body"])
         builder.setVibrate(longArrayOf(1000, 1000, 1000, 1000, 1000))
         builder.setSound(alarmSound)
-        val resultIntent = Intent(this, HomeActivity::class.java)
+        val resultIntent = Intent(this, Home2Activity::class.java)
         val stackbuilder = TaskStackBuilder.create(this)
         stackbuilder.addNextIntent(resultIntent)
         val resultPendingIntent = stackbuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT)

@@ -84,7 +84,7 @@ class LoadingActivity : AppCompatActivity() {
                 else{
                     val intent = Intent(this,TweetsdbService::class.java)
                     startService(intent)
-                    val intent2 = Intent(this,HomeActivity::class.java)
+                    val intent2 = Intent(this,Home2Activity::class.java)
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
                     startActivity(intent2)
@@ -126,7 +126,7 @@ class LoadingActivity : AppCompatActivity() {
                             println("tweetno$c")
                             c++
                         }
-                        val intent = Intent(this,HomeActivity::class.java)
+                        val intent = Intent(this,Home2Activity::class.java)
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
                         startActivity(intent)
@@ -143,7 +143,7 @@ class LoadingActivity : AppCompatActivity() {
                 Mysingleton.getInstance(baseContext).addToRequestqueue(jsonObjectRequest)
             }
             else{
-                val intent = Intent(this,HomeActivity::class.java)
+                val intent = Intent(this,Home2Activity::class.java)
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
                 startActivity(intent)
