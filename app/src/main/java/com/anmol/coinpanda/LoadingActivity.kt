@@ -14,6 +14,7 @@ import com.android.volley.toolbox.JsonObjectRequest
 import com.anmol.coinpanda.Helper.*
 import com.anmol.coinpanda.Model.Sqlcoin
 import com.anmol.coinpanda.Model.Sqltweet
+import com.anmol.coinpanda.Model.Value
 import com.anmol.coinpanda.Services.BookmarksdbService
 import com.anmol.coinpanda.Services.TweetsdbService
 import com.google.firebase.auth.FirebaseAuth
@@ -44,6 +45,30 @@ class LoadingActivity : AppCompatActivity() {
             startActivity(Intent(this,LoginActivity::class.java))
         }
         else{
+            val databse = Dbtopicshelper(this)
+            val value = Value("secret",0)
+            databse.insertData(value)
+            val datavalue = databse.readData()
+            if(datavalue[0].keyvalue == 0){
+                val db = FirebaseFirestore.getInstance()
+                db.collection("users").document(auth.currentUser!!.uid).collection("portfolio").get().addOnCompleteListener {
+                    task ->
+                    val documentSnapshot = task.result
+                    val s = documentSnapshot.size()
+                    if(s!=0){
+                        for(doc in documentSnapshot){
+                            val coinname = doc.getString("coin_name")
+                            val coinsymbol = doc.id
+                            topicsearch(0,coinsymbol,coinname)
+                        }
+                        val valuenew = Value("secret",1)
+                        databse.updatedata(valuenew)
+
+                    }
+
+
+                }
+            }
             startloading()
             retry?.setOnClickListener({
                 pw?.text = "Please Wait!!!"
@@ -59,6 +84,7 @@ class LoadingActivity : AppCompatActivity() {
         retry?.visibility = View.GONE
         loadpgr?.visibility = View.VISIBLE
         pw?.visibility = View.VISIBLE
+
         val dcb = Dbcoinshelper(this)
         val dtb = Dbhelper(this)
         val dbb = Dbbookshelper(this)
