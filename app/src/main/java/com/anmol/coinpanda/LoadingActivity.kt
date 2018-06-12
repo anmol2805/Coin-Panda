@@ -137,7 +137,7 @@ class LoadingActivity : AppCompatActivity() {
         else{
             if(tweetdata.isEmpty()){
                 pw?.text = "We're setting up few things for you..."
-                val jsonObjectRequest = JsonObjectRequest(Request.Method.GET, "http://165.227.98.190/tweets", null, Response.Listener { response ->
+                val jsonObjectRequest = JsonObjectRequest(Request.Method.GET, "http://198.199.90.139/tweets", null, Response.Listener { response ->
                     pw?.text = "We're almost done...!"
                     var c = 0
                     try {

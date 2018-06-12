@@ -135,7 +135,7 @@ class allcoins : Fragment(){
                     resources.getColor(R.color.colorAccent)
             )
             srl?.isRefreshing = true
-        val jsonObjectrefRequest = JsonObjectRequest(Request.Method.GET, "http://165.227.98.190/tweets", null, Response.Listener { response ->
+        val jsonObjectrefRequest = JsonObjectRequest(Request.Method.GET, "http://198.199.90.139/tweets", null, Response.Listener { response ->
             var c = 0
             try {
                 val jsonArray = response.getJSONArray("tweets")
@@ -179,7 +179,7 @@ class allcoins : Fragment(){
         })
         Mysingleton.getInstance(activity!!).addToRequestqueue(jsonObjectrefRequest)
             srl?.setOnRefreshListener {
-                val jsonObjectRequest = JsonObjectRequest(Request.Method.GET, "http://165.227.98.190/tweets", null, Response.Listener { response ->
+                val jsonObjectRequest = JsonObjectRequest(Request.Method.GET, "http://198.199.90.139/tweets", null, Response.Listener { response ->
                     var c = 0
                     try {
                         val jsonArray = response.getJSONArray("tweets")
@@ -270,7 +270,7 @@ class allcoins : Fragment(){
             }
             else{
 
-                val jsonobjectrequest = JsonObjectRequest(Request.Method.GET,"http://165.227.98.190/tweets",null,
+                val jsonobjectrequest = JsonObjectRequest(Request.Method.GET,"http://198.199.90.139/tweets",null,
                         Response.Listener { response ->
 
                             var c = 0
