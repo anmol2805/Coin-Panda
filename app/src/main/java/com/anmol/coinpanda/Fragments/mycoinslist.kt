@@ -252,7 +252,7 @@ class mycoinslist : Fragment(){
             if(documentSnapshot.exists()){
                 val count = documentSnapshot.getLong("count")
                 if(count > 990){
-                    topicsearch(i+1, coinname, allcoins[i].coin)
+                    topicsearch(i+1, coinname, coin)
                 }
                 else{
                     val map  = HashMap<String,Any>()

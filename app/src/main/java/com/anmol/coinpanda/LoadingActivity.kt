@@ -18,15 +18,20 @@ import com.anmol.coinpanda.Services.BookmarksdbService
 import com.anmol.coinpanda.Services.TweetsdbService
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.messaging.FirebaseMessaging
 import org.json.JSONException
 import org.json.JSONObject
 import org.w3c.dom.Text
 import java.util.ArrayList
+import java.util.HashMap
 
 class LoadingActivity : AppCompatActivity() {
     var retry:Button?=null
     var loadpgr:ProgressBar?=null
     var pw:TextView?=null
+    var db = FirebaseFirestore.getInstance()
+    val auth = FirebaseAuth.getInstance()
+    val messaging = FirebaseMessaging.getInstance()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_loading)
@@ -75,6 +80,7 @@ class LoadingActivity : AppCompatActivity() {
                         val coinname = doc.getString("coin_name")
                         val coinsymbol = doc.id
                         val coinpage = doc.getString("coinPage")
+                        topicsearch(0,coinsymbol,coinname)
                         val sqlcoin = Sqlcoin(coinname,coinsymbol,coinpage)
                         dcb.insertData(sqlcoin)
                     }
@@ -150,6 +156,45 @@ class LoadingActivity : AppCompatActivity() {
                 finish()
 
             }
+        }
+    }
+    private fun topicsearch(i: Int, coinname: String?, coin: String?) {
+
+        db.collection("topics").document(coinname + i.toString()).get().addOnCompleteListener { task->
+            val documentSnapshot = task.result
+            if(documentSnapshot.exists()){
+                val count = documentSnapshot.getLong("count")
+                if(count > 990){
+                    topicsearch(i+1, coinname, coin)
+                }
+                else{
+                    val map  = HashMap<String,Any>()
+                    map["notify"] = true
+                    map["coinname"] = coin!!
+                    db.collection("users").document(auth.currentUser!!.uid).collection("topics").document(coinname + i.toString())
+                            .set(map).addOnSuccessListener {
+                                messaging.subscribeToTopic(coinname + i.toString())
+                                val countmap = HashMap<String,Any>()
+                                countmap["count"] = count+1
+                                countmap["coin_symbol"] = coinname.toString()
+                                db.collection("topics").document(coinname + i.toString()).set(countmap)
+                            }
+                }
+            }
+            else{
+                val map  = HashMap<String,Any>()
+                map["notify"] = true
+                map["coinname"] = coin!!
+                db.collection("users").document(auth.currentUser!!.uid).collection("topics").document(coinname + i.toString())
+                        .set(map).addOnSuccessListener {
+                            messaging.subscribeToTopic(coinname + i.toString())
+                            val count = HashMap<String,Any>()
+                            count["count"] = 1
+                            count["coin_symbol"] = coinname.toString()
+                            db.collection("topics").document(coinname + i.toString()).set(count)
+                        }
+            }
+
         }
     }
 

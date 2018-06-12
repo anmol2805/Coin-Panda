@@ -20,6 +20,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.iid.FirebaseInstanceId
 import kotlinx.android.synthetic.main.activity_home.*
 
 class Home2Activity : AppCompatActivity() {
@@ -38,6 +39,7 @@ class Home2Activity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         supportActionBar?.hide()
         setContentView(R.layout.activity_home2)
+        System.out.println("token" + FirebaseInstanceId.getInstance().token)
         coinslayout = findViewById(R.id.coinslayout)
         bookmarkslayout = findViewById(R.id.bookmarklayout)
         tweetslayout = findViewById(R.id.tweetlayout)
