@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "474823730403",
+    "firebase_url": "https://coinpanda-fb1f8.firebaseio.com",
+    "project_id": "coinpanda-fb1f8",
+    "storage_bucket": "coinpanda-fb1f8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:474823730403:android:9d19fda88d770b83",
+        "android_client_info": {
+          "package_name": "com.anmol.coinpanda"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "474823730403-v9kvbcnh30fr16qpfqhvdgmmomqk1a03.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.anmol.coinpanda",
+            "certificate_hash": "c79d1b144190dc24dc52304619e1b4776b126167"
+          }
+        },
+        {
+          "client_id": "474823730403-9015hrpu4pc777en0l0co9mkcubumahi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBWKH5oerfsU6SXQFQ27TP9FRnbRjOr2Tw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "474823730403-9015hrpu4pc777en0l0co9mkcubumahi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
