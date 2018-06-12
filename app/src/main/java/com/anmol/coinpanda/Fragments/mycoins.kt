@@ -151,9 +151,17 @@ class mycoins : Fragment(){
                     val coinpage = obj.getString("coin_handle")
 
                     val sqltweet = Sqltweet(coin, coin_symbol, mtweet, url, keyword, id, dates, coinpage)
-                    val db = Dbhelper(activity!!)
-                    db.insertData(sqltweet)
-                    println("tweetno$c")
+
+                        try {
+                            val db = Dbhelper(activity!!)
+                            db.insertData(sqltweet)
+                            println("tweetno$c")
+                        }
+                        catch (e:KotlinNullPointerException){
+                            e.printStackTrace()
+                        }
+
+
                     c++
                 }
                 srl?.isRefreshing = false
