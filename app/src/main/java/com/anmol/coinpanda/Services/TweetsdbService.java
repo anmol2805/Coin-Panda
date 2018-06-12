@@ -45,7 +45,7 @@ public class TweetsdbService extends IntentService {
 
                         while (c<450){
                             JSONObject obj = jsonArray.getJSONObject(c);
-                            String id = obj.getString("id");
+                            String id = obj.getString("tweetid");
                             String coin = obj.getString("coin_name");
                             String coin_symbol = obj.getString("coin_symbol");
                             String mtweet = obj.getString("tweet");
