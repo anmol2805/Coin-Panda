@@ -49,7 +49,9 @@ class LoadingActivity : AppCompatActivity() {
             val value = Value("secret",0)
             databse.insertData(value)
             val datavalue = databse.readData()
+            System.out.println("procedure data" + datavalue[0].keyvalue)
             if(datavalue[0].keyvalue == 0){
+                System.out.println("procedure 0")
                 val db = FirebaseFirestore.getInstance()
                 db.collection("users").document(auth.currentUser!!.uid).collection("portfolio").get().addOnCompleteListener {
                     task ->
@@ -68,6 +70,9 @@ class LoadingActivity : AppCompatActivity() {
 
 
                 }
+            }
+            else{
+                System.out.println("procedure 1")
             }
             startloading()
             retry?.setOnClickListener({
@@ -185,7 +190,7 @@ class LoadingActivity : AppCompatActivity() {
         }
     }
     private fun topicsearch(i: Int, coinname: String?, coin: String?) {
-
+        System.out.println("procedure topicsearch")
         db.collection("topics").document(coinname + i.toString()).get().addOnCompleteListener { task->
             val documentSnapshot = task.result
             if(documentSnapshot.exists()){
