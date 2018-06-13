@@ -68,11 +68,14 @@
 
     <TextView
         android:id="@+id/coin"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/coinlay"
         android:layout_toEndOf="@+id/coinicon"
         android:layout_toRightOf="@+id/coinicon"
-        android:layout_alignTop="@+id/coinlay"
+        android:layout_toLeftOf="@+id/keyword"
+        android:layout_toStartOf="@+id/keyword"
+        android:layout_marginRight="5dp"
         android:fontFamily="sans-serif-smallcaps"
         android:text="TextView"
         android:textAllCaps="false"
@@ -123,6 +126,7 @@
         android:fontFamily="monospace"
         android:text="timestamp"
         android:textSize="10sp"
+        android:layout_marginBottom="5dp"
         android:textStyle="bold" />
 
 
