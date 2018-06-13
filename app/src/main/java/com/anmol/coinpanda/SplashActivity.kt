@@ -45,7 +45,7 @@ class SplashActivity : AppCompatActivity() {
     }
     private fun updaterequest() {
         val stringRequest = StringRequest(Request.Method.GET,"http://198.199.90.139/update", Response.Listener { response ->
-            System.out.println(response)
+            System.out.println("responsefunction"+response)
         }, Response.ErrorListener { error->
             System.out.println(error)
         })
@@ -55,7 +55,7 @@ class SplashActivity : AppCompatActivity() {
     }
     private fun moverequest() {
         val stringRequest = StringRequest(Request.Method.GET,"http://198.199.90.139/move", Response.Listener { response ->
-            System.out.println(response)
+            System.out.println("responsefunction"+response)
         }, Response.ErrorListener { error->
             System.out.println(error)
         })

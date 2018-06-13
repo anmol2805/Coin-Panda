@@ -29,6 +29,8 @@ import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import java.text.ParseException
+import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.HashMap
 
@@ -72,7 +74,17 @@ class TweetsAdapter(internal var c: Context, internal var tweets: List<Tweet>, p
         holder.mcoin?.text = coindata.coin
         holder.coinname?.text = coindata.coin_symbol
         holder.keyword?.text = "#" + coindata.keyword
-        holder.timestamp?.text = coindata.dates + "(GMT)"
+
+        val oldFormatter = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+        oldFormatter.timeZone = TimeZone.getTimeZone("UTC")
+        val value = oldFormatter.parse(coindata.dates)
+        val newFormatter = SimpleDateFormat("dd-MM-yyyy hh:mm a")
+        newFormatter.timeZone = TimeZone.getDefault()
+        val dueDateAsNormal = newFormatter.format(value)
+        System.out.println("checkdate$dueDateAsNormal")
+        holder.timestamp?.text = dueDateAsNormal
+
+
         val testurl = "https://twitter.com/" + coindata.coinpage + "/profile_image?size=original"
         println("testurltweets$testurl")
         Glide.with(c).load(testurl).into(holder.image)
