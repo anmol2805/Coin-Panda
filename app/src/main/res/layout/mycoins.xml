@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:background="#fff"
+    >
 
     <TextView
         android:id="@+id/empty"
@@ -43,6 +45,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:id="@+id/search"
+        android:background="#fff"
     android:layout_toLeftOf="@+id/searchdate"
     android:layout_toStartOf="@+id/searchdate"
     >
@@ -63,20 +66,23 @@
 
 
     </android.support.design.widget.TextInputLayout>
+
     <Button
-        android:layout_height="wrap_content"
         android:id="@+id/searchdate"
         android:layout_width="160dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:layout_marginHorizontal="10dp"
         android:layout_marginTop="5dp"
+        android:background="fff"
+        android:drawablePadding="5dp"
         android:drawableRight="@drawable/filter"
+        android:elevation="0dp"
+        android:paddingHorizontal="5dp"
         android:text="Filter by date"
-        android:textColor="#000"
-        android:background="#fff"
-        />
+        android:textColor="#000" />
 
 
     <android.support.v4.widget.SwipeRefreshLayout
