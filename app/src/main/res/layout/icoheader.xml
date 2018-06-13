@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
-    android:background="#fff"
-    >
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#fff">
 
     <ImageView
         android:id="@+id/icoimage"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
         android:layout_margin="5dp" />
 
     <TextView
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
         android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
         android:layout_margin="5dp"
         android:layout_toEndOf="@+id/icoimage"
         android:layout_toRightOf="@+id/icoimage"
@@ -31,23 +31,22 @@
         android:id="@+id/view"
         android:layout_width="match_parent"
         android:layout_height="2dp"
+        android:layout_below="@+id/content"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
-        android:layout_below="@+id/content"
         android:background="@color/colorPrimary" />
 
     <TextView
         android:id="@+id/content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/linear"
         android:layout_centerHorizontal="true"
+        android:layout_margin="5dp"
         android:text="An Initial Coin Offering, also commonly referred to as an ICO, is a fundraising mechanism in which new projects sell their underlying crypto tokens in exchange for bitcoin and ether. ... ICOs are a relatively new phenomenon but have quickly become a dominant topic of discussion within the blockchain community"
         android:textAlignment="center"
         android:textColor="#000"
-        android:textSize="12sp"
-        android:layout_margin="5dp"
-        android:layout_below="@+id/linear"
-        />
+        android:textSize="12sp" />
 
     <LinearLayout
         android:id="@+id/linear"
@@ -55,10 +54,10 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_margin="5dp"
         android:layout_below="@+id/title"
-        android:layout_toRightOfOf="@+id/icoimage"
+        android:layout_margin="5dp"
         android:layout_toEndOf="@+id/icoimage"
+        android:layout_toRightOfOf="@+id/icoimage"
         android:orientation="horizontal">
 
         <LinearLayout
@@ -72,9 +71,8 @@
                 android:layout_width="35dp"
                 android:layout_height="35dp"
                 android:layout_gravity="center"
-                android:gravity="center"
                 android:background="@drawable/telegram"
-                />
+                android:gravity="center" />
         </LinearLayout>
 
         <LinearLayout
@@ -88,9 +86,8 @@
                 android:layout_width="35dp"
                 android:layout_height="35dp"
                 android:layout_gravity="center"
-                android:gravity="center"
                 android:background="@drawable/medium"
-                />
+                android:gravity="center" />
         </LinearLayout>
 
         <LinearLayout
@@ -104,9 +101,8 @@
                 android:layout_width="35dp"
                 android:layout_height="35dp"
                 android:layout_gravity="center"
-                android:gravity="center"
                 android:background="@drawable/twitter"
-                />
+                android:gravity="center" />
         </LinearLayout>
     </LinearLayout>
 </RelativeLayout>
