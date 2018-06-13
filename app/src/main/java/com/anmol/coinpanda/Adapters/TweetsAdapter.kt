@@ -67,7 +67,7 @@ class TweetsAdapter(internal var c: Context, internal var tweets: List<Tweet>, p
             val shareintent = Intent()
             shareintent.action = Intent.ACTION_SEND
             shareintent.type = "text/plain"
-            shareintent.putExtra(Intent.EXTRA_TEXT,tweets[position].url)
+            shareintent.putExtra(Intent.EXTRA_TEXT,"www.cryptohype-anmol.com/test")
             c.startActivity(Intent.createChooser(shareintent,"Share tweet"))
         }
 
