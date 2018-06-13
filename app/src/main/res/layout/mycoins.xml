@@ -43,8 +43,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:id="@+id/search"
-    android:layout_toLeftOf="@+id/scb"
-    android:layout_toStartOf="@+id/scb"
+    android:layout_toLeftOf="@+id/searchdate"
+    android:layout_toStartOf="@+id/searchdate"
     >
     <EditText
     android:id="@+id/sc"
@@ -63,6 +63,22 @@
 
 
     </android.support.design.widget.TextInputLayout>
+    <Button
+        android:layout_height="wrap_content"
+        android:id="@+id/searchdate"
+        android:layout_width="160dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginTop="5dp"
+        android:drawableRight="@drawable/filter"
+        android:text="Filter by date"
+        android:textColor="#000"
+        android:background="#fff"
+        />
+
+
     <android.support.v4.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

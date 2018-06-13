@@ -1,5 +1,6 @@
 package com.anmol.coinpanda.Fragments
 
+import android.app.DatePickerDialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -60,6 +61,7 @@ class mycoins : Fragment(){
     var retry:Button?=null
     var tweetsAdapter : TweetsAdapter?=null
     var srl:SwipeRefreshLayout?=null
+    var dateedit:Button?=null
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val vi = inflater.inflate(R.layout.mycoins, container, false)
         if(activity!=null){
@@ -74,6 +76,7 @@ class mycoins : Fragment(){
             retry?.visibility = View.GONE
             pgr = vi.findViewById(R.id.pgr)
             srl = vi.findViewById(R.id.srl)
+            dateedit = vi.findViewById(R.id.searchdate)
             keywordrecycler?.setHasFixedSize(true)
             keywordrecycler?.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
             empty?.visibility = View.GONE
@@ -122,6 +125,19 @@ class mycoins : Fragment(){
                 keywordrecycler?.adapter = keywordAdapter
             }
 
+        }
+        dateedit?.setOnClickListener{
+            val mcurrentdate = Calendar.getInstance()
+            val myear = mcurrentdate.get(Calendar.YEAR)
+            val mMonth = mcurrentdate.get(Calendar.MONTH)
+            val mDay =  mcurrentdate.get(Calendar.DAY_OF_MONTH)
+            val mDatepicker = DatePickerDialog(activity,DatePickerDialog.OnDateSetListener { datePicker:DatePicker, y:Int, m:Int, d:Int ->
+                var month = m
+                month += 1
+                dateedit?.text = "$y-$month-$d"
+            },myear,mMonth,mDay)
+            mDatepicker.setTitle("Select Date")
+            mDatepicker.show()
         }
 
         retry?.setOnClickListener{

@@ -57,7 +57,7 @@
         android:layout_below="@+id/title"
         android:layout_margin="5dp"
         android:layout_toEndOf="@+id/icoimage"
-        android:layout_toRightOfOf="@+id/icoimage"
+        android:layout_toRightOf="@+id/icoimage"
         android:orientation="horizontal">
 
         <LinearLayout
