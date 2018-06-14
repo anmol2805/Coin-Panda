@@ -21,7 +21,6 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.iid.FirebaseInstanceId
-import kotlinx.android.synthetic.main.activity_home.*
 
 class Home2Activity : AppCompatActivity() {
     private var back_pressed: Long = 0
@@ -35,6 +34,7 @@ class Home2Activity : AppCompatActivity() {
     var tweeticon:ImageView?=null
     var icoicon:ImageView?=null
     var settingsicon:ImageView?=null
+    var currentfragment:Int = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar?.hide()
@@ -126,8 +126,9 @@ class Home2Activity : AppCompatActivity() {
                 }
 
             })
-
-            setFragment(dashboard())
+            supportFragmentManager.beginTransaction().replace(R.id.appframe,dashboard()).commitAllowingStateLoss()
+            supportFragmentManager.executePendingTransactions()
+            currentfragment = 3
             Glide.with(this).load(R.drawable.newsfilled).into(tweeticon)
             Glide.with(this).load(R.drawable.mycoinsunfilled).into(porticon)
             Glide.with(this).load(R.drawable.bookmarksunfilled).into(bookmarksicon)
@@ -135,7 +136,8 @@ class Home2Activity : AppCompatActivity() {
             Glide.with(this).load(R.drawable.settingsunfiled).into(settingsicon)
         }
         coinslayout?.setOnClickListener{
-            setFragment(home())
+            setFragment(home(),1)
+            //currentfragment = 1
             Glide.with(this).load(R.drawable.newsunfilled).into(tweeticon)
             Glide.with(this).load(R.drawable.mycoinsfilled).into(porticon)
             Glide.with(this).load(R.drawable.bookmarksunfilled).into(bookmarksicon)
@@ -143,7 +145,8 @@ class Home2Activity : AppCompatActivity() {
             Glide.with(this).load(R.drawable.settingsunfiled).into(settingsicon)
         }
         bookmarkslayout?.setOnClickListener{
-            setFragment(bookmarks())
+            setFragment(bookmarks(),2)
+            //currentfragment = 2
             Glide.with(this).load(R.drawable.newsunfilled).into(tweeticon)
             Glide.with(this).load(R.drawable.mycoinsunfilled).into(porticon)
             Glide.with(this).load(R.drawable.bookmarksfilled).into(bookmarksicon)
@@ -151,7 +154,8 @@ class Home2Activity : AppCompatActivity() {
             Glide.with(this).load(R.drawable.settingsunfiled).into(settingsicon)
         }
         tweetslayout?.setOnClickListener{
-            setFragment(dashboard())
+            setFragment(dashboard(),3)
+            //currentfragment = 3
             Glide.with(this).load(R.drawable.newsfilled).into(tweeticon)
             Glide.with(this).load(R.drawable.mycoinsunfilled).into(porticon)
             Glide.with(this).load(R.drawable.bookmarksunfilled).into(bookmarksicon)
@@ -159,7 +163,8 @@ class Home2Activity : AppCompatActivity() {
             Glide.with(this).load(R.drawable.settingsunfiled).into(settingsicon)
         }
         icolayout?.setOnClickListener{
-            setFragment(ico())
+            setFragment(ico(),4)
+            //currentfragment = 4
             Glide.with(this).load(R.drawable.newsunfilled).into(tweeticon)
             Glide.with(this).load(R.drawable.mycoinsunfilled).into(porticon)
             Glide.with(this).load(R.drawable.bookmarksunfilled).into(bookmarksicon)
@@ -167,7 +172,8 @@ class Home2Activity : AppCompatActivity() {
             Glide.with(this).load(R.drawable.settingsunfiled).into(settingsicon)
         }
         settingslayout?.setOnClickListener {
-            setFragment(settings())
+            setFragment(settings(),5)
+            //currentfragment = 5
             Glide.with(this).load(R.drawable.newsunfilled).into(tweeticon)
             Glide.with(this).load(R.drawable.mycoinsunfilled).into(porticon)
             Glide.with(this).load(R.drawable.bookmarksunfilled).into(bookmarksicon)
@@ -176,9 +182,18 @@ class Home2Activity : AppCompatActivity() {
         }
 
     }
-    private fun setFragment(fragment: Fragment) {
-        supportFragmentManager.beginTransaction().replace(R.id.appframe,fragment).commitAllowingStateLoss()
-        supportFragmentManager.executePendingTransactions()
+    private fun setFragment(fragment: Fragment, i: Int) {
+        if (i<currentfragment!!){
+            supportFragmentManager.beginTransaction().setCustomAnimations(R.anim.fragment_slide_right_enter,R.anim.fragment_slide_right_exit).replace(R.id.appframe,fragment).commitAllowingStateLoss()
+            supportFragmentManager.executePendingTransactions()
+            currentfragment = i
+        }
+        else if(i>currentfragment!!){
+            supportFragmentManager.beginTransaction().setCustomAnimations(R.anim.fragment_slide_left_enter,R.anim.fragment_slide_left_exit).replace(R.id.appframe,fragment).commitAllowingStateLoss()
+            supportFragmentManager.executePendingTransactions()
+            currentfragment = i
+        }
+
 
     }
     override fun onPostResume() {
