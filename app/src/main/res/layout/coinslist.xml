@@ -38,8 +38,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/search"
-        android:background="@drawable/rectangle_button"
-        android:layout_margin="5dp"
         android:layout_toLeftOf="@+id/scb"
         android:layout_toStartOf="@+id/scb"
         >
@@ -49,7 +47,7 @@
             android:id="@+id/sc"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-
+            android:layout_marginTop="5dp"
             android:layout_marginHorizontal="10dp"
             android:hint="Search Coin"
             android:inputType="text"
