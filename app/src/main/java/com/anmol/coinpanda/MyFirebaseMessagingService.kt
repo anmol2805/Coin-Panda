@@ -29,7 +29,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         val builder = NotificationCompat.Builder(this)
 
         builder.setSmallIcon(R.drawable.alpha)
-        builder.color = getColor(R.color.colorPrimary)
+        builder.setBadgeIconType(R.drawable.alpha)
+        builder.color = 255
         builder.setWhen(System.currentTimeMillis())
         builder.setContentTitle(payload["title"])
         builder.setContentText(payload["body"])
@@ -42,5 +43,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         builder.setContentIntent(resultPendingIntent)
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         notificationManager.notify(0, builder.build())
+
+
     }
 }
