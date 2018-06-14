@@ -3,6 +3,7 @@ package com.anmol.coinpanda.Fragments
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.support.v4.app.Fragment
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -52,35 +53,39 @@ class dashboard : Fragment() {
 //        pgr?.visibility = View.GONE
 //        tweetselect.isChecked = false
 //        setFragment(allcoins())
-        val dtb = Dbhelper(activity!!)
-        val dataquery = "Select * from $TABLE_NAME ORDER BY $COL_ID DESC"
-        val data = dtb.readData(dataquery)
-        if(data.isEmpty()){
-            val intent = Intent(activity,TweetsdbService::class.java)
-            activity!!.startService(intent)
-        }
+        val handler = Handler()
+        handler.postDelayed({
+            val dtb = Dbhelper(activity!!)
+            val dataquery = "Select * from $TABLE_NAME ORDER BY $COL_ID DESC"
+            val data = dtb.readData(dataquery)
+            if(data.isEmpty()){
+                val intent = Intent(activity,TweetsdbService::class.java)
+                activity!!.startService(intent)
+            }
 
-        val dcb = Dbcoinshelper(activity!!)
-        val coins = dcb.readData()
-        if(!coins.isEmpty()){
-            pgr?.visibility = View.GONE
-            tweetselect.isChecked = true
-            setFragment(mycoins())
-        }
-        else{
-            pgr?.visibility = View.GONE
-            tweetselect.isChecked = false
-            setFragment(allcoins())
-        }
-
-        tweetselect.setOnCheckedChangeListener { _, b ->
-            if(b){
+            val dcb = Dbcoinshelper(activity!!)
+            val coins = dcb.readData()
+            if(!coins.isEmpty()){
+                pgr?.visibility = View.GONE
+                tweetselect.isChecked = true
                 setFragment(mycoins())
             }
             else{
+                pgr?.visibility = View.GONE
+                tweetselect.isChecked = false
                 setFragment(allcoins())
             }
-        }
+
+            tweetselect.setOnCheckedChangeListener { _, b ->
+                if(b){
+                    setFragment(mycoins())
+                }
+                else{
+                    setFragment(allcoins())
+                }
+            }
+        },200)
+
         
         return vi
     }
