@@ -90,5 +90,15 @@
         android:layout_marginStart="5dp"
         android:layout_marginTop="5dp"
         app:srcCompat="@drawable/white50" />
-
+    <TextView
+        android:id="@+id/textViewico"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:fontFamily="monospace"
+        android:text="ICO News"
+        android:layout_alignBottom="@+id/imageView"
+        android:textColor="#fff"
+        android:textSize="18sp"
+        android:textStyle="bold" />
 </RelativeLayout>

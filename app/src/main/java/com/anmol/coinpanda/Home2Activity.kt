@@ -163,13 +163,13 @@ class Home2Activity : AppCompatActivity() {
             Glide.with(this).load(R.drawable.settingsunfiled).into(settingsicon)
         }
         icolayout?.setOnClickListener{
-            setFragment(ico(),4)
-            //currentfragment = 4
-            Glide.with(this).load(R.drawable.newsunfilled).into(tweeticon)
-            Glide.with(this).load(R.drawable.mycoinsunfilled).into(porticon)
-            Glide.with(this).load(R.drawable.bookmarksunfilled).into(bookmarksicon)
-            Glide.with(this).load(R.drawable.icofilled).into(icoicon)
-            Glide.with(this).load(R.drawable.settingsunfiled).into(settingsicon)
+//            setFragment(ico(),4)
+//            //currentfragment = 4
+//            Glide.with(this).load(R.drawable.newsunfilled).into(tweeticon)
+//            Glide.with(this).load(R.drawable.mycoinsunfilled).into(porticon)
+//            Glide.with(this).load(R.drawable.bookmarksunfilled).into(bookmarksicon)
+//            Glide.with(this).load(R.drawable.icofilled).into(icoicon)
+//            Glide.with(this).load(R.drawable.settingsunfiled).into(settingsicon)
         }
         settingslayout?.setOnClickListener {
             setFragment(settings(),5)

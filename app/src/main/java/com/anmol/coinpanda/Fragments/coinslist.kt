@@ -367,7 +367,7 @@ class coinslist : Fragment(){
                                     else{
                                         pgr?.visibility = View.GONE
                                         empty?.visibility = View.VISIBLE
-                                        empty?.text = "No Results found"
+                                        empty?.text = "No Coin found? Still you can request this coin from settings tab. Our support team will add it to the CryptoHype Network!!!"
                                     }
                                 }
                             }

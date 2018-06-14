@@ -21,6 +21,7 @@
         android:text="No Coins to show"
         android:textAlignment="center"
         android:textSize="20sp"
+        android:layout_margin="20dp"
         android:visibility="gone" />
 
     <Button
