@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="35dp"
+    android:foreground="?attr/selectableItemBackground"
     >
     <Button
         android:layout_width="20dp"
@@ -107,6 +108,7 @@
         android:layout_marginRight="5dp"
         android:text="tweet"
         android:textColor="#000"
+        android:foreground="?attr/selectableItemBackground"
         android:textAlignment="textStart"
         android:layout_gravity="start" />
 
