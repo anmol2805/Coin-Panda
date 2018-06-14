@@ -25,6 +25,7 @@ class settings : Fragment() {
     var donate : Button? = null
     var share : Button? = null
     var help : Button? = null
+    var facebook:Button?=null
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val vi = inflater.inflate(R.layout.settings,
                 container, false)
@@ -34,6 +35,7 @@ class settings : Fragment() {
         donate = vi.findViewById(R.id.donate)
         share = vi.findViewById(R.id.share)
         help = vi.findViewById(R.id.support)
+        facebook = vi.findViewById(R.id.likefb)
         share?.setOnClickListener {
             val shareintent = Intent()
             shareintent.action = Intent.ACTION_SEND
@@ -64,6 +66,12 @@ class settings : Fragment() {
             intent.data = Uri.parse(url)
             startActivity(intent)
 
+        }
+        facebook?.setOnClickListener{
+            val url = "https://www.facebook.com/cryptohyype/"
+            val intent = Intent(Intent.ACTION_VIEW)
+            intent.data = Uri.parse(url)
+            startActivity(intent)
         }
         donate?.setOnClickListener {
             if(activity!=null){
