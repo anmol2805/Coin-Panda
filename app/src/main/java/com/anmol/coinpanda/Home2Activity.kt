@@ -132,7 +132,7 @@ class Home2Activity : AppCompatActivity() {
             Glide.with(this).load(R.drawable.newsfilled).into(tweeticon)
             Glide.with(this).load(R.drawable.mycoinsunfilled).into(porticon)
             Glide.with(this).load(R.drawable.bookmarksunfilled).into(bookmarksicon)
-            Glide.with(this).load(R.drawable.icounfilled).into(icoicon)
+            //Glide.with(this).load(R.drawable.icounfilled).into(icoicon)
             Glide.with(this).load(R.drawable.settingsunfiled).into(settingsicon)
         }
         coinslayout?.setOnClickListener{
