@@ -37,7 +37,7 @@ class AddCoinAdapter(internal var c: Context, internal var allcoins: List<Allcoi
         val db = FirebaseFirestore.getInstance()
         val auth = FirebaseAuth.getInstance()
         db.collection("users").document(auth.currentUser!!.uid).collection("portfolio").addSnapshotListener{ documentSnapshot, e ->
-            for(doc in documentSnapshot.documents){
+            for(doc in documentSnapshot!!.documents){
                 if(doc.id.contains(coindata.coinname!!)){
                     holder.addtoport?.visibility = View.GONE
                     holder.btnstatus?.visibility = View.VISIBLE

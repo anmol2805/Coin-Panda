@@ -195,7 +195,7 @@ class LoadingActivity : AppCompatActivity() {
             val documentSnapshot = task.result
             if(documentSnapshot.exists()){
                 val count = documentSnapshot.getLong("count")
-                if(count > 990){
+                if(count!! > 990){
                     topicsearch(i+1, coinname, coin)
                 }
                 else{

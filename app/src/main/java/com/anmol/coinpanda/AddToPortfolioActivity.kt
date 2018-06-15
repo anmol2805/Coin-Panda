@@ -41,7 +41,7 @@ class AddToPortfolioActivity : AppCompatActivity() {
         allcoins.clear()
         db.collection("supernode").document("allcoins").collection("names").addSnapshotListener{documentSnapshot, firebaseFirestoreException ->
             allcoins.clear()
-            for(doc in documentSnapshot.documents){
+            for(doc in documentSnapshot!!.documents){
                 val coinname = doc.id
 //                val allcoin = Allcoin(coinname)
 //                allcoins.add(allcoin)
