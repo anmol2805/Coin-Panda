@@ -21,6 +21,10 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.iid.FirebaseInstanceId
+import android.Manifest.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS
+import android.os.Build
+import org.jetbrains.anko.startActivityForResult
+
 
 class Home2Activity : AppCompatActivity() {
     private var back_pressed: Long = 0
@@ -51,6 +55,7 @@ class Home2Activity : AppCompatActivity() {
         icoicon = findViewById(R.id.icoicon)
         settingsicon = findViewById(R.id.settingsicon)
         val auth = FirebaseAuth.getInstance()
+
         if(auth.currentUser == null){
             startActivity(Intent(this,LoginActivity::class.java))
         }
@@ -163,7 +168,7 @@ class Home2Activity : AppCompatActivity() {
             Glide.with(this).load(R.drawable.settingsunfiled).into(settingsicon)
         }
         icolayout?.setOnClickListener{
-//            setFragment(ico(),4)
+            //  setFragment(ico(),4)
 //            //currentfragment = 4
 //            Glide.with(this).load(R.drawable.newsunfilled).into(tweeticon)
 //            Glide.with(this).load(R.drawable.mycoinsunfilled).into(porticon)
