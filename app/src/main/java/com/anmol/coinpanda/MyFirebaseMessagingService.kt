@@ -19,6 +19,7 @@ import android.support.v4.app.NotificationManagerCompat
 import android.transition.VisibilityPropagation
 import android.graphics.BitmapFactory
 import android.graphics.Bitmap
+import android.support.v4.content.ContextCompat
 import com.anmol.coinpanda.Fragments.ico
 
 
@@ -63,13 +64,13 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 //        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 //        notificationManager.notify(0, builder.build())
 
-        val icon = BitmapFactory.decodeResource(resources, R.drawable.alpha)
+        val icon = BitmapFactory.decodeResource(resources, R.drawable.notificon)
         val mBuilder = NotificationCompat.Builder(this, CHANNEL_ID)
-                .setSmallIcon(R.drawable.alpha)
+                .setSmallIcon(R.drawable.notificon)
                 .setLargeIcon(icon)
-                .setBadgeIconType(R.drawable.alpha)
+                .setBadgeIconType(R.drawable.notificon)
                 .setWhen(System.currentTimeMillis())
-                .setColor(255)
+                .setColor(ContextCompat.getColor(this,R.color.colorPrimary))
                 .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
                 .setContentTitle(payload["title"])
                 .setContentText(payload["body"])
