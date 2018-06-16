@@ -64,11 +64,11 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 //        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 //        notificationManager.notify(0, builder.build())
 
-        val icon = BitmapFactory.decodeResource(resources, R.drawable.notificon)
+        val icon = BitmapFactory.decodeResource(resources, R.drawable.ic_cryptohype_notification)
         val mBuilder = NotificationCompat.Builder(this, CHANNEL_ID)
-                .setSmallIcon(R.drawable.notificon)
+                .setSmallIcon(R.drawable.ic_cryptohype_notification)
                 .setLargeIcon(icon)
-                .setBadgeIconType(R.drawable.notificon)
+                .setBadgeIconType(R.drawable.ic_cryptohype_notification)
                 .setWhen(System.currentTimeMillis())
                 .setColor(ContextCompat.getColor(this,R.color.colorPrimary))
                 .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
