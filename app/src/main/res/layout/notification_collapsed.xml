@@ -9,6 +9,7 @@
         android:layout_alignParentEnd="true"
         android:layout_marginHorizontal="10dp"
         android:id="@+id/coinnotifyicon"
+        android:src="@drawable/alpha"
         />
 
     <TextView
