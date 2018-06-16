@@ -53,8 +53,7 @@ class dashboard : Fragment() {
 //        pgr?.visibility = View.GONE
 //        tweetselect.isChecked = false
 //        setFragment(allcoins())
-        val handler = Handler()
-        handler.postDelayed({
+
             val dtb = Dbhelper(activity!!)
             val dataquery = "Select * from $TABLE_NAME ORDER BY $COL_ID DESC"
             val data = dtb.readData(dataquery)
@@ -84,7 +83,6 @@ class dashboard : Fragment() {
                     setFragment(allcoins())
                 }
             }
-        },200)
 
         
         return vi
@@ -92,7 +90,7 @@ class dashboard : Fragment() {
 
     private fun setFragment(fragment: Fragment) {
         if(activity!=null && !activity!!.isFinishing){
-            activity!!.supportFragmentManager.beginTransaction().replace(R.id.coinframe,fragment).commitAllowingStateLoss()
+            activity!!.supportFragmentManager.beginTransaction().setCustomAnimations(R.anim.fade_in,R.anim.fade_out).replace(R.id.coinframe,fragment).commitAllowingStateLoss()
         }
 
 

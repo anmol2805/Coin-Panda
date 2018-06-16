@@ -85,7 +85,7 @@ class home : Fragment() {
     }
     private fun setFragment(fragment: Fragment) {
         if(activity!=null && !activity!!.isFinishing){
-            activity!!.supportFragmentManager.beginTransaction().replace(R.id.fragment,fragment).commitAllowingStateLoss()
+            activity!!.supportFragmentManager.beginTransaction().setCustomAnimations(R.anim.fade_in,R.anim.fade_out).replace(R.id.fragment,fragment).commitAllowingStateLoss()
         }
 
 

@@ -188,13 +188,13 @@ class Home2Activity : AppCompatActivity() {
 
     }
     private fun setFragment(fragment: Fragment, i: Int) {
-        if (i<currentfragment!!){
-            supportFragmentManager.beginTransaction().setCustomAnimations(R.anim.fragment_slide_right_enter,R.anim.fragment_slide_right_exit).replace(R.id.appframe,fragment).commitAllowingStateLoss()
+        if (i<currentfragment){
+            supportFragmentManager.beginTransaction().setCustomAnimations(R.anim.fade_in,R.anim.fade_out).replace(R.id.appframe,fragment).commitAllowingStateLoss()
             supportFragmentManager.executePendingTransactions()
             currentfragment = i
         }
-        else if(i>currentfragment!!){
-            supportFragmentManager.beginTransaction().setCustomAnimations(R.anim.fragment_slide_left_enter,R.anim.fragment_slide_left_exit).replace(R.id.appframe,fragment).commitAllowingStateLoss()
+        else if(i>currentfragment){
+            supportFragmentManager.beginTransaction().setCustomAnimations(R.anim.fade_in,R.anim.fade_out).replace(R.id.appframe,fragment).commitAllowingStateLoss()
             supportFragmentManager.executePendingTransactions()
             currentfragment = i
         }
