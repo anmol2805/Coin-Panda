@@ -9,18 +9,26 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.android.volley.Request
+import com.android.volley.Response
+import com.android.volley.toolbox.JsonArrayRequest
 import com.anmol.coinpanda.Adapters.IcoAdapter
-import com.anmol.coinpanda.IconewsActivity
+import com.anmol.coinpanda.Helper.Dbicohelper
+import com.anmol.coinpanda.Helper.TABLE_ICO
 import com.anmol.coinpanda.Interfaces.ItemClickListener
-import com.anmol.coinpanda.Model.Iconew
+import com.anmol.coinpanda.Model.Icocoin
+import com.anmol.coinpanda.Mysingleton
 import com.anmol.coinpanda.R
+import com.anmol.coinpanda.Services.IcodbService
+import org.jetbrains.anko.support.v4.startService
+import org.json.JSONObject
 
 /**
  * Created by anmol on 3/11/2018.
  */
 class ico : Fragment(){
     private var cointweetrecycler: RecyclerView?=null
-    lateinit var iconews : MutableList<Iconew>
+    lateinit var icocoins : MutableList<Icocoin>
     var icoAdapter : IcoAdapter?=null
     lateinit var itemClickListener : ItemClickListener
 
@@ -31,39 +39,49 @@ class ico : Fragment(){
         cointweetrecycler?.layoutManager   = layoutManager
         cointweetrecycler?.setHasFixedSize(true)
         cointweetrecycler?.itemAnimator   = DefaultItemAnimator()
-        iconews = ArrayList()
-        val iconew1 = Iconew("Arcona","11-06-2018","Augmented Reality World Discovered","https://www.icohotlist.com/wp-content/uploads/2018/04/243.png")
-        val iconew2 = Iconew("Cargocoin","11-06-2018","Revolutionizing Global Trade and Transport by Decentralization","https://www.icohotlist.com/wp-content/uploads/2018/06/cargocoin300x300-100x100.png")
-        val iconew3 = Iconew("Etheal","11-06-2018","The 7.6 Trillion Healthcare Industry's New Operating System: a blockchain-based incentivized global health platform","https://www.icohotlist.com/wp-content/uploads/2018/03/1-ydlbuo81n6er6qg4l8-j1g-100x100.png")
-        val iconew4 = Iconew("Gluon","11-06-2018","An Intelligent Connected Automotive Marketplace","https://www.icohotlist.com/wp-content/uploads/2018/06/gluon-100x100.jpg")
-        val iconew5 = Iconew("Ternio","11-06-2018","The only scalable blockchain. Lexicon delivers over 1 million transactions per second","https://www.icohotlist.com/wp-content/uploads/2018/03/screen-shot-2017-12-28-at-51355-pm-100x31.png")
-        val iconew6 = Iconew("Ubex","11-06-2018","Artificial Intelligence in Advertising","https://www.icohotlist.com/wp-content/uploads/2018/05/256x256-100x100.png")
-        val iconew7 = Iconew("Vivalid","11-06-2018","ViValid is decentralized, a community-driven ledger of collectibles that contains the history of value and ownership","https://www.icohotlist.com/wp-content/uploads/2018/04/1000x300-100x32.png")
-        val iconew8 = Iconew("Localcoinswap","11-06-2018","The world's most inclusive and expansive P2P crypto marketplace","https://www.icohotlist.com/wp-content/uploads/2018/01/green-logo-square-100x100.png")
-        iconews.clear()
-        iconews.add(iconew1)
-        iconews.add(iconew2)
-        iconews.add(iconew3)
-        iconews.add(iconew4)
-        iconews.add(iconew5)
-        iconews.add(iconew6)
-        iconews.add(iconew7)
-        iconews.add(iconew8)
-        itemClickListener = object : ItemClickListener {
-            override fun onItemClick(pos: Int) {
-                val intent = Intent(activity,IconewsActivity::class.java)
-                intent.putExtra("iconame",iconews[pos].iconame)
-                intent.putExtra("icotitle",iconews[pos].news)
-                intent.putExtra("iconlink",iconews[pos].link)
-                startActivity(intent)
-
-            }
-
+        val intent = Intent(activity,IcodbService::class.java)
+        activity!!.startService(intent)
+        icocoins = ArrayList()
+        val db = Dbicohelper(activity!!)
+        val query ="Select * from $TABLE_ICO"
+        val data = db.readData(query)
+        icocoins = data
+        if(!icocoins.isEmpty()){
+            icoAdapter = IcoAdapter(activity!!,icocoins,itemClickListener)
+            icoAdapter!!.notifyDataSetChanged()
+            cointweetrecycler?.adapter = icoAdapter
         }
-        System.out.println("iconews$iconews")
-        icoAdapter = IcoAdapter(activity!!,iconews,itemClickListener)
-        icoAdapter!!.notifyDataSetChanged()
-        cointweetrecycler?.adapter = icoAdapter
+        else{
+            var c = 0
+            val jsonArray = JsonArrayRequest(Request.Method.GET,"http://198.199.90.139/ico",null, Response.Listener {response ->
+                while (c<response.length()){
+                    val jsonObject = response.getJSONObject(c)
+                    val iconame = jsonObject.getString("ICO_Name")
+                    val telegramurl = jsonObject.getString("Telegram_URL")
+                    val website = jsonObject.getString("Website")
+                    val mediumurl = jsonObject.getString("Medium_URL")
+                    val crowdsale_date = jsonObject.getString("Crowdsale_Date")
+                    val icostatus = jsonObject.getString("ICO_Status")
+                    val industry = jsonObject.getString("Industry")
+                    val icodescription = jsonObject.getString("Description")
+                    val hardcap = jsonObject.getString("Hardcap")
+                    val softcap = jsonObject.getString("Softcap")
+                    val twitterurl = jsonObject.getString("Twitter_URL")
+                    val rating = jsonObject.getString("Rating")
+                    val icocoin = Icocoin(iconame,telegramurl,website,mediumurl,crowdsale_date,icostatus,industry,icodescription,hardcap,softcap,twitterurl,rating)
+                    icocoins.add(icocoin)
+                    c++
+                }
+                icoAdapter = IcoAdapter(activity!!,icocoins,itemClickListener)
+                icoAdapter!!.notifyDataSetChanged()
+                cointweetrecycler?.adapter = icoAdapter
+
+            }, Response.ErrorListener {
+
+            })
+            Mysingleton.getInstance(activity).addToRequestqueue(jsonArray)
+        }
+
         return vi
     }
 }
