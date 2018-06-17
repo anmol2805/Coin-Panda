@@ -15,10 +15,12 @@ import com.android.volley.toolbox.JsonArrayRequest
 import com.anmol.coinpanda.Adapters.IcoAdapter
 import com.anmol.coinpanda.Helper.Dbicohelper
 import com.anmol.coinpanda.Helper.TABLE_ICO
+import com.anmol.coinpanda.IcodataActivity
 import com.anmol.coinpanda.Interfaces.ItemClickListener
 import com.anmol.coinpanda.Model.Icocoin
 import com.anmol.coinpanda.Mysingleton
 import com.anmol.coinpanda.R
+import com.anmol.coinpanda.ScrollingActivity
 import com.anmol.coinpanda.Services.IcodbService
 import org.jetbrains.anko.support.v4.startService
 import org.json.JSONObject
@@ -39,12 +41,7 @@ class ico : Fragment(){
         cointweetrecycler?.layoutManager   = layoutManager
         cointweetrecycler?.setHasFixedSize(true)
         cointweetrecycler?.itemAnimator   = DefaultItemAnimator()
-        itemClickListener = object : ItemClickListener{
-            override fun onItemClick(pos: Int) {
 
-            }
-
-        }
         val intent = Intent(activity,IcodbService::class.java)
         activity!!.startService(intent)
         icocoins = ArrayList()
@@ -52,6 +49,14 @@ class ico : Fragment(){
         val query ="Select * from $TABLE_ICO"
         val data = db.readData(query)
         icocoins = data
+        itemClickListener = object : ItemClickListener{
+            override fun onItemClick(pos: Int) {
+                val intent2 = Intent(activity,IcodataActivity::class.java)
+                intent2.putExtra("iconame",icocoins[pos].ico_name)
+                startActivity(intent2)
+            }
+
+        }
         if(!icocoins.isEmpty()){
             icoAdapter = IcoAdapter(activity!!,icocoins,itemClickListener)
             icoAdapter!!.notifyDataSetChanged()

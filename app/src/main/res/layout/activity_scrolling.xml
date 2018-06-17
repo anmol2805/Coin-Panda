@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context=".ScrollingActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/app_bar_height"
+        android:fitsSystemWindows="true"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/toolbar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
+            app:contentScrim="?attr/colorPrimary"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:toolbarId="@+id/toolbar">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_collapseMode="pin"
+                app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+        </android.support.design.widget.CollapsingToolbarLayout>
+    </android.support.design.widget.AppBarLayout>
+
+    <include layout="@layout/content_scrolling" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/btntelegram"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_margin="50dp"
+        app:fabCustomSize="@dimen/activity_horizontal_margin"
+        android:src="@drawable/telegram"
+        app:backgroundTint="#fff"
+        app:fabSize="mini"
+        app:layout_anchor="@id/app_bar"
+        app:layout_anchorGravity="bottom|end"
+        app:rippleColor="@color/colorPrimaryDark" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/website"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_margin="10dp"
+        android:src="@drawable/website1"
+        app:backgroundTint="#fff"
+        app:fabCustomSize="@dimen/activity_horizontal_margin"
+        app:layout_anchor="@id/app_bar"
+
+        app:layout_anchorGravity="bottom|end"
+        app:rippleColor="@color/colorAccent" />
+
+    <!--<android.support.design.widget.FloatingActionButton-->
+        <!--android:id="@+id/fab1"-->
+        <!--android:layout_width="35dp"-->
+        <!--android:layout_height="35dp"-->
+        <!--android:layout_margin="50dp"-->
+        <!--app:layout_anchor="@id/app_bar"-->
+        <!--app:layout_anchorGravity="bottom|end"-->
+        <!--app:srcCompat="@drawable/telegram" />-->
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/btnmedium"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_margin="90dp"
+        android:background="@drawable/medium"
+        android:src="@drawable/medium"
+        app:backgroundTint="#fff"
+        app:layout_anchor="@id/app_bar"
+        app:fabCustomSize="@dimen/activity_horizontal_margin"
+        app:layout_anchorGravity="bottom|end"
+        app:rippleColor="@color/colorAccent" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/btntwitter"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_margin="130dp"
+        android:background="@drawable/twitter"
+        android:src="@drawable/twitter"
+        app:backgroundTint="#fff"
+        app:fabCustomSize="@dimen/activity_horizontal_margin"
+        app:layout_anchor="@id/app_bar"
+        app:layout_anchorGravity="bottom|end"
+        app:rippleColor="@color/colorPrimaryDark" />
+
+</android.support.design.widget.CoordinatorLayout>
