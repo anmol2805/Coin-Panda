@@ -5,6 +5,8 @@ import android.content.Context
 import android.database.sqlite.SQLiteCantOpenDatabaseException
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import com.anmol.coinpanda.Fragments.ico
+import com.anmol.coinpanda.Model.Icocoin
 import com.anmol.coinpanda.Model.Sqltweet
 import com.anmol.coinpanda.Model.Tweet
 
@@ -49,19 +51,24 @@ class Dbicohelper (context: Context):SQLiteOpenHelper(context, DATABASE_ICO,null
         onCreate(p0)
     }
 
-    fun insertData(sqltweet: Sqltweet){
+    fun insertData(icocoin: Icocoin){
         try{
         val db = this.writableDatabase
         val cv = ContentValues()
-        cv.put(COL_ID,sqltweet.tweetid)
-        cv.put(COL_COIN,sqltweet.coin)
-        cv.put(COL_COIN_SYMBOL,sqltweet.coin_symbol)
-        cv.put(COL_COIN_HANDLE,sqltweet.coinpage)
-        cv.put(COL_TWEET,sqltweet.tweet)
-        cv.put(COL_URL,sqltweet.url)
-        cv.put(COL_KEYWORD,sqltweet.keyword)
-        cv.put(COL_DATES,sqltweet.dates)
-            val result = db.insert(TABLE_NAME,null,cv)
+            cv.put(COL_ICO_NAME,icocoin.ico_name)
+            cv.put(COL_TELEGRAM,icocoin.telegram_url)
+            cv.put(COL_WEBSITE,icocoin.website)
+            cv.put(COL_MEDIUM_URL,icocoin.medium_url)
+            cv.put(COL_CROWDSALE_DATE,icocoin.crowdsale_date)
+            cv.put(COL_ICO_STATUS,icocoin.ico_status)
+            cv.put(COL_INDUSTRY,icocoin.industry)
+            cv.put(COL_DESCRIPTION,icocoin.icodescription)
+            cv.put(COL_HARDCAP,icocoin.hardcap)
+            cv.put(COL_SOFTCAP,icocoin.softcap)
+            cv.put(COL_TWITTER_URL,icocoin.twitter_url)
+            cv.put(COL_RATING,icocoin.rating)
+
+            val result = db.insert(TABLE_ICO,null,cv)
             if(result == (-1).toLong())
                 System.out.println("sqlstatus is failed")
             else
@@ -71,24 +78,28 @@ class Dbicohelper (context: Context):SQLiteOpenHelper(context, DATABASE_ICO,null
         }
 
     }
-    fun readData(dataquery: String):MutableList<Tweet>{
-        val tweets : MutableList<Tweet> = ArrayList()
+    fun readData(dataquery: String):MutableList<Icocoin>{
+        val icocoins : MutableList<Icocoin> = ArrayList()
         try {
             val db = this.readableDatabase
             val query = dataquery
             val result = db.rawQuery(query,null)
             if(result.moveToFirst()){
                 do{
-                    val mcoin = result.getString(result.getColumnIndex(COL_COIN))
-                    val coin_symbol = result.getString(result.getColumnIndex(COL_COIN_SYMBOL))
-                    val mtweet = result.getString(result.getColumnIndex(COL_TWEET))
-                    val url = result.getString(result.getColumnIndex(COL_URL))
-                    val keyword = result.getString(result.getColumnIndex(COL_KEYWORD))
-                    val id = result.getString(result.getColumnIndex(COL_ID))
-                    val dates = result.getString(result.getColumnIndex(COL_DATES))
-                    val coinpage = result.getString(result.getColumnIndex(COL_COIN_HANDLE))
-                    val tweet = Tweet(mcoin,coin_symbol,mtweet,url,keyword,id,false,dates,"mc",coinpage)
-                    tweets.add(tweet)
+                    val ico_name = result.getString(result.getColumnIndex(COL_ICO_NAME))
+                    val telegram_url = result.getString(result.getColumnIndex(COL_TELEGRAM))
+                    val website = result.getString(result.getColumnIndex(COL_WEBSITE))
+                    val medium_url = result.getString(result.getColumnIndex(COL_MEDIUM_URL))
+                    val crowdsale = result.getString(result.getColumnIndex(COL_CROWDSALE_DATE))
+                    val icostatus = result.getString(result.getColumnIndex(COL_ICO_STATUS))
+                    val industry = result.getString(result.getColumnIndex(COL_INDUSTRY))
+                    val icodescription = result.getString(result.getColumnIndex(COL_DESCRIPTION))
+                    val hardcap = result.getString(result.getColumnIndex(COL_HARDCAP))
+                    val softcap = result.getString(result.getColumnIndex(COL_SOFTCAP))
+                    val twitterurl = result.getString(result.getColumnIndex(COL_TWITTER_URL))
+                    val rating = result.getString(result.getColumnIndex(COL_RATING))
+                    val icocoin = Icocoin(ico_name,telegram_url,website,medium_url,crowdsale,icostatus,industry,icodescription,hardcap,softcap,twitterurl,rating)
+                    icocoins.add(icocoin)
 //                    if(booked.contains("0")){
 //                        val tweet = Tweet(mcoin,coin_symbol,mtweet,url,keyword,id,false,dates,"mc",coinpage)
 //                        tweets.add(tweet)
@@ -102,14 +113,14 @@ class Dbicohelper (context: Context):SQLiteOpenHelper(context, DATABASE_ICO,null
             }
             result.close()
             db.close()
-            System.out.println("inside:$tweets")
+            System.out.println("inside:$icocoins")
 
         }
         catch (e:SQLiteCantOpenDatabaseException){
             e.printStackTrace()
         }
-        System.out.println("outside:$tweets")
-        return tweets
+        System.out.println("outside:$icocoins")
+        return icocoins
     }
 //    fun readmyData():MutableList<Tweet>{
 //        val tweets : MutableList<Tweet> = ArrayList()
