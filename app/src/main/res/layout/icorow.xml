@@ -2,9 +2,9 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="35dp"
     android:foreground="?attr/selectableItemBackground"
     >
 
@@ -103,19 +103,21 @@
         android:id="@+id/tweet"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/coin"
         android:layout_alignStart="@+id/coin"
+        android:layout_below="@+id/coin"
+        android:layout_gravity="start"
+        android:layout_marginRight="5dp"
         android:layout_toEndOf="@+id/coinlay"
         android:layout_toLeftOf="@+id/bookmark"
         android:layout_toRightOf="@+id/coinlay"
         android:layout_toStartOf="@+id/bookmark"
         android:autoLink="web"
-        android:layout_marginRight="5dp"
-        android:text="tweet"
-        android:textColor="#000"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:text="To get filtered updates, you have to make sure you are following TENZORUM ANNOUNCEMENTS CHANNEL att.me/tenzorum_ann"
         android:textAlignment="textStart"
-        android:layout_gravity="start"
-        />
+        android:textColor="#000"
+        tools:ellipsize="end" />
 
     <TextView
         android:id="@+id/time"

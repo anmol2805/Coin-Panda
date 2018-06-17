@@ -124,7 +124,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:padding="2dp"
-                    app:srcCompat="@drawable/icogrey" />
+                    app:srcCompat="@drawable/icounfilled" />
 
                 <TextView
                     android:id="@+id/textView14"
@@ -132,6 +132,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif"
                     android:text="ICO news"
+                    android:textColor="@color/colorAccent"
                     android:textAlignment="center"
                     android:textSize="10sp" />
             </LinearLayout>

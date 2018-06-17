@@ -34,11 +34,17 @@ class ico : Fragment(){
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val vi = inflater.inflate(R.layout.ico, container, false)
-        val layoutManager = LinearLayoutManager(activity)
+        val layoutManager = LinearLayoutManager(activity!!)
         cointweetrecycler = vi.findViewById(R.id.cointweetrecycler)
         cointweetrecycler?.layoutManager   = layoutManager
         cointweetrecycler?.setHasFixedSize(true)
         cointweetrecycler?.itemAnimator   = DefaultItemAnimator()
+        itemClickListener = object : ItemClickListener{
+            override fun onItemClick(pos: Int) {
+
+            }
+
+        }
         val intent = Intent(activity,IcodbService::class.java)
         activity!!.startService(intent)
         icocoins = ArrayList()

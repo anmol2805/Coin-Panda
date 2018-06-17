@@ -55,6 +55,7 @@ class IcoAdapter(internal var c: Context, internal var icocoins: MutableList<Ico
         //holder.coinname?.text = coindata.coin_symbol
         //holder.keyword?.text = "#" + coindata.keyword
         holder.timestamp?.text = coindata.crowdsale_date
+        holder.keyword?.text = coindata.rating
 //        val testurl = "https://twitter.com/" + coindata.coinpage + "/profile_image?size=original"
 //        println("testurltweets$testurl")
         //Glide.with(c).load(coindata.link).into(holder.image)
