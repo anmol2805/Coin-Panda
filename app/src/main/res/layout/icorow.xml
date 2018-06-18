@@ -101,11 +101,23 @@
         android:visibility="visible" />
 
     <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/icoindustry"
+        android:layout_alignStart="@+id/coin"
+        android:layout_below="@+id/coin"
+        android:layout_gravity="start"
+        android:layout_marginRight="5dp"
+        android:textColor="#000"
+        android:text="Blockchain Service"
+        />
+
+    <TextView
         android:id="@+id/tweet"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/coin"
-        android:layout_below="@+id/coin"
+        android:layout_below="@+id/icoindustry"
         android:layout_gravity="start"
         android:layout_marginRight="5dp"
         android:layout_toEndOf="@+id/coinlay"
@@ -113,12 +125,11 @@
         android:layout_toRightOf="@+id/coinlay"
         android:layout_toStartOf="@+id/bookmark"
         android:autoLink="web"
-        android:clickable="true"
+        android:clickable="false"
         android:textSize="12sp"
         android:maxLines="2"
         android:text="To get filtered updates, you have to make sure you are following TENZORUM ANNOUNCEMENTS CHANNEL att.me/tenzorum_ann"
         android:textAlignment="textStart"
-        android:textColor="#000"
         tools:ellipsize="end" />
 
     <TextView

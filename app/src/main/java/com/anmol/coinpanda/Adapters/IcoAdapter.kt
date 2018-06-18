@@ -56,6 +56,7 @@ class IcoAdapter(internal var c: Context, internal var icocoins: MutableList<Ico
         //holder.keyword?.text = "#" + coindata.keyword
         holder.timestamp?.text = coindata.crowdsale_date
         holder.keyword?.text = coindata.rating
+        holder.industry?.text = coindata.industry
         Glide.with(c).load(coindata.twitter_url+ "/profile_image?size=original").into(holder.image)
 //        val testurl = "https://twitter.com/" + coindata.coinpage + "/profile_image?size=original"
 //        println("testurltweets$testurl")
@@ -129,6 +130,7 @@ class IcoAdapter(internal var c: Context, internal var icocoins: MutableList<Ico
         var bookmark:ImageView?=null
         var timestamp:TextView?=null
         var sharebtn:Button?=null
+        var industry:TextView?=null
         init {
             this.mtweet = itemView.findViewById(R.id.tweet)
             this.mcoin = itemView.findViewById(R.id.coin)
@@ -138,6 +140,7 @@ class IcoAdapter(internal var c: Context, internal var icocoins: MutableList<Ico
             this.bookmark = itemView.findViewById(R.id.bookmark)
             this.timestamp = itemView.findViewById(R.id.time)
             this.sharebtn = itemView.findViewById(R.id.sharebtn)
+            this.industry = itemView.findViewById(R.id.icoindustry)
             itemView.setOnClickListener(this)
         }
 
