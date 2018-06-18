@@ -2,6 +2,7 @@ package com.anmol.coinpanda.Fragments
 
 import android.content.Intent
 import android.os.Bundle
+import android.support.v4.app.ActivityOptionsCompat
 import android.support.v4.app.Fragment
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
@@ -22,6 +23,8 @@ import com.anmol.coinpanda.Mysingleton
 import com.anmol.coinpanda.R
 import com.anmol.coinpanda.ScrollingActivity
 import com.anmol.coinpanda.Services.IcodbService
+import org.jetbrains.anko.startActivity
+import org.jetbrains.anko.support.v4.startActivity
 import org.jetbrains.anko.support.v4.startService
 import org.json.JSONObject
 
@@ -53,7 +56,8 @@ class ico : Fragment(){
             override fun onItemClick(pos: Int) {
                 val intent2 = Intent(activity,ScrollingActivity::class.java)
                 intent2.putExtra("iconame",icocoins[pos].ico_name)
-                startActivity(intent2)
+                val optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(activity!!,vi.findViewById(R.id.coinicon),"myimage")
+                startActivity(intent2,optionsCompat.toBundle())
             }
 
         }
