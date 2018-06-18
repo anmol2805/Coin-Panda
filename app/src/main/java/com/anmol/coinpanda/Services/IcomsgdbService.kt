@@ -21,7 +21,7 @@ class IcomsgdbService:IntentService("IcomsgdbService"){
         val jsonArray = JsonArrayRequest(Request.Method.GET,"http://198.199.90.139/ico/pinned",null, Response.Listener { response ->
             while (c<response.length()){
                 val jsonObject = response.getJSONObject(c)
-                val messageid = jsonObject.getString("cID")
+                val messageid = jsonObject.getInt("cID")
                 val message = jsonObject.getString("pinned_messages")
                 val messagetime = jsonObject.getString("date")
                 val ico_name = jsonObject.getString("coin_name")

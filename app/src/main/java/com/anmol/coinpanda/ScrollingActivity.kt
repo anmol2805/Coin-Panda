@@ -1,18 +1,23 @@
 package com.anmol.coinpanda
 
+import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
 import android.support.design.widget.Snackbar
+import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.widget.Toast
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonArrayRequest
 import com.anmol.coinpanda.Adapters.IcoAdapter
 import com.anmol.coinpanda.Adapters.IcomsgAdapter
+import com.anmol.coinpanda.Helper.COL_ICOPIN_ID
 import com.anmol.coinpanda.Helper.Dbicopinhelper
 import com.anmol.coinpanda.Helper.ICOPIN_TABLE_NAME
 import com.anmol.coinpanda.Interfaces.ItemClickListener
@@ -20,6 +25,7 @@ import com.anmol.coinpanda.Model.Icocoin
 import com.anmol.coinpanda.Model.Icopin
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.activity_scrolling.*
+import kotlinx.android.synthetic.main.content_scrolling.*
 import java.text.SimpleDateFormat
 
 class ScrollingActivity : AppCompatActivity() {
@@ -71,7 +77,82 @@ class ScrollingActivity : AppCompatActivity() {
         cointweetrecycler?.itemAnimator   = DefaultItemAnimator()
         icopins = ArrayList()
         val db = Dbicopinhelper(this)
-        val query ="Select * from $ICOPIN_TABLE_NAME"
+        icotweetrefresh.setColorSchemeColors(
+                resources.getColor(R.color.colorAccent)
+        )
+        val handler = Handler()
+        handler.postDelayed({
+            icotweetrefresh.isRefreshing = true
+            var m = 0
+            val jsonArray1 = JsonArrayRequest(Request.Method.GET,"http://198.199.90.139/ico/pinned",null, Response.Listener { response ->
+                icopins.clear()
+                while (m<response.length()){
+                    val jsonObject = response.getJSONObject(m)
+                    val messageid = jsonObject.getInt("cID")
+                    val message = jsonObject.getString("pinned_messages")
+                    val messagetime = jsonObject.getString("date")
+                    val ico_name = jsonObject.getString("coin_name")
+                    val icopin = Icopin(messageid,ico_name,message,messagetime)
+                    db.insertData(icopin)
+                    m++
+                }
+                val query ="Select * from $ICOPIN_TABLE_NAME ORDER BY $COL_ICOPIN_ID DESC"
+                val data = db.readData(query)
+                var x = 0
+                while(x<data.size){
+                    if(data[x].icocoin_name == title){
+                        icopins.add(data[x])
+                    }
+                    x++
+                }
+                icotweetrefresh.isRefreshing = false
+                icomsgAdapter = IcomsgAdapter(this,icopins,itemClickListener)
+                icomsgAdapter!!.notifyDataSetChanged()
+                cointweetrecycler?.adapter = icomsgAdapter
+
+            }, Response.ErrorListener {
+                icotweetrefresh.isRefreshing = false
+                Toast.makeText(this,"Unable to refresh news",Toast.LENGTH_SHORT).show()
+            })
+            Mysingleton.getInstance(this).addToRequestqueue(jsonArray1)
+        },100)
+
+        icotweetrefresh.setOnRefreshListener {
+            icotweetrefresh.isRefreshing = true
+            var m = 0
+            val jsonArray1 = JsonArrayRequest(Request.Method.GET,"http://198.199.90.139/ico/pinned",null, Response.Listener { response ->
+                icopins.clear()
+                while (m<response.length()){
+                    val jsonObject = response.getJSONObject(m)
+                    val messageid = jsonObject.getInt("cID")
+                    val message = jsonObject.getString("pinned_messages")
+                    val messagetime = jsonObject.getString("date")
+                    val ico_name = jsonObject.getString("coin_name")
+                    val icopin = Icopin(messageid,ico_name,message,messagetime)
+                    db.insertData(icopin)
+                    m++
+                }
+                val query ="Select * from $ICOPIN_TABLE_NAME ORDER BY $COL_ICOPIN_ID DESC"
+                val data = db.readData(query)
+                var x = 0
+                while(x<data.size){
+                    if(data[x].icocoin_name == title){
+                        icopins.add(data[x])
+                    }
+                    x++
+                }
+                icotweetrefresh.isRefreshing = false
+                icomsgAdapter = IcomsgAdapter(this,icopins,itemClickListener)
+                icomsgAdapter!!.notifyDataSetChanged()
+                cointweetrecycler?.adapter = icomsgAdapter
+
+            }, Response.ErrorListener {
+                icotweetrefresh.isRefreshing = false
+                Toast.makeText(this,"Unable to refresh news",Toast.LENGTH_SHORT).show()
+            })
+            Mysingleton.getInstance(this).addToRequestqueue(jsonArray1)
+        }
+        val query ="Select * from $ICOPIN_TABLE_NAME ORDER BY $COL_ICOPIN_ID DESC"
         val data = db.readData(query)
         itemClickListener = object :ItemClickListener{
             override fun onItemClick(pos: Int) {
@@ -98,7 +179,7 @@ class ScrollingActivity : AppCompatActivity() {
                 icopins.clear()
                 while (c<response.length()){
                     val jsonObject = response.getJSONObject(c)
-                    val messageid = jsonObject.getString("cID")
+                    val messageid = jsonObject.getInt("cID")
                     val message = jsonObject.getString("pinned_messages")
                     val messagetime = jsonObject.getString("date")
                     val ico_name = jsonObject.getString("coin_name")
@@ -114,7 +195,7 @@ class ScrollingActivity : AppCompatActivity() {
                 cointweetrecycler?.adapter = icomsgAdapter
 
             }, Response.ErrorListener {
-
+                Toast.makeText(this,"Network Error!!! Please try again.",Toast.LENGTH_SHORT).show()
             })
             Mysingleton.getInstance(this).addToRequestqueue(jsonArray)
         }
@@ -146,7 +227,13 @@ class ScrollingActivity : AppCompatActivity() {
             val url = intent.getStringExtra("websiteurl")
             val intent = Intent(Intent.ACTION_VIEW)
             intent.data = Uri.parse(url)
-            startActivity(intent)
+            try{
+                startActivity(intent)
+            }
+            catch (e:ActivityNotFoundException){
+                e.printStackTrace()
+            }
+
 
         }
         Glide.with(this).load(intent.getStringExtra("twitterurl") + "/profile_image?size=original").into(icolargeimg)

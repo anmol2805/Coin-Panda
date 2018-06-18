@@ -62,7 +62,7 @@ class Dbicopinhelper (context: Context):SQLiteOpenHelper(context, ICOPIN_NAME,nu
             val result = db.rawQuery(query,null)
             if(result.moveToFirst()){
                 do{
-                    val cid = result.getString(result.getColumnIndex(COL_ICOPIN_ID))
+                    val cid = result.getInt(result.getColumnIndex(COL_ICOPIN_ID))
                     val icopinname = result.getString(result.getColumnIndex(COL_ICOPIN_NAME))
                     val icopinmessage = result.getString(result.getColumnIndex(COL_ICOPIN_MESSAGE))
                     val icopindates = result.getString(result.getColumnIndex(COL_ICOPIN_DATE))
