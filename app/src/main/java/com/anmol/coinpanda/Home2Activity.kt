@@ -23,6 +23,8 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.iid.FirebaseInstanceId
 import android.Manifest.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS
 import android.os.Build
+import com.anmol.coinpanda.Services.IcodbService
+import com.anmol.coinpanda.Services.IcomsgdbService
 import org.jetbrains.anko.startActivityForResult
 
 
@@ -60,7 +62,10 @@ class Home2Activity : AppCompatActivity() {
             startActivity(Intent(this,LoginActivity::class.java))
         }
         else{
-
+            val intent3 = Intent(this, IcodbService::class.java)
+            startService(intent3)
+            val intent2 = Intent(this, IcomsgdbService::class.java)
+            startService(intent2)
             val intent = Intent(this, TweetsdbService::class.java)
             startService(intent)
             val dbb = Dbbookshelper(this)

@@ -48,14 +48,17 @@ class ico : Fragment(){
         cointweetrecycler?.setHasFixedSize(true)
         cointweetrecycler?.itemAnimator   = DefaultItemAnimator()
         srl = vi.findViewById(R.id.srl)
-        val intent = Intent(activity,IcodbService::class.java)
-        activity!!.startService(intent)
+
         icocoins = ArrayList()
         val db = Dbicohelper(activity!!)
 
+
+
+
+
         itemClickListener = object : ItemClickListener{
             override fun onItemClick(pos: Int) {
-                val intent2 = Intent(activity,ScrollingActivity::class.java)
+                val intent2 = Intent(activity!!,ScrollingActivity::class.java)
                 intent2.putExtra("iconame",icocoins[pos].ico_name)
                 intent2.putExtra("telegramurl",icocoins[pos].telegram_url)
                 intent2.putExtra("twitterurl",icocoins[pos].twitter_url)
@@ -109,9 +112,9 @@ class ico : Fragment(){
 
             }, Response.ErrorListener {
                 srl?.isRefreshing = false
-                Toast.makeText(activity,"Unable to refresh Ico news",Toast.LENGTH_SHORT).show()
+                Toast.makeText(activity!!,"Unable to refresh Ico news",Toast.LENGTH_SHORT).show()
             })
-            Mysingleton.getInstance(activity).addToRequestqueue(jsonArray)
+            Mysingleton.getInstance(activity!!).addToRequestqueue(jsonArray)
 
         },200)
         srl?.setOnRefreshListener {
@@ -147,9 +150,9 @@ class ico : Fragment(){
 
             }, Response.ErrorListener {
                 srl?.isRefreshing = false
-                Toast.makeText(activity,"Unable to refresh Ico news",Toast.LENGTH_SHORT).show()
+                Toast.makeText(activity!!,"Unable to refresh Ico news",Toast.LENGTH_SHORT).show()
             })
-            Mysingleton.getInstance(activity).addToRequestqueue(jsonArray)
+            Mysingleton.getInstance(activity!!).addToRequestqueue(jsonArray)
         }
         val query ="Select * from $TABLE_ICO"
         val data = db.readData(query)
@@ -188,7 +191,7 @@ class ico : Fragment(){
             }, Response.ErrorListener {
                 Toast.makeText(activity!!,"Network Error!!! Please try again",Toast.LENGTH_SHORT).show()
             })
-            Mysingleton.getInstance(activity).addToRequestqueue(jsonArray)
+            Mysingleton.getInstance(activity!!).addToRequestqueue(jsonArray)
         }
 
         return vi
