@@ -35,7 +35,7 @@
         app:srcCompat="@drawable/starunfilled" />
 
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/coinicon"
         android:layout_width="40dp"
         android:layout_height="40dp"

@@ -124,7 +124,7 @@ class IcoAdapter(internal var c: Context, internal var icocoins: MutableList<Ico
         var mtweet:TextView?=null
         var mcoin:TextView?=null
         var coinname:TextView?=null
-        var image:ImageView?=null
+        var image:de.hdodenhof.circleimageview.CircleImageView?=null
         var keyword:TextView?=null
         var bookmark:ImageView?=null
         var timestamp:TextView?=null

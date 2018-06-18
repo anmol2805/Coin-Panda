@@ -41,12 +41,12 @@ class ScrollingActivity : AppCompatActivity() {
             icocrowdsaledate.text = ""
         }
         else{
-            val olddate = intent.getStringExtra("crowdsale")
-            val sdf = SimpleDateFormat("MM/dd/yyyy")
-            val date = sdf.format(olddate)
-            val sdfnew = SimpleDateFormat("dd-MM-yyyy")
-            val newdate = sdfnew.parse(date)
-            icocrowdsaledate.text = "Crowdsale date:$newdate"
+//            val olddate = "Crowdsale date:" + intent.getStringExtra("crowdsale")
+//            val sdf = SimpleDateFormat("MM/dd/yyyy")
+//            val date = sdf.format(olddate)
+//            val sdfnew = SimpleDateFormat("dd-MM-yyyy")
+//            val newdate = sdfnew.p
+            icocrowdsaledate.text = "Crowdsale date:" + intent.getStringExtra("crowdsale")
         }
 
         if(intent.getStringExtra("hardcap") == "" || intent.getStringExtra("hardcap") == "?"){

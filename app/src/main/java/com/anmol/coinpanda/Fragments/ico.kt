@@ -66,8 +66,8 @@ class ico : Fragment(){
                 intent2.putExtra("status",icocoins[pos].ico_status)
                 intent2.putExtra("crowdsale",icocoins[pos].crowdsale_date)
                 intent2.putExtra("industry",icocoins[pos].industry)
-                //val optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(activity!!,vi.findViewById(R.id.coinicon),"myimage")
-                startActivity(intent2)
+                val optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(activity!!,vi.findViewById(R.id.coinicon),"myimage")
+                startActivity(intent2,optionsCompat.toBundle())
             }
 
         }
