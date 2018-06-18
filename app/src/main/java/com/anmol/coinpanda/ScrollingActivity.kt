@@ -20,6 +20,7 @@ import com.anmol.coinpanda.Model.Icocoin
 import com.anmol.coinpanda.Model.Icopin
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.activity_scrolling.*
+import java.text.SimpleDateFormat
 
 class ScrollingActivity : AppCompatActivity() {
     private var cointweetrecycler: RecyclerView?=null
@@ -40,7 +41,12 @@ class ScrollingActivity : AppCompatActivity() {
             icocrowdsaledate.text = ""
         }
         else{
-            icocrowdsaledate.text = "Crowdsale date:" + intent.getStringExtra("crowdsale")
+            val olddate = intent.getStringExtra("crowdsale")
+            val sdf = SimpleDateFormat("MM/dd/yyyy")
+            val date = sdf.format(olddate)
+            val sdfnew = SimpleDateFormat("dd-MM-yyyy")
+            val newdate = sdfnew.parse(date)
+            icocrowdsaledate.text = "Crowdsale date:$newdate"
         }
 
         if(intent.getStringExtra("hardcap") == "" || intent.getStringExtra("hardcap") == "?"){
