@@ -51,7 +51,7 @@ class ico : Fragment(){
         icocoins = data
         itemClickListener = object : ItemClickListener{
             override fun onItemClick(pos: Int) {
-                val intent2 = Intent(activity,IcodataActivity::class.java)
+                val intent2 = Intent(activity,ScrollingActivity::class.java)
                 intent2.putExtra("iconame",icocoins[pos].ico_name)
                 startActivity(intent2)
             }

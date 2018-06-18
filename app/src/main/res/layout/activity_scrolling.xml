@@ -10,7 +10,7 @@
     <android.support.design.widget.AppBarLayout
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/app_bar_height"
+        android:layout_height="210dp"
         android:fitsSystemWindows="true"
         android:theme="@style/AppTheme.AppBarOverlay">
 
@@ -22,11 +22,126 @@
             app:contentScrim="?attr/colorPrimary"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
             app:toolbarId="@+id/toolbar">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                app:layout_collapseMode="parallax"
+                >
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="5dp"
+                    android:src="@drawable/arcona"
+                    app:civ_border_color="@color/yellow"
+                    app:civ_border_width="2dp"
+                    android:id="@+id/icolargeimg"
+                     />
+
+                <TextView
+                    android:id="@+id/content"
+                    android:layout_width="match_parent"
+                    android:layout_height="75dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_margin="5dp"
+                    android:layout_toRightOf="@+id/icolargeimg"
+                    android:text="FANTOM is the world’s first DAG based smart contract platform that solves the issue of scalability and confirmation time of the existing blockchain technology."
+                    android:textAlignment="center"
+
+                    android:textColor="#fff"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:layout_width="110dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:text="Upcoming"
+                    android:textAlignment="center"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:textStyle="bold"
+                    android:textColor="#000"
+                    android:fontFamily="monospace"
+                    android:id="@+id/icostatus"
+
+                    />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:text="Crowdsale Date:18/6/2018"
+                    android:textAlignment="center"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:textStyle="bold"
+                    android:textColor="@color/yellow"
+                    android:fontFamily="monospace"
+                    android:id="@+id/icocrowdsaledate"
+                    android:layout_toRightOf="@+id/icostatus"
+                    android:layout_toEndOf="@+id/icostatus"
+
+
+
+                    />
+
+                <TextView
+                    android:id="@+id/industry"
+                    android:layout_width="110dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/icolargeimg"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginStart="5dp"
+                    android:text="Blockchain Service"
+                    android:textAlignment="center"
+                    android:textColor="#fff"
+                    android:textSize="10sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/industry"
+                    android:layout_toEndOf="@+id/industry"
+                    android:layout_toRightOf="@+id/industry"
+                    android:layout_marginEnd="5dp"
+                    android:id="@+id/caplayout"
+                    android:orientation="horizontal"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textSize="10sp"
+                        android:textColor="@color/orange"
+                        android:text="Hardcap: 39,400,000 USD "
+                        android:textAlignment="center"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textSize="10sp"
+                        android:textColor="@color/orange"
+                        android:textAlignment="center"
+                        android:text="Softcap: 39,400,000 USD "
+                        />
+
+                </LinearLayout>
+            </RelativeLayout>
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
+                android:layout_height="55dp"
                 app:layout_collapseMode="pin"
                 app:popupTheme="@style/AppTheme.PopupOverlay" />
 
@@ -40,7 +155,7 @@
         android:layout_width="35dp"
         android:layout_height="35dp"
         android:layout_margin="50dp"
-        app:fabCustomSize="@dimen/activity_horizontal_margin"
+        app:fabCustomSize="32dp"
         android:src="@drawable/telegram"
         app:backgroundTint="#fff"
         app:fabSize="mini"
@@ -55,7 +170,7 @@
         android:layout_margin="10dp"
         android:src="@drawable/website1"
         app:backgroundTint="#fff"
-        app:fabCustomSize="@dimen/activity_horizontal_margin"
+        app:fabCustomSize="32dp"
         app:layout_anchor="@id/app_bar"
 
         app:layout_anchorGravity="bottom|end"
@@ -78,8 +193,9 @@
         android:background="@drawable/medium"
         android:src="@drawable/medium"
         app:backgroundTint="#fff"
+        app:fabCustomSize="32dp"
         app:layout_anchor="@id/app_bar"
-        app:fabCustomSize="@dimen/activity_horizontal_margin"
+
         app:layout_anchorGravity="bottom|end"
         app:rippleColor="@color/colorAccent" />
 
@@ -91,7 +207,7 @@
         android:background="@drawable/twitter"
         android:src="@drawable/twitter"
         app:backgroundTint="#fff"
-        app:fabCustomSize="@dimen/activity_horizontal_margin"
+        app:fabCustomSize="32dp"
         app:layout_anchor="@id/app_bar"
         app:layout_anchorGravity="bottom|end"
         app:rippleColor="@color/colorPrimaryDark" />
