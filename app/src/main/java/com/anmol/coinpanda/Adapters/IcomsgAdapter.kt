@@ -51,11 +51,18 @@ class IcomsgAdapter(internal var c: Context, internal var icopins: MutableList<I
             shareintent.putExtra(Intent.EXTRA_TEXT,coindata.pinned_messages)
             c.startActivity(Intent.createChooser(shareintent,"Share message"))
         }
-
+        holder.sharebtn1?.setOnClickListener {
+            val shareintent = Intent()
+            shareintent.action = Intent.ACTION_SEND
+            shareintent.type = "text/plain"
+            shareintent.putExtra(Intent.EXTRA_TEXT,coindata.pinned_messages)
+            c.startActivity(Intent.createChooser(shareintent,"Share message"))
+        }
 
         //holder.coinname?.text = coindata.coin_symbol
         //holder.keyword?.text = "#" + coindata.keyword
         holder.timestamp?.text = coindata.pinneddate
+        holder.timestamp1?.text = coindata.pinneddate
 
 //        val testurl = "https://twitter.com/" + coindata.coinpage + "/profile_image?size=original"
 //        println("testurltweets$testurl")
@@ -129,10 +136,14 @@ class IcomsgAdapter(internal var c: Context, internal var icopins: MutableList<I
 //        var bookmark:ImageView?=null
         var timestamp:TextView?=null
         var sharebtn:Button?=null
+        var timestamp1:TextView?=null
+        var sharebtn1:Button?=null
         init {
             this.mtweet = itemView.findViewById(R.id.tweet)
             this.timestamp = itemView.findViewById(R.id.time)
             this.sharebtn = itemView.findViewById(R.id.sharebtn)
+            this.timestamp1 = itemView.findViewById(R.id.time1)
+            this.sharebtn1 = itemView.findViewById(R.id.sharebtn1)
             itemView.setOnClickListener(this)
         }
 

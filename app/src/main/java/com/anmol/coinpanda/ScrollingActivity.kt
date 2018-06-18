@@ -36,9 +36,27 @@ class ScrollingActivity : AppCompatActivity() {
         content.text = intent.getStringExtra("description")
         industry.text = intent.getStringExtra("industry")
         icostatus.text = intent.getStringExtra("status")
-        icocrowdsaledate.text = intent.getStringExtra("crowdsale")
-        hardcaptext.text = intent.getStringExtra("hardcap")
-        softcaptext.text = intent.getStringExtra("softcap")
+        if(intent.getStringExtra("crowdsale") == ""){
+            icocrowdsaledate.text = ""
+        }
+        else{
+            icocrowdsaledate.text = "Crowdsale date:" + intent.getStringExtra("crowdsale")
+        }
+
+        if(intent.getStringExtra("hardcap") == "" || intent.getStringExtra("hardcap") == "?"){
+            hardcaptext.text = ""
+        }
+        else{
+            hardcaptext.text = "Hardcap:" + intent.getStringExtra("hardcap")
+        }
+        if(intent.getStringExtra("softcap") == "" || intent.getStringExtra("softcap") == "?"){
+            softcaptext.text = ""
+        }
+        else
+        {
+            softcaptext.text = "Softcap:" + intent.getStringExtra("softcap")
+        }
+
 
         val layoutManager = LinearLayoutManager(this)
         cointweetrecycler = findViewById(R.id.iconewsrecycler)

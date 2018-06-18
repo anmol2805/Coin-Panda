@@ -12,11 +12,20 @@
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         app:cardCornerRadius="8dp"
-        app:cardElevation="4dp">
+        app:cardElevation="8dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+            <Button
+                android:id="@+id/sharebtn1"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:layout_margin="10dp"
+                android:background="@drawable/shareapp" />
 
             <Button
                 android:id="@+id/sharebtn"
@@ -25,7 +34,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_below="@+id/tweet"
-                android:layout_margin="5dp"
+                android:layout_margin="10dp"
                 android:background="@drawable/shareapp" />
 
             <ImageView
@@ -64,19 +73,29 @@
                 android:layout_height="wrap_content"
                 android:layout_alignLeft="@+id/tweet"
                 android:layout_alignStart="@+id/tweet"
-                android:layout_below="@+id/tweet"
+                android:layout_alignTop="@+id/sharebtn"
                 android:fontFamily="monospace"
                 android:text="timestamp"
                 android:textSize="12sp"
                 android:textStyle="bold" />
-
+            <TextView
+                android:id="@+id/time1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/tweet"
+                android:layout_alignStart="@+id/tweet"
+                android:layout_alignTop="@+id/sharebtn1"
+                android:fontFamily="monospace"
+                android:text="timestamp"
+                android:textSize="12sp"
+                android:textStyle="bold" />
             <TextView
                 android:id="@+id/tweet"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
+                android:layout_below="@+id/sharebtn1"
                 android:layout_gravity="start"
                 android:layout_margin="5dp"
                 android:autoLink="web"
