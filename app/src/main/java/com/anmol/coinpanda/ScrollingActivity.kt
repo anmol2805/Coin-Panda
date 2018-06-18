@@ -16,6 +16,7 @@ class ScrollingActivity : AppCompatActivity() {
                     .setAction("Action", null).show()
         }
         val title = intent.getStringExtra("iconame")
+
         setTitle(title)
     }
 }
