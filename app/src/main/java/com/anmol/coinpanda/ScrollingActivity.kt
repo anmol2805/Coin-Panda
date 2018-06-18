@@ -49,8 +49,21 @@ class ScrollingActivity : AppCompatActivity() {
         val db = Dbicopinhelper(this)
         val query ="Select * from $ICOPIN_TABLE_NAME"
         val data = db.readData(query)
-        icopins = data
-        if(!icopins.isEmpty()){
+        itemClickListener = object :ItemClickListener{
+            override fun onItemClick(pos: Int) {
+
+            }
+
+        }
+        if(!data.isEmpty()){
+            var c = 0
+            icopins.clear()
+            while (c<data.size){
+                if(data[c].icocoin_name == title){
+                    icopins.add(data[c])
+                }
+                c++
+            }
             icomsgAdapter = IcomsgAdapter(this,icopins,itemClickListener)
             icomsgAdapter!!.notifyDataSetChanged()
             cointweetrecycler?.adapter = icomsgAdapter
@@ -58,6 +71,7 @@ class ScrollingActivity : AppCompatActivity() {
         else{
             var c = 0
             val jsonArray = JsonArrayRequest(Request.Method.GET,"http://198.199.90.139/ico/pinned",null, Response.Listener { response ->
+                icopins.clear()
                 while (c<response.length()){
                     val jsonObject = response.getJSONObject(c)
                     val messageid = jsonObject.getString("cID")
