@@ -116,25 +116,26 @@
                     android:id="@+id/caplayout"
                     android:orientation="horizontal"
                     >
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:textSize="10sp"
-                        android:textColor="@color/orange"
-                        android:text="Hardcap: 39,400,000 USD "
-                        android:textAlignment="center"
-                        />
 
                     <TextView
+                        android:id="@+id/hardcaptext"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:textSize="10sp"
-                        android:textColor="@color/orange"
+                        android:text="Hardcap: 39,400,000 USD "
                         android:textAlignment="center"
+                        android:textColor="@color/orange"
+                        android:textSize="10sp" />
+
+                    <TextView
+                        android:id="@+id/softcaptext"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:text="Softcap: 39,400,000 USD "
-                        />
+                        android:textAlignment="center"
+                        android:textColor="@color/orange"
+                        android:textSize="10sp" />
 
                 </LinearLayout>
             </RelativeLayout>

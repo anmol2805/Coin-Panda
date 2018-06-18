@@ -1,5 +1,7 @@
 package com.anmol.coinpanda
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
@@ -16,6 +18,7 @@ import com.anmol.coinpanda.Helper.ICOPIN_TABLE_NAME
 import com.anmol.coinpanda.Interfaces.ItemClickListener
 import com.anmol.coinpanda.Model.Icocoin
 import com.anmol.coinpanda.Model.Icopin
+import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.activity_scrolling.*
 
 class ScrollingActivity : AppCompatActivity() {
@@ -29,8 +32,13 @@ class ScrollingActivity : AppCompatActivity() {
         setContentView(R.layout.activity_scrolling)
         setSupportActionBar(toolbar)
         val title = intent.getStringExtra("iconame")
-
         setTitle(title)
+        content.text = intent.getStringExtra("description")
+        industry.text = intent.getStringExtra("industry")
+        icostatus.text = intent.getStringExtra("status")
+        icocrowdsaledate.text = intent.getStringExtra("crowdsale")
+        hardcaptext.text = intent.getStringExtra("hardcap")
+        softcaptext.text = intent.getStringExtra("softcap")
 
         val layoutManager = LinearLayoutManager(this)
         cointweetrecycler = findViewById(R.id.iconewsrecycler)
@@ -74,10 +82,36 @@ class ScrollingActivity : AppCompatActivity() {
         }
 
         btntelegram.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
-        }
+            val url = intent.getStringExtra("telegramurl")
+            val intent = Intent(Intent.ACTION_VIEW)
+            intent.data = Uri.parse(url)
+            startActivity(intent)
 
+        }
+        btnmedium.setOnClickListener{view ->
+            val url = intent.getStringExtra("mediumurl")
+            val intent = Intent(Intent.ACTION_VIEW)
+            intent.data = Uri.parse(url)
+            startActivity(intent)
+
+        }
+        btntwitter.setOnClickListener{
+            view ->
+            val url = intent.getStringExtra("twitterurl")
+            val intent = Intent(Intent.ACTION_VIEW)
+            intent.data = Uri.parse(url)
+            startActivity(intent)
+
+        }
+        website.setOnClickListener {
+            view ->
+            val url = intent.getStringExtra("websiteurl")
+            val intent = Intent(Intent.ACTION_VIEW)
+            intent.data = Uri.parse(url)
+            startActivity(intent)
+
+        }
+        Glide.with(this).load(intent.getStringExtra("twitterurl") + "/profile_image?size=original").into(icolargeimg)
 
     }
 }
