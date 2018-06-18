@@ -84,6 +84,7 @@ class ico : Fragment(){
                     val twitterurl = jsonObject.getString("Twitter_URL")
                     val rating = jsonObject.getString("Rating")
                     val icocoin = Icocoin(iconame,telegramurl,website,mediumurl,crowdsale_date,icostatus,industry,icodescription,hardcap,softcap,twitterurl,rating)
+                    db.insertData(icocoin)
                     icocoins.add(icocoin)
                     c++
                 }

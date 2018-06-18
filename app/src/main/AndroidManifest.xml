@@ -65,6 +65,7 @@
         <service android:name=".Services.CoinsdbService" />
         <service android:name=".Services.BookmarksdbService" />
         <service android:name=".Services.IcodbService" />
+        <service android:name=".Services.IcomsgdbService" />
 
         <activity
             android:name=".SplashActivity"
