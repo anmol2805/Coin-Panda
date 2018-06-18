@@ -56,8 +56,8 @@ class ico : Fragment(){
             override fun onItemClick(pos: Int) {
                 val intent2 = Intent(activity,ScrollingActivity::class.java)
                 intent2.putExtra("iconame",icocoins[pos].ico_name)
-                val optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(activity!!,vi.findViewById(R.id.coinicon),"myimage")
-                startActivity(intent2,optionsCompat.toBundle())
+                //val optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(activity!!,vi.findViewById(R.id.coinicon),"myimage")
+                startActivity(intent2)
             }
 
         }
