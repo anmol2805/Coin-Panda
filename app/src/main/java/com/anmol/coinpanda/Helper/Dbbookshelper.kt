@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteCantOpenDatabaseException
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteDatabase.openOrCreateDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.database.sqlite.SQLiteReadOnlyDatabaseException
 import android.widget.Toast
 import com.anmol.coinpanda.Model.Allcoin
 import com.anmol.coinpanda.Model.Sqlcoin
@@ -62,6 +63,9 @@ class Dbbookshelper (context: Context):SQLiteOpenHelper(context, DB,null,1){
 
         }
         catch (e:SQLiteCantOpenDatabaseException){
+            e.printStackTrace()
+        }
+        catch (e:SQLiteReadOnlyDatabaseException){
             e.printStackTrace()
         }
         return tweets

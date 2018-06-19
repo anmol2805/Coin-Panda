@@ -193,7 +193,13 @@ class mycoins : Fragment(){
                 Toast.makeText(activity,"Unable to refresh tweets",Toast.LENGTH_SHORT).show()
 
             })
-            Mysingleton.getInstance(activity!!).addToRequestqueue(jsonObjectrefRequest)
+            try{
+                Mysingleton.getInstance(activity!!).addToRequestqueue(jsonObjectrefRequest)
+            }
+            catch (e:KotlinNullPointerException){
+                e.printStackTrace()
+            }
+
         },200)
 
         srl?.setOnRefreshListener {
