@@ -12,6 +12,8 @@ import android.widget.LinearLayout
 import android.widget.Toast
 import com.anmol.coinpanda.Fragments.*
 import com.anmol.coinpanda.Helper.Dbbookshelper
+import com.anmol.coinpanda.Services.BookmarksdbService
+import com.anmol.coinpanda.Services.TweetsdbService
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -21,7 +23,8 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.iid.FirebaseInstanceId
 import android.Manifest.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS
 import android.os.Build
-import com.anmol.coinpanda.Services.*
+import com.anmol.coinpanda.Services.IcodbService
+import com.anmol.coinpanda.Services.IcomsgdbService
 import org.jetbrains.anko.startActivityForResult
 
 
@@ -65,7 +68,7 @@ class Home2Activity : AppCompatActivity() {
             startService(intent2)
             val intent = Intent(this, TweetsdbService::class.java)
             startService(intent)
-            val intent4 = Intent(this, IcodbupdateService::class.java)
+            val intent4 = Intent(this, IcomsgdbService::class.java)
             startService(intent4)
             val dbb = Dbbookshelper(this)
             val bookmarkdata = dbb.readbook()
