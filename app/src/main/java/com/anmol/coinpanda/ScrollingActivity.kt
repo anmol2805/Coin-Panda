@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.view.View
 import android.widget.Toast
 import com.android.volley.Request
 import com.android.volley.Response
@@ -112,10 +113,18 @@ class ScrollingActivity : AppCompatActivity() {
                     }
                     x++
                 }
-                icotweetrefresh.isRefreshing = false
-                icomsgAdapter = IcomsgAdapter(this,icopins,itemClickListener)
-                icomsgAdapter!!.notifyDataSetChanged()
-                cointweetrecycler?.adapter = icomsgAdapter
+                if(icopins.isEmpty()){
+                    icotweetrefresh.isRefreshing = false
+                    scrollinglayout.visibility = View.INVISIBLE
+                }
+                else{
+                    icotweetrefresh.isRefreshing = false
+                    scrollinglayout.visibility = View.VISIBLE
+                    icomsgAdapter = IcomsgAdapter(this,icopins,itemClickListener)
+                    icomsgAdapter!!.notifyDataSetChanged()
+                    cointweetrecycler?.adapter = icomsgAdapter
+                }
+
 
             }, Response.ErrorListener {
                 icotweetrefresh.isRefreshing = false
@@ -148,10 +157,19 @@ class ScrollingActivity : AppCompatActivity() {
                     }
                     x++
                 }
-                icotweetrefresh.isRefreshing = false
-                icomsgAdapter = IcomsgAdapter(this,icopins,itemClickListener)
-                icomsgAdapter!!.notifyDataSetChanged()
-                cointweetrecycler?.adapter = icomsgAdapter
+
+                if(icopins.isEmpty()){
+                    icotweetrefresh.isRefreshing = false
+                    scrollinglayout.visibility = View.INVISIBLE
+                }
+                else{
+                    scrollinglayout.visibility = View.VISIBLE
+                    icotweetrefresh.isRefreshing = false
+                    icomsgAdapter = IcomsgAdapter(this,icopins,itemClickListener)
+                    icomsgAdapter!!.notifyDataSetChanged()
+                    cointweetrecycler?.adapter = icomsgAdapter
+                }
+
 
             }, Response.ErrorListener {
                 icotweetrefresh.isRefreshing = false
@@ -176,9 +194,16 @@ class ScrollingActivity : AppCompatActivity() {
                 }
                 c++
             }
-            icomsgAdapter = IcomsgAdapter(this,icopins,itemClickListener)
-            icomsgAdapter!!.notifyDataSetChanged()
-            cointweetrecycler?.adapter = icomsgAdapter
+            if(icopins.isEmpty()){
+                scrollinglayout.visibility = View.VISIBLE
+            }
+            else{
+                scrollinglayout.visibility = View.VISIBLE
+                icomsgAdapter = IcomsgAdapter(this,icopins,itemClickListener)
+                icomsgAdapter!!.notifyDataSetChanged()
+                cointweetrecycler?.adapter = icomsgAdapter
+            }
+
         }
         else{
             var c = 0
@@ -197,9 +222,16 @@ class ScrollingActivity : AppCompatActivity() {
                     db.insertData(icopin)
                     c++
                 }
-                icomsgAdapter = IcomsgAdapter(this,icopins,itemClickListener)
-                icomsgAdapter!!.notifyDataSetChanged()
-                cointweetrecycler?.adapter = icomsgAdapter
+                if(icopins.isEmpty()){
+                    scrollinglayout.visibility = View.INVISIBLE
+                }
+                else{
+                    scrollinglayout.visibility = View.VISIBLE
+                    icomsgAdapter = IcomsgAdapter(this,icopins,itemClickListener)
+                    icomsgAdapter!!.notifyDataSetChanged()
+                    cointweetrecycler?.adapter = icomsgAdapter
+                }
+
 
             }, Response.ErrorListener {
                 Toast.makeText(this,"Network Error!!! Please try again.",Toast.LENGTH_SHORT).show()
