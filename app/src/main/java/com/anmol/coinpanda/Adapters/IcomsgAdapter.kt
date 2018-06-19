@@ -14,6 +14,8 @@ import com.anmol.coinpanda.Interfaces.ItemClickListener
 import com.anmol.coinpanda.Model.*
 import com.anmol.coinpanda.R
 import com.bumptech.glide.Glide
+import java.text.SimpleDateFormat
+import java.util.*
 
 /**
  * Created by anmol on 2/27/2018.
@@ -61,8 +63,14 @@ class IcomsgAdapter(internal var c: Context, internal var icopins: MutableList<I
 
         //holder.coinname?.text = coindata.coin_symbol
         //holder.keyword?.text = "#" + coindata.keyword
-        holder.timestamp?.text = coindata.pinneddate
-        holder.timestamp1?.text = coindata.pinneddate
+        val oldFormatter = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+        oldFormatter.timeZone = TimeZone.getTimeZone("UTC")
+        val value = oldFormatter.parse(coindata.pinneddate)
+        val newFormatter = SimpleDateFormat("dd-MM-yyyy hh:mm a")
+        newFormatter.timeZone = TimeZone.getDefault()
+        val dueDateAsNormal = newFormatter.format(value)
+        holder.timestamp?.text = dueDateAsNormal
+        holder.timestamp1?.text = dueDateAsNormal
 
 //        val testurl = "https://twitter.com/" + coindata.coinpage + "/profile_image?size=original"
 //        println("testurltweets$testurl")

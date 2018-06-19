@@ -13,11 +13,17 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
+import com.anmol.coinpanda.Helper.COL_ICOPIN_ID
+import com.anmol.coinpanda.Helper.Dbicopinhelper
+import com.anmol.coinpanda.Helper.ICOPIN_NAME
+import com.anmol.coinpanda.Helper.ICOPIN_TABLE_NAME
 import com.anmol.coinpanda.Interfaces.ItemClickListener
 import com.anmol.coinpanda.Model.*
 import com.anmol.coinpanda.R
 import com.anmol.coinpanda.ScrollingActivity
 import com.bumptech.glide.Glide
+import java.text.SimpleDateFormat
+import java.util.*
 
 /**
  * Created by anmol on 2/27/2018.
@@ -35,6 +41,18 @@ class IcoAdapter(internal var c: Context, internal var icocoins: MutableList<Ico
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val coindata = icocoins[position]
+        val icocoinname = coindata.ico_name
+        val db = Dbicopinhelper(c)
+        val query = "Select * from $ICOPIN_TABLE_NAME WHERE $ICOPIN_NAME LIKE $icocoinname ORDER BY $COL_ICOPIN_ID DESC LIMIT 1"
+        val data = db.readData(query)
+        holder.mtweet?.text = data[0].pinned_messages
+        val oldFormatter = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+        oldFormatter.timeZone = TimeZone.getTimeZone("UTC")
+        val value = oldFormatter.parse(data[0].pinneddate)
+        val newFormatter = SimpleDateFormat("dd-MM-yyyy hh:mm a")
+        newFormatter.timeZone = TimeZone.getDefault()
+        val dueDateAsNormal = newFormatter.format(value)
+        holder.timestamp?.text = "Last updated:$dueDateAsNormal"
         //holder.mtweet?.text = coindata.
 //        holder.mtweet?.setOnClickListener {
 //            val url = tweets[position].url
