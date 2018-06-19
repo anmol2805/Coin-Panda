@@ -243,14 +243,26 @@ class ScrollingActivity : AppCompatActivity() {
             val url = intent.getStringExtra("telegramurl")
             val intent = Intent(Intent.ACTION_VIEW)
             intent.data = Uri.parse(url)
-            startActivity(intent)
+            try {
+                startActivity(intent)
+            }
+            catch (e:ActivityNotFoundException){
+                e.printStackTrace()
+            }
+
 
         }
         btnmedium.setOnClickListener{view ->
             val url = intent.getStringExtra("mediumurl")
             val intent = Intent(Intent.ACTION_VIEW)
             intent.data = Uri.parse(url)
-            startActivity(intent)
+            try{
+                startActivity(intent)
+            }
+            catch (e:ActivityNotFoundException){
+                e.printStackTrace()
+            }
+
 
         }
         btntwitter.setOnClickListener{
@@ -258,7 +270,13 @@ class ScrollingActivity : AppCompatActivity() {
             val url = intent.getStringExtra("twitterurl")
             val intent = Intent(Intent.ACTION_VIEW)
             intent.data = Uri.parse(url)
-            startActivity(intent)
+            try{
+                startActivity(intent)
+            }
+            catch (e:ActivityNotFoundException){
+                e.printStackTrace()
+            }
+
 
         }
         website.setOnClickListener {

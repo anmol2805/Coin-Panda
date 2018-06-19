@@ -115,6 +115,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:foreground="@drawable/ripple_effect"
                 android:orientation="vertical"
                 android:padding="5dp">
 

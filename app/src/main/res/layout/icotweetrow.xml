@@ -12,11 +12,13 @@
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         app:cardCornerRadius="8dp"
-        app:cardElevation="8dp">
+        app:cardElevation="12dp"
+        app:cardUseCompatPadding="false">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <Button
                 android:id="@+id/sharebtn1"
                 android:layout_width="20dp"
@@ -78,6 +80,7 @@
                 android:text="timestamp"
                 android:textSize="12sp"
                 android:textStyle="bold" />
+
             <TextView
                 android:id="@+id/time1"
                 android:layout_width="wrap_content"
@@ -89,6 +92,7 @@
                 android:text="timestamp"
                 android:textSize="12sp"
                 android:textStyle="bold" />
+
             <TextView
                 android:id="@+id/tweet"
                 android:layout_width="match_parent"

@@ -57,14 +57,21 @@ class IcoAdapter(internal var c: Context, internal var icocoins: MutableList<Ico
                 }
             x++
         }
-        holder.mtweet?.text = icopins[0].pinned_messages
-        val oldFormatter = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
-        oldFormatter.timeZone = TimeZone.getTimeZone("UTC")
-        val value = oldFormatter.parse(icopins[0].pinneddate)
-        val newFormatter = SimpleDateFormat("dd-MM-yyyy hh:mm a")
-        newFormatter.timeZone = TimeZone.getDefault()
-        val dueDateAsNormal = newFormatter.format(value)
-        holder.timestamp?.text = "Last updated:$dueDateAsNormal"
+        try{
+            holder.mtweet?.text = icopins[0].pinned_messages
+            val oldFormatter = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+            oldFormatter.timeZone = TimeZone.getTimeZone("UTC")
+            val value = oldFormatter.parse(icopins[0].pinneddate)
+            val newFormatter = SimpleDateFormat("dd-MM-yyyy hh:mm a")
+            newFormatter.timeZone = TimeZone.getDefault()
+            val dueDateAsNormal = newFormatter.format(value)
+            holder.timestamp?.text = "Last updated:$dueDateAsNormal"
+        }catch (e:IndexOutOfBoundsException){
+            holder.mtweet?.text = "No recent pinned messages available!!!"
+            holder.timestamp?.text = ""
+            e.printStackTrace()
+        }
+
         //holder.mtweet?.text = coindata.
 //        holder.mtweet?.setOnClickListener {
 //            val url = tweets[position].url
