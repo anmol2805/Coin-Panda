@@ -1,17 +1,22 @@
 package com.anmol.coinpanda.Adapters
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
+import android.support.v4.app.ActivityOptionsCompat
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.RelativeLayout
 import android.widget.TextView
 import com.anmol.coinpanda.Interfaces.ItemClickListener
 import com.anmol.coinpanda.Model.*
 import com.anmol.coinpanda.R
+import com.anmol.coinpanda.ScrollingActivity
 import com.bumptech.glide.Glide
 
 /**
@@ -58,6 +63,25 @@ class IcoAdapter(internal var c: Context, internal var icocoins: MutableList<Ico
         holder.keyword?.text = coindata.rating
         holder.industry?.text = coindata.industry
         Glide.with(c).load(coindata.twitter_url+ "/profile_image?size=original").into(holder.image)
+        
+        
+        holder.layout?.setOnClickListener { 
+            view ->
+            val intent2 = Intent(c, ScrollingActivity::class.java)
+            intent2.putExtra("iconame",icocoins[position].ico_name)
+            intent2.putExtra("telegramurl",icocoins[position].telegram_url)
+            intent2.putExtra("twitterurl",icocoins[position].twitter_url)
+            intent2.putExtra("mediumurl",icocoins[position].medium_url)
+            intent2.putExtra("websiteurl",icocoins[position].website)
+            intent2.putExtra("description",icocoins[position].icodescription)
+            intent2.putExtra("hardcap",icocoins[position].hardcap)
+            intent2.putExtra("softcap",icocoins[position].softcap)
+            intent2.putExtra("status",icocoins[position].ico_status)
+            intent2.putExtra("crowdsale",icocoins[position].crowdsale_date)
+            intent2.putExtra("industry",icocoins[position].industry)
+            val optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(c as Activity,holder.itemView.findViewById(R.id.coinicon),"myimage")
+            c.startActivity(intent2,optionsCompat.toBundle())
+        }
 //        val testurl = "https://twitter.com/" + coindata.coinpage + "/profile_image?size=original"
 //        println("testurltweets$testurl")
         //Glide.with(c).load(coindata.link).into(holder.image)
@@ -131,6 +155,7 @@ class IcoAdapter(internal var c: Context, internal var icocoins: MutableList<Ico
         var timestamp:TextView?=null
         var sharebtn:Button?=null
         var industry:TextView?=null
+        var layout:RelativeLayout?=null
         init {
             this.mtweet = itemView.findViewById(R.id.tweet)
             this.mcoin = itemView.findViewById(R.id.coin)
@@ -141,6 +166,7 @@ class IcoAdapter(internal var c: Context, internal var icocoins: MutableList<Ico
             this.timestamp = itemView.findViewById(R.id.time)
             this.sharebtn = itemView.findViewById(R.id.sharebtn)
             this.industry = itemView.findViewById(R.id.icoindustry)
+            this.layout = itemView.findViewById(R.id.layout)
             itemView.setOnClickListener(this)
         }
 

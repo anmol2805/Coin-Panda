@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:id="@+id/layout"
     android:foreground="?attr/selectableItemBackground"
     >
 
@@ -124,7 +125,6 @@
         android:layout_toLeftOf="@+id/bookmark"
         android:layout_toRightOf="@+id/coinlay"
         android:layout_toStartOf="@+id/bookmark"
-        android:autoLink="web"
         android:clickable="false"
         android:textSize="12sp"
         android:maxLines="2"

@@ -58,20 +58,20 @@ class ico : Fragment(){
 
         itemClickListener = object : ItemClickListener{
             override fun onItemClick(pos: Int) {
-                val intent2 = Intent(activity!!,ScrollingActivity::class.java)
-                intent2.putExtra("iconame",icocoins[pos].ico_name)
-                intent2.putExtra("telegramurl",icocoins[pos].telegram_url)
-                intent2.putExtra("twitterurl",icocoins[pos].twitter_url)
-                intent2.putExtra("mediumurl",icocoins[pos].medium_url)
-                intent2.putExtra("websiteurl",icocoins[pos].website)
-                intent2.putExtra("description",icocoins[pos].icodescription)
-                intent2.putExtra("hardcap",icocoins[pos].hardcap)
-                intent2.putExtra("softcap",icocoins[pos].softcap)
-                intent2.putExtra("status",icocoins[pos].ico_status)
-                intent2.putExtra("crowdsale",icocoins[pos].crowdsale_date)
-                intent2.putExtra("industry",icocoins[pos].industry)
-                val optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(activity!!,vi.findViewById(R.id.coinicon),"myimage")
-                startActivity(intent2,optionsCompat.toBundle())
+//                val intent2 = Intent(activity!!,ScrollingActivity::class.java)
+//                intent2.putExtra("iconame",icocoins[pos].ico_name)
+//                intent2.putExtra("telegramurl",icocoins[pos].telegram_url)
+//                intent2.putExtra("twitterurl",icocoins[pos].twitter_url)
+//                intent2.putExtra("mediumurl",icocoins[pos].medium_url)
+//                intent2.putExtra("websiteurl",icocoins[pos].website)
+//                intent2.putExtra("description",icocoins[pos].icodescription)
+//                intent2.putExtra("hardcap",icocoins[pos].hardcap)
+//                intent2.putExtra("softcap",icocoins[pos].softcap)
+//                intent2.putExtra("status",icocoins[pos].ico_status)
+//                intent2.putExtra("crowdsale",icocoins[pos].crowdsale_date)
+//                intent2.putExtra("industry",icocoins[pos].industry)
+//                val optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(activity!!,vi.findViewById(R.id.coinicon),"myimage")
+//                startActivity(intent2,optionsCompat.toBundle())
             }
 
         }
