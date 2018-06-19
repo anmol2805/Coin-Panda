@@ -50,7 +50,7 @@ class ico : Fragment(){
         srl = vi.findViewById(R.id.srl)
 
         icocoins = ArrayList()
-        val db = Dbicohelper(activity!!)
+
 
 
 
@@ -83,32 +83,39 @@ class ico : Fragment(){
             srl?.isRefreshing = true
             var c = 0
             val jsonArray = JsonArrayRequest(Request.Method.GET,"http://198.199.90.139/ico",null, Response.Listener {response ->
-                icocoins.clear()
-                while (c<response.length()){
-                    val jsonObject = response.getJSONObject(c)
-                    val iconame = jsonObject.getString("ICO_Name")
-                    val telegramurl = jsonObject.getString("Telegram_URL")
-                    val website = jsonObject.getString("Website")
-                    val mediumurl = jsonObject.getString("Medium_URL")
-                    val crowdsale_date = jsonObject.getString("Crowdsale_Date")
-                    val icostatus = jsonObject.getString("ICO_Status")
-                    val industry = jsonObject.getString("Industry")
-                    val icodescription = jsonObject.getString("Description")
-                    val hardcap = jsonObject.getString("Hardcap")
-                    val softcap = jsonObject.getString("Softcap")
-                    val twitterurl = jsonObject.getString("Twitter_URL")
-                    val rating = jsonObject.getString("Rating")
-                    val icocoin = Icocoin(iconame,telegramurl,website,mediumurl,crowdsale_date,icostatus,industry,icodescription,hardcap,softcap,twitterurl,rating)
-                    db.insertData(icocoin)
-                    c++
+                try{
+                    val db = Dbicohelper(activity!!)
+                    icocoins.clear()
+                    while (c<response.length()){
+                        val jsonObject = response.getJSONObject(c)
+                        val iconame = jsonObject.getString("ICO_Name")
+                        val telegramurl = jsonObject.getString("Telegram_URL")
+                        val website = jsonObject.getString("Website")
+                        val mediumurl = jsonObject.getString("Medium_URL")
+                        val crowdsale_date = jsonObject.getString("Crowdsale_Date")
+                        val icostatus = jsonObject.getString("ICO_Status")
+                        val industry = jsonObject.getString("Industry")
+                        val icodescription = jsonObject.getString("Description")
+                        val hardcap = jsonObject.getString("Hardcap")
+                        val softcap = jsonObject.getString("Softcap")
+                        val twitterurl = jsonObject.getString("Twitter_URL")
+                        val rating = jsonObject.getString("Rating")
+                        val icocoin = Icocoin(iconame,telegramurl,website,mediumurl,crowdsale_date,icostatus,industry,icodescription,hardcap,softcap,twitterurl,rating)
+                        db.insertData(icocoin)
+                        c++
+                    }
+                    val query ="Select * from $TABLE_ICO"
+                    val data = db.readData(query)
+                    icocoins = data
+                    srl?.isRefreshing = false
+                    icoAdapter = IcoAdapter(activity!!,icocoins,itemClickListener)
+                    icoAdapter!!.notifyDataSetChanged()
+                    cointweetrecycler?.adapter = icoAdapter
+
                 }
-                val query ="Select * from $TABLE_ICO"
-                val data = db.readData(query)
-                icocoins = data
-                srl?.isRefreshing = false
-                icoAdapter = IcoAdapter(activity!!,icocoins,itemClickListener)
-                icoAdapter!!.notifyDataSetChanged()
-                cointweetrecycler?.adapter = icoAdapter
+                catch (e:KotlinNullPointerException){
+                    e.printStackTrace()
+                }
 
             }, Response.ErrorListener {
                 srl?.isRefreshing = false
@@ -117,36 +124,45 @@ class ico : Fragment(){
             Mysingleton.getInstance(activity!!).addToRequestqueue(jsonArray)
 
         },200)
+
+
         srl?.setOnRefreshListener {
             srl?.isRefreshing = true
             var c = 0
             val jsonArray = JsonArrayRequest(Request.Method.GET,"http://198.199.90.139/ico",null, Response.Listener {response ->
-                icocoins.clear()
-                while (c<response.length()){
-                    val jsonObject = response.getJSONObject(c)
-                    val iconame = jsonObject.getString("ICO_Name")
-                    val telegramurl = jsonObject.getString("Telegram_URL")
-                    val website = jsonObject.getString("Website")
-                    val mediumurl = jsonObject.getString("Medium_URL")
-                    val crowdsale_date = jsonObject.getString("Crowdsale_Date")
-                    val icostatus = jsonObject.getString("ICO_Status")
-                    val industry = jsonObject.getString("Industry")
-                    val icodescription = jsonObject.getString("Description")
-                    val hardcap = jsonObject.getString("Hardcap")
-                    val softcap = jsonObject.getString("Softcap")
-                    val twitterurl = jsonObject.getString("Twitter_URL")
-                    val rating = jsonObject.getString("Rating")
-                    val icocoin = Icocoin(iconame,telegramurl,website,mediumurl,crowdsale_date,icostatus,industry,icodescription,hardcap,softcap,twitterurl,rating)
-                    db.insertData(icocoin)
-                    c++
+                try{
+                    val db = Dbicohelper(activity!!)
+                    icocoins.clear()
+                    while (c<response.length()){
+                        val jsonObject = response.getJSONObject(c)
+                        val iconame = jsonObject.getString("ICO_Name")
+                        val telegramurl = jsonObject.getString("Telegram_URL")
+                        val website = jsonObject.getString("Website")
+                        val mediumurl = jsonObject.getString("Medium_URL")
+                        val crowdsale_date = jsonObject.getString("Crowdsale_Date")
+                        val icostatus = jsonObject.getString("ICO_Status")
+                        val industry = jsonObject.getString("Industry")
+                        val icodescription = jsonObject.getString("Description")
+                        val hardcap = jsonObject.getString("Hardcap")
+                        val softcap = jsonObject.getString("Softcap")
+                        val twitterurl = jsonObject.getString("Twitter_URL")
+                        val rating = jsonObject.getString("Rating")
+                        val icocoin = Icocoin(iconame,telegramurl,website,mediumurl,crowdsale_date,icostatus,industry,icodescription,hardcap,softcap,twitterurl,rating)
+                        db.insertData(icocoin)
+                        c++
+                    }
+                    val query ="Select * from $TABLE_ICO"
+                    val data = db.readData(query)
+                    icocoins = data
+                    srl?.isRefreshing = false
+                    icoAdapter = IcoAdapter(activity!!,icocoins,itemClickListener)
+                    icoAdapter!!.notifyDataSetChanged()
+                    cointweetrecycler?.adapter = icoAdapter
+
                 }
-                val query ="Select * from $TABLE_ICO"
-                val data = db.readData(query)
-                icocoins = data
-                srl?.isRefreshing = false
-                icoAdapter = IcoAdapter(activity!!,icocoins,itemClickListener)
-                icoAdapter!!.notifyDataSetChanged()
-                cointweetrecycler?.adapter = icoAdapter
+                catch (e:KotlinNullPointerException){
+                    e.printStackTrace()
+                }
 
             }, Response.ErrorListener {
                 srl?.isRefreshing = false
@@ -154,45 +170,52 @@ class ico : Fragment(){
             })
             Mysingleton.getInstance(activity!!).addToRequestqueue(jsonArray)
         }
-        val query ="Select * from $TABLE_ICO"
-        val data = db.readData(query)
-        icocoins = data
-        if(!icocoins.isEmpty()){
-            icoAdapter = IcoAdapter(activity!!,icocoins,itemClickListener)
-            icoAdapter!!.notifyDataSetChanged()
-            cointweetrecycler?.adapter = icoAdapter
-        }
-        else{
-            var c = 0
-            val jsonArray = JsonArrayRequest(Request.Method.GET,"http://198.199.90.139/ico",null, Response.Listener {response ->
-                while (c<response.length()){
-                    val jsonObject = response.getJSONObject(c)
-                    val iconame = jsonObject.getString("ICO_Name")
-                    val telegramurl = jsonObject.getString("Telegram_URL")
-                    val website = jsonObject.getString("Website")
-                    val mediumurl = jsonObject.getString("Medium_URL")
-                    val crowdsale_date = jsonObject.getString("Crowdsale_Date")
-                    val icostatus = jsonObject.getString("ICO_Status")
-                    val industry = jsonObject.getString("Industry")
-                    val icodescription = jsonObject.getString("Description")
-                    val hardcap = jsonObject.getString("Hardcap")
-                    val softcap = jsonObject.getString("Softcap")
-                    val twitterurl = jsonObject.getString("Twitter_URL")
-                    val rating = jsonObject.getString("Rating")
-                    val icocoin = Icocoin(iconame,telegramurl,website,mediumurl,crowdsale_date,icostatus,industry,icodescription,hardcap,softcap,twitterurl,rating)
-                    db.insertData(icocoin)
-                    icocoins.add(icocoin)
-                    c++
-                }
+
+        try{
+            val db = Dbicohelper(activity!!)
+            val query ="Select * from $TABLE_ICO"
+            val data = db.readData(query)
+            icocoins = data
+            if(!icocoins.isEmpty()){
                 icoAdapter = IcoAdapter(activity!!,icocoins,itemClickListener)
                 icoAdapter!!.notifyDataSetChanged()
                 cointweetrecycler?.adapter = icoAdapter
+            }
+            else{
+                var c = 0
+                val jsonArray = JsonArrayRequest(Request.Method.GET,"http://198.199.90.139/ico",null, Response.Listener {response ->
+                    while (c<response.length()){
+                        val jsonObject = response.getJSONObject(c)
+                        val iconame = jsonObject.getString("ICO_Name")
+                        val telegramurl = jsonObject.getString("Telegram_URL")
+                        val website = jsonObject.getString("Website")
+                        val mediumurl = jsonObject.getString("Medium_URL")
+                        val crowdsale_date = jsonObject.getString("Crowdsale_Date")
+                        val icostatus = jsonObject.getString("ICO_Status")
+                        val industry = jsonObject.getString("Industry")
+                        val icodescription = jsonObject.getString("Description")
+                        val hardcap = jsonObject.getString("Hardcap")
+                        val softcap = jsonObject.getString("Softcap")
+                        val twitterurl = jsonObject.getString("Twitter_URL")
+                        val rating = jsonObject.getString("Rating")
+                        val icocoin = Icocoin(iconame,telegramurl,website,mediumurl,crowdsale_date,icostatus,industry,icodescription,hardcap,softcap,twitterurl,rating)
+                        db.insertData(icocoin)
+                        icocoins.add(icocoin)
+                        c++
+                    }
+                    icoAdapter = IcoAdapter(activity!!,icocoins,itemClickListener)
+                    icoAdapter!!.notifyDataSetChanged()
+                    cointweetrecycler?.adapter = icoAdapter
 
-            }, Response.ErrorListener {
-                Toast.makeText(activity!!,"Network Error!!! Please try again",Toast.LENGTH_SHORT).show()
-            })
-            Mysingleton.getInstance(activity!!).addToRequestqueue(jsonArray)
+                }, Response.ErrorListener {
+                    Toast.makeText(activity!!,"Network Error!!! Please try again",Toast.LENGTH_SHORT).show()
+                })
+                Mysingleton.getInstance(activity!!).addToRequestqueue(jsonArray)
+            }
+        }catch (e:KotlinNullPointerException){
+            e.printStackTrace()
         }
+
 
         return vi
     }
