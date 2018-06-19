@@ -66,6 +66,7 @@
         <service android:name=".Services.BookmarksdbService" />
         <service android:name=".Services.IcodbService" />
         <service android:name=".Services.IcomsgdbService" />
+        <service android:name=".Services.IcodbupdateService" />
 
         <activity
             android:name=".SplashActivity"

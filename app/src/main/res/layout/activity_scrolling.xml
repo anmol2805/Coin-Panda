@@ -56,7 +56,9 @@
                     android:layout_toRightOf="@+id/icolargeimg"
                     android:text="FANTOM is the world’s first DAG based smart contract platform that solves the issue of scalability and confirmation time of the existing blockchain technology."
                     android:textAlignment="center"
-
+                    android:ellipsize="marquee"
+                    android:maxLines="4"
+                    android:singleLine="false"
                     android:textColor="#fff"
                     android:textSize="12sp" />
 

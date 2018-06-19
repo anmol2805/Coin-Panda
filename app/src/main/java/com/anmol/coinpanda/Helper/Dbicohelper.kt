@@ -199,13 +199,24 @@ class Dbicohelper (context: Context):SQLiteOpenHelper(context, DATABASE_ICO,null
 //        return tweets
 //    }
 //
-//    fun updatetweet(sqltweet: Sqltweet){
-//        val db = this.writableDatabase
-//        val cv = ContentValues()
-//        cv.put(COL_BOOKMARK,sqltweet.booked)
-//        db.update(TABLE_NAME,cv,"$COL_ID = ?", arrayOf(sqltweet.tweetid))
-//        db.close()
-//    }
+    fun updatedata(icocoin: Icocoin){
+        val db = this.writableDatabase
+        val cv = ContentValues()
+    cv.put(COL_TELEGRAM,icocoin.telegram_url)
+    cv.put(COL_WEBSITE,icocoin.website)
+    cv.put(COL_MEDIUM_URL,icocoin.medium_url)
+    cv.put(COL_CROWDSALE_DATE,icocoin.crowdsale_date)
+    cv.put(COL_ICO_STATUS,icocoin.ico_status)
+    cv.put(COL_INDUSTRY,icocoin.industry)
+    cv.put(COL_DESCRIPTION,icocoin.icodescription)
+    cv.put(COL_HARDCAP,icocoin.hardcap)
+    cv.put(COL_SOFTCAP,icocoin.softcap)
+    cv.put(COL_TWITTER_URL,icocoin.twitter_url)
+    cv.put(COL_RATING,icocoin.rating)
+
+    db.update(TABLE_ICO,cv,"$COL_ICO_NAME = ?", arrayOf(icocoin.ico_name))
+        db.close()
+    }
 
 }
 
