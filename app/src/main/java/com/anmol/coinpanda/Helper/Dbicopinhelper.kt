@@ -5,6 +5,7 @@ import android.content.Context
 import android.database.sqlite.SQLiteCantOpenDatabaseException
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.database.sqlite.SQLiteReadOnlyDatabaseException
 import com.anmol.coinpanda.Model.Icopin
 import com.anmol.coinpanda.Model.Sqltweet
 import com.anmol.coinpanda.Model.Tweet
@@ -86,6 +87,9 @@ class Dbicopinhelper (context: Context):SQLiteOpenHelper(context, ICOPIN_NAME,nu
 
         }
         catch (e:SQLiteCantOpenDatabaseException){
+            e.printStackTrace()
+        }
+        catch (e:SQLiteReadOnlyDatabaseException){
             e.printStackTrace()
         }
         System.out.println("outside:$icopins")

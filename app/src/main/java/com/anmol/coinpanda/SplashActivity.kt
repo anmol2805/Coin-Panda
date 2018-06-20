@@ -1,9 +1,11 @@
 package com.anmol.coinpanda
 
+import android.app.Activity
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import android.support.v4.app.ActivityOptionsCompat
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
@@ -37,7 +39,8 @@ class SplashActivity : AppCompatActivity() {
                 val intent = Intent(this,LoginActivity::class.java)
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                startActivity(intent)
+                val optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(this,findViewById(R.id.logoimage),"logotransition")
+                startActivity(intent,optionsCompat.toBundle())
                 finish()
             },3000)
         }

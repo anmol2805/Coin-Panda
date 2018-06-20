@@ -5,6 +5,7 @@ import android.content.Context
 import android.database.sqlite.SQLiteCantOpenDatabaseException
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.database.sqlite.SQLiteReadOnlyDatabaseException
 import com.anmol.coinpanda.Model.Sqltweet
 import com.anmol.coinpanda.Model.Tweet
 
@@ -98,6 +99,9 @@ class Dbhelper (context: Context):SQLiteOpenHelper(context, DATABASE_NAME,null,1
 
         }
         catch (e:SQLiteCantOpenDatabaseException){
+            e.printStackTrace()
+        }
+        catch (e:SQLiteReadOnlyDatabaseException){
             e.printStackTrace()
         }
         System.out.println("outside:$tweets")

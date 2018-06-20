@@ -9,13 +9,15 @@
     >
 
     <ImageView
-        android:id="@+id/imageView5"
+        android:id="@+id/logoimage"
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:layout_centerHorizontal="true"
         android:layout_above="@+id/textView10"
         android:layout_marginBottom="20dp"
-        app:srcCompat="@drawable/alpha" />
+        app:srcCompat="@drawable/alpha"
+        android:transitionName="logotransition"
+        />
 
     <TextView
         android:id="@+id/textView10"
@@ -24,6 +26,7 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:text="CryptoHype"
+        android:transitionName="mytext"
         android:textColor="@color/colorAccent"
         android:textSize="20sp" />
     <Button
@@ -35,6 +38,7 @@
         android:layout_centerHorizontal="true"
         android:background="@drawable/common_google_signin_btn_text_light_focused"
         android:text="Sign in with Google"
+        android:foreground="@drawable/ripple_effect"
         android:textAppearance="@style/TextAppearance.AppCompat" />
 
 

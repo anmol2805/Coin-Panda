@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.transition.Transition;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -57,6 +58,36 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         setTitle("Login");
+        googleSignIn = (Button) findViewById(R.id.google_sign_in);
+        googleSignIn.setVisibility(View.INVISIBLE);
+        final Transition fade = getWindow().getEnterTransition();
+        fade.addListener(new Transition.TransitionListener() {
+            @Override
+            public void onTransitionStart(Transition transition) {
+
+            }
+
+            @Override
+            public void onTransitionEnd(Transition transition) {
+                googleSignIn.setVisibility(View.VISIBLE);
+                fade.removeListener(this);
+            }
+
+            @Override
+            public void onTransitionCancel(Transition transition) {
+
+            }
+
+            @Override
+            public void onTransitionPause(Transition transition) {
+
+            }
+
+            @Override
+            public void onTransitionResume(Transition transition) {
+
+            }
+        });
         pgr = (ProgressBar)findViewById(R.id.pgr);
         //Instantiate Google Login
         instantiateGoogleLogin();
@@ -64,7 +95,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     }
     private void instantiateGoogleLogin(){
 
-        googleSignIn = (Button) findViewById(R.id.google_sign_in);
+
 
         // Configure Google Sign In
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
