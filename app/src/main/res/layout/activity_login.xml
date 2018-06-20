@@ -68,6 +68,17 @@
         android:layout_marginTop="35dp"
         android:visibility="gone" />
 
+    <com.anmol.coinpanda.TypeWriter
+        android:id="@+id/typewriter"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/google_sign_in"
+        android:layout_marginTop="35dp"
+        android:textAlignment="center"
+        android:textColor="@color/colorPrimary"
+        />
+
     <!--<Button-->
         <!--android:id="@+id/loginmail"-->
         <!--android:layout_width="wrap_content"-->

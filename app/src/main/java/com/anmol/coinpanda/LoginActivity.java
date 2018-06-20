@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.transition.Transition;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -50,7 +52,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private static final int RC_SIGN_IN = 9001;
     private GoogleApiClient mGoogleApiClient;
     ProgressBar pgr;
-
+    Animation anim;
+    TypeWriter tw;
     //Data retrieved from social media method of sign in
 
     @Override
@@ -60,6 +63,9 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         setTitle("Login");
         googleSignIn = (Button) findViewById(R.id.google_sign_in);
         googleSignIn.setVisibility(View.INVISIBLE);
+        tw = (TypeWriter)findViewById(R.id.typewriter);
+        anim = AnimationUtils.loadAnimation(this,
+                R.anim.fade_in);
         final Transition fade = getWindow().getEnterTransition();
         fade.addListener(new Transition.TransitionListener() {
             @Override
@@ -69,7 +75,10 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
             @Override
             public void onTransitionEnd(Transition transition) {
-                googleSignIn.setVisibility(View.VISIBLE);
+                googleSignIn.startAnimation(anim);
+                tw.setText("");
+                tw.setCharacterDelay(150);
+                tw.animateText("Please login to keep CryptoNews at your fingertips.");
                 fade.removeListener(this);
             }
 
@@ -290,7 +299,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        finish();
+        finishAndRemoveTask();
         overridePendingTransition(R.anim.still,R.anim.slide_out_down);
     }
 }

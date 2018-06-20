@@ -37,11 +37,11 @@ class SplashActivity : AppCompatActivity() {
             val handler = Handler()
             handler.postDelayed({
                 val intent = Intent(this,LoginActivity::class.java)
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+//                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+//                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
                 val optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(this,findViewById(R.id.logoimage),"logotransition")
                 startActivity(intent,optionsCompat.toBundle())
-                finish()
+                //finishAfterTransition()
             },3000)
         }
 
@@ -67,10 +67,10 @@ class SplashActivity : AppCompatActivity() {
 
     }
 
-    override fun onPause() {
-        // TODO Auto-generated method stub
-        super.onPause()
-        finish()
-        overridePendingTransition(R.anim.still, R.anim.slide_in_up)
-    }
+//    override fun onPause() {
+//        // TODO Auto-generated method stub
+//        super.onPause()
+//        finishAfterTransition()
+//        //overridePendingTransition(R.anim.still, R.anim.slide_in_up)
+//    }
 }
