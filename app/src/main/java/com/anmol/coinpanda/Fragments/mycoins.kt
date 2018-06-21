@@ -190,8 +190,9 @@ class mycoins : Fragment(){
                 }
             }, Response.ErrorListener {
                 srl?.isRefreshing = false
-                Toast.makeText(activity,"Unable to refresh tweets",Toast.LENGTH_SHORT).show()
-
+                if(activity!=null){
+                    Toast.makeText(activity,"Unable to refresh tweets",Toast.LENGTH_SHORT).show()
+                }
             })
             try{
                 Mysingleton.getInstance(activity!!).addToRequestqueue(jsonObjectrefRequest)

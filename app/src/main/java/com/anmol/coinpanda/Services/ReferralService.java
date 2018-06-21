@@ -25,7 +25,7 @@ public class ReferralService extends IntentService {
         FirebaseAuth auth = FirebaseAuth.getInstance();
         final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("users");
         final Map<String,Object> map = new HashMap<>();
-        map.put(auth.getCurrentUser().getUid(),random());
+        map.put(random(),auth.getCurrentUser().getUid());
         databaseReference.child(auth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -44,7 +44,7 @@ public class ReferralService extends IntentService {
     public static String random() {
         Random generator = new Random();
         StringBuilder randomStringBuilder = new StringBuilder();
-        int randomLength = generator.nextInt(10);
+        int randomLength = generator.nextInt(16);
         char tempChar;
         for (int i = 0; i < randomLength; i++){
             tempChar = (char) (generator.nextInt(96) + 32);
