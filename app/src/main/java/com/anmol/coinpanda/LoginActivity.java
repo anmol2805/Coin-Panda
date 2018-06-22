@@ -125,49 +125,92 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         refersubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String referalcode = refercode.getText().toString();
+                final String referalcode = refercode.getText().toString();
                 final DatabaseReference  databaseReference = FirebaseDatabase.getInstance().getReference();
-                databaseReference.child("users").child(referalcode).addValueEventListener(new ValueEventListener() {
+                databaseReference.child("users").addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        if(dataSnapshot.exists()){
-                            if(!Objects.equals(dataSnapshot.getValue(String.class), mAuth.getCurrentUser().getUid())){
-                                final String referrerid = dataSnapshot.getValue(String.class);
-                                final Map<String,Object> map = new HashMap<>();
-                                map.put(mAuth.getCurrentUser().getUid(),true);
-                                databaseReference.child("referrers").child(referrerid).setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
-                                        databaseReference.child("referrers").child(referrerid).child("count").addListenerForSingleValueEvent(new ValueEventListener() {
-                                            @Override
-                                            public void onDataChange(DataSnapshot dataSnapshot) {
-                                                if(dataSnapshot.exists()){
-                                                    Integer counter = dataSnapshot.getValue(Integer.class);
-                                                    counter = counter + 1;
+                        for(DataSnapshot data:dataSnapshot.getChildren()){
+                            if(data.getValue(String.class).equals(referalcode)){
+                                if(!data.getKey().equals(mAuth.getCurrentUser().getUid())){
+                                    final String referrerid = data.getKey();
+                                    final Map<String,Object> map = new HashMap<>();
+                                    map.put(mAuth.getCurrentUser().getUid(),true);
+                                    databaseReference.child("referrers").child(referrerid).updateChildren(map).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            databaseReference.child("referrers").child(referrerid).addListenerForSingleValueEvent(new ValueEventListener() {
+                                                @Override
+                                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                                    long k = dataSnapshot.getChildrenCount();
                                                     Map<String,Object> map1 = new HashMap<>();
-                                                    map1.put("count",counter);
-                                                    databaseReference.child("referrers").child(referrerid).setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                        @Override
-                                                        public void onComplete(@NonNull Task<Void> task) {
-                                                            Intent intent = new Intent(LoginActivity.this,LoadingActivity.class);
-                                                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                                            startActivity(intent);
-                                                            finish();
-                                                            overridePendingTransition(R.anim.slide_left_in,R.anim.slide_left_out);
-                                                        }
-                                                    });
+                                                    map1.put("count",k-1);
+                                                    databaseReference.child("referrers").child(referrerid).updateChildren(map1)
+                                                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                                @Override
+                                                                public void onComplete(@NonNull Task<Void> task) {
+                                                                    Intent intent = new Intent(LoginActivity.this,LoadingActivity.class);
+                                                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                                                    startActivity(intent);
+                                                                    finish();
+                                                                    overridePendingTransition(R.anim.slide_left_in,R.anim.slide_left_out);
+                                                                }
+                                                            });
                                                 }
-                                            }
 
-                                            @Override
-                                            public void onCancelled(DatabaseError databaseError) {
+                                                @Override
+                                                public void onCancelled(DatabaseError databaseError) {
 
-                                            }
-                                        });
-                                    }
-                                });
+                                                }
+                                            });
+//                                            databaseReference.child("referrers").child(referrerid).child("count").addListenerForSingleValueEvent(new ValueEventListener() {
+//                                                @Override
+//                                                public void onDataChange(DataSnapshot dataSnapshot) {
+//                                                    if(dataSnapshot.exists()){
+//                                                        Integer counter = dataSnapshot.getValue(Integer.class);
+//                                                        counter = counter + 1;
+//                                                        Map<String,Object> map1 = new HashMap<>();
+//                                                        map1.put("count",counter);
+//                                                        databaseReference.child("referrers").child(referrerid).updateChildren(map1).addOnCompleteListener(new OnCompleteListener<Void>() {
+//                                                            @Override
+//                                                            public void onComplete(@NonNull Task<Void> task) {
+//
+//                                                            }
+//                                                        });
+//                                                    }
+//                                                    else{
+//                                                        Map<String,Object> map1 = new HashMap<>();
+//                                                        map1.put("count",1);
+//                                                        databaseReference.child("referrers").child(referrerid).updateChildren(map1).addOnCompleteListener(new OnCompleteListener<Void>() {
+//                                                            @Override
+//                                                            public void onComplete(@NonNull Task<Void> task) {
+//                                                                Intent intent = new Intent(LoginActivity.this,LoadingActivity.class);
+//                                                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                                                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//                                                                startActivity(intent);
+//                                                                finish();
+//                                                                overridePendingTransition(R.anim.slide_left_in,R.anim.slide_left_out);
+//                                                            }
+//                                                        });
+//                                                    }
+//                                                }
+//
+//                                                @Override
+//                                                public void onCancelled(DatabaseError databaseError) {
+//
+//                                                }
+//                                            });
+                                        }
+                                    });
+                                }
+                                else{
+                                    System.out.println("refererror internal");
+                                    Toast.makeText(LoginActivity.this,"Invalid referral code",Toast.LENGTH_SHORT).show();
+                                }
                             }
+
+
                         }
                     }
 
@@ -176,6 +219,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
                     }
                 });
+
             }
         });
         skip.setOnClickListener(new View.OnClickListener() {
@@ -342,6 +386,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
+                    googleSignIn.setVisibility(View.GONE);
                     referlayout.startAnimation(anim);
                 }
             },1000);

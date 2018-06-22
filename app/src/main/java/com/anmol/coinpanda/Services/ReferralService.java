@@ -25,13 +25,14 @@ public class ReferralService extends IntentService {
         FirebaseAuth auth = FirebaseAuth.getInstance();
         final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("users");
         final Map<String,Object> map = new HashMap<>();
-        map.put(random(),auth.getCurrentUser().getUid());
+        map.put(auth.getCurrentUser().getUid(),random());
         databaseReference.child(auth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if(!dataSnapshot.exists()){
-                    databaseReference.setValue(map);
+                    databaseReference.updateChildren(map);
                 }
+
             }
 
             @Override
