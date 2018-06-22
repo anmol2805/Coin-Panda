@@ -12,6 +12,8 @@ import com.anmol.coinpanda.R
 import android.net.Uri
 import android.widget.*
 import com.anmol.coinpanda.SupportActivity
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.*
 import com.google.firebase.firestore.FirebaseFirestore
 
 
@@ -26,6 +28,8 @@ class settings : Fragment() {
     var share : Button? = null
     var help : Button? = null
     var facebook:Button?=null
+    var sharereferral:Button?=null
+    var referralcount:TextView?=null
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val vi = inflater.inflate(R.layout.settings,
                 container, false)
@@ -151,7 +155,47 @@ class settings : Fragment() {
             }
 
         }
+        val auth = FirebaseAuth.getInstance()
+        val db = FirebaseDatabase.getInstance().reference
+        db.child("users").child(auth.currentUser!!.uid).addValueEventListener(object:ValueEventListener{
+            override fun onCancelled(p0: DatabaseError?) {
 
+            }
+
+            override fun onDataChange(p0: DataSnapshot?) {
+                if(p0!!.exists()){
+                    sharereferral?.text = p0.value.toString()
+                    sharereferral?.setOnClickListener{
+                        view ->
+                        val shareintent = Intent()
+                        shareintent.action = Intent.ACTION_SEND
+                        shareintent.type = "text/plain"
+                        shareintent.putExtra(Intent.EXTRA_TEXT,"https://play.google.com/store/apps/details?id=com.anmol.coinpanda" + " to download the CryptoHype app and use my code " + p0.value.toString() + " after login.")
+                        startActivity(Intent.createChooser(shareintent,"Share code via..."))
+                    }
+                }
+                else{
+                    sharereferral?.visibility = View.GONE
+                }
+            }
+
+        })
+
+        db.child("referrers").child(auth.currentUser!!.uid).child("count").addValueEventListener(object:ValueEventListener{
+            override fun onCancelled(p0: DatabaseError?) {
+
+            }
+
+            override fun onDataChange(p0: DataSnapshot?) {
+                if(p0!!.exists()){
+                    referralcount?.text = p0.value.toString()
+                }
+                else{
+                    referralcount?.text = "0"
+                }
+            }
+
+        })
         return vi
     }
 
