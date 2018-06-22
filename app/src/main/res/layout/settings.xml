@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:layout_marginBottom="50dp"
     >
 
 
@@ -20,102 +21,199 @@
         android:fontFamily="monospace"
         android:background="@color/colorPrimary"
         />
-
-    <Button
-        android:id="@+id/telegram"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Join our Telegram Channel"
-        android:textAlignment="viewStart"
-        android:layout_gravity="start"
-        android:background="#fff"
-        android:paddingLeft="20dp"
-        android:drawablePadding="10dp"
-        android:drawableLeft="@drawable/layer"
-        />
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+            <Button
+                android:id="@+id/telegram"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Join our Telegram Channel"
+                android:textAlignment="viewStart"
+                android:layout_gravity="start"
+                android:background="#fff"
+                android:paddingLeft="20dp"
+                android:drawablePadding="10dp"
+                android:drawableLeft="@drawable/layer"
+                />
 
-    <Button
-        android:id="@+id/review"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Review this app"
-        android:textAlignment="viewStart"
-        android:layout_gravity="start"
-        android:background="#fff"
-        android:drawablePadding="10dp"
+            <Button
+                android:id="@+id/review"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Review this app"
+                android:textAlignment="viewStart"
+                android:layout_gravity="start"
+                android:background="#fff"
+                android:drawablePadding="10dp"
 
-        android:drawableLeft="@drawable/layerreview"
-        android:paddingLeft="20dp"/>
-    <Button
-        android:id="@+id/likefb"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Like our facebook page"
-        android:layout_marginBottom="10dp"
-        android:textAlignment="viewStart"
-        android:layout_gravity="start"
-        android:background="#fff"
-        android:drawablePadding="10dp"
+                android:drawableLeft="@drawable/layerreview"
+                android:paddingLeft="20dp"/>
+            <Button
+                android:id="@+id/likefb"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Like our facebook page"
+                android:layout_marginBottom="10dp"
+                android:textAlignment="viewStart"
+                android:layout_gravity="start"
+                android:background="#fff"
+                android:drawablePadding="10dp"
 
-        android:drawableLeft="@drawable/facebook96"
-        android:paddingLeft="15dp"/>
-    <Button
-        android:id="@+id/request"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Add new coin to our radar"
-        android:layout_marginBottom="10dp"
-        android:textAlignment="viewStart"
-        android:layout_gravity="start"
-        android:background="#fff"
-        android:drawablePadding="10dp"
+                android:drawableLeft="@drawable/facebook96"
+                android:paddingLeft="15dp"/>
+            <Button
+                android:id="@+id/request"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Add new coin to our radar"
+                android:layout_marginBottom="10dp"
+                android:textAlignment="viewStart"
+                android:layout_gravity="start"
+                android:background="#fff"
+                android:drawablePadding="10dp"
 
-        android:drawableLeft="@drawable/layerreq"
-        android:paddingLeft="20dp"
-        />
+                android:drawableLeft="@drawable/layerreq"
+                android:paddingLeft="20dp"
+                />
 
-    <Button
-        android:id="@+id/donate"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Show us some love !!!"
-        android:textAlignment="viewStart"
-        android:layout_gravity="start"
-        android:background="#fff"
-        android:drawablePadding="10dp"
+            <Button
+                android:id="@+id/donate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Show us some love !!!"
+                android:textAlignment="viewStart"
+                android:layout_gravity="start"
+                android:background="#fff"
+                android:drawablePadding="10dp"
 
-        android:drawableLeft="@drawable/layerdonate"
-        android:paddingLeft="20dp"
-        />
+                android:drawableLeft="@drawable/layerdonate"
+                android:paddingLeft="20dp"
+                />
 
 
-    <Button
-        android:id="@+id/share"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Share the App"
-        android:textAlignment="viewStart"
-        android:layout_gravity="start"
-        android:background="#fff"
-        android:paddingLeft="20dp"
-        android:drawablePadding="10dp"
+            <Button
+                android:id="@+id/share"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Share the App"
+                android:textAlignment="viewStart"
+                android:layout_gravity="start"
+                android:background="#fff"
+                android:paddingLeft="20dp"
+                android:drawablePadding="10dp"
 
-        android:drawableLeft="@drawable/layershare"
-        />
+                android:drawableLeft="@drawable/layershare"
+                />
 
-    <Button
-        android:id="@+id/support"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Support"
-        android:textAlignment="viewStart"
-        android:layout_gravity="start"
-        android:background="#fff"
-        android:paddingLeft="20dp"
-        android:drawablePadding="10dp"
+            <Button
+                android:id="@+id/support"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Support"
+                android:textAlignment="viewStart"
+                android:layout_gravity="start"
+                android:background="#fff"
+                android:paddingLeft="20dp"
+                android:drawablePadding="10dp"
 
-        android:drawableLeft="@drawable/layerhelp"
+                android:drawableLeft="@drawable/layerhelp"
 
-        />
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textView16"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="We are going to airdrop 10-50 tokens of 5 blockchain projects, ICOs every month"
+                    android:textAlignment="center"
+                    android:textColor="#000"
+                    android:textSize="12sp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    />
+                <TextView
+                    android:id="@+id/textView17"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Refer your friends to earn these airdrops"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorPrimary"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    />
+
+                <TextView
+                    android:id="@+id/textView18"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginStart="5dp"
+                    android:fontFamily="monospace"
+                    android:text="Share referral code"
+                    android:textAlignment="center"
+                    android:textColor="#000"
+                    android:textSize="12sp" />
+
+                <Button
+                    android:id="@+id/sharereferral"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:background="#fff"
+                    android:drawableRight="@drawable/layershare"
+                    android:drawablePadding="10dp"
+                    android:paddingRight="20dp"
+                    android:paddingLeft="20dp"
+                    android:drawableLeft="@drawable/layershare"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:textAlignment="center" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="5dp"
+                    >
+
+                    <TextView
+                        android:id="@+id/textView19"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:paddingLeft="20dp"
+                        android:text="Your referral count is: "
+
+                        android:textColor="#000" />
+
+                    <TextView
+                        android:id="@+id/referralcount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="monospace"
+                        android:text="5"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+
 
 </LinearLayout>
