@@ -73,8 +73,7 @@ class Home2Activity : AppCompatActivity() {
             startService(intent6)
             val intent7 = Intent(this, TopicsshiftingService::class.java)
             startService(intent7)
-            val intent8 = Intent(this, TopicsService::class.java)
-            startService(intent8)
+
             val dbb = Dbbookshelper(this)
             val bookmarkdata = dbb.readbook()
             if(bookmarkdata.isEmpty()){

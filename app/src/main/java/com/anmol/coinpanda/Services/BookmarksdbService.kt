@@ -17,6 +17,7 @@ import com.anmol.coinpanda.Model.Sqlcoin
 import com.anmol.coinpanda.Model.Sqltweet
 import com.anmol.coinpanda.Mysingleton
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.*
 import com.google.firebase.firestore.FirebaseFirestore
 import org.json.JSONException
 import org.json.JSONObject
@@ -28,14 +29,25 @@ class BookmarksdbService : IntentService("BookmarksdbService") {
     override fun onHandleIntent(intent: Intent?) {
         val db = FirebaseFirestore.getInstance()
         val auth = FirebaseAuth.getInstance()
+        val databaseReference = FirebaseDatabase.getInstance().reference.child("database").child(auth.currentUser!!.uid).child("bookmarks")
         val dbb = Dbbookshelper(baseContext)
-        db.collection("users").document(auth.currentUser!!.uid).collection("bookmarks").get().addOnCompleteListener {
-            task ->
-            for (doc in task.result.documents){
-                val tweetid = doc.id
-                dbb.insertData(tweetid)
+        databaseReference.addValueEventListener(object :ValueEventListener{
+            override fun onCancelled(p0: DatabaseError?) {
+
             }
 
-        }
+            override fun onDataChange(p0: DataSnapshot?) {
+                if(p0!!.exists()){
+                    for(data in p0.children){
+                        val tweetid = data.key
+                        System.out.println("realdbtesting:$tweetid")
+                        dbb.insertData(tweetid)
+                    }
+                }
+
+            }
+
+        })
+
     }
 }
