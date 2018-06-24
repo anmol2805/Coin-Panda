@@ -70,6 +70,7 @@
         <service android:name=".Services.ReferralService" />
         <service android:name=".Services.CoinsshiftingService" />
         <service android:name=".Services.BookmarksshiftingService" />
+        <service android:name=".Services.TopicsshiftingService" />
 
         <activity
             android:name=".SplashActivity"
