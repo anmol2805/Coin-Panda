@@ -28,6 +28,7 @@ import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FirebaseFirestore
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -49,6 +50,8 @@ class TweetsAdapter(internal var c: Context, internal var tweets: List<Tweet>, p
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
+        val auth = FirebaseAuth.getInstance()
+        val databaseReference = FirebaseDatabase.getInstance().reference.child("database").child(auth.currentUser!!.uid).child("bookmarks")
         val coindata = tweets[position] 
         holder.mtweet?.text = coindata.tweet
         holder.mtweet?.setOnClickListener {
@@ -113,10 +116,11 @@ class TweetsAdapter(internal var c: Context, internal var tweets: List<Tweet>, p
 //                    val sqltweet = Sqltweet(tweets[position].coin,tweets[position].coin_symbol,tweets[position].tweet,tweets[position].url,tweets[position].keyword,tweets[position].tweetid,tweets[position].dates,tweets[position].coin_symbol,mytweet,0)
 //                    dbc.updatetweet(sqltweet)
                     Glide.with(c).load(R.drawable.starunfilled).into(holder.bookmark)
-                    val auth = FirebaseAuth.getInstance()
-                    db.collection("users").document(auth.currentUser!!.uid).collection("bookmarks").document(coindata.tweetid!!).delete().addOnSuccessListener {
+
+                    databaseReference.child(tweets[position].tweetid!!).removeValue().addOnCompleteListener {
                         Glide.with(c).load(R.drawable.starunfilled).into(holder.bookmark)
                     }
+
                 }
                 else{
                     dbb.insertData(tweets[position].tweetid!!)
@@ -124,11 +128,12 @@ class TweetsAdapter(internal var c: Context, internal var tweets: List<Tweet>, p
 //                    dbc.updatetweet(sqltweet)
                     Glide.with(c).load(R.drawable.starfilled).into(holder.bookmark)
                     val map = HashMap<String,Any>()
-                    map["bookmark"] = true
-                    val auth = FirebaseAuth.getInstance()
-                    db.collection("users").document(auth.currentUser!!.uid).collection("bookmarks").document(coindata.tweetid!!).set(map).addOnSuccessListener {
+                    map[tweets[position].tweetid!!] = true
+                    databaseReference.updateChildren(map).addOnCompleteListener {
                         Glide.with(c).load(R.drawable.starfilled).into(holder.bookmark)
                     }
+
+
                 }
 
             }
