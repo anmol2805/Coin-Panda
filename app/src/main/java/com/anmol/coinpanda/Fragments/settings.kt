@@ -159,14 +159,18 @@ class settings : Fragment() {
         val db = FirebaseDatabase.getInstance().reference
         db.child("users").child(auth.currentUser!!.uid).addValueEventListener(object:ValueEventListener{
             override fun onCancelled(p0: DatabaseError?) {
-
+                System.out.println("Referralerror$p0")
             }
 
             override fun onDataChange(p0: DataSnapshot?) {
                 if(p0!!.exists()){
-                    sharereferral?.text = p0.value.toString()
+                    System.out.println("Referralerror$p0")
+                    val refercode:String = p0.value as String
+                    sharereferral?.text = "code"
+                    sharereferral?.text = refercode
+                    System.out.println("Referralerror${p0.value}")
                     sharereferral?.setOnClickListener{
-                        view ->
+
                         val shareintent = Intent()
                         shareintent.action = Intent.ACTION_SEND
                         shareintent.type = "text/plain"
@@ -188,7 +192,10 @@ class settings : Fragment() {
 
             override fun onDataChange(p0: DataSnapshot?) {
                 if(p0!!.exists()){
-                    referralcount?.text = p0.value.toString()
+                    val refercount:Long = p0.value as Long
+                    System.out.println("Referralerror${p0.value}")
+                    referralcount?.text = "abc"
+                    referralcount?.text = refercount.toString()
                 }
                 else{
                     referralcount?.text = "0"

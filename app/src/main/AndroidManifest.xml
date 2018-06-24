@@ -68,6 +68,8 @@
         <service android:name=".Services.IcomsgdbService" />
         <service android:name=".Services.IcodbupdateService" />
         <service android:name=".Services.ReferralService" />
+        <service android:name=".Services.CoinsshiftingService" />
+        <service android:name=".Services.BookmarksshiftingService" />
 
         <activity
             android:name=".SplashActivity"
