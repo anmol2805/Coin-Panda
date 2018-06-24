@@ -23,14 +23,14 @@ import org.json.JSONObject
 import java.util.ArrayList
 
 
-class TopicsshiftingService : IntentService("TopicsshiftingService") {
+class TopicsService : IntentService("TopicsService") {
 
     override fun onHandleIntent(intent: Intent?) {
 
         val db = FirebaseFirestore.getInstance()
         val auth = FirebaseAuth.getInstance()
-        val databaseReference = FirebaseDatabase.getInstance().reference.child("database").child(auth.currentUser!!.uid).child("topics")
-        db.collection("users").document(auth.currentUser!!.uid).collection("topics").get().addOnCompleteListener {
+        val databaseReference = FirebaseDatabase.getInstance().reference.child("topics")
+        db.collection("topics").get().addOnCompleteListener {
             task ->
             val documentSnapshot = task.result
 
@@ -38,13 +38,12 @@ class TopicsshiftingService : IntentService("TopicsshiftingService") {
 
             if(s!=0){
                 for(doc in documentSnapshot){
-                    val coinname = doc.getString("coinname")
+                    val coin_symbol = doc.getString("coin_symbol")
+                    val count = doc.getLong("count")
                     val map = HashMap<String,Any>()
-                    map["coinname"] = coinname!!
-                    databaseReference.child(doc.id).setValue(map).addOnCompleteListener {
-                        db.collection("users").document(auth.currentUser!!.uid).collection("topics")
-                                .document(doc.id).delete()
-                    }
+                    map["coin_symbol"] = coin_symbol!!
+                    map["count"] = count!!
+                    databaseReference.child(doc.id).setValue(map)
                 }
 
 
