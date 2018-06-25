@@ -1,9 +1,268 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".ReferralDetailsActivity">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimary"
+                android:fontFamily="monospace"
+                android:padding="10dp"
+                android:text="Monthly Community Airdrop"
+                android:textAlignment="center"
+                android:textColor="#fff"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
-</android.support.constraint.ConstraintLayout>
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="2dp"
+
+                >
+
+                <LinearLayout
+                    android:padding="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/textView16"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Your Referral Count:  "
+                        android:textColor="#000"
+                        android:layout_gravity="center"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/referralcount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="5"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+            <Button
+                android:id="@+id/request"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="YOur referral code:vdfbv"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="5dp"
+                android:textAlignment="viewStart"
+                android:layout_gravity="start"
+                android:background="#fff"
+                android:drawablePadding="10dp"
+                android:paddingLeft="5dp"
+                android:drawableRight="@drawable/shareapp"
+                android:paddingRight="20dp"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimary"
+                android:fontFamily="monospace"
+                android:padding="10dp"
+                android:text="About Airdrop"
+                android:textAlignment="center"
+                android:textColor="#fff"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#fff"
+
+                android:padding="10dp"
+                android:text="we are dedicated to legit official news and alerts for the community.
+Our ML algorithms find the right information for you and filter out the Jargon.
+We are empowering a strong community of crypto enthusiasts who need quality news
+and information."
+                android:textAlignment="center"
+                android:textColor="#000"
+                />
+            <LinearLayout
+                android:padding="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Airdrop Date: "
+                    android:textColor="#000"
+                    android:layout_gravity="center"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/airdropdate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="5"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+
+            </LinearLayout>
+            <LinearLayout
+                android:padding="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Token: "
+                    android:textColor="#000"
+                    android:layout_gravity="center"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/token"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="5"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+
+            </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Steps:-"
+                android:textColor="#000"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:padding="5dp"
+                android:background="#fff"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="1. Click on the above button to share your code.
+2.Your referral count increases as your friend downloads and uses the app.
+3. Referral as many as you can to increase chances of AIRDROP
+4. Fill your eth and neo wallet address in the settings menu."
+                android:padding="5dp"
+                android:background="#fff"
+                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="#fff"
+                >
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/eth"
+                    android:layout_weight="1"
+                    >
+                    <EditText
+                        android:id="@+id/ethaddress"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginHorizontal="10dp"
+                        android:hint="Ethereum Address"
+
+                        android:inputType="text"
+                        android:textAlignment="center"
+                        android:textColor="#000"
+                        android:textColorHint="@color/colorPrimary"
+                        />
+
+
+                </android.support.design.widget.TextInputLayout>
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="submit"
+                    android:layout_gravity="center"
+                    android:background="#fff"
+                    android:foreground="@drawable/ripple_effect"
+                    android:id="@+id/ethsubmit"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#fff"
+                >
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/neo"
+                    android:layout_weight="1"
+                    >
+                    <EditText
+                        android:id="@+id/neoaddress"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginHorizontal="10dp"
+                        android:hint="Neo Address"
+
+                        android:inputType="text"
+                        android:textAlignment="center"
+                        android:textColor="#000"
+                        android:textColorHint="@color/colorPrimary"
+                        />
+
+
+                </android.support.design.widget.TextInputLayout>
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="submit"
+                    android:foreground="@drawable/ripple_effect"
+                    android:layout_gravity="center"
+                    android:background="#fff"
+                    android:id="@+id/neosubmit"
+                    />
+            </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimary"
+
+                android:padding="10dp"
+                android:text="Do not worry, we are air dropping everymonth"
+                android:textAlignment="center"
+                android:textColor="#fff"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>
