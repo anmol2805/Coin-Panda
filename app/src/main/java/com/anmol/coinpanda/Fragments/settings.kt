@@ -157,54 +157,6 @@ class settings : Fragment() {
             }
 
         }
-//        val auth = FirebaseAuth.getInstance()
-//        val db = FirebaseDatabase.getInstance().reference
-//        db.child("users").child(auth.currentUser!!.uid).addValueEventListener(object:ValueEventListener{
-//            override fun onCancelled(p0: DatabaseError?) {
-//                System.out.println("Referralerror$p0")
-//            }
-//
-//            override fun onDataChange(p0: DataSnapshot?) {
-//                if(p0!!.exists()){
-//                    System.out.println("Referralerror$p0")
-//                    val refercode:String = p0.value as String
-//                    sharereferral?.text = "code"
-//                    sharereferral?.text = refercode
-//                    System.out.println("Referralerror${p0.value}")
-//                    sharereferral?.setOnClickListener{
-//
-//                        val shareintent = Intent()
-//                        shareintent.action = Intent.ACTION_SEND
-//                        shareintent.type = "text/plain"
-//                        shareintent.putExtra(Intent.EXTRA_TEXT,"https://play.google.com/store/apps/details?id=com.anmol.coinpanda" + " to download the CryptoHype app and use my code " + p0.value.toString() + " after login.")
-//                        startActivity(Intent.createChooser(shareintent,"Share code via..."))
-//                    }
-//                }
-//                else{
-//                    sharereferral?.visibility = View.GONE
-//                }
-//            }
-//
-//        })
-//
-//        db.child("referrers").child(auth.currentUser!!.uid).child("count").addValueEventListener(object:ValueEventListener{
-//            override fun onCancelled(p0: DatabaseError?) {
-//
-//            }
-//
-//            override fun onDataChange(p0: DataSnapshot?) {
-//                if(p0!!.exists()){
-//                    val refercount:Long = p0.value as Long
-//                    System.out.println("Referralerror${p0.value}")
-//                    referralcount?.text = "abc"
-//                    referralcount?.text = refercount.toString()
-//                }
-//                else{
-//                    referralcount?.text = "0"
-//                }
-//            }
-//
-//        })
 
         airdrop?.setOnClickListener {
             startActivity(Intent(activity!!,ReferralDetailsActivity::class.java))
