@@ -19,13 +19,16 @@ public class ReferralService extends IntentService {
     public ReferralService() {
         super("ReferralService");
     }
+    public static final String DATA = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    public static Random RANDOM = new Random();
 
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
         FirebaseAuth auth = FirebaseAuth.getInstance();
         final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("users");
         final Map<String,Object> map = new HashMap<>();
-        map.put(auth.getCurrentUser().getUid(),random());
+        String token = randomString(7);
+        map.put(auth.getCurrentUser().getUid(),token);
         databaseReference.child(auth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -53,4 +56,18 @@ public class ReferralService extends IntentService {
         }
         return randomStringBuilder.toString();
     }
+
+
+
+        public static String randomString(int len) {
+            StringBuilder sb = new StringBuilder(len);
+
+            for (int i = 0; i < len; i++) {
+                sb.append(DATA.charAt(RANDOM.nextInt(DATA.length())));
+            }
+
+            return sb.toString();
+        }
+
+
 }
