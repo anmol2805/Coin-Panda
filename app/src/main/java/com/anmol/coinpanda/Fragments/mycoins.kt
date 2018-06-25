@@ -70,6 +70,7 @@ class mycoins : Fragment(){
             cointweetrecycler = vi.findViewById(R.id.cointweetrecycler)
             keywordrecycler = vi.findViewById(R.id.keywordrecycler)
             sedit = vi.findViewById(R.id.sc)
+            sedit?.clearFocus()
             srch = vi.findViewById(R.id.scb)
             empty = vi.findViewById(R.id.empty)
             retry = vi.findViewById(R.id.retry)

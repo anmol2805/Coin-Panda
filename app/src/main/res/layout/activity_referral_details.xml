@@ -56,45 +56,74 @@
                         android:layout_weight="1"
                         android:text="5"
                         android:textColor="@color/colorPrimary"
-                        android:textSize="18sp"
+                        android:textSize="15sp"
                         android:textStyle="bold" />
 
 
                 </LinearLayout>
             </android.support.v7.widget.CardView>
-            <Button
-                android:id="@+id/request"
+            <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="YOur referral code:vdfbv"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="5dp"
-                android:textAlignment="viewStart"
-                android:layout_gravity="start"
-                android:background="#fff"
-                android:drawablePadding="10dp"
-                android:paddingLeft="5dp"
-                android:drawableRight="@drawable/shareapp"
-                android:paddingRight="20dp"
-                />
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="2dp"
+
+                >
+
+                <LinearLayout
+                    android:padding="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Your Referral Code: "
+                        android:textColor="#000"
+                        android:layout_gravity="center"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/referralcode"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="bvuifvu"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+                    <Button
+                        android:layout_width="30dp"
+                        android:layout_height="25dp"
+                        android:background="@drawable/shareapp"
+                        android:id="@+id/referralshare"
+                        android:foreground="@drawable/ripple_effect"
+                        />
+
+
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/colorPrimary"
-                android:fontFamily="monospace"
-                android:padding="10dp"
-                android:text="About Airdrop"
-                android:textAlignment="center"
-                android:textColor="#fff"
-                android:textSize="18sp"
+                android:background="#fff"
+                android:padding="5dp"
+                android:text="About Airdrop:"
+
+                android:textColor="#000"
+                android:textSize="16sp"
                 android:textStyle="bold" />
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#fff"
 
-                android:padding="10dp"
-                android:text="we are dedicated to legit official news and alerts for the community.
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:text="We are dedicated to legit official news and alerts for the community.
 Our ML algorithms find the right information for you and filter out the Jargon.
 We are empowering a strong community of crypto enthusiasts who need quality news
 and information."
@@ -102,6 +131,7 @@ and information."
                 android:textColor="#000"
                 />
             <LinearLayout
+                android:layout_marginTop="5dp"
                 android:padding="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -114,21 +144,22 @@ and information."
                     android:text="Airdrop Date: "
                     android:textColor="#000"
                     android:layout_gravity="center"
-                    android:textSize="15sp" />
+                     />
 
                 <TextView
                     android:id="@+id/airdropdate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="5"
+                    android:text="16th july 2018"
                     android:textColor="@color/colorPrimary"
-                    android:textSize="18sp"
+                    android:textSize="15sp"
                     android:textStyle="bold" />
 
 
             </LinearLayout>
             <LinearLayout
+                android:layout_marginBottom="5dp"
                 android:padding="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -140,16 +171,16 @@ and information."
                     android:text="Token: "
                     android:textColor="#000"
                     android:layout_gravity="center"
-                    android:textSize="15sp" />
+                     />
 
                 <TextView
                     android:id="@+id/token"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="5"
+                    android:text="100000 tron tokens"
                     android:textColor="@color/colorPrimary"
-                    android:textSize="18sp"
+                    android:textSize="15sp"
                     android:textStyle="bold" />
 
 
@@ -157,21 +188,39 @@ and information."
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Steps:-"
+                android:text="Steps:"
                 android:textColor="#000"
                 android:textStyle="bold"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:padding="5dp"
                 android:background="#fff"
                 />
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="1. Click on the above button to share your code.
-2.Your referral count increases as your friend downloads and uses the app.
-3. Referral as many as you can to increase chances of AIRDROP
-4. Fill your eth and neo wallet address in the settings menu."
-                android:padding="5dp"
+                android:text="1. Click on the above button to share your code."
+                android:background="#fff"
+                android:paddingLeft="5dp"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="2.Your referral count increases as your friend downloads and uses the app."
+                android:background="#fff"
+                android:paddingLeft="5dp"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="3. Referral as many as you can to increase chances of AIRDROP"
+                android:background="#fff"
+                android:paddingLeft="5dp"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="4. Fill your eth and neo wallet address in the settings menu."
+                android:paddingLeft="5dp"
                 android:background="#fff"
                 />
             <LinearLayout
@@ -179,6 +228,7 @@ and information."
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:background="#fff"
+                android:layout_marginTop="10dp"
                 >
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
@@ -254,12 +304,12 @@ and information."
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/colorPrimary"
-
+                android:layout_marginTop="10dp"
                 android:padding="10dp"
                 android:text="Do not worry, we are air dropping everymonth"
                 android:textAlignment="center"
                 android:textColor="#fff"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:textStyle="bold" />
         </LinearLayout>
     </ScrollView>
