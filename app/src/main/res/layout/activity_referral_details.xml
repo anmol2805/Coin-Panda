@@ -8,7 +8,9 @@
     tools:context=".ReferralDetailsActivity">
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        >
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -305,19 +307,19 @@ and information."
                     android:id="@+id/neosubmit"
                     />
             </LinearLayout>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/colorPrimary"
-                android:layout_marginTop="10dp"
-                android:padding="10dp"
-                android:text="Do not worry, we're air dropping everymonth"
-                android:textAlignment="center"
-                android:textColor="#fff"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+
         </LinearLayout>
     </ScrollView>
-
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:layout_marginTop="10dp"
+        android:padding="10dp"
+        android:text="Do not worry, we're air dropping everymonth"
+        android:textAlignment="center"
+        android:textColor="#fff"
+        android:textSize="16sp"
+        android:textStyle="bold" />
 
 </LinearLayout>

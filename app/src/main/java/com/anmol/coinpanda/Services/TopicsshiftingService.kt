@@ -41,6 +41,7 @@ class TopicsshiftingService : IntentService("TopicsshiftingService") {
                     val coinname = doc.getString("coinname")
                     val map = HashMap<String,Any>()
                     map["coinname"] = coinname!!
+                    map["notify"] = true
                     databaseReference.child(doc.id).setValue(map).addOnCompleteListener {
                         db.collection("users").document(auth.currentUser!!.uid).collection("topics")
                                 .document(doc.id).delete()
