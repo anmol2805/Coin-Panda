@@ -225,10 +225,12 @@ and information."
                 android:background="#fff"
                 />
             <LinearLayout
+                android:id="@+id/ethlayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:background="#fff"
+                android:paddingRight="5dp"
                 android:layout_marginTop="10dp"
                 >
                 <android.support.design.widget.TextInputLayout
@@ -264,10 +266,12 @@ and information."
                     />
             </LinearLayout>
             <LinearLayout
+                android:id="@+id/neolayout"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#fff"
+                android:paddingRight="5dp"
                 >
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
@@ -307,7 +311,7 @@ and information."
                 android:background="@color/colorPrimary"
                 android:layout_marginTop="10dp"
                 android:padding="10dp"
-                android:text="Do not worry, we are air dropping everymonth"
+                android:text="Do not worry, we're air dropping everymonth"
                 android:textAlignment="center"
                 android:textColor="#fff"
                 android:textSize="16sp"

@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
+import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_referral_details.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -23,6 +24,20 @@ class ReferralDetailsActivity : AppCompatActivity() {
         ethaddress.clearFocus()
         val auth = FirebaseAuth.getInstance()
         val db = FirebaseDatabase.getInstance().reference
+        db.addValueEventListener(object:ValueEventListener{
+            override fun onCancelled(p0: DatabaseError?) {
+
+            }
+
+            override fun onDataChange(p0: DataSnapshot?) {
+                    if(p0!!.exists()){
+                        airdropdate.text = p0.child("airdropdate").value.toString()
+                        token.text = p0.child("token").value.toString()
+                    }
+            }
+
+
+        })
         db.child("users").child(auth.currentUser!!.uid).addValueEventListener(object: ValueEventListener {
             override fun onCancelled(p0: DatabaseError?) {
                 System.out.println("Referralerror$p0")
@@ -73,6 +88,56 @@ class ReferralDetailsActivity : AppCompatActivity() {
             }
 
         })
+        db.child("address").child(auth.currentUser!!.uid).addValueEventListener(object:ValueEventListener{
+            override fun onCancelled(p0: DatabaseError?) {
+
+            }
+
+            override fun onDataChange(p0: DataSnapshot?) {
+                if(p0!!.exists()){
+                    if(p0.child("eth").exists()){
+                        ethlayout.visibility = View.GONE
+                    }
+                    else{
+                        ethlayout.visibility = View.VISIBLE
+                    }
+                    if(p0.child("neo").exists()){
+                        neolayout.visibility = View.GONE
+                    }
+                    else{
+                        neolayout.visibility = View.VISIBLE
+                    }
+                }
+                else{
+                    ethlayout.visibility = View.VISIBLE
+                    neolayout.visibility = View.VISIBLE
+                }
+            }
+
+        })
+        ethsubmit.setOnClickListener {
+
+            if(ethaddress.text.isEmpty() || ethaddress.text == null){
+                Toast.makeText(this,"Please enter valid Ethereum Address",Toast.LENGTH_SHORT).show()
+            }
+            else{
+                val ea = ethaddress.text.toString().trim()
+                val map = HashMap<String,Any>()
+                map["eth"] = ea
+                db.child("address").child(auth.currentUser!!.uid).updateChildren(map)
+            }
+        }
+        neosubmit.setOnClickListener {
+            if(neoaddress.text.isEmpty() || neoaddress.text == null){
+                Toast.makeText(this,"Please enter valid Neo Address",Toast.LENGTH_SHORT).show()
+            }
+            else{
+                val na = neoaddress.text.toString().trim()
+                val map = HashMap<String,Any>()
+                map["neo"] = na
+                db.child("address").child(auth.currentUser!!.uid).updateChildren(map)
+            }
+        }
 
     }
 }
