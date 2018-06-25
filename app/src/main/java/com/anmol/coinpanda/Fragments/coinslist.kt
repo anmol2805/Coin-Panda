@@ -107,25 +107,7 @@ class coinslist : Fragment(){
                     }
 
                 })
-                databaseReference!!.child("database").child(auth.currentUser!!.uid).child("topics").addListenerForSingleValueEvent(object:ValueEventListener{
-                    override fun onCancelled(p0: DatabaseError?) {
 
-                    }
-
-                    override fun onDataChange(p0: DataSnapshot?) {
-                        if(p0!!.exists()){
-                            for(data in p0.children){
-                                if (data.key.contains(allcoins[i].coinname!!) && data.child("coinname").value.toString().contains(allcoins[i].coin!!)) {
-                                    val notify:Boolean = data.child("notify").value as Boolean
-                                    if (!notify) {
-                                        notificationswitch?.isChecked = false
-                                    }
-                                }
-                            }
-                        }
-                    }
-
-                })
 
                 notificationswitch?.isChecked = true
                 notificationswitch?.setOnCheckedChangeListener { _, b ->
@@ -171,6 +153,9 @@ class coinslist : Fragment(){
                             }
 
                         })
+                        val map = HashMap<String,Any>()
+                        map["notify"] = false
+                        databaseReference!!.child("database").child(auth.currentUser!!.uid).child("portfolio").child(allcoins[i].coinname!!).updateChildren(map)
 
                 }
             }
