@@ -126,89 +126,18 @@
 
                 />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/textView16"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="We are going to airdrop 10-50 tokens of 5 blockchain projects, ICOs every month"
-                    android:textAlignment="center"
-                    android:textColor="#000"
-                    android:textSize="12sp"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginEnd="5dp"
-                    />
-                <TextView
-                    android:id="@+id/textView17"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Refer your friends to earn these airdrops"
-                    android:textAlignment="center"
-                    android:textColor="@color/colorPrimary"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginEnd="5dp"
-                    />
-
-                <TextView
-                    android:id="@+id/textView18"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="5dp"
-                    android:layout_marginStart="5dp"
-                    android:fontFamily="monospace"
-                    android:text="Share referral code"
-                    android:textAlignment="center"
-                    android:textColor="#000"
-                    android:textSize="12sp" />
-
-                <Button
-                    android:id="@+id/sharereferral"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="start"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginTop="5dp"
-                    android:background="#fff"
-                    android:drawableLeft="@drawable/layershare"
-                    android:drawablePadding="10dp"
-                    android:drawableRight="@drawable/layershare"
-                    android:paddingLeft="20dp"
-                    android:paddingRight="20dp"
-                    android:textAlignment="center" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginBottom="5dp"
-                    >
-
-                    <TextView
-                        android:id="@+id/textView19"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:paddingLeft="20dp"
-                        android:text="Your referral count is: "
-
-                        android:textColor="#000" />
-
-                    <TextView
-                        android:id="@+id/referralcount"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:fontFamily="monospace"
-                        android:textColor="@color/colorPrimary"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
-
-            </LinearLayout>
+            <Button
+                android:id="@+id/airdrop"
+                android:layout_width="225dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="50dp"
+                android:background="@drawable/round_button2"
+                android:gravity="center"
+                android:text="Airdrop"
+                android:textColor="#fff"
+                android:textStyle="bold" />
 
         </LinearLayout>
     </ScrollView>
