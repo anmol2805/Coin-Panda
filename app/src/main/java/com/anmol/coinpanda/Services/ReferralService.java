@@ -27,7 +27,7 @@ public class ReferralService extends IntentService {
         FirebaseAuth auth = FirebaseAuth.getInstance();
         final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("users");
         final Map<String,Object> map = new HashMap<>();
-        String token = randomString(7);
+        String token = randomString(9);
         map.put(auth.getCurrentUser().getUid(),token);
         databaseReference.child(auth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

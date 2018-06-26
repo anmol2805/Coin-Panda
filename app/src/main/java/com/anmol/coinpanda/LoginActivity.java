@@ -127,7 +127,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             public void onClick(View view) {
                 final String referalcode = refercode.getText().toString();
                 final DatabaseReference  databaseReference = FirebaseDatabase.getInstance().getReference();
-                databaseReference.child("users").addValueEventListener(new ValueEventListener() {
+                databaseReference.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         for(DataSnapshot data:dataSnapshot.getChildren()){
@@ -144,7 +144,13 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                                                 public void onDataChange(DataSnapshot dataSnapshot) {
                                                     long k = dataSnapshot.getChildrenCount();
                                                     Map<String,Object> map1 = new HashMap<>();
-                                                    map1.put("count",k-1);
+                                                    if(k == 0){
+                                                        map1.put("count",1);
+                                                    }
+                                                    else{
+                                                        map1.put("count",k-1);
+                                                    }
+
                                                     databaseReference.child("referrers").child(referrerid).updateChildren(map1)
                                                             .addOnCompleteListener(new OnCompleteListener<Void>() {
                                                                 @Override
@@ -209,6 +215,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                                     Toast.makeText(LoginActivity.this,"Invalid referral code",Toast.LENGTH_SHORT).show();
                                 }
                             }
+
 
 
                         }
