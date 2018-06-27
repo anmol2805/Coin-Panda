@@ -97,7 +97,7 @@ class dashboard : Fragment() {
 
     }
     private fun updaterequest() {
-        val stringRequest = StringRequest(Request.Method.GET,"http://198.199.90.139/update", Response.Listener { response ->
+        val stringRequest = StringRequest(Request.Method.GET,"https://www.cryptohype.live/update", Response.Listener { response ->
             System.out.println(response)
         }, Response.ErrorListener { error->
             System.out.println(error)
@@ -108,7 +108,7 @@ class dashboard : Fragment() {
 
     }
     private fun moverequest() {
-        val stringRequest = StringRequest(Request.Method.GET,"http://198.199.90.139/move", Response.Listener { response ->
+        val stringRequest = StringRequest(Request.Method.GET,"https://www.cryptohype.live/move", Response.Listener { response ->
             System.out.println(response)
         }, Response.ErrorListener { error->
             System.out.println(error)

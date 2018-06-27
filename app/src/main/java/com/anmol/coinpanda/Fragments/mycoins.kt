@@ -150,7 +150,7 @@ class mycoins : Fragment(){
         val handler2 = Handler()
         handler2.postDelayed({
             srl?.isRefreshing = true
-            val jsonObjectrefRequest = JsonObjectRequest(Request.Method.GET, "http://198.199.90.139/tweets", null, Response.Listener { response ->
+            val jsonObjectrefRequest = JsonObjectRequest(Request.Method.GET, "https://www.cryptohype.live/tweets", null, Response.Listener { response ->
                 var c = 0
                 try {
                     val jsonArray = response.getJSONArray("tweets")
@@ -206,7 +206,7 @@ class mycoins : Fragment(){
 
         srl?.setOnRefreshListener {
             System.out.println("refreshing")
-            val jsonObjectRequest = JsonObjectRequest(Request.Method.GET, "http://198.199.90.139/tweets", null, Response.Listener { response ->
+            val jsonObjectRequest = JsonObjectRequest(Request.Method.GET, "https://www.cryptohype.live/tweets", null, Response.Listener { response ->
                 var c = 0
                 try {
                     val jsonArray = response.getJSONArray("tweets")

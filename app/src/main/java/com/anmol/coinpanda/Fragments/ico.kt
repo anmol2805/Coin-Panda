@@ -82,7 +82,7 @@ class ico : Fragment(){
         handler.postDelayed({
             srl?.isRefreshing = true
             var c = 0
-            val jsonArray = JsonArrayRequest(Request.Method.GET,"http://198.199.90.139/ico",null, Response.Listener {response ->
+            val jsonArray = JsonArrayRequest(Request.Method.GET,"https://www.cryptohype.live/ico",null, Response.Listener {response ->
                 try{
                     val db = Dbicohelper(activity!!)
                     icocoins.clear()
@@ -129,7 +129,7 @@ class ico : Fragment(){
         srl?.setOnRefreshListener {
             srl?.isRefreshing = true
             var c = 0
-            val jsonArray = JsonArrayRequest(Request.Method.GET,"http://198.199.90.139/ico",null, Response.Listener {response ->
+            val jsonArray = JsonArrayRequest(Request.Method.GET,"https://www.cryptohype.live/ico",null, Response.Listener {response ->
                 try{
                     val db = Dbicohelper(activity!!)
                     icocoins.clear()
@@ -183,7 +183,7 @@ class ico : Fragment(){
             }
             else{
                 var c = 0
-                val jsonArray = JsonArrayRequest(Request.Method.GET,"http://198.199.90.139/ico",null, Response.Listener {response ->
+                val jsonArray = JsonArrayRequest(Request.Method.GET,"https://www.cryptohype.live/ico",null, Response.Listener {response ->
                     while (c<response.length()){
                         val jsonObject = response.getJSONObject(c)
                         val iconame = jsonObject.getString("ICO_Name")

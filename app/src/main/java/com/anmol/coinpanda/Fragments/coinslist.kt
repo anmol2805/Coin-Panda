@@ -380,7 +380,7 @@ class coinslist : Fragment(){
         retry?.visibility = View.GONE
         empty?.visibility = View.GONE
         allcoins.clear()
-        val jsonobjectrequest = JsonArrayRequest(Request.Method.GET,"http://198.199.90.139/coins",null,
+        val jsonobjectrequest = JsonArrayRequest(Request.Method.GET,"https://www.cryptohype.live/tweets",null,
                 Response.Listener {response ->
                     allcoins.clear()
                     if(p0 == null){

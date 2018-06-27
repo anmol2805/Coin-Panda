@@ -15,7 +15,7 @@ class IcodbupdateService:IntentService("IcodbupdateService"){
     override fun onHandleIntent(p0: Intent?) {
         val db = Dbicohelper(applicationContext)
         var c = 0
-        val jsonArray = JsonArrayRequest(Request.Method.GET,"http://198.199.90.139/ico",null, Response.Listener { response ->
+        val jsonArray = JsonArrayRequest(Request.Method.GET,"https://www.cryptohype.live/ico",null, Response.Listener { response ->
             while (c<response.length()){
                 val jsonObject = response.getJSONObject(c)
                 val iconame = jsonObject.getString("ICO_Name")

@@ -92,7 +92,7 @@ class ScrollingActivity : AppCompatActivity() {
         handler.postDelayed({
             icotweetrefresh.isRefreshing = true
             var m = 0
-            val jsonArray1 = JsonArrayRequest(Request.Method.GET,"http://198.199.90.139/ico/pinned",null, Response.Listener { response ->
+            val jsonArray1 = JsonArrayRequest(Request.Method.GET,"https://www.cryptohype.live/ico/pinned",null, Response.Listener { response ->
                 icopins.clear()
                 while (m<response.length()){
                     val jsonObject = response.getJSONObject(m)
@@ -136,7 +136,7 @@ class ScrollingActivity : AppCompatActivity() {
         icotweetrefresh.setOnRefreshListener {
             icotweetrefresh.isRefreshing = true
             var m = 0
-            val jsonArray1 = JsonArrayRequest(Request.Method.GET,"http://198.199.90.139/ico/pinned",null, Response.Listener { response ->
+            val jsonArray1 = JsonArrayRequest(Request.Method.GET,"https://www.cryptohype.live/ico/pinned",null, Response.Listener { response ->
                 icopins.clear()
                 while (m<response.length()){
                     val jsonObject = response.getJSONObject(m)
@@ -207,7 +207,7 @@ class ScrollingActivity : AppCompatActivity() {
         }
         else{
             var c = 0
-            val jsonArray = JsonArrayRequest(Request.Method.GET,"http://198.199.90.139/ico/pinned",null, Response.Listener { response ->
+            val jsonArray = JsonArrayRequest(Request.Method.GET,"https://www.cryptohype.live/ico/pinned",null, Response.Listener { response ->
                 icopins.clear()
                 while (c<response.length()){
                     val jsonObject = response.getJSONObject(c)

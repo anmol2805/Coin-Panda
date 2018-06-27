@@ -33,7 +33,7 @@ public class TweetsdbService extends IntentService {
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
 
-            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, "http://198.199.90.139/tweets", null, new Response.Listener<JSONObject>() {
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, "https://www.cryptohype.live/tweets", null, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
                     int c = 0;

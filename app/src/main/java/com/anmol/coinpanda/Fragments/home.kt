@@ -70,14 +70,14 @@ class home : Fragment() {
 
 
 
-        mcoinselect.setOnCheckedChangeListener({ compoundButton, b ->
+        mcoinselect.setOnCheckedChangeListener { compoundButton, b ->
             if (b){
                 setFragment(mycoinslist())
             }
             else{
                 setFragment(coinslist())
             }
-        })
+        }
 
 
         // Inflate the layout for this fragment

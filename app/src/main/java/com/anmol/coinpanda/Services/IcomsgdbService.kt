@@ -18,7 +18,7 @@ class IcomsgdbService:IntentService("IcomsgdbService"){
     override fun onHandleIntent(p0: Intent?) {
         val db = Dbicopinhelper(this)
         var c = 0
-        val jsonArray = JsonArrayRequest(Request.Method.GET,"http://198.199.90.139/ico/pinned",null, Response.Listener { response ->
+        val jsonArray = JsonArrayRequest(Request.Method.GET,"https://www.cryptohype.live/ico/pinned",null, Response.Listener { response ->
             while (c<response.length()){
                 val jsonObject = response.getJSONObject(c)
                 val messageid = jsonObject.getInt("cID")
