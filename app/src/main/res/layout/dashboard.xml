@@ -16,13 +16,45 @@
         app:cardCornerRadius="8dp"
         app:cardElevation="48dp"
         android:id="@+id/cardView">
+
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/coinframe"
-            >
+            android:layout_height="match_parent">
+            <!--<LinearLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:orientation="horizontal"-->
+                <!--android:id="@+id/noticelayout"-->
+                <!--android:background="@drawable/side_nav_bar2"-->
+                <!--&gt;-->
+                <!--<TextView-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:layout_margin="5dp"-->
+                    <!--android:textColor="#000"-->
+                    <!--android:layout_gravity="center"-->
+                    <!--android:text="All new update of cryptohype is waiting for you"-->
+                    <!--/>-->
+                <!--<Button-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="35dp"-->
+                    <!--android:text="Install"-->
+                    <!--android:textSize="12sp"-->
+                    <!--android:background="@drawable/round_button"-->
+                    <!--android:foreground="@drawable/ripple_effect"-->
+                    <!--android:layout_margin="5dp"-->
+                    <!--android:layout_gravity="center"-->
+                    <!--/>-->
+            <!--</LinearLayout>-->
+            <RelativeLayout
 
-            <!--<Button-->
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/coinframe"
+                >
+
+                <!--<Button-->
                 <!--android:id="@+id/scb"-->
                 <!--android:layout_width="35dp"-->
                 <!--android:layout_height="35dp"-->
@@ -31,7 +63,7 @@
                 <!--android:layout_marginRight="5dp"-->
                 <!--android:layout_marginVertical="10dp"-->
                 <!--android:background="@drawable/search50" />-->
-            <!--<android.support.design.widget.TextInputLayout-->
+                <!--<android.support.design.widget.TextInputLayout-->
                 <!--android:layout_width="match_parent"-->
                 <!--android:layout_height="wrap_content"-->
                 <!--android:id="@+id/search"-->
@@ -39,56 +71,88 @@
                 <!--android:layout_toStartOf="@+id/scb"-->
                 <!--&gt;-->
                 <!--<EditText-->
-                    <!--android:id="@+id/sc"-->
-                    <!--android:layout_width="fill_parent"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_margin="10dp"-->
-                    <!--android:hint="Search Coin"-->
-                    <!--android:inputType="text"-->
-                    <!--android:textAlignment="center"-->
-                    <!--android:textColor="#000"-->
-                    <!--android:textColorHint="@color/colorPrimary"-->
-                    <!--/>-->
+                <!--android:id="@+id/sc"-->
+                <!--android:layout_width="fill_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_margin="10dp"-->
+                <!--android:hint="Search Coin"-->
+                <!--android:inputType="text"-->
+                <!--android:textAlignment="center"-->
+                <!--android:textColor="#000"-->
+                <!--android:textColorHint="@color/colorPrimary"-->
+                <!--/>-->
 
 
-            <!--</android.support.design.widget.TextInputLayout>-->
+                <!--</android.support.design.widget.TextInputLayout>-->
 
-            <!--<android.support.v7.widget.RecyclerView-->
+                <!--<android.support.v7.widget.RecyclerView-->
                 <!--android:layout_below="@+id/search"-->
                 <!--android:layout_width="match_parent"-->
                 <!--android:layout_height="match_parent"-->
                 <!--android:id="@+id/cointweetrecycler"-->
                 <!--android:layout_marginBottom="60dp"-->
                 <!--/>-->
+            </RelativeLayout>
+
         </RelativeLayout>
 
     </android.support.v7.widget.CardView>
 
-    <Switch
-        android:id="@+id/cointweetselect"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="18dp"
+        android:id="@+id/switchlayout"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="All Coins"
+            android:textColor="#fff"
+            android:textStyle="bold"
+            android:textSize="12sp"
+            android:layout_margin="2dp"
+            android:layout_gravity="center"
 
-        android:checked="true"
-        android:showText="true"
-        android:splitTrack="false"
-        android:switchMinWidth="@dimen/activity_horizontal_margin"
-        android:switchPadding="@dimen/activity_horizontal_margin"
+            />
+        <Switch
+            android:id="@+id/cointweetselect"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
 
-        android:switchTextAppearance="@android:style/TextAppearance.WindowTitle"
-        android:textColor="#fff"
-        android:textOff="All Coins"
-        android:textOn="My Coins"
-        android:theme="@style/SCBSwitch" />
+            android:checked="true"
+            android:showText="true"
+            android:splitTrack="false"
+            android:switchMinWidth="@dimen/activity_horizontal_margin"
+            android:switchPadding="@dimen/activity_horizontal_margin"
+
+            android:switchTextAppearance="@android:style/TextAppearance.WindowTitle"
+            android:textColor="#fff"
+            android:textOff=""
+            android:textOn=""
+            android:theme="@style/SCBSwitch" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="My Coins"
+            android:textColor="#fff"
+            android:textStyle="bold"
+            android:textSize="12sp"
+            android:layout_margin="2dp"
+            android:layout_gravity="center"
+
+            />
+    </LinearLayout>
+
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="35dp"
         android:layout_height="35dp"
-        android:layout_alignBottom="@+id/cointweetselect"
+        android:layout_alignBottom="@+id/switchlayout"
         android:layout_alignLeft="@+id/cardView"
         android:layout_alignStart="@+id/cardView"
         android:layout_marginLeft="5dp"

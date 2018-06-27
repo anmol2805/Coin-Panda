@@ -84,6 +84,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         skip = (Button)findViewById(R.id.skip);
         googleSignIn.setVisibility(View.INVISIBLE);
         tw = (TypeWriter)findViewById(R.id.typewriter);
+        googleSignIn.setVisibility(View.VISIBLE);
         anim = AnimationUtils.loadAnimation(this,
                 R.anim.fade_in);
         anim2 = AnimationUtils.loadAnimation(this,R.anim.fade_out);
@@ -96,8 +97,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
             @Override
             public void onTransitionEnd(Transition transition) {
-                googleSignIn.startAnimation(anim);
-                tw.setVisibility(View.INVISIBLE);
+                //googleSignIn.startAnimation(anim);
+                tw.setVisibility(View.VISIBLE);
                 tw.setText("");
                 tw.setCharacterDelay(150);
                 tw.animateText("Please login to keep CryptoNews at your fingertips.");
@@ -388,12 +389,13 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private void updateUI(FirebaseUser currentUser){
         if(currentUser!=null)       //Someone is logged in
         {   pgr.setVisibility(View.INVISIBLE);
-            googleSignIn.startAnimation(anim2);
+            //googleSignIn.startAnimation(anim2);
             Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     googleSignIn.setVisibility(View.GONE);
+                    tw.setVisibility(View.GONE);
                     referlayout.startAnimation(anim);
                 }
             },1000);

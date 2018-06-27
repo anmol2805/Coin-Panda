@@ -258,7 +258,7 @@ class coinslist : Fragment(){
                             Toast.makeText(activity,"Added to your Portfolio", Toast.LENGTH_SHORT).show()
                         }
                     }
-
+ 
                     dialog.dismiss()
                 }
                 dialog.show()
