@@ -312,7 +312,7 @@ class Home2Activity : AppCompatActivity() {
 
         sequence.setConfig(config)
 
-        sequence.addSequenceItem(tweetslayout, "This is a button made for the first sequence", "GOT IT")
+        sequence.addSequenceItem(tweetslayout, "View updates from all blockchain projects and your portfolio coins", "OK")
 
 //        sequence.addSequenceItem(
 //                MaterialShowcaseView.Builder(this)
@@ -326,8 +326,8 @@ class Home2Activity : AppCompatActivity() {
         sequence.addSequenceItem(
                 MaterialShowcaseView.Builder(this)
                         .setTarget(coinslayout)
-                        .setDismissText("OK")
-                        .setContentText("This is a textview made for the second sequence")
+                        .setDismissText("GOT IT")
+                        .setContentText("Manage portfolio. Add or remove tokens. Choose to get notifications for specific tokens.")
                         .withCircleShape()
                         .build()
         )
@@ -336,15 +336,15 @@ class Home2Activity : AppCompatActivity() {
                 MaterialShowcaseView.Builder(this)
                         .setTarget(icolayout)
                         .setDismissText("UNDERSTAND")
-                        .setContentText("This is the checkbox made for the third sequence")
+                        .setContentText("Track all the top upcoming ICOs and never  miss an AirDrop or Crowdsale news from them.")
                         .withCircleShape()
                         .build()
         )
         sequence.addSequenceItem(
                 MaterialShowcaseView.Builder(this)
                         .setTarget(settingslayout)
-                        .setDismissText("UNDERSTAND")
-                        .setContentText("This is the checkbox made for the third sequence")
+                        .setDismissText("ENJOY")
+                        .setContentText("Click here to participate in the monthly airdrop. The more you refer, more are your chances")
                         .withCircleShape()
                         .build()
         )

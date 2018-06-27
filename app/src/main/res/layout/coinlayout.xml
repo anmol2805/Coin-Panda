@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:cardBackgroundColor="@android:color/white"
+        android:id="@+id/coincard"
         app:cardCornerRadius="@dimen/com_facebook_auth_dialog_corner_radius_oversized"
         app:cardElevation="@dimen/com_facebook_auth_dialog_corner_radius_oversized">
 

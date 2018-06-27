@@ -215,7 +215,7 @@ and information."
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="3. Referral as many as you can to increase chances of AIRDROP"
+                android:text="3. Refer as many as you can to increase chances of AIRDROP"
                 android:background="#fff"
                 android:paddingLeft="5dp"
                 />

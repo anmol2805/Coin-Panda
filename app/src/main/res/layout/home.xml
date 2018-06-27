@@ -26,33 +26,62 @@
         </RelativeLayout>
 
     </android.support.v7.widget.CardView>
-
-    <Switch
-        android:id="@+id/coinselect"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="18dp"
+        android:id="@+id/switchlayout"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="All Coins"
+            android:textColor="#fff"
+            android:textStyle="bold"
+            android:textSize="12sp"
+            android:layout_margin="2dp"
+            android:layout_gravity="center"
 
-        android:checked="true"
-        android:showText="true"
-        android:splitTrack="false"
-        android:switchMinWidth="@dimen/activity_horizontal_margin"
-        android:switchPadding="@dimen/activity_horizontal_margin"
+            />
+        <Switch
+            android:id="@+id/coinselect"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:checked="true"
+            android:showText="true"
+            android:splitTrack="false"
+            android:switchMinWidth="@dimen/activity_horizontal_margin"
+            android:switchPadding="@dimen/activity_horizontal_margin"
+
+            android:switchTextAppearance="@android:style/TextAppearance.WindowTitle"
+            android:textColor="#fff"
+            android:textOff=""
+            android:textOn=""
+            android:theme="@style/SCBSwitch" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="My Coins"
+            android:textColor="#fff"
+            android:textStyle="bold"
+            android:textSize="12sp"
+            android:layout_margin="2dp"
+            android:layout_gravity="center"
+
+            />
+    </LinearLayout>
 
 
-        android:switchTextAppearance="@android:style/TextAppearance.WindowTitle"
-        android:textColor="#fff"
-        android:textOff="All Coins"
-        android:textOn="My Coins"
-        android:theme="@style/SCBSwitch" />
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="35dp"
         android:layout_height="35dp"
-        android:layout_alignBottom="@+id/coinselect"
+        android:layout_alignBottom="@+id/switchlayout"
         android:layout_alignLeft="@+id/cardView"
         android:layout_alignStart="@+id/cardView"
         android:layout_marginLeft="5dp"
