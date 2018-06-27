@@ -23,6 +23,11 @@ import android.Manifest.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS
 import android.os.Build
 import com.anmol.coinpanda.Services.*
 import org.jetbrains.anko.startActivityForResult
+import uk.co.deanwild.materialshowcaseview.MaterialShowcaseView
+import uk.co.deanwild.materialshowcaseview.MaterialShowcaseSequence
+import uk.co.deanwild.materialshowcaseview.ShowcaseConfig
+
+
 
 
 class Home2Activity : AppCompatActivity() {
@@ -38,6 +43,7 @@ class Home2Activity : AppCompatActivity() {
     var icoicon:ImageView?=null
     var settingsicon:ImageView?=null
     var currentfragment:Int = 0
+    private val SHOWCASE_ID = "Sequence Showcase"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar?.hide()
@@ -152,6 +158,7 @@ class Home2Activity : AppCompatActivity() {
             Glide.with(this).load(R.drawable.bookmarksunfilled).into(bookmarksicon)
             Glide.with(this).load(R.drawable.icounfilled).into(icoicon)
             Glide.with(this).load(R.drawable.settingsunfiled).into(settingsicon)
+            showTutorSequence(500)
         }
         coinslayout?.setOnClickListener{
             setFragment(home(),1)
@@ -291,6 +298,58 @@ class Home2Activity : AppCompatActivity() {
             Toast.makeText(baseContext, "Double tap to exit!", Toast.LENGTH_SHORT).show()
 
         }
+
+    }
+
+    private fun showTutorSequence(millis: Int) {
+
+        val config = ShowcaseConfig()
+        config.delay = millis.toLong()
+
+        val sequence = MaterialShowcaseSequence(this, SHOWCASE_ID)
+
+        //sequence.setOnItemShownListener { itemView, position -> Toast.makeText(itemView.context, "Item #$position", Toast.LENGTH_SHORT).show() }
+
+        sequence.setConfig(config)
+
+        sequence.addSequenceItem(tweetslayout, "This is a button made for the first sequence", "GOT IT")
+
+//        sequence.addSequenceItem(
+//                MaterialShowcaseView.Builder(this)
+//                        .setTarget(tweetslayout)
+//                        .setDismissText("OK")
+//                        .setContentText("This is a textview made for the second sequence")
+//                        .withCircleShape()
+//                        .build()
+//        )
+
+        sequence.addSequenceItem(
+                MaterialShowcaseView.Builder(this)
+                        .setTarget(coinslayout)
+                        .setDismissText("OK")
+                        .setContentText("This is a textview made for the second sequence")
+                        .withCircleShape()
+                        .build()
+        )
+
+        sequence.addSequenceItem(
+                MaterialShowcaseView.Builder(this)
+                        .setTarget(icolayout)
+                        .setDismissText("UNDERSTAND")
+                        .setContentText("This is the checkbox made for the third sequence")
+                        .withCircleShape()
+                        .build()
+        )
+        sequence.addSequenceItem(
+                MaterialShowcaseView.Builder(this)
+                        .setTarget(settingslayout)
+                        .setDismissText("UNDERSTAND")
+                        .setContentText("This is the checkbox made for the third sequence")
+                        .withCircleShape()
+                        .build()
+        )
+
+        sequence.start()
 
     }
 }
