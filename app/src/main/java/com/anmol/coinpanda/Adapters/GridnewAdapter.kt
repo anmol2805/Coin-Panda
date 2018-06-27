@@ -46,7 +46,7 @@ class GridnewAdapter(internal var c: Context, internal var allcoins: List<Allcoi
                     .setShapePadding(100)
                     .setContentTextColor(Color.WHITE)
                     .setDismissTextColor(Color.WHITE)
-                    .setTitleTextColor(Color.BLUE)
+                    .setTitleTextColor(Color.CYAN)
                     .setDelay(500)
                     .singleUse("Coinshowcase")
                     .show()
