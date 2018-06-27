@@ -20,6 +20,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.iid.FirebaseInstanceId
 import android.Manifest.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS
+import android.graphics.Color
 import android.os.Build
 import com.anmol.coinpanda.Services.*
 import org.jetbrains.anko.startActivityForResult
@@ -328,6 +329,8 @@ class Home2Activity : AppCompatActivity() {
                         .setTarget(coinslayout)
                         .setDismissText("GOT IT")
                         .setContentText("Manage portfolio. Add or remove tokens. Choose to get notifications for specific tokens.")
+                        .setDismissTextColor(Color.WHITE)
+                        .setContentTextColor(Color.WHITE)
                         .withCircleShape()
                         .build()
         )
@@ -335,16 +338,20 @@ class Home2Activity : AppCompatActivity() {
         sequence.addSequenceItem(
                 MaterialShowcaseView.Builder(this)
                         .setTarget(icolayout)
-                        .setDismissText("UNDERSTAND")
+                        .setDismissText("Understand")
                         .setContentText("Track all the top upcoming ICOs and never  miss an AirDrop or Crowdsale news from them.")
+                        .setDismissTextColor(Color.WHITE)
+                        .setContentTextColor(Color.WHITE)
                         .withCircleShape()
                         .build()
         )
         sequence.addSequenceItem(
                 MaterialShowcaseView.Builder(this)
                         .setTarget(settingslayout)
-                        .setDismissText("ENJOY")
+                        .setDismissText("Enjoy!")
                         .setContentText("Click here to participate in the monthly airdrop. The more you refer, more are your chances")
+                        .setDismissTextColor(Color.WHITE)
+                        .setContentTextColor(Color.WHITE)
                         .withCircleShape()
                         .build()
         )

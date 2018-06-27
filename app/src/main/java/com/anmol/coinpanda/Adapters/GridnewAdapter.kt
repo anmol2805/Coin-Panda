@@ -2,6 +2,7 @@ package com.anmol.coinpanda.Adapters
 
 import android.app.Activity
 import android.content.Context
+import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.support.v7.widget.CardView
 import android.view.View
@@ -38,10 +39,14 @@ class GridnewAdapter(internal var c: Context, internal var allcoins: List<Allcoi
         nametext?.text = allcoins[p0].coin
         if(p0 == 1){
             MaterialShowcaseView.Builder(c as Activity?)
-                    .setTarget(coincard)
+                    .setTarget(imageicon)
                     .setTitleText("Coins")
                     .setDismissText("GOT IT")
                     .setContentText("Add favourite coins to your Portfolio to receive regular updates.")
+                    .setShapePadding(100)
+                    .setContentTextColor(Color.WHITE)
+                    .setDismissTextColor(Color.WHITE)
+                    .setTitleTextColor(Color.BLUE)
                     .setDelay(500)
                     .singleUse("Coinshowcase")
                     .show()
