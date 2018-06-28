@@ -45,6 +45,7 @@ class Dbhelper (context: Context):SQLiteOpenHelper(context, DATABASE_NAME,null,1
     fun insertData(sqltweet: Sqltweet){
         try{
         val db = this.writableDatabase
+            db.enableWriteAheadLogging()
         val cv = ContentValues()
         cv.put(COL_ID,sqltweet.tweetid)
         cv.put(COL_COIN,sqltweet.coin)

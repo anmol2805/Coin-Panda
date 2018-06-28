@@ -33,6 +33,7 @@ class Dbbookshelper (context: Context):SQLiteOpenHelper(context, DB,null,1){
     fun insertData(tweetid:String){
         try{
         val db = this.writableDatabase
+            db.enableWriteAheadLogging()
         val cv = ContentValues()
         cv.put(TWEETID,tweetid)
 
@@ -73,6 +74,7 @@ class Dbbookshelper (context: Context):SQLiteOpenHelper(context, DB,null,1){
 
     fun deletebook(tweetid:String) {
         val db = this.writableDatabase
+        db.enableWriteAheadLogging()
         db.delete(TB, "$TWEETID = ?", arrayOf(tweetid))
         db.close()
     }

@@ -32,6 +32,7 @@ class Dbtopicshelper (context: Context):SQLiteOpenHelper(context, DNAME,null,1){
     fun insertData(value:Value){
         try{
         val db = this.writableDatabase
+            db.enableWriteAheadLogging()
         val cv = ContentValues()
             cv.put(KEY,value.key)
             cv.put(KEYVALUE,value.keyvalue)
@@ -72,6 +73,7 @@ class Dbtopicshelper (context: Context):SQLiteOpenHelper(context, DNAME,null,1){
 
     fun updatedata(value: Value) {
         val db = this.writableDatabase
+        db.enableWriteAheadLogging()
         val cv = ContentValues()
         cv.put(KEYVALUE,value.keyvalue)
         db.update(TNAME, cv,"$KEY = ?", arrayOf(value.key))

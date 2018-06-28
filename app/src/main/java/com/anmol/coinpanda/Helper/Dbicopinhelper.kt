@@ -39,6 +39,7 @@ class Dbicopinhelper (context: Context):SQLiteOpenHelper(context, ICOPIN_NAME,nu
     fun insertData(icopin: Icopin){
         try{
         val db = this.writableDatabase
+            db.enableWriteAheadLogging()
         val cv = ContentValues()
         cv.put(COL_ICOPIN_ID,icopin.cid)
         cv.put(COL_ICOPIN_NAME,icopin.icocoin_name)

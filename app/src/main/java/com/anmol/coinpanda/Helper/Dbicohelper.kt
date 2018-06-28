@@ -54,6 +54,7 @@ class Dbicohelper (context: Context):SQLiteOpenHelper(context, DATABASE_ICO,null
     fun insertData(icocoin: Icocoin){
         try{
         val db = this.writableDatabase
+            db.enableWriteAheadLogging()
         val cv = ContentValues()
             cv.put(COL_ICO_NAME,icocoin.ico_name)
             cv.put(COL_TELEGRAM,icocoin.telegram_url)
@@ -201,6 +202,7 @@ class Dbicohelper (context: Context):SQLiteOpenHelper(context, DATABASE_ICO,null
 //
     fun updatedata(icocoin: Icocoin){
         val db = this.writableDatabase
+    db.enableWriteAheadLogging()
         val cv = ContentValues()
     cv.put(COL_TELEGRAM,icocoin.telegram_url)
     cv.put(COL_WEBSITE,icocoin.website)

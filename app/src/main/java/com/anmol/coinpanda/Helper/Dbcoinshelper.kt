@@ -36,6 +36,7 @@ class Dbcoinshelper (context: Context):SQLiteOpenHelper(context, DB_NAME,null,1)
     fun insertData(sqlcoin: Sqlcoin){
         try{
         val db = this.writableDatabase
+            db.enableWriteAheadLogging()
         val cv = ContentValues()
         cv.put(COIN,sqlcoin.coin)
         cv.put(COIN_SYMBOL,sqlcoin.coin_symbol)
@@ -78,6 +79,7 @@ class Dbcoinshelper (context: Context):SQLiteOpenHelper(context, DB_NAME,null,1)
 
     fun deleteCoin(sqlcoin: Sqlcoin) {
         val db = this.writableDatabase
+        db.enableWriteAheadLogging()
         db.delete(TB_NAME, "$COIN_SYMBOL = ?", arrayOf(sqlcoin.coin_symbol))
         db.close()
     }
