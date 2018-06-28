@@ -56,6 +56,7 @@ class coinslist : Fragment(){
     var pgr :ProgressBar? = null
     var retry:Button?=null
     var databaseReference:DatabaseReference?= null
+    var dcb:Dbcoinshelper?=null
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val vi = inflater.inflate(R.layout.coinslist, container, false)
         coingrid = vi.findViewById(R.id.coingrid)
@@ -67,6 +68,7 @@ class coinslist : Fragment(){
         retry = vi.findViewById(R.id.retry)
         retry?.visibility = View.GONE
         allcoins = ArrayList()
+        dcb = Dbcoinshelper(activity!!)
         val handler = Handler()
         handler.postDelayed({
             loadalldata(null)    
@@ -159,8 +161,8 @@ class coinslist : Fragment(){
 
                 }
             }
-                val dcb = Dbcoinshelper(activity!!)
-                val coins = dcb.readData()
+
+                val coins = dcb!!.readData()
                 var j = 0
                 while (j<coins.size){
                     if(allcoins[i].coinname == coins[j].coinname){
@@ -195,8 +197,8 @@ class coinslist : Fragment(){
                 }
                 remove?.setOnClickListener {
                     val sqlcoin = Sqlcoin(allcoins[i].coin, allcoins[i].coinname, allcoins[i].coinpage)
-                    val dcb = Dbcoinshelper(activity!!)
-                    dcb.deleteCoin(sqlcoin)
+
+                    dcb!!.deleteCoin(sqlcoin)
                     databaseReference!!.child("database").child(auth.currentUser!!.uid).child("topics").addListenerForSingleValueEvent(object:ValueEventListener{
                         override fun onCancelled(p0: DatabaseError?) {
 
@@ -244,8 +246,7 @@ class coinslist : Fragment(){
                 }
                 atp?.setOnClickListener {
                     val sqlcoin = Sqlcoin(allcoins[i].coin, allcoins[i].coinname, allcoins[i].coinpage)
-                    val dcb = Dbcoinshelper(activity!!)
-                    dcb.insertData(sqlcoin)
+                    dcb!!.insertData(sqlcoin)
                     topicsearch(0,allcoins[i].coinname,allcoins[i].coin)
                     prg?.visibility = View.VISIBLE
                     atp.visibility = View.GONE

@@ -323,7 +323,7 @@ class Home2Activity : AppCompatActivity() {
                 MaterialShowcaseView.Builder(this)
                         .setTarget(coinslayout)
                         .setDismissText("GOT IT")
-                        .setContentText("Manage portfolio. Add or remove tokens. Choose to get notifications for specific tokens.")
+                        .setContentText("Manage portfolio. Add or remove coins. Choose to get notifications for specific coins.")
                         .setDismissTextColor(Color.WHITE)
                         .setContentTextColor(Color.WHITE)
                         .withCircleShape()

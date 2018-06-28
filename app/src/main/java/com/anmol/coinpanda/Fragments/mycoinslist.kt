@@ -41,7 +41,7 @@ class mycoinslist : Fragment(){
     val messaging = FirebaseMessaging.getInstance()
     var pgr :ProgressBar?=null
     var databaseReference: DatabaseReference?= null
-
+    var dcb : Dbcoinshelper?=null
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val vi = inflater.inflate(R.layout.mycoinslist, container, false)
         coingrid = vi.findViewById(R.id.coingrid)
@@ -49,6 +49,7 @@ class mycoinslist : Fragment(){
         pgr = vi.findViewById(R.id.pgr)
         empty?.visibility = View.GONE
         allcoins = ArrayList()
+        dcb = Dbcoinshelper(activity!!)
         val handler = Handler()
         handler.postDelayed({
             loaddata()
@@ -139,8 +140,8 @@ class mycoinslist : Fragment(){
                         databaseReference!!.child("database").child(auth.currentUser!!.uid).child("portfolio").child(allcoins[i].coinname!!).updateChildren(map)
                     }
                 }
-                val dcb = Dbcoinshelper(activity!!)
-                val coins = dcb.readData()
+
+                val coins = dcb!!.readData()
                 var j = 0
                 while (j<coins.size){
                     if(allcoins[i].coinname == coins[j].coinname){
@@ -175,8 +176,7 @@ class mycoinslist : Fragment(){
                 }
                 remove?.setOnClickListener {
                     val sqlcoin = Sqlcoin(allcoins[i].coin, allcoins[i].coinname, allcoins[i].coinpage)
-                    val dcb = Dbcoinshelper(activity!!)
-                    dcb.deleteCoin(sqlcoin)
+                    dcb!!.deleteCoin(sqlcoin)
                     databaseReference!!.child("database").child(auth.currentUser!!.uid).child("topics").addListenerForSingleValueEvent(object:ValueEventListener{
                         override fun onCancelled(p0: DatabaseError?) {
 
@@ -228,8 +228,8 @@ class mycoinslist : Fragment(){
 //                intent.putExtra("coin",allcoins[i].coin)
 //                startActivity(intent)
                     val sqlcoin = Sqlcoin(allcoins[i].coin, allcoins[i].coinname, allcoins[i].coinpage)
-                    val dcb = Dbcoinshelper(activity!!)
-                    dcb.insertData(sqlcoin)
+
+                    dcb!!.insertData(sqlcoin)
                     topicsearch(0, allcoins[i].coinname, allcoins[i].coin)
                     prg?.visibility = View.VISIBLE
                     atp.visibility = View.GONE
@@ -316,8 +316,7 @@ class mycoinslist : Fragment(){
         allcoins.clear()
         pgr?.visibility = View.VISIBLE
         if(activity!=null){
-            val dcb = Dbcoinshelper(activity!!)
-            val data = dcb.readData()
+            val data = dcb!!.readData()
             allcoins = data
             if(!allcoins.isEmpty()){
                 pgr?.visibility = View.GONE
