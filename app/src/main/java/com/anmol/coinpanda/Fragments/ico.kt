@@ -48,6 +48,9 @@ class ico : Fragment(){
         cointweetrecycler = vi.findViewById(R.id.cointweetrecycler)
         cointweetrecycler?.layoutManager   = layoutManager
         cointweetrecycler?.setHasFixedSize(true)
+        cointweetrecycler?.setItemViewCacheSize(20)
+        cointweetrecycler?.isDrawingCacheEnabled = true
+        cointweetrecycler?.drawingCacheQuality = View.DRAWING_CACHE_QUALITY_HIGH
         cointweetrecycler?.itemAnimator   = DefaultItemAnimator()
         srl = vi.findViewById(R.id.srl)
         activity!!.startService(Intent(activity!!,IcomsgdbService::class.java))
