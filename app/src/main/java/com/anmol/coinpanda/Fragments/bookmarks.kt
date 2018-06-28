@@ -26,6 +26,7 @@ import com.anmol.coinpanda.Interfaces.ItemClickListener
 import com.anmol.coinpanda.Model.Tweet
 import com.anmol.coinpanda.Mysingleton
 import com.anmol.coinpanda.R
+import com.anmol.coinpanda.Services.BookmarksdbService
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthCredential
 import com.google.firebase.firestore.FirebaseFirestore
@@ -49,13 +50,14 @@ class bookmarks : Fragment() {
     var pgr :ProgressBar?=null
     var retry:Button?=null
     var tweetsAdapter : TweetsAdapter?=null
+    var dbb:Dbbookshelper?= null
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val vi = inflater.inflate(R.layout.bookmarks,
                 container, false)
         if(activity!=null) {
             activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
             val layoutManager = LinearLayoutManager(activity)
-
+            dbb = Dbbookshelper(activity!!)
 
             cointweetrecycler = vi.findViewById(R.id.cointweetrecycler)
             sedit = vi.findViewById(R.id.sc)
@@ -69,6 +71,11 @@ class bookmarks : Fragment() {
             cointweetrecycler?.setHasFixedSize(true)
             cointweetrecycler?.itemAnimator = DefaultItemAnimator()
             tweets = ArrayList()
+            val bookmarkdata = dbb!!.readbook()
+            if(bookmarkdata.isEmpty()){
+                val intent1 = Intent(activity!!, BookmarksdbService::class.java)
+                activity!!.startService(intent1)
+            }
             val handler = Handler()
             handler.postDelayed({ loadquery(null) }, 200)
 
@@ -104,8 +111,8 @@ class bookmarks : Fragment() {
             val db = Dbhelper(activity!!)
             val dataquery = "Select * from $TABLE_NAME ORDER BY $COL_ID DESC"
             var bookmarks = ArrayList<String>()
-            val dbb = Dbbookshelper(activity!!)
-            bookmarks = dbb.readbook()
+
+            bookmarks = dbb!!.readbook()
             val loadtweets = ArrayList<Tweet>()
             loadtweets.clear()
             val data = db.readData(dataquery)

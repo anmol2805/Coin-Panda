@@ -83,12 +83,7 @@ class Home2Activity : AppCompatActivity() {
             val intent7 = Intent(this, TopicsshiftingService::class.java)
             startService(intent7)
 
-            val dbb = Dbbookshelper(this)
-            val bookmarkdata = dbb.readbook()
-            if(bookmarkdata.isEmpty()){
-                val intent1 = Intent(this, BookmarksdbService::class.java)
-                startService(intent1)
-            }
+
             val databaseReference = FirebaseDatabase.getInstance().reference
             databaseReference.root.addValueEventListener(object : ValueEventListener {
                 override fun onCancelled(p0: DatabaseError?) {
