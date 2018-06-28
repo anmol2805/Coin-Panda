@@ -26,6 +26,7 @@ import com.anmol.coinpanda.Mysingleton
 import com.anmol.coinpanda.R
 import com.anmol.coinpanda.ScrollingActivity
 import com.anmol.coinpanda.Services.IcodbService
+import com.anmol.coinpanda.Services.IcomsgdbService
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.support.v4.startActivity
 import org.jetbrains.anko.support.v4.startService
@@ -40,6 +41,7 @@ class ico : Fragment(){
     var icoAdapter : IcoAdapter?=null
     lateinit var itemClickListener : ItemClickListener
     var srl:SwipeRefreshLayout?=null
+    var db:Dbicohelper?=null
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val vi = inflater.inflate(R.layout.ico, container, false)
         val layoutManager = LinearLayoutManager(activity!!)
@@ -48,9 +50,9 @@ class ico : Fragment(){
         cointweetrecycler?.setHasFixedSize(true)
         cointweetrecycler?.itemAnimator   = DefaultItemAnimator()
         srl = vi.findViewById(R.id.srl)
-
+        activity!!.startService(Intent(activity!!,IcomsgdbService::class.java))
         icocoins = ArrayList()
-
+        db = Dbicohelper(activity!!)
 
 
 
@@ -84,7 +86,7 @@ class ico : Fragment(){
             var c = 0
             val jsonArray = JsonArrayRequest(Request.Method.GET,"https://www.cryptohype.live/ico",null, Response.Listener {response ->
                 try{
-                    val db = Dbicohelper(activity!!)
+
                     icocoins.clear()
                     while (c<response.length()){
                         val jsonObject = response.getJSONObject(c)
@@ -101,11 +103,12 @@ class ico : Fragment(){
                         val twitterurl = jsonObject.getString("Twitter_URL")
                         val rating = jsonObject.getString("Rating")
                         val icocoin = Icocoin(iconame,telegramurl,website,mediumurl,crowdsale_date,icostatus,industry,icodescription,hardcap,softcap,twitterurl,rating)
-                        db.insertData(icocoin)
+                        db!!.insertData(icocoin)
+                        db!!.updatedata(icocoin)
                         c++
                     }
                     val query ="Select * from $TABLE_ICO"
-                    val data = db.readData(query)
+                    val data = db!!.readData(query)
                     icocoins = data
                     srl?.isRefreshing = false
                     icoAdapter = IcoAdapter(activity!!,icocoins,itemClickListener)
@@ -131,7 +134,7 @@ class ico : Fragment(){
             var c = 0
             val jsonArray = JsonArrayRequest(Request.Method.GET,"https://www.cryptohype.live/ico",null, Response.Listener {response ->
                 try{
-                    val db = Dbicohelper(activity!!)
+
                     icocoins.clear()
                     while (c<response.length()){
                         val jsonObject = response.getJSONObject(c)
@@ -148,11 +151,12 @@ class ico : Fragment(){
                         val twitterurl = jsonObject.getString("Twitter_URL")
                         val rating = jsonObject.getString("Rating")
                         val icocoin = Icocoin(iconame,telegramurl,website,mediumurl,crowdsale_date,icostatus,industry,icodescription,hardcap,softcap,twitterurl,rating)
-                        db.insertData(icocoin)
+                        db!!.insertData(icocoin)
+                        db!!.updatedata(icocoin)
                         c++
                     }
                     val query ="Select * from $TABLE_ICO"
-                    val data = db.readData(query)
+                    val data = db!!.readData(query)
                     icocoins = data
                     srl?.isRefreshing = false
                     icoAdapter = IcoAdapter(activity!!,icocoins,itemClickListener)
@@ -172,9 +176,9 @@ class ico : Fragment(){
         }
 
         try{
-            val db = Dbicohelper(activity!!)
+
             val query ="Select * from $TABLE_ICO"
-            val data = db.readData(query)
+            val data = db!!.readData(query)
             icocoins = data
             if(!icocoins.isEmpty()){
                 icoAdapter = IcoAdapter(activity!!,icocoins,itemClickListener)
@@ -199,7 +203,8 @@ class ico : Fragment(){
                         val twitterurl = jsonObject.getString("Twitter_URL")
                         val rating = jsonObject.getString("Rating")
                         val icocoin = Icocoin(iconame,telegramurl,website,mediumurl,crowdsale_date,icostatus,industry,icodescription,hardcap,softcap,twitterurl,rating)
-                        db.insertData(icocoin)
+                        db!!.insertData(icocoin)
+                        db!!.updatedata(icocoin)
                         icocoins.add(icocoin)
                         c++
                     }

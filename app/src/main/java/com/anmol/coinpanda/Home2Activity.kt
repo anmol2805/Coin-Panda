@@ -66,14 +66,8 @@ class Home2Activity : AppCompatActivity() {
             startActivity(Intent(this,LoginActivity::class.java))
         }
         else{
-            val intent3 = Intent(this, IcodbService::class.java)
-            startService(intent3)
-            val intent8 = Intent(this, IcodbupdateService::class.java)
-            startService(intent8)
-            val intent2 = Intent(this, IcomsgdbService::class.java)
-            startService(intent2)
-//            val intent = Intent(this, TweetsdbService::class.java)
-//            startService(intent)
+
+
             val intent4 = Intent(this, CoinsshiftingService::class.java)
             startService(intent4)
             val intent5 = Intent(this,ReferralService::class.java)
