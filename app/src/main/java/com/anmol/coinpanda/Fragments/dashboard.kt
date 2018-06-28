@@ -57,10 +57,10 @@ class dashboard : Fragment() {
             val dtb = Dbhelper(activity!!)
             val dataquery = "Select * from $TABLE_NAME ORDER BY $COL_ID DESC"
             val data = dtb.readData(dataquery)
-            if(data.isEmpty()){
-                val intent = Intent(activity,TweetsdbService::class.java)
-                activity!!.startService(intent)
-            }
+//            if(data.isEmpty()){
+//                val intent = Intent(activity,TweetsdbService::class.java)
+//                activity!!.startService(intent)
+//            }
 
             val dcb = Dbcoinshelper(activity!!)
             val coins = dcb.readData()

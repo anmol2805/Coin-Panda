@@ -61,7 +61,7 @@ class Dbhelper (context: Context):SQLiteOpenHelper(context, DATABASE_NAME,null,1
             else
                 System.out.println("sqlstatus is successs")
         }catch (e:SQLiteCantOpenDatabaseException){
-            e.printStackTrace()
+
         }
 
     }

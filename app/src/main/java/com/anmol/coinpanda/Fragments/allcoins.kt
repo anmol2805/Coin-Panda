@@ -145,7 +145,7 @@ class allcoins : Fragment(){
                     sqltweets.clear()
 
 
-                    while (c < 50) {
+                    while (c < 10) {
                         val obj = jsonArray.getJSONObject(c)
                         val id = obj.getString("tweetid")
                         val coin = obj.getString("coin_name")

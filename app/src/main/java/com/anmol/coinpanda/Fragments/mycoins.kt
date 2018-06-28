@@ -31,6 +31,7 @@ import com.anmol.coinpanda.Model.Sqltweet
 import com.anmol.coinpanda.Model.Tweet
 import com.anmol.coinpanda.Mysingleton
 import com.anmol.coinpanda.R
+import com.facebook.shimmer.ShimmerFrameLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
@@ -62,11 +63,13 @@ class mycoins : Fragment(){
     var tweetsAdapter : TweetsAdapter?=null
     var srl:SwipeRefreshLayout?=null
     var dateedit:Button?=null
+    var dbhelper:Dbhelper?=null
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val vi = inflater.inflate(R.layout.mycoins, container, false)
         if(activity!=null){
             activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
             val layoutManager = LinearLayoutManager(activity)
+            dbhelper = Dbhelper(activity!!)
             cointweetrecycler = vi.findViewById(R.id.cointweetrecycler)
             keywordrecycler = vi.findViewById(R.id.keywordrecycler)
             sedit = vi.findViewById(R.id.sc)
@@ -158,7 +161,7 @@ class mycoins : Fragment(){
                     sqltweets.clear()
 
 
-                    while (c < 50) {
+                    while (c < 10) {
                         val obj = jsonArray.getJSONObject(c)
                         val id = obj.getString("tweetid")
                         val coin = obj.getString("coin_name")
@@ -172,8 +175,7 @@ class mycoins : Fragment(){
                         val sqltweet = Sqltweet(coin, coin_symbol, mtweet, url, keyword, id, dates, coinpage)
 
                         try {
-                            val db = Dbhelper(activity!!)
-                            db.insertData(sqltweet)
+                            dbhelper!!.insertData(sqltweet)
                             println("tweetno$c")
                         }
                         catch (e:KotlinNullPointerException){
@@ -227,8 +229,8 @@ class mycoins : Fragment(){
 
                         val sqltweet = Sqltweet(coin, coin_symbol, mtweet, url, keyword, id, dates, coinpage)
                         try{
-                            val db = Dbhelper(activity!!)
-                            db.insertData(sqltweet)
+
+                            dbhelper!!.insertData(sqltweet)
                             println("tweetno$c")
                         }
                         catch (e:KotlinNullPointerException){
@@ -264,7 +266,6 @@ class mycoins : Fragment(){
         val stringtime = format.format(cal.time)
         val prevtime = Timestamp.valueOf(stringtime)
         if(activity!=null){
-            val db = Dbhelper(activity!!)
             val dataquery = "Select * from $TABLE_NAME ORDER BY $COL_ID DESC"
             var bookmarks = ArrayList<String>()
             val dbb = Dbbookshelper(activity!!)
@@ -274,7 +275,7 @@ class mycoins : Fragment(){
             coins = dcb.readData()
             val loadtweets = ArrayList<Tweet>()
             loadtweets.clear()
-            val data = db.readData(dataquery)
+            val data = dbhelper!!.readData(dataquery)
             tweets = data
             if (!tweets.isEmpty()) {
                 var i = 0

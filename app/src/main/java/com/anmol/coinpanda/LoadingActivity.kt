@@ -129,8 +129,8 @@ class LoadingActivity : AppCompatActivity() {
                         startloading()
                     }
                     else{
-                        val intent = Intent(this@LoadingActivity, TweetsdbService::class.java)
-                        startService(intent)
+//                        val intent = Intent(this@LoadingActivity, TweetsdbService::class.java)
+//                        startService(intent)
                         val intent2 = Intent(this@LoadingActivity, Home2Activity::class.java)
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
