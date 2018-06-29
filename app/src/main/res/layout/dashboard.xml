@@ -20,33 +20,41 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-            <!--<LinearLayout-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:orientation="horizontal"-->
-                <!--android:id="@+id/noticelayout"-->
-                <!--android:background="@drawable/side_nav_bar2"-->
-                <!--&gt;-->
-                <!--<TextView-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_weight="1"-->
-                    <!--android:layout_margin="5dp"-->
-                    <!--android:textColor="#000"-->
-                    <!--android:layout_gravity="center"-->
-                    <!--android:text="All new update of cryptohype is waiting for you"-->
-                    <!--/>-->
-                <!--<Button-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="35dp"-->
-                    <!--android:text="Install"-->
-                    <!--android:textSize="12sp"-->
-                    <!--android:background="@drawable/round_button"-->
-                    <!--android:foreground="@drawable/ripple_effect"-->
-                    <!--android:layout_margin="5dp"-->
-                    <!--android:layout_gravity="center"-->
-                    <!--/>-->
-            <!--</LinearLayout>-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:id="@+id/noticelayout"
+                android:visibility="gone"
+                android:background="@drawable/side_nav_bar2"
+                >
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:id="@+id/noticetext"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:textAlignment="center"
+                    android:textSize="12sp"
+                    android:textColor="#000"
+                    android:layout_gravity="center"
+                    android:text="All new update of cryptohype is waiting for you"
+                    />
+
+                <ImageButton
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_gravity="center"
+
+                    android:layout_marginEnd="5dp"
+                    android:id="@+id/noticebutton"
+                    android:background="#00000000"
+                    android:elevation="64dp"
+                    android:foreground="@drawable/ripple_effect"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/upgrade" />
+            </LinearLayout>
             <RelativeLayout
 
                 android:layout_width="match_parent"

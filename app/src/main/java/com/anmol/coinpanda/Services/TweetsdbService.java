@@ -43,7 +43,7 @@ public class TweetsdbService extends IntentService {
                         sqltweets.clear();
 
 
-                        while (c<450){
+                        while (c<225){
                             JSONObject obj = jsonArray.getJSONObject(c);
                             String id = obj.getString("tweetid");
                             String coin = obj.getString("coin_name");
