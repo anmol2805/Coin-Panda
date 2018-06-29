@@ -73,13 +73,12 @@
 
     <TextView
         android:id="@+id/coin"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/coinlay"
         android:layout_toEndOf="@+id/coinicon"
         android:layout_toRightOf="@+id/coinicon"
-        android:layout_toLeftOf="@+id/keyword"
-        android:layout_toStartOf="@+id/keyword"
+
         android:layout_marginRight="5dp"
         android:fontFamily="sans-serif-smallcaps"
         android:text="TextView"
@@ -107,11 +106,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/icoindustry"
-        android:layout_alignStart="@+id/coin"
-        android:layout_below="@+id/coin"
+        android:layout_toRightOf="@+id/coin"
+        android:layout_toEndOf="@+id/coin"
         android:layout_gravity="start"
         android:layout_marginRight="5dp"
-        android:textColor="#000"
+        android:textSize="12sp"
+        android:layout_alignBaseline="@+id/coin"
         android:text="Blockchain Service"
         />
 
@@ -138,8 +138,7 @@
         android:id="@+id/time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/keyword"
-        android:layout_alignEnd="@+id/keyword"
+        android:layout_alignStart="@+id/coin"
         android:layout_below="@+id/tweet"
         android:fontFamily="monospace"
         android:text="timestamp"

@@ -111,10 +111,12 @@ class dashboard : Fragment() {
 
                     val code = p0.child("buttoncode").value
                     when(code){
-                        0 -> {
+                        "hide" -> {
+                            System.out.println("firebaseresponse0")
                             noticebutton!!.visibility = View.GONE
                         }
-                        1 ->{
+                        "link" ->{
+                            System.out.println("firebaseresponse1")
                             noticebutton!!.visibility = View.VISIBLE
                             noticebutton!!.setOnClickListener {
                                 val url = p0.child("buttonlink").value.toString()
@@ -128,7 +130,8 @@ class dashboard : Fragment() {
                                 }
                             }
                         }
-                        2 ->{
+                        "update" ->{
+                            System.out.println("firebaseresponse2")
                             noticebutton!!.visibility = View.VISIBLE
                             noticebutton!!.setOnClickListener {
                                 val uri = Uri.parse("market://details?id=" + "com.anmol.coinpanda")
@@ -146,19 +149,26 @@ class dashboard : Fragment() {
                                 }
                             }
                         }
-                        3 ->{
+                        "activity" ->{
+                            System.out.println("firebaseresponse3")
                             noticebutton!!.visibility = View.VISIBLE
                             noticebutton!!.setOnClickListener {
                                 startActivity(Intent(activity!!, ReferralDetailsActivity::class.java))
                             }
                         }
                         else ->{
+                            System.out.println("firebaseresponseelse")
                             noticebutton!!.visibility = View.GONE
                         }
                     }
 
                     val buttonimagelink = p0.child("buttonimagelink").value
-                    Glide.with(activity!!).load(buttonimagelink).into(noticebutton)
+                    try{
+                        Glide.with(activity!!).load(buttonimagelink).into(noticebutton)
+                    }catch (e:KotlinNullPointerException){
+                        e.printStackTrace()
+                    }
+
 
 
                 }

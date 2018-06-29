@@ -27,6 +27,7 @@
                 android:id="@+id/noticelayout"
                 android:visibility="gone"
                 android:background="@drawable/side_nav_bar2"
+                android:layout_marginBottom="5dp"
                 >
                 <TextView
                     android:layout_width="match_parent"
@@ -36,15 +37,14 @@
                     android:layout_marginStart="5dp"
                     android:layout_marginEnd="5dp"
                     android:textAlignment="center"
-                    android:textSize="12sp"
                     android:textColor="#000"
                     android:layout_gravity="center"
                     android:text="All new update of cryptohype is waiting for you"
                     />
 
                 <ImageButton
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
                     android:layout_gravity="center"
 
                     android:layout_marginEnd="5dp"
@@ -56,7 +56,7 @@
                     android:src="@drawable/upgrade" />
             </LinearLayout>
             <RelativeLayout
-
+                android:layout_below="@+id/noticelayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:id="@+id/coinframe"
