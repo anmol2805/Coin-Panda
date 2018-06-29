@@ -130,6 +130,7 @@
         android:clickable="false"
         android:textSize="12sp"
         android:maxLines="1"
+        android:textColor="#000"
         android:text="To get filtered updates, you have to make sure you are following TENZORUM ANNOUNCEMENTS CHANNEL att.me/tenzorum_ann"
         android:textAlignment="textStart"
         tools:ellipsize="end" />

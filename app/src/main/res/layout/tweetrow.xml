@@ -27,20 +27,19 @@
                 android:layout_height="20dp"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="5dp"
-                android:layout_marginRight="5dp"
+
+                android:layout_margin="5dp"
+
                 android:background="@drawable/shareapp" />
 
             <ImageView
                 android:id="@+id/bookmark"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_marginEnd="5dp"
-                android:layout_marginRight="5dp"
+                android:layout_toLeftOf="@+id/sharebtn"
+                android:layout_toStartOf="@id/sharebtn"
+                android:layout_marginEnd="10dp"
+                android:layout_marginTop="5dp"
                 android:elevation="8dp"
                 android:scaleType="fitStart"
                 app:srcCompat="@drawable/starunfilled" />
@@ -115,9 +114,8 @@
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 android:layout_toEndOf="@+id/coinlay"
-                android:layout_toLeftOf="@+id/bookmark"
                 android:layout_toRightOf="@+id/coinlay"
-                android:layout_toStartOf="@+id/bookmark"
+
                 android:autoLink="web"
                 android:foreground="?attr/selectableItemBackground"
                 android:text="tweet"
