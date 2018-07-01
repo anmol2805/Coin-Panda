@@ -65,8 +65,8 @@
                 android:background="#fff"
                 android:drawablePadding="10dp"
 
-                android:drawableLeft="@drawable/facebook96"
-                android:paddingLeft="15dp"/>
+                android:drawableLeft="@drawable/layerfacebook"
+                android:paddingLeft="20dp"/>
             <Button
                 android:id="@+id/request"
                 android:layout_width="match_parent"
