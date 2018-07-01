@@ -33,13 +33,13 @@ class CoinsdbService : IntentService("CoinsdbService") {
         val auth = FirebaseAuth.getInstance()
         val databaseReference = FirebaseDatabase.getInstance().reference.child("database").child(auth.currentUser!!.uid).child("portfolio")
         databaseReference.addValueEventListener(object :ValueEventListener{
-            override fun onCancelled(p0: DatabaseError?) {
+            override fun onCancelled(p0: DatabaseError) {
 
             }
 
-            override fun onDataChange(p0: DataSnapshot?) {
+            override fun onDataChange(p0: DataSnapshot) {
                 val dcb = Dbcoinshelper(baseContext)
-                if(p0!!.exists()){
+                if(p0.exists()){
                     for(doc in p0.children){
                         val coinname = doc.child("coin").value.toString()
                         val coinsymbol = doc.child("coin_symbol").value.toString()

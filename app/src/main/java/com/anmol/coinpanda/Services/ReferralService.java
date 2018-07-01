@@ -2,6 +2,7 @@ package com.anmol.coinpanda.Services;
 
 import android.app.IntentService;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -31,7 +32,7 @@ public class ReferralService extends IntentService {
         map.put(auth.getCurrentUser().getUid(),token);
         databaseReference.child(auth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(!dataSnapshot.exists()){
                     databaseReference.updateChildren(map);
                 }
@@ -39,7 +40,7 @@ public class ReferralService extends IntentService {
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
         });

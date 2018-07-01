@@ -32,16 +32,16 @@ class BookmarksdbService : IntentService("BookmarksdbService") {
         val databaseReference = FirebaseDatabase.getInstance().reference.child("database").child(auth.currentUser!!.uid).child("bookmarks")
         val dbb = Dbbookshelper(baseContext)
         databaseReference.addValueEventListener(object :ValueEventListener{
-            override fun onCancelled(p0: DatabaseError?) {
+            override fun onCancelled(p0: DatabaseError) {
 
             }
 
-            override fun onDataChange(p0: DataSnapshot?) {
-                if(p0!!.exists()){
+            override fun onDataChange(p0: DataSnapshot) {
+                if(p0.exists()){
                     for(data in p0.children){
                         val tweetid = data.key
                         System.out.println("realdbtesting:$tweetid")
-                        dbb.insertData(tweetid)
+                        dbb.insertData(tweetid!!)
                     }
                 }
 
