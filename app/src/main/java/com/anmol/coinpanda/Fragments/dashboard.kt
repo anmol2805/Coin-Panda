@@ -94,11 +94,11 @@ class dashboard : Fragment() {
             }
         databaseReference = FirebaseDatabase.getInstance().reference.child("banner")
         databaseReference!!.addValueEventListener(object:ValueEventListener{
-            override fun onCancelled(p0: DatabaseError?) {
+            override fun onCancelled(p0: DatabaseError) {
 
             }
 
-            override fun onDataChange(p0: DataSnapshot?) {
+            override fun onDataChange(p0: DataSnapshot) {
                 if(p0!!.exists()){
                     if(p0.child("text").value!!.equals("") || p0.child("text").value.toString().isEmpty()){
                         noticelayout!!.visibility = View.GONE

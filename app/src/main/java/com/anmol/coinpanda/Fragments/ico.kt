@@ -19,7 +19,6 @@ import com.android.volley.toolbox.JsonArrayRequest
 import com.anmol.coinpanda.Adapters.IcoAdapter
 import com.anmol.coinpanda.Helper.Dbicohelper
 import com.anmol.coinpanda.Helper.TABLE_ICO
-import com.anmol.coinpanda.IcodataActivity
 import com.anmol.coinpanda.Interfaces.ItemClickListener
 import com.anmol.coinpanda.Model.Icocoin
 import com.anmol.coinpanda.Mysingleton

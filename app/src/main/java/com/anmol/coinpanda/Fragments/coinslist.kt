@@ -91,14 +91,14 @@ class coinslist : Fragment(){
                 atp?.visibility = View.VISIBLE
                 portfoliolay?.visibility = View.GONE
                 databaseReference!!.child("database").child(auth.currentUser!!.uid).child("topics").addListenerForSingleValueEvent(object:ValueEventListener{
-                    override fun onCancelled(p0: DatabaseError?) {
+                    override fun onCancelled(p0: DatabaseError) {
 
                     }
 
-                    override fun onDataChange(p0: DataSnapshot?) {
+                    override fun onDataChange(p0: DataSnapshot) {
                         if(p0!!.exists()){
                             for(data in p0.children){
-                                if (data.key.contains(allcoins[i].coinname!!) && data.child("coinname").value.toString().contains(allcoins[i].coin!!)) {
+                                if (data.key!!.contains(allcoins[i].coinname!!) && data.child("coinname").value.toString().contains(allcoins[i].coin!!)) {
                                     val notify:Boolean = data.child("notify").value as Boolean
                                     if (!notify) {
                                         notificationswitch?.isChecked = false
@@ -120,27 +120,27 @@ class coinslist : Fragment(){
                         databaseReference!!.child("database").child(auth.currentUser!!.uid).child("portfolio").child(allcoins[i].coinname!!).updateChildren(map)
                     } else {
                         databaseReference!!.child("database").child(auth.currentUser!!.uid).child("topics").addListenerForSingleValueEvent(object :ValueEventListener{
-                            override fun onCancelled(p0: DatabaseError?) {
+                            override fun onCancelled(p0: DatabaseError) {
 
                             }
 
-                            override fun onDataChange(p0: DataSnapshot?) {
-                                if(p0!!.exists()){
+                            override fun onDataChange(p0: DataSnapshot) {
+                                if(p0.exists()){
                                     for(data in p0.children){
-                                        if (data.key.contains(allcoins[i].coinname!!) && data.child("coinname").value == allcoins[i].coin) {
-                                            databaseReference!!.child("database").child(auth.currentUser!!.uid).child("topics").child(data.key).removeValue().addOnSuccessListener {
+                                        if (data.key!!.contains(allcoins[i].coinname!!) && data.child("coinname").value == allcoins[i].coin) {
+                                            databaseReference!!.child("database").child(auth.currentUser!!.uid).child("topics").child(data.key!!).removeValue().addOnSuccessListener {
                                                 messaging.unsubscribeFromTopic(data.key)
-                                                databaseReference!!.child("topics").child(data.key).addListenerForSingleValueEvent(object:ValueEventListener{
-                                                    override fun onCancelled(p0: DatabaseError?) {
+                                                databaseReference!!.child("topics").child(data.key!!).addListenerForSingleValueEvent(object:ValueEventListener{
+                                                    override fun onCancelled(p0: DatabaseError) {
 
                                                     }
 
-                                                    override fun onDataChange(p0: DataSnapshot?) {
-                                                        val count:Long = p0!!.child("count").value as Long
+                                                    override fun onDataChange(p0: DataSnapshot) {
+                                                        val count:Long = p0.child("count").value as Long
                                                         if (count>0){
                                                             val map  = java.util.HashMap<String, Any>()
                                                             map["count"] = count - 1
-                                                            databaseReference!!.child("topics").child(data.key).updateChildren(map)
+                                                            databaseReference!!.child("topics").child(data.key!!).updateChildren(map)
                                                         }
                                                     }
 
@@ -200,15 +200,15 @@ class coinslist : Fragment(){
 
                     dcb!!.deleteCoin(sqlcoin)
                     databaseReference!!.child("database").child(auth.currentUser!!.uid).child("topics").addListenerForSingleValueEvent(object:ValueEventListener{
-                        override fun onCancelled(p0: DatabaseError?) {
+                        override fun onCancelled(p0: DatabaseError) {
 
                         }
 
-                        override fun onDataChange(p0: DataSnapshot?) {
-                            if(p0!!.exists()){
+                        override fun onDataChange(p0: DataSnapshot) {
+                            if(p0.exists()){
                                 for(data in p0.children){
-                                    if(data.key.contains(allcoins[i].coinname!!) && data.child("coinname").value == allcoins[i].coin){
-                                        databaseReference!!.child("database").child(auth.currentUser!!.uid).child("topics").child(data.key).removeValue().addOnCompleteListener {
+                                    if(data.key!!.contains(allcoins[i].coinname!!) && data.child("coinname").value == allcoins[i].coin){
+                                        databaseReference!!.child("database").child(auth.currentUser!!.uid).child("topics").child(data.key!!).removeValue().addOnCompleteListener {
                                             messaging.unsubscribeFromTopic(data.key)
                                             databaseReference!!.child("database").child(auth.currentUser!!.uid).child("portfolio").child(allcoins[i].coinname!!)
                                                     .removeValue().addOnSuccessListener {
@@ -218,17 +218,17 @@ class coinslist : Fragment(){
 
                                                     }
 
-                                            databaseReference!!.child("topics").child(data.key).addListenerForSingleValueEvent(object:ValueEventListener{
-                                                override fun onCancelled(p0: DatabaseError?) {
+                                            databaseReference!!.child("topics").child(data.key!!).addListenerForSingleValueEvent(object:ValueEventListener{
+                                                override fun onCancelled(p0: DatabaseError) {
 
                                                 }
 
-                                                override fun onDataChange(p0: DataSnapshot?) {
-                                                    val count:Long = p0!!.child("count").value as Long
+                                                override fun onDataChange(p0: DataSnapshot) {
+                                                    val count:Long = p0.child("count").value as Long
                                                     if (count>0){
                                                         val map  = java.util.HashMap<String, Any>()
                                                         map["count"] = count - 1
-                                                        databaseReference!!.child("topics").child(data.key).updateChildren(map)
+                                                        databaseReference!!.child("topics").child(data.key!!).updateChildren(map)
                                                     }
                                                 }
 
@@ -276,12 +276,12 @@ class coinslist : Fragment(){
 
     private fun removetopic(id: String) {
         databaseReference!!.child("topics").child(id).addListenerForSingleValueEvent(object:ValueEventListener{
-            override fun onCancelled(p0: DatabaseError?) {
+            override fun onCancelled(p0: DatabaseError) {
 
             }
 
-            override fun onDataChange(p0: DataSnapshot?) {
-                val count:Long = p0!!.child("count").value as Long
+            override fun onDataChange(p0: DataSnapshot) {
+                val count:Long = p0.child("count").value as Long
                 if (count>0){
                     val map  = java.util.HashMap<String, Any>()
                     map["count"] = count - 1
@@ -297,12 +297,12 @@ class coinslist : Fragment(){
     private fun topicsearch(i: Int, coinname: String?, coin: String?) {
 
         databaseReference!!.child("topics").child(coinname + i.toString()).addListenerForSingleValueEvent(object:ValueEventListener{
-            override fun onCancelled(p0: DatabaseError?) {
+            override fun onCancelled(p0: DatabaseError) {
 
             }
 
-            override fun onDataChange(p0: DataSnapshot?) {
-                if(p0!!.exists()){
+            override fun onDataChange(p0: DataSnapshot) {
+                if(p0.exists()){
                     val count:Long = p0.child("count").value as Long
                     if(count > 990){
                         topicsearch(i+1, coinname, coin)
