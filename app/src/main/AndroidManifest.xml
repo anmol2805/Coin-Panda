@@ -89,7 +89,6 @@
             android:name=".ScrollingActivity"
             android:label="@string/title_activity_scrolling"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".IcodataActivity" />
         <activity android:name=".ReferralActivity" />
         <activity android:name=".ReferralDetailsActivity"></activity>
     </application>

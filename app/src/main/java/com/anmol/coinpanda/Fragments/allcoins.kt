@@ -1,6 +1,5 @@
 package com.anmol.coinpanda.Fragments
 
-import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.support.v4.app.Fragment
@@ -21,7 +20,6 @@ import com.anmol.coinpanda.Helper.COL_ID
 import com.anmol.coinpanda.Helper.Dbbookshelper
 import com.anmol.coinpanda.Helper.Dbhelper
 import com.anmol.coinpanda.Helper.TABLE_NAME
-import com.anmol.coinpanda.HomeActivity
 import com.anmol.coinpanda.Interfaces.ItemClickListener
 import com.anmol.coinpanda.Model.Sqltweet
 import com.anmol.coinpanda.Model.Tweet
@@ -30,9 +28,6 @@ import com.anmol.coinpanda.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import org.json.JSONException
-import java.sql.Timestamp
-import java.text.SimpleDateFormat
-import java.util.*
 import kotlin.collections.ArrayList
 
 /**

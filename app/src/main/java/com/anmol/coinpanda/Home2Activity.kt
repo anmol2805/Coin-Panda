@@ -80,11 +80,11 @@ class Home2Activity : AppCompatActivity() {
 
             val databaseReference = FirebaseDatabase.getInstance().reference
             databaseReference.root.addValueEventListener(object : ValueEventListener {
-                override fun onCancelled(p0: DatabaseError?) {
+                override fun onCancelled(p0: DatabaseError) {
 
                 }
 
-                override fun onDataChange(p0: DataSnapshot?) {
+                override fun onDataChange(p0: DataSnapshot) {
 //                    if(p0!!.child("vname").value!=null){
 //                        val updateversion = p0.child("vname").value
 //                        val pInfo = packageManager.getPackageInfo(packageName, 0)
@@ -215,11 +215,12 @@ class Home2Activity : AppCompatActivity() {
         super.onPostResume()
         val databaseReference = FirebaseDatabase.getInstance().reference
         databaseReference.root.addValueEventListener(object : ValueEventListener{
-            override fun onCancelled(p0: DatabaseError?) {
+
+            override fun onCancelled(p0: DatabaseError) {
 
             }
 
-            override fun onDataChange(p0: DataSnapshot?) {
+            override fun onDataChange(p0: DataSnapshot) {
 //                if(p0!!.child("vname").value!=null){
 //                    val updateversion = p0.child("vname").value.toString().trim()
 //                    val pInfo = packageManager.getPackageInfo(packageName, 0)

@@ -1,38 +1,19 @@
 package com.anmol.coinpanda.Fragments
 
 import android.annotation.SuppressLint
-import android.app.Dialog
 import android.support.v4.app.Fragment
 
 import android.content.Intent
-import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.os.Handler
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import com.anmol.coinpanda.Adapters.GridnewAdapter
 import com.anmol.coinpanda.Helper.Dbcoinshelper
-import com.anmol.coinpanda.Interfaces.ItemClickListener
-import com.anmol.coinpanda.Model.Allcoin
-import com.anmol.coinpanda.Model.Sqlcoin
-import com.anmol.coinpanda.PaymentActivity
 import com.anmol.coinpanda.R
 import com.anmol.coinpanda.Services.CoinsdbService
-import com.anmol.coinpanda.TweetsActivity
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.DataSource
-import com.bumptech.glide.load.engine.GlideException
-import com.bumptech.glide.request.RequestListener
-import com.bumptech.glide.request.target.Target
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.Query
-import org.jetbrains.anko.support.v4.startService
 
 /**
  * Created by anmol on 2/26/2018.

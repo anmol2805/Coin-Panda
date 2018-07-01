@@ -57,12 +57,12 @@ class LoadingActivity : AppCompatActivity() {
                 System.out.println("procedure 0")
                 val databaseReference = FirebaseDatabase.getInstance().reference
                 databaseReference.child("database").child(auth.currentUser!!.uid).child("portfolio").addListenerForSingleValueEvent(object : ValueEventListener {
-                    override fun onCancelled(p0: DatabaseError?) {
+                    override fun onCancelled(p0: DatabaseError) {
 
                     }
 
-                    override fun onDataChange(p0: DataSnapshot?) {
-                        if (p0!!.exists()) {
+                    override fun onDataChange(p0: DataSnapshot) {
+                        if (p0.exists()) {
                             for (data in p0.children) {
                                 val coinname = data.child("coin").value.toString()
                                 val coinsymbol = data.child("coin_symbol").value.toString()
@@ -109,15 +109,15 @@ class LoadingActivity : AppCompatActivity() {
             val auth = FirebaseAuth.getInstance()
             val databaseReference = FirebaseDatabase.getInstance().reference
             databaseReference.child("database").child(auth.currentUser!!.uid).child("portfolio").addListenerForSingleValueEvent(object:ValueEventListener{
-                override fun onCancelled(p0: DatabaseError?) {
+                override fun onCancelled(p0: DatabaseError) {
                     retry?.visibility = View.VISIBLE
                     loadpgr?.visibility = View.GONE
                     pw?.text = "Network Error"
                 }
 
-                override fun onDataChange(p0: DataSnapshot?) {
+                override fun onDataChange(p0: DataSnapshot) {
                     pw?.text = "Please Wait!!!"
-                    if(p0!!.exists()){
+                    if(p0.exists()){
                         for (doc in p0.children){
                             val coinname = doc.child("coin").value.toString()
                             val coinsymbol = doc.child("coin_symbol").value.toString()
@@ -198,13 +198,13 @@ class LoadingActivity : AppCompatActivity() {
 
     private fun topicsearch(i: Int, coinname: String?, coin: String?) {
         val databaseReference = FirebaseDatabase.getInstance().reference
-        databaseReference!!.child("topics").child(coinname + i.toString()).addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onCancelled(p0: DatabaseError?) {
+        databaseReference.child("topics").child(coinname + i.toString()).addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onCancelled(p0: DatabaseError) {
 
             }
 
-            override fun onDataChange(p0: DataSnapshot?) {
-                if (p0!!.exists()) {
+            override fun onDataChange(p0: DataSnapshot) {
+                if (p0.exists()) {
                     val count: Long = p0.child("count").value as Long
                     if (count > 990) {
                         topicsearch(i + 1, coinname, coin)

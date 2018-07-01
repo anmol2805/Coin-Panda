@@ -25,12 +25,12 @@ class ReferralDetailsActivity : AppCompatActivity() {
         val auth = FirebaseAuth.getInstance()
         val db = FirebaseDatabase.getInstance().reference
         db.addValueEventListener(object:ValueEventListener{
-            override fun onCancelled(p0: DatabaseError?) {
+            override fun onCancelled(p0: DatabaseError) {
 
             }
 
-            override fun onDataChange(p0: DataSnapshot?) {
-                    if(p0!!.exists()){
+            override fun onDataChange(p0: DataSnapshot) {
+                    if(p0.exists()){
                         airdropdate.text = p0.child("airdropdate").value.toString()
                         token.text = p0.child("token").value.toString()
                     }
@@ -39,12 +39,12 @@ class ReferralDetailsActivity : AppCompatActivity() {
 
         })
         db.child("users").child(auth.currentUser!!.uid).addValueEventListener(object: ValueEventListener {
-            override fun onCancelled(p0: DatabaseError?) {
+            override fun onCancelled(p0: DatabaseError) {
                 System.out.println("Referralerror$p0")
             }
 
-            override fun onDataChange(p0: DataSnapshot?) {
-                if(p0!!.exists()){
+            override fun onDataChange(p0: DataSnapshot) {
+                if(p0.exists()){
                     System.out.println("Referralerror$p0")
                     val refercode:String = p0.value as String
                     referralcode.text = refercode
@@ -73,12 +73,12 @@ class ReferralDetailsActivity : AppCompatActivity() {
         })
 
         db.child("referrers").child(auth.currentUser!!.uid).child("count").addValueEventListener(object:ValueEventListener{
-            override fun onCancelled(p0: DatabaseError?) {
+            override fun onCancelled(p0: DatabaseError) {
 
             }
 
-            override fun onDataChange(p0: DataSnapshot?) {
-                if(p0!!.exists()){
+            override fun onDataChange(p0: DataSnapshot) {
+                if(p0.exists()){
                     val refercount:Long = p0.value as Long
                     referralcount?.text = refercount.toString()
                 }
@@ -89,12 +89,12 @@ class ReferralDetailsActivity : AppCompatActivity() {
 
         })
         db.child("address").child(auth.currentUser!!.uid).addValueEventListener(object:ValueEventListener{
-            override fun onCancelled(p0: DatabaseError?) {
+            override fun onCancelled(p0: DatabaseError) {
 
             }
 
-            override fun onDataChange(p0: DataSnapshot?) {
-                if(p0!!.exists()){
+            override fun onDataChange(p0: DataSnapshot) {
+                if(p0.exists()){
                     if(p0.child("eth").exists()){
                         ethlayout.visibility = View.GONE
                     }
