@@ -129,59 +129,60 @@ class allcoins : Fragment(){
             srl?.setColorSchemeColors(
                     resources.getColor(R.color.colorAccent)
             )
+        srl?.isRefreshing = true
         val handler2 = Handler()
         handler2.postDelayed({
-            srl?.isRefreshing = true
-            val jsonObjectrefRequest = JsonObjectRequest(Request.Method.GET, "https://www.cryptohype.live/tweets", null, Response.Listener { response ->
-                var c = 0
-                try {
-                    val jsonArray = response.getJSONArray("tweets")
-                    val sqltweets = java.util.ArrayList<Sqltweet>()
-                    sqltweets.clear()
+            srl?.isRefreshing = false
+//            val jsonObjectrefRequest = JsonObjectRequest(Request.Method.GET, "https://www.cryptohype.live/tweets", null, Response.Listener { response ->
+//                var c = 0
+//                try {
+//                    val jsonArray = response.getJSONArray("tweets")
+//                    val sqltweets = java.util.ArrayList<Sqltweet>()
+//                    sqltweets.clear()
+//
+//
+//                    while (c < 10) {
+//                        val obj = jsonArray.getJSONObject(c)
+//                        val id = obj.getString("tweetid")
+//                        val coin = obj.getString("coin_name")
+//                        val coin_symbol = obj.getString("coin_symbol")
+//                        val mtweet = obj.getString("tweet")
+//                        val url = obj.getString("url")
+//                        val keyword = obj.getString("keyword")
+//                        val dates = obj.getString("date")
+//                        val coinpage = obj.getString("coin_handle")
+//
+//                        val sqltweet = Sqltweet(coin, coin_symbol, mtweet, url, keyword, id, dates, coinpage)
+//                        try {
+//                            val db = Dbhelper(activity!!)
+//                            db.insertData(sqltweet)
+//                            println("tweetno$c")
+//                        }
+//                        catch (e:KotlinNullPointerException){
+//                            e.printStackTrace()
+//                        }
+//
+//                        c++
+//                    }
+//                    srl?.isRefreshing = false
+//                    loadquery(null)
+//
+//                } catch (e: JSONException) {
+//                    e.printStackTrace()
+//                }
+//            }, Response.ErrorListener {
+//                srl?.isRefreshing = false
+//                Toast.makeText(activity,"Unable to refresh tweets",Toast.LENGTH_SHORT).show()
+//
+//            })
+//            try{
+//                Mysingleton.getInstance(activity!!).addToRequestqueue(jsonObjectrefRequest)
+//            }
+//            catch (e:KotlinNullPointerException){
+//                e.printStackTrace()
+//            }
 
-
-                    while (c < 10) {
-                        val obj = jsonArray.getJSONObject(c)
-                        val id = obj.getString("tweetid")
-                        val coin = obj.getString("coin_name")
-                        val coin_symbol = obj.getString("coin_symbol")
-                        val mtweet = obj.getString("tweet")
-                        val url = obj.getString("url")
-                        val keyword = obj.getString("keyword")
-                        val dates = obj.getString("date")
-                        val coinpage = obj.getString("coin_handle")
-
-                        val sqltweet = Sqltweet(coin, coin_symbol, mtweet, url, keyword, id, dates, coinpage)
-                        try {
-                            val db = Dbhelper(activity!!)
-                            db.insertData(sqltweet)
-                            println("tweetno$c")
-                        }
-                        catch (e:KotlinNullPointerException){
-                            e.printStackTrace()
-                        }
-
-                        c++
-                    }
-                    srl?.isRefreshing = false
-                    loadquery(null)
-
-                } catch (e: JSONException) {
-                    e.printStackTrace()
-                }
-            }, Response.ErrorListener {
-                srl?.isRefreshing = false
-                Toast.makeText(activity,"Unable to refresh tweets",Toast.LENGTH_SHORT).show()
-
-            })
-            try{
-                Mysingleton.getInstance(activity!!).addToRequestqueue(jsonObjectrefRequest)
-            }
-            catch (e:KotlinNullPointerException){
-                e.printStackTrace()
-            }
-
-        },200)
+        },2000)
 
             srl?.setOnRefreshListener {
                 val jsonObjectRequest = JsonObjectRequest(Request.Method.GET, "https://www.cryptohype.live/tweets", null, Response.Listener { response ->
