@@ -13,6 +13,8 @@ import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.StringRequest
 import com.anmol.coinpanda.Helper.Dbhelper
 import com.anmol.coinpanda.Model.Sqltweet
+import com.anmol.coinpanda.Services.IcodbService
+import com.anmol.coinpanda.Services.IcomsgdbService
 import com.anmol.coinpanda.Services.TweetsdbService
 import com.google.firebase.auth.FirebaseAuth
 import org.json.JSONException
@@ -24,8 +26,11 @@ class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
-//        val intent1 = Intent(this,TweetsdbService::class.java)
-//        startService(intent1)
+        val intent1 = Intent(this,IcodbService::class.java)
+        startService(intent1)
+        val intent2 = Intent(this,IcomsgdbService::class.java)
+        startService(intent2)
+
         updaterequest()
         moverequest()
         val jsonObjectRequest = JsonObjectRequest(Request.Method.GET, "https://www.cryptohype.live/tweets", null, Response.Listener { response ->
@@ -36,7 +41,7 @@ class SplashActivity : AppCompatActivity() {
                 sqltweets.clear()
 
 
-                while (c < 450) {
+                while (c < 225) {
                     val obj = jsonArray.getJSONObject(c)
                     val id = obj.getString("tweetid")
                     val coin = obj.getString("coin_name")

@@ -32,6 +32,7 @@ class IcodbService:IntentService("IcodbService"){
                 val rating = jsonObject.getString("Rating")
                 val icocoin = Icocoin(iconame,telegramurl,website,mediumurl,crowdsale_date,icostatus,industry,icodescription,hardcap,softcap,twitterurl,rating)
                 db.insertData(icocoin)
+                db.updatedata(icocoin)
                 c++
             }
 

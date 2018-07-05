@@ -88,50 +88,51 @@ class ScrollingActivity : AppCompatActivity() {
         icotweetrefresh.setColorSchemeColors(
                 resources.getColor(R.color.colorAccent)
         )
+        icotweetrefresh.isRefreshing = true
         val handler = Handler()
         handler.postDelayed({
-            icotweetrefresh.isRefreshing = true
-            var m = 0
-            val jsonArray1 = JsonArrayRequest(Request.Method.GET,"https://www.cryptohype.live/ico/pinned",null, Response.Listener { response ->
-                icopins.clear()
-                while (m<response.length()){
-                    val jsonObject = response.getJSONObject(m)
-                    val messageid = jsonObject.getInt("cID")
-                    val message = jsonObject.getString("pinned_messages")
-                    val messagetime = jsonObject.getString("date")
-                    val ico_name = jsonObject.getString("coin_name")
-                    val icopin = Icopin(messageid,ico_name,message,messagetime)
-                    db.insertData(icopin)
-                    m++
-                }
-                val query ="Select * from $ICOPIN_TABLE_NAME ORDER BY $COL_ICOPIN_ID DESC"
-                val data = db.readData(query)
-                var x = 0
-                while(x<data.size){
-                    if(data[x].icocoin_name == title){
-                        icopins.add(data[x])
-                    }
-                    x++
-                }
-                if(icopins.isEmpty()){
-                    icotweetrefresh.isRefreshing = false
-                    scrollinglayout.visibility = View.INVISIBLE
-                }
-                else{
-                    icotweetrefresh.isRefreshing = false
-                    scrollinglayout.visibility = View.VISIBLE
-                    icomsgAdapter = IcomsgAdapter(this,icopins,itemClickListener)
-                    icomsgAdapter!!.notifyDataSetChanged()
-                    cointweetrecycler?.adapter = icomsgAdapter
-                }
-
-
-            }, Response.ErrorListener {
-                icotweetrefresh.isRefreshing = false
-                Toast.makeText(this,"Unable to refresh news",Toast.LENGTH_SHORT).show()
-            })
-            Mysingleton.getInstance(this).addToRequestqueue(jsonArray1)
-        },100)
+            icotweetrefresh.isRefreshing = false
+//            var m = 0
+//            val jsonArray1 = JsonArrayRequest(Request.Method.GET,"https://www.cryptohype.live/ico/pinned",null, Response.Listener { response ->
+//                icopins.clear()
+//                while (m<response.length()){
+//                    val jsonObject = response.getJSONObject(m)
+//                    val messageid = jsonObject.getInt("cID")
+//                    val message = jsonObject.getString("pinned_messages")
+//                    val messagetime = jsonObject.getString("date")
+//                    val ico_name = jsonObject.getString("coin_name")
+//                    val icopin = Icopin(messageid,ico_name,message,messagetime)
+//                    db.insertData(icopin)
+//                    m++
+//                }
+//                val query ="Select * from $ICOPIN_TABLE_NAME ORDER BY $COL_ICOPIN_ID DESC"
+//                val data = db.readData(query)
+//                var x = 0
+//                while(x<data.size){
+//                    if(data[x].icocoin_name == title){
+//                        icopins.add(data[x])
+//                    }
+//                    x++
+//                }
+//                if(icopins.isEmpty()){
+//                    icotweetrefresh.isRefreshing = false
+//                    scrollinglayout.visibility = View.INVISIBLE
+//                }
+//                else{
+//                    icotweetrefresh.isRefreshing = false
+//                    scrollinglayout.visibility = View.VISIBLE
+//                    icomsgAdapter = IcomsgAdapter(this,icopins,itemClickListener)
+//                    icomsgAdapter!!.notifyDataSetChanged()
+//                    cointweetrecycler?.adapter = icomsgAdapter
+//                }
+//
+//
+//            }, Response.ErrorListener {
+//                icotweetrefresh.isRefreshing = false
+//                Toast.makeText(this,"Unable to refresh news",Toast.LENGTH_SHORT).show()
+//            })
+//            Mysingleton.getInstance(this).addToRequestqueue(jsonArray1)
+        },2000)
 
         icotweetrefresh.setOnRefreshListener {
             icotweetrefresh.isRefreshing = true
