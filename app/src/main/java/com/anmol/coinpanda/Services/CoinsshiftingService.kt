@@ -24,11 +24,61 @@ import java.util.ArrayList
 
 
 class CoinsshiftingService : IntentService("CoinsshiftingService") {
-
+    val db = FirebaseFirestore.getInstance()
+    val auth = FirebaseAuth.getInstance()
     override fun onHandleIntent(intent: Intent?) {
 
-        val db = FirebaseFirestore.getInstance()
-        val auth = FirebaseAuth.getInstance()
+
+        coinshift()
+        topicshift()
+        bookmarkshift()
+
+    }
+
+    private fun bookmarkshift() {
+        val databaseReference = FirebaseDatabase.getInstance().reference.child("database").child(auth.currentUser!!.uid).child("bookmarks")
+        db.collection("users").document(auth.currentUser!!.uid).collection("bookmarks").get().addOnCompleteListener {
+            task ->
+            for (doc in task.result.documents){
+                val tweetid = doc.id
+                val map = HashMap<String,Any>()
+                map[tweetid] = true
+                databaseReference.updateChildren(map).addOnCompleteListener {
+                    db.collection("users").document(auth.currentUser!!.uid).collection("bookmarks")
+                            .document(tweetid).delete()
+                }
+            }
+
+        }
+    }
+
+    private fun topicshift() {
+        val databaseReference = FirebaseDatabase.getInstance().reference.child("database").child(auth.currentUser!!.uid).child("topics")
+        db.collection("users").document(auth.currentUser!!.uid).collection("topics").get().addOnCompleteListener {
+            task ->
+            val documentSnapshot = task.result
+
+            val s = documentSnapshot.size()
+
+            if(s!=0){
+                for(doc in documentSnapshot){
+                    val coinname = doc.getString("coinname")
+                    val map = HashMap<String,Any>()
+                    map["coinname"] = coinname!!
+                    map["notify"] = true
+                    databaseReference.child(doc.id).setValue(map).addOnCompleteListener {
+                        db.collection("users").document(auth.currentUser!!.uid).collection("topics")
+                                .document(doc.id).delete()
+                    }
+                }
+
+
+            }
+
+        }
+    }
+
+    private fun coinshift() {
         val databaseReference = FirebaseDatabase.getInstance().reference.child("database").child(auth.currentUser!!.uid).child("portfolio")
         db.collection("users").document(auth.currentUser!!.uid).collection("portfolio").get().addOnCompleteListener {
             task ->
@@ -53,4 +103,5 @@ class CoinsshiftingService : IntentService("CoinsshiftingService") {
 
         }
     }
+
 }
