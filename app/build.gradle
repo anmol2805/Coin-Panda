@@ -20,8 +20,8 @@ android {
         applicationId "com.anmol.coinpanda"
         minSdkVersion 21
         targetSdkVersion 27
-        versionCode 16
-        versionName '2.9.1'
+        versionCode 18
+        versionName '2.9.3'
         multiDexEnabled true
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
