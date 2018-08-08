@@ -28,8 +28,9 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
 
-                android:layout_margin="5dp"
-
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="5dp"
                 android:background="@drawable/shareapp" />
 
             <ImageView
@@ -43,6 +44,18 @@
                 android:elevation="8dp"
                 android:scaleType="fitStart"
                 app:srcCompat="@drawable/starunfilled" />
+
+            <ImageView
+                android:id="@+id/addcoin"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_toLeftOf="@+id/bookmark"
+                android:layout_toStartOf="@id/bookmark"
+                android:layout_marginEnd="10dp"
+                android:layout_marginTop="5dp"
+                android:elevation="8dp"
+                android:scaleType="fitStart"
+                app:srcCompat="@drawable/addcoin" />
 
 
             <ImageView
@@ -84,6 +97,9 @@
                 android:layout_toEndOf="@+id/coinicon"
                 android:layout_toRightOf="@+id/coinicon"
                 android:fontFamily="sans-serif-smallcaps"
+                android:layout_toLeftOf="@+id/addcoin"
+                android:layout_toStartOf="@id/addcoin"
+                android:layout_marginRight="5dp"
                 android:text="TextView"
                 android:textAllCaps="false"
                 android:textColor="#000"

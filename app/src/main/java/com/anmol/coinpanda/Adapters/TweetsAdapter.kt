@@ -162,6 +162,7 @@ class TweetsAdapter(internal var c: Context, internal var tweets: List<Tweet>, p
         var bookmark:ImageView?=null
         var timestamp:TextView?=null
         var sharebtn:Button?=null
+        var addbtn:Button?=null
         init {
             this.mtweet = itemView.findViewById(R.id.tweet)
             this.mcoin = itemView.findViewById(R.id.coin)
@@ -171,6 +172,7 @@ class TweetsAdapter(internal var c: Context, internal var tweets: List<Tweet>, p
             this.bookmark = itemView.findViewById(R.id.bookmark)
             this.timestamp = itemView.findViewById(R.id.time)
             this.sharebtn = itemView.findViewById(R.id.sharebtn)
+            this.addbtn = itemView.findViewById(R.id.addcoin)
             itemView.setOnClickListener(this)
         }
 

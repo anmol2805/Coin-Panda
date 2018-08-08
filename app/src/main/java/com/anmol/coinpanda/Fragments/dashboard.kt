@@ -56,7 +56,7 @@ class dashboard : Fragment() {
         noticelayout = vi.findViewById(R.id.noticelayout)
         noticebutton = vi.findViewById(R.id.noticebutton)
         noticetext = vi.findViewById(R.id.noticetext)
-        pgr?.visibility = View.VISIBLE
+
         //updaterequest()
         //moverequest()
 //        pgr?.visibility = View.GONE
