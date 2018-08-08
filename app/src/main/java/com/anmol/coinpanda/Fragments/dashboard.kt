@@ -63,26 +63,17 @@ class dashboard : Fragment() {
 //        tweetselect.isChecked = false
 //        setFragment(allcoins())
 
-            val dtb = Dbhelper(activity!!)
-            val dataquery = "Select * from $TABLE_NAME ORDER BY $COL_ID DESC"
-            val data = dtb.readData(dataquery)
+//            val dtb = Dbhelper(activity!!)
+//            val dataquery = "Select * from $TABLE_NAME ORDER BY $COL_ID DESC"
+//            val data = dtb.readData(dataquery)
 //            if(data.isEmpty()){
 //                val intent = Intent(activity,TweetsdbService::class.java)
 //                activity!!.startService(intent)
 //            }
+        pgr?.visibility = View.GONE
+        tweetselect.isChecked = false
+        setFragment(allcoins())
 
-            val dcb = Dbcoinshelper(activity!!)
-            val coins = dcb.readData()
-            if(!coins.isEmpty()){
-                pgr?.visibility = View.GONE
-                tweetselect.isChecked = true
-                setFragment(mycoins())
-            }
-            else{
-                pgr?.visibility = View.GONE
-                tweetselect.isChecked = false
-                setFragment(allcoins())
-            }
 
             tweetselect.setOnCheckedChangeListener { _, b ->
                 if(b){
