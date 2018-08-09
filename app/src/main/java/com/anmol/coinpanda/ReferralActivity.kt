@@ -7,28 +7,30 @@ import android.view.View
 import android.widget.Toast
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import kotlinx.android.synthetic.main.activity_referral.*
 import java.util.HashMap
 
 class ReferralActivity : AppCompatActivity() {
-
+    val mAuth = FirebaseAuth.getInstance()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_referral)
-        refersubmit.setOnClickListener(View.OnClickListener {
-            val referalcode = refercode.getText().toString()
+        submitref.setOnClickListener {
+            val referalcode = referralcode.text.toString()
             val databaseReference = FirebaseDatabase.getInstance().reference
             databaseReference.child("users").addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                     for (data in dataSnapshot.children) {
                         if (data.getValue(String::class.java) == referalcode) {
-                            if (data.key != mAuth.getCurrentUser()!!.getUid()) {
+                            if (data.key != mAuth.currentUser!!.uid) {
                                 val referrerid = data.key
                                 val map = HashMap<String, Any>()
-                                map[mAuth.getCurrentUser()!!.getUid()] = true
+                                map[mAuth.currentUser!!.uid] = true
                                 databaseReference.child("referrers").child(referrerid!!).updateChildren(map).addOnCompleteListener {
                                     databaseReference.child("referrers").child(referrerid).addListenerForSingleValueEvent(object : ValueEventListener {
                                         override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -42,7 +44,7 @@ class ReferralActivity : AppCompatActivity() {
 
                                             databaseReference.child("referrers").child(referrerid).updateChildren(map1)
                                                     .addOnCompleteListener {
-                                                        val intent = Intent(this@LoginActivity, LoadingActivity::class.java)
+                                                        val intent = Intent(this@ReferralActivity, LoadingActivity::class.java)
                                                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                                                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
                                                         startActivity(intent)
@@ -55,47 +57,11 @@ class ReferralActivity : AppCompatActivity() {
 
                                         }
                                     })
-                                    //                                            databaseReference.child("referrers").child(referrerid).child("count").addListenerForSingleValueEvent(new ValueEventListener() {
-                                    //                                                @Override
-                                    //                                                public void onDataChange(DataSnapshot dataSnapshot) {
-                                    //                                                    if(dataSnapshot.exists()){
-                                    //                                                        Integer counter = dataSnapshot.getValue(Integer.class);
-                                    //                                                        counter = counter + 1;
-                                    //                                                        Map<String,Object> map1 = new HashMap<>();
-                                    //                                                        map1.put("count",counter);
-                                    //                                                        databaseReference.child("referrers").child(referrerid).updateChildren(map1).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    //                                                            @Override
-                                    //                                                            public void onComplete(@NonNull Task<Void> task) {
-                                    //
-                                    //                                                            }
-                                    //                                                        });
-                                    //                                                    }
-                                    //                                                    else{
-                                    //                                                        Map<String,Object> map1 = new HashMap<>();
-                                    //                                                        map1.put("count",1);
-                                    //                                                        databaseReference.child("referrers").child(referrerid).updateChildren(map1).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    //                                                            @Override
-                                    //                                                            public void onComplete(@NonNull Task<Void> task) {
-                                    //                                                                Intent intent = new Intent(LoginActivity.this,LoadingActivity.class);
-                                    //                                                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                    //                                                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                    //                                                                startActivity(intent);
-                                    //                                                                finish();
-                                    //                                                                overridePendingTransition(R.anim.slide_left_in,R.anim.slide_left_out);
-                                    //                                                            }
-                                    //                                                        });
-                                    //                                                    }
-                                    //                                                }
-                                    //
-                                    //                                                @Override
-                                    //                                                public void onCancelled(DatabaseError databaseError) {
-                                    //
-                                    //                                                }
-                                    //                                            });
+
                                 }
                             } else {
                                 println("refererror internal")
-                                Toast.makeText(this@LoginActivity, "Invalid referral code", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(this@ReferralActivity, "Invalid referral code", Toast.LENGTH_SHORT).show()
                             }
                         }
 
@@ -107,14 +73,14 @@ class ReferralActivity : AppCompatActivity() {
 
                 }
             })
-        })
-        skip.setOnClickListener(View.OnClickListener {
-            val intent = Intent(this@LoginActivity, LoadingActivity::class.java)
+        }
+        skip.setOnClickListener {
+            val intent = Intent(this, LoadingActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
             startActivity(intent)
             finish()
             overridePendingTransition(R.anim.slide_left_in, R.anim.slide_left_out)
-        })
+        }
     }
 }
