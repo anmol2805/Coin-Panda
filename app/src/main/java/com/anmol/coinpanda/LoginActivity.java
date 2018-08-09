@@ -65,182 +65,29 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private static final int RC_SIGN_IN = 9001;
     private GoogleApiClient mGoogleApiClient;
     ProgressBar pgr;
-    Animation anim,anim2;
+
     TypeWriter tw;
     //Data retrieved from social media method of sign in
-    RelativeLayout referlayout;
-    EditText refercode;
-    Button refersubmit;
-    Button skip;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         setTitle("Login");
         googleSignIn = (Button) findViewById(R.id.google_sign_in);
-        referlayout = (RelativeLayout)findViewById(R.id.referrallayout);
-        refersubmit = (Button)findViewById(R.id.submitref);
-        refercode = (EditText) findViewById(R.id.referralcode);
-        skip = (Button)findViewById(R.id.skip);
+
         googleSignIn.setVisibility(View.INVISIBLE);
         tw = (TypeWriter)findViewById(R.id.typewriter);
         googleSignIn.setVisibility(View.VISIBLE);
-        anim = AnimationUtils.loadAnimation(this,
-                R.anim.fade_in);
-        anim2 = AnimationUtils.loadAnimation(this,R.anim.fade_out);
-        final Transition fade = getWindow().getEnterTransition();
-        fade.addListener(new Transition.TransitionListener() {
-            @Override
-            public void onTransitionStart(Transition transition) {
+        tw.setVisibility(View.VISIBLE);
+        tw.setText("");
+        tw.setCharacterDelay(150);
+        tw.animateText("Please login to keep CryptoNews at your fingertips.");
 
-            }
-
-            @Override
-            public void onTransitionEnd(Transition transition) {
-                //googleSignIn.startAnimation(anim);
-                tw.setVisibility(View.VISIBLE);
-                tw.setText("");
-                tw.setCharacterDelay(150);
-                tw.animateText("Please login to keep CryptoNews at your fingertips.");
-                fade.removeListener(this);
-            }
-
-            @Override
-            public void onTransitionCancel(Transition transition) {
-
-            }
-
-            @Override
-            public void onTransitionPause(Transition transition) {
-
-            }
-
-            @Override
-            public void onTransitionResume(Transition transition) {
-
-            }
-        });
         pgr = (ProgressBar)findViewById(R.id.pgr);
         //Instantiate Google Login
         instantiateGoogleLogin();
-        refersubmit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                final String referalcode = refercode.getText().toString();
-                final DatabaseReference  databaseReference = FirebaseDatabase.getInstance().getReference();
-                databaseReference.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        for(DataSnapshot data:dataSnapshot.getChildren()){
-                            if(data.getValue(String.class).equals(referalcode)){
-                                if(!data.getKey().equals(mAuth.getCurrentUser().getUid())){
-                                    final String referrerid = data.getKey();
-                                    final Map<String,Object> map = new HashMap<>();
-                                    map.put(mAuth.getCurrentUser().getUid(),true);
-                                    databaseReference.child("referrers").child(referrerid).updateChildren(map).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
-                                            databaseReference.child("referrers").child(referrerid).addListenerForSingleValueEvent(new ValueEventListener() {
-                                                @Override
-                                                public void onDataChange(DataSnapshot dataSnapshot) {
-                                                    long k = dataSnapshot.getChildrenCount();
-                                                    Map<String,Object> map1 = new HashMap<>();
-                                                    if(k == 0){
-                                                        map1.put("count",1);
-                                                    }
-                                                    else{
-                                                        map1.put("count",k-1);
-                                                    }
 
-                                                    databaseReference.child("referrers").child(referrerid).updateChildren(map1)
-                                                            .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                                @Override
-                                                                public void onComplete(@NonNull Task<Void> task) {
-                                                                    Intent intent = new Intent(LoginActivity.this,LoadingActivity.class);
-                                                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                                                    startActivity(intent);
-                                                                    finish();
-                                                                    overridePendingTransition(R.anim.slide_left_in,R.anim.slide_left_out);
-                                                                }
-                                                            });
-                                                }
-
-                                                @Override
-                                                public void onCancelled(DatabaseError databaseError) {
-
-                                                }
-                                            });
-//                                            databaseReference.child("referrers").child(referrerid).child("count").addListenerForSingleValueEvent(new ValueEventListener() {
-//                                                @Override
-//                                                public void onDataChange(DataSnapshot dataSnapshot) {
-//                                                    if(dataSnapshot.exists()){
-//                                                        Integer counter = dataSnapshot.getValue(Integer.class);
-//                                                        counter = counter + 1;
-//                                                        Map<String,Object> map1 = new HashMap<>();
-//                                                        map1.put("count",counter);
-//                                                        databaseReference.child("referrers").child(referrerid).updateChildren(map1).addOnCompleteListener(new OnCompleteListener<Void>() {
-//                                                            @Override
-//                                                            public void onComplete(@NonNull Task<Void> task) {
-//
-//                                                            }
-//                                                        });
-//                                                    }
-//                                                    else{
-//                                                        Map<String,Object> map1 = new HashMap<>();
-//                                                        map1.put("count",1);
-//                                                        databaseReference.child("referrers").child(referrerid).updateChildren(map1).addOnCompleteListener(new OnCompleteListener<Void>() {
-//                                                            @Override
-//                                                            public void onComplete(@NonNull Task<Void> task) {
-//                                                                Intent intent = new Intent(LoginActivity.this,LoadingActivity.class);
-//                                                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                                                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//                                                                startActivity(intent);
-//                                                                finish();
-//                                                                overridePendingTransition(R.anim.slide_left_in,R.anim.slide_left_out);
-//                                                            }
-//                                                        });
-//                                                    }
-//                                                }
-//
-//                                                @Override
-//                                                public void onCancelled(DatabaseError databaseError) {
-//
-//                                                }
-//                                            });
-                                        }
-                                    });
-                                }
-                                else{
-                                    System.out.println("refererror internal");
-                                    Toast.makeText(LoginActivity.this,"Invalid referral code",Toast.LENGTH_SHORT).show();
-                                }
-                            }
-
-
-
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
-
-            }
-        });
-        skip.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(LoginActivity.this,LoadingActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
-                finish();
-                overridePendingTransition(R.anim.slide_left_in,R.anim.slide_left_out);
-            }
-        });
     }
     private void instantiateGoogleLogin(){
 
@@ -390,15 +237,12 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         if(currentUser!=null)       //Someone is logged in
         {   pgr.setVisibility(View.INVISIBLE);
             //googleSignIn.startAnimation(anim2);
-            Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    googleSignIn.setVisibility(View.GONE);
-                    tw.setVisibility(View.GONE);
-                    referlayout.startAnimation(anim);
-                }
-            },1000);
+            Intent intent = new Intent(this,ReferralActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+            finish();
+            overridePendingTransition(R.anim.slide_left_in, R.anim.slide_left_out);
             Log.i(TAG,"Login was successful in Firebase");
             Log.i(TAG,"UID "+ currentUser.getUid());
 
