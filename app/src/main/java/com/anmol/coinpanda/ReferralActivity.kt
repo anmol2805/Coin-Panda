@@ -21,13 +21,16 @@ class ReferralActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_referral)
         submitref.setOnClickListener {
+            pgr.visibility = View.VISIBLE
             val referalcode = referralcode.text.toString()
             val databaseReference = FirebaseDatabase.getInstance().reference
             databaseReference.child("users").addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    var kounter = false
                     for (data in dataSnapshot.children) {
                         if (data.getValue(String::class.java) == referalcode) {
                             if (data.key != mAuth.currentUser!!.uid) {
+                                kounter = true
                                 val referrerid = data.key
                                 val map = HashMap<String, Any>()
                                 map[mAuth.currentUser!!.uid] = true
@@ -56,18 +59,24 @@ class ReferralActivity : AppCompatActivity() {
                                         }
 
                                         override fun onCancelled(databaseError: DatabaseError) {
-
+                                            pgr.visibility = View.GONE
                                         }
                                     })
 
                                 }
                             } else {
+                                pgr.visibility = View.GONE
                                 println("refererror internal")
                                 Toast.makeText(this@ReferralActivity, "Invalid referral code", Toast.LENGTH_SHORT).show()
                             }
                         }
 
 
+                    }
+                    if(!kounter){
+                        pgr.visibility = View.GONE
+                        println("refererror internal")
+                        Toast.makeText(this@ReferralActivity, "Invalid referral code", Toast.LENGTH_SHORT).show()
                     }
                 }
 

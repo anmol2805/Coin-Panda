@@ -41,6 +41,16 @@
         android:id="@+id/submitref"
         />
 
+    <ProgressBar
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_below="@+id/submitref"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="20dp"
+        android:id="@+id/pgr"
+        android:visibility="gone"
+        />
+
     <Button
         android:id="@+id/skip"
         android:layout_width="70dp"
