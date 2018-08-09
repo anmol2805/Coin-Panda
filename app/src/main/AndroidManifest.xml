@@ -35,7 +35,6 @@
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/colorPrimary" />
 
-
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="com.anmol.coinpanda"
@@ -45,7 +44,6 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/filepaths" />
         </provider>
-
 
         <activity
             android:name=".TweetsActivity"
@@ -88,20 +86,17 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:scheme="https"
                     android:host="cryptohype.live"
-                    android:pathPrefix="/shared" />
+                    android:pathPrefix="/shared"
+                    android:scheme="https" />
             </intent-filter>
         </activity>
         <activity
             android:name=".LoadingActivity"
-            android:screenOrientation="portrait"
-
-            />
-
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Home2Activity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ScrollingActivity"
             android:label="@string/title_activity_scrolling"
@@ -110,7 +105,8 @@
         <activity
             android:name=".ReferralDetailsActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".ShiftingActivity"></activity>
+        <activity android:name=".ShiftingActivity" />
+        <activity android:name=".ReferralActivity"></activity>
     </application>
 
 </manifest>
