@@ -108,6 +108,7 @@ class TweetsAdapter(internal var c: Context, internal var tweets: List<Tweet>, p
                 map["coinpage"] = coindata.coinpage.toString()
                 map["coin_symbol"] = coindata.coin_symbol.toString()
                 topicsReference.child("database").child(auth.currentUser!!.uid).child("portfolio").child(coindata.coin_symbol!!).setValue(map).addOnCompleteListener {
+                    holder.addbtn!!.visibility = View.INVISIBLE
                     Toast.makeText(c,"Added to your Portfolio", Toast.LENGTH_SHORT).show()
                 }
 

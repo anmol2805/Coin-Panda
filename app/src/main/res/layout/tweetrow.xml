@@ -45,7 +45,7 @@
                 android:scaleType="fitStart"
                 app:srcCompat="@drawable/starunfilled" />
 
-            <ImageView
+            <Button
                 android:id="@+id/addcoin"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
@@ -55,7 +55,8 @@
                 android:layout_marginTop="5dp"
                 android:elevation="8dp"
                 android:scaleType="fitStart"
-                app:srcCompat="@drawable/addcoin" />
+                android:background="@drawable/addcoin"
+                 />
 
 
             <ImageView
