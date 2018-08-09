@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.activity_referral.*
 import java.util.HashMap
 
 class ReferralActivity : AppCompatActivity() {
-    val mAuth = FirebaseAuth.getInstance()
+    val mAuth = FirebaseAuth.getInstance()!!
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_referral)
@@ -34,13 +34,15 @@ class ReferralActivity : AppCompatActivity() {
                                 databaseReference.child("referrers").child(referrerid!!).updateChildren(map).addOnCompleteListener {
                                     databaseReference.child("referrers").child(referrerid).addListenerForSingleValueEvent(object : ValueEventListener {
                                         override fun onDataChange(dataSnapshot: DataSnapshot) {
-                                            val k = dataSnapshot.childrenCount
                                             val map1 = HashMap<String, Any>()
-                                            if (k == 0L) {
-                                                map1["count"] = 1
-                                            } else {
+                                            if(dataSnapshot.child("count").exists()){
+                                                val k = dataSnapshot.childrenCount
                                                 map1["count"] = k - 1
                                             }
+                                            else{
+                                                map1["count"] = 1
+                                            }
+
 
                                             databaseReference.child("referrers").child(referrerid).updateChildren(map1)
                                                     .addOnCompleteListener {
