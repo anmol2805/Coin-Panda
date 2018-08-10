@@ -81,7 +81,7 @@ class Dbhelper (context: Context):SQLiteOpenHelper(context, DATABASE_NAME,null,1
                     val id = result.getString(result.getColumnIndex(COL_ID))
                     val dates = result.getString(result.getColumnIndex(COL_DATES))
                     val coinpage = result.getString(result.getColumnIndex(COL_COIN_HANDLE))
-                    val tweet = Tweet(mcoin,coin_symbol,mtweet,url,keyword,id,false,dates,"mc",coinpage)
+                    val tweet = Tweet(mcoin,coin_symbol,mtweet,url,keyword,id,false,dates,"mc",coinpage,false)
                     tweets.add(tweet)
 //                    if(booked.contains("0")){
 //                        val tweet = Tweet(mcoin,coin_symbol,mtweet,url,keyword,id,false,dates,"mc",coinpage)
