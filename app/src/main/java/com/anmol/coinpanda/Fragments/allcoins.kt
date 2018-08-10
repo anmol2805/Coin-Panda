@@ -16,10 +16,7 @@ import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.anmol.coinpanda.Adapters.TweetsAdapter
-import com.anmol.coinpanda.Helper.COL_ID
-import com.anmol.coinpanda.Helper.Dbbookshelper
-import com.anmol.coinpanda.Helper.Dbhelper
-import com.anmol.coinpanda.Helper.TABLE_NAME
+import com.anmol.coinpanda.Helper.*
 import com.anmol.coinpanda.Interfaces.ItemClickListener
 import com.anmol.coinpanda.Model.Sqltweet
 import com.anmol.coinpanda.Model.Tweet
@@ -49,10 +46,10 @@ class allcoins : Fragment(){
     var pgr:ProgressBar?=null
     var empty:ImageView?=null
     var srl:SwipeRefreshLayout?= null
+    var dcb:Dbcoinshelper?=null
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val vi = inflater.inflate(R.layout.allcoins, container, false)
         activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
-
         val layoutManager = LinearLayoutManager(activity)
         cointweetrecycler = vi.findViewById(R.id.cointweetrecycler)
         pgr = vi.findViewById(R.id.pgr)
@@ -86,6 +83,7 @@ class allcoins : Fragment(){
 //        keywords?.add("update")
 //        keywords?.add("association")
 //        keywords?.add("achievement")
+        dcb = Dbcoinshelper(activity!!)
         val handler = Handler()
         handler.postDelayed({
             loadquery(null)
@@ -254,7 +252,16 @@ class allcoins : Fragment(){
                         j++
 
                     }
-                    val tweet = Tweet(tweets[i].coin,tweets[i].coin_symbol,tweets[i].tweet,tweets[i].url,tweets[i].keyword,tweets[i].tweetid,booked,tweets[i].dates,"mc",tweets[i].coinpage)
+                    val coins = dcb!!.readData()
+                    var k = 0
+                    var coinadded = false
+                    while (k<coins.size){
+                        if(tweets[i].coin_symbol == coins[k].coinname){
+                            coinadded = true
+                        }
+                        k++
+                    }
+                    val tweet = Tweet(tweets[i].coin,tweets[i].coin_symbol,tweets[i].tweet,tweets[i].url,tweets[i].keyword,tweets[i].tweetid,booked,tweets[i].dates,"mc",tweets[i].coinpage,coinadded)
                     loadtweets.add(tweet)
                     i++
                 }
@@ -293,7 +300,16 @@ class allcoins : Fragment(){
                                 val keyword = obj.getString("keyword")
                                 val dates = obj.getString("date")
                                 val coinpage = obj.getString("coin_handle")
-                                val tweet = Tweet(coin,coin_symbol,mtweet,url,keyword,id,false,dates,"ac",coinpage)
+                                val coins = dcb!!.readData()
+                                var k = 0
+                                var coinadded = false
+                                while (k<coins.size){
+                                    if(coin_symbol == coins[k].coinname){
+                                        coinadded = true
+                                    }
+                                    k++
+                                }
+                                val tweet = Tweet(coin,coin_symbol,mtweet,url,keyword,id,false,dates,"ac",coinpage,coinadded)
                                 tweets.add(tweet)
                                 c++
                             }

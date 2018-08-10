@@ -51,6 +51,7 @@ class bookmarks : Fragment() {
     var retry:Button?=null
     var tweetsAdapter : TweetsAdapter?=null
     var dbb:Dbbookshelper?= null
+    var dcb:Dbcoinshelper?=null
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val vi = inflater.inflate(R.layout.bookmarks,
                 container, false)
@@ -58,7 +59,7 @@ class bookmarks : Fragment() {
             activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
             val layoutManager = LinearLayoutManager(activity)
             dbb = Dbbookshelper(activity!!)
-
+            dcb = Dbcoinshelper(activity!!)
             cointweetrecycler = vi.findViewById(R.id.cointweetrecycler)
             sedit = vi.findViewById(R.id.sc)
             srch = vi.findViewById(R.id.scb)
@@ -123,7 +124,16 @@ class bookmarks : Fragment() {
                     var j = 0
                     while (j<bookmarks.size){
                         if(bookmarks[j] == tweets[i].tweetid){
-                            val tweet = Tweet(tweets[i].coin,tweets[i].coin_symbol,tweets[i].tweet,tweets[i].url,tweets[i].keyword,tweets[i].tweetid,true,tweets[i].dates,"mc",tweets[i].coinpage)
+                            val coins = dcb!!.readData()
+                            var k = 0
+                            var coinadded = false
+                            while (k<coins.size){
+                                if(tweets[i].coin_symbol == coins[k].coinname){
+                                    coinadded = true
+                                }
+                                k++
+                            }
+                            val tweet = Tweet(tweets[i].coin,tweets[i].coin_symbol,tweets[i].tweet,tweets[i].url,tweets[i].keyword,tweets[i].tweetid,true,tweets[i].dates,"mc",tweets[i].coinpage,coinadded)
                             loadtweets.add(tweet)        
                         }
                         j++
