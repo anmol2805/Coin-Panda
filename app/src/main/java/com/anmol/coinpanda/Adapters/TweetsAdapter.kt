@@ -74,10 +74,7 @@ class TweetsAdapter(internal var c: Context, internal var tweets: List<Tweet>, p
         if(coindata.coinadded){
             holder.addbtn!!.visibility = View.INVISIBLE
         }
-        else{
-            holder.addbtn!!.visibility = View.VISIBLE
-        }
-        holder.addbtn!!.setOnClickListener{
+        holder.addbtn!!.setOnClickListener{ _ ->
             val dialog = Dialog(c)
             dialog.setContentView(R.layout.dialoglayout)
             val prg: ProgressBar? = dialog.findViewById(R.id.prgbr)
