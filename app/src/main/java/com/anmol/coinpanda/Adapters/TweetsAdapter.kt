@@ -71,13 +71,11 @@ class TweetsAdapter(internal var c: Context, internal var tweets: List<Tweet>, p
             holder.bookmark!!.visibility = View.VISIBLE
         }
         val dcb = Dbcoinshelper(c)
-        val coins = dcb.readData()
-        var j = 0
-        while (j<coins.size){
-            if(coindata.coin_symbol == coins[j].coinname){
-                holder.addbtn!!.visibility = View.INVISIBLE
-            }
-            j++
+        if(coindata.coinadded){
+            holder.addbtn!!.visibility = View.INVISIBLE
+        }
+        else{
+            holder.addbtn!!.visibility = View.VISIBLE
         }
         holder.addbtn!!.setOnClickListener{
             val dialog = Dialog(c)
