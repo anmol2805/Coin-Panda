@@ -236,6 +236,7 @@ class allcoins : Fragment(){
             var bookmarks = ArrayList<String>()
             val dbb = Dbbookshelper(activity!!)
             bookmarks = dbb.readbook()
+            // list of tweets
             val loadtweets = ArrayList<Tweet>()
             loadtweets.clear()
             val data = db.readData(dataquery)
