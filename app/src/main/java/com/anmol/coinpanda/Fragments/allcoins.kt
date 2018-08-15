@@ -30,7 +30,7 @@ import kotlin.collections.ArrayList
 /**
  * Created by anmol on 3/11/2018.
  */
-class allcoins : Fragment(){
+class allcoins : Fragment() {
     private var cointweetrecycler: RecyclerView?=null
     private var keywordrecycler: RecyclerView?=null
     var keywords:ArrayList<String>?=null
@@ -47,6 +47,8 @@ class allcoins : Fragment(){
     var empty:ImageView?=null
     var srl:SwipeRefreshLayout?= null
     var dcb:Dbcoinshelper?=null
+    var isLoading:Boolean=false
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val vi = inflater.inflate(R.layout.allcoins, container, false)
         activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
@@ -83,11 +85,33 @@ class allcoins : Fragment(){
 //        keywords?.add("update")
 //        keywords?.add("association")
 //        keywords?.add("achievement")
+
         dcb = Dbcoinshelper(activity!!)
+
         val handler = Handler()
         handler.postDelayed({
-            loadquery(null)
-        },200)
+            loadquery(20)
+        },10)
+
+        cointweetrecycler?.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
+                //super.onScrolled(recyclerView, dx, dy)
+                if(dy > 0) {
+                    val visibleItemCount = layoutManager.childCount
+                    val totalItemCount = layoutManager.itemCount
+                    val pastVisibleItems = layoutManager.findFirstVisibleItemPosition()
+
+                    if (visibleItemCount + pastVisibleItems >= totalItemCount && !isLoading) {
+                        val handler = Handler()
+                        handler.postDelayed({
+                            loadquery(0)
+                        },10)
+
+                        isLoading = true
+                    }
+                }
+            }
+        })
 
         itemClickListener = object : ItemClickListener {
             override fun onItemClick(pos: Int) {
@@ -122,7 +146,7 @@ class allcoins : Fragment(){
 //
 //        })
             retry?.setOnClickListener{
-                loadquery(null)
+                loadquery(0)
             }
             srl?.setColorSchemeColors(
                     resources.getColor(R.color.colorAccent)
@@ -209,7 +233,7 @@ class allcoins : Fragment(){
                             c++
                         }
                         srl?.isRefreshing = false
-                        loadquery(null)
+                        loadquery(0)
 
                     } catch (e: JSONException) {
                         e.printStackTrace()
@@ -225,22 +249,31 @@ class allcoins : Fragment(){
             return vi
     }
 
-    private fun loadquery(p0: CharSequence?) {
+    private fun loadquery(numOfTweets: Int) {
         pgr?.visibility = View.VISIBLE
         retry?.visibility = View.GONE
         empty?.visibility = View.GONE
         tweets.clear()
         if(activity!=null){
             val db = Dbhelper(activity!!)
-            val dataquery = "Select * from $TABLE_NAME ORDER BY $COL_ID DESC"
+
+            val dataquery: String;
+            if(numOfTweets == 0) {
+                dataquery = "SELECT * FROM $TABLE_NAME ORDER BY $COL_ID DESC"
+            } else {
+                dataquery = "SELECT * FROM $TABLE_NAME ORDER BY $COL_ID DESC LIMIT $numOfTweets"
+            }
+
             var bookmarks = ArrayList<String>()
             val dbb = Dbbookshelper(activity!!)
             bookmarks = dbb.readbook()
+
             // list of tweets
             val loadtweets = ArrayList<Tweet>()
             loadtweets.clear()
             val data = db.readData(dataquery)
             tweets = data
+
             if (!tweets.isEmpty()) {
                 var i = 0
                 while (i<data.size){
@@ -266,6 +299,7 @@ class allcoins : Fragment(){
                     loadtweets.add(tweet)
                     i++
                 }
+
                 if(!loadtweets.isEmpty()){
                     pgr?.visibility = View.GONE
                     retry?.visibility = View.GONE
@@ -355,6 +389,8 @@ class allcoins : Fragment(){
 
             }
         }
+
+        isLoading = false
 
 
 //        db.collection("Tweets").whereGreaterThanOrEqualTo("date",prevtime)
