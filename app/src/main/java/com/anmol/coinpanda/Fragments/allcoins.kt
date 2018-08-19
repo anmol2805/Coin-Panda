@@ -31,23 +31,24 @@ import kotlin.collections.ArrayList
  * Created by anmol on 3/11/2018.
  */
 class allcoins : Fragment() {
-    private var cointweetrecycler: RecyclerView?=null
-    private var keywordrecycler: RecyclerView?=null
-    var keywords:ArrayList<String>?=null
-    lateinit var tweets : MutableList<Tweet>
-    lateinit var itemClickListener : ItemClickListener
-    lateinit var keyClickListener : ItemClickListener
-    var retry:Button?=null
+    private var cointweetrecycler: RecyclerView? = null
+    private var keywordrecycler: RecyclerView? = null
+    var keywords: ArrayList<String>? = null
+    lateinit var tweets: MutableList<Tweet>
+    lateinit var itemClickListener: ItemClickListener
+    lateinit var keyClickListener: ItemClickListener
+    var retry: Button? = null
     var sedit: EditText? = null
     var srch: Button? = null
     var db = FirebaseFirestore.getInstance()
     val auth = FirebaseAuth.getInstance()
-    var tweetsAdapter : TweetsAdapter?=null
-    var pgr:ProgressBar?=null
-    var empty:ImageView?=null
-    var srl:SwipeRefreshLayout?= null
-    var dcb:Dbcoinshelper?=null
-    var isLoading:Boolean=false
+    var tweetsAdapter: TweetsAdapter? = null
+    var pgr: ProgressBar? = null
+    var empty: ImageView? = null
+    var srl: SwipeRefreshLayout? = null
+    var dcb: Dbcoinshelper? = null
+    var isLoading: Boolean = false
+    lateinit var loadtweets: ArrayList<Tweet>
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val vi = inflater.inflate(R.layout.allcoins, container, false)
@@ -68,8 +69,13 @@ class allcoins : Fragment() {
         cointweetrecycler?.layoutManager   = layoutManager
         cointweetrecycler?.setHasFixedSize(true)
         cointweetrecycler?.itemAnimator   = DefaultItemAnimator()
-//        keywordrecycler?.itemAnimator = DefaultItemAnimator()
+//        keywordrecycler?.itemAnimator = DefaultItemAnimator
+
+
         tweets = ArrayList()
+        // list of tweets
+        loadtweets = ArrayList()
+
 //        keywords = ArrayList()
 //        keywords?.add("win")
 //        keywords?.add("partnership")
@@ -86,11 +92,25 @@ class allcoins : Fragment() {
 //        keywords?.add("association")
 //        keywords?.add("achievement")
 
+        itemClickListener = object : ItemClickListener {
+            override fun onItemClick(pos: Int) {
+
+                //loadquery(keywords!![pos])
+//                sedit?.setText(keywords!![pos])
+
+            }
+
+        }
+
+        tweetsAdapter = TweetsAdapter(activity!!, loadtweets, itemClickListener)
+        cointweetrecycler?.adapter = tweetsAdapter
+
+
         dcb = Dbcoinshelper(activity!!)
 
         val handler = Handler()
         handler.postDelayed({
-            loadquery(20)
+            loadquery(0, 20)
         },10)
 
         cointweetrecycler?.addOnScrollListener(object : RecyclerView.OnScrollListener() {
@@ -104,7 +124,7 @@ class allcoins : Fragment() {
                     if (visibleItemCount + pastVisibleItems >= totalItemCount && !isLoading) {
                         val handler = Handler()
                         handler.postDelayed({
-                            loadquery(0)
+                            loadquery(20, 0)
                         },10)
 
                         isLoading = true
@@ -113,15 +133,7 @@ class allcoins : Fragment() {
             }
         })
 
-        itemClickListener = object : ItemClickListener {
-            override fun onItemClick(pos: Int) {
 
-                //loadquery(keywords!![pos])
-//                sedit?.setText(keywords!![pos])
-
-            }
-
-        }
 
         keyClickListener = object :ItemClickListener{
             override fun onItemClick(pos: Int) {
@@ -146,11 +158,12 @@ class allcoins : Fragment() {
 //
 //        })
             retry?.setOnClickListener{
-                loadquery(0)
+                loadquery(0, 0)
             }
             srl?.setColorSchemeColors(
                     resources.getColor(R.color.colorAccent)
             )
+
         srl?.isRefreshing = true
         val handler2 = Handler()
         handler2.postDelayed({
@@ -233,7 +246,7 @@ class allcoins : Fragment() {
                             c++
                         }
                         srl?.isRefreshing = false
-                        loadquery(0)
+                        loadquery(0, 0)
 
                     } catch (e: JSONException) {
                         e.printStackTrace()
@@ -249,7 +262,7 @@ class allcoins : Fragment() {
             return vi
     }
 
-    private fun loadquery(numOfTweets: Int) {
+    private fun loadquery(offset: Int, numOfTweets: Int) {
         pgr?.visibility = View.VISIBLE
         retry?.visibility = View.GONE
         empty?.visibility = View.GONE
@@ -257,20 +270,18 @@ class allcoins : Fragment() {
         if(activity!=null){
             val db = Dbhelper(activity!!)
 
-            val dataquery: String;
+            val dataquery: String
             if(numOfTweets == 0) {
-                dataquery = "SELECT * FROM $TABLE_NAME ORDER BY $COL_ID DESC"
+                dataquery = "SELECT * FROM $TABLE_NAME ORDER BY $COL_ID DESC LIMIT 1844674407370955161 OFFSET $offset"
             } else {
-                dataquery = "SELECT * FROM $TABLE_NAME ORDER BY $COL_ID DESC LIMIT $numOfTweets"
+                dataquery = "SELECT * FROM $TABLE_NAME ORDER BY $COL_ID DESC LIMIT $numOfTweets OFFSET $offset"
             }
 
             var bookmarks = ArrayList<String>()
             val dbb = Dbbookshelper(activity!!)
             bookmarks = dbb.readbook()
 
-            // list of tweets
-            val loadtweets = ArrayList<Tweet>()
-            loadtweets.clear()
+            //loadtweets.clear()
             val data = db.readData(dataquery)
             tweets = data
 
@@ -304,9 +315,9 @@ class allcoins : Fragment() {
                     pgr?.visibility = View.GONE
                     retry?.visibility = View.GONE
                     empty?.visibility = View.GONE
-                    tweetsAdapter = TweetsAdapter(activity!!, loadtweets, itemClickListener)
+                    //tweetsAdapter = TweetsAdapter(activity!!, loadtweets, itemClickListener)
                     tweetsAdapter!!.notifyDataSetChanged()
-                    cointweetrecycler?.adapter = tweetsAdapter
+                    //cointweetrecycler?.adapter = tweetsAdapter
                 }
                 else{
                     pgr?.visibility = View.GONE
@@ -353,9 +364,9 @@ class allcoins : Fragment() {
                                     pgr?.visibility = View.GONE
                                     retry?.visibility = View.GONE
                                     empty?.visibility = View.GONE
-                                    tweetsAdapter = TweetsAdapter(activity!!, tweets, itemClickListener)
+                                    //tweetsAdapter = TweetsAdapter(activity!!, tweets, itemClickListener)
                                     tweetsAdapter!!.notifyDataSetChanged()
-                                    cointweetrecycler?.adapter = tweetsAdapter
+                                    //cointweetrecycler?.adapter = tweetsAdapter
                                     //cointweetrecycler?.addItemDecoration(DividerItemDecoration(ContextCompat.getDrawable(activity!!,R.drawable.item_decorator)!!))
 
                                 }
