@@ -237,7 +237,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         if(currentUser!=null)       //Someone is logged in
         {   pgr.setVisibility(View.INVISIBLE);
             //googleSignIn.startAnimation(anim2);
-            Intent intent = new Intent(this,ReferralActivity.class);
+            Intent intent = new Intent(this,LoadingActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
