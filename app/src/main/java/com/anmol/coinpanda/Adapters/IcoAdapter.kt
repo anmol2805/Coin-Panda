@@ -31,7 +31,7 @@ import kotlin.collections.ArrayList
 /**
  * Created by anmol on 2/27/2018.
  */
-class IcoAdapter(internal var c: Context, internal var icocoins: MutableList<Icocoin>, private val mitemClickListener: ItemClickListener): RecyclerView.Adapter<IcoAdapter.MyViewHolder>(){
+class IcoAdapter(internal var c: Context, private var icocoins: MutableList<Icocoin>, private val mitemClickListener: ItemClickListener): RecyclerView.Adapter<IcoAdapter.MyViewHolder>(){
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val v = LayoutInflater.from(c).inflate(R.layout.icorow,parent,false)
         return MyViewHolder(v,mitemClickListener)

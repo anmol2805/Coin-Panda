@@ -49,7 +49,7 @@ class allcoins : Fragment() {
     var dcb: Dbcoinshelper? = null
     var isLoading: Boolean = false
     lateinit var loadtweets: ArrayList<Tweet>
-
+    var lasttweetid:Int = 0
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val vi = inflater.inflate(R.layout.allcoins, container, false)
         activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
@@ -61,36 +61,17 @@ class allcoins : Fragment() {
         retry?.visibility = View.GONE
         empty?.visibility = View.GONE
         srl = vi.findViewById(R.id.srl)
-//        keywordrecycler = vi.findViewById(R.id.keywordrecycler)
-//        sedit = vi.findViewById(R.id.sc)
-//        srch = vi.findViewById(R.id.scb)
-//        keywordrecycler?.setHasFixedSize(true)
-//        keywordrecycler?.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+
         cointweetrecycler?.layoutManager   = layoutManager
         cointweetrecycler?.setHasFixedSize(true)
         cointweetrecycler?.itemAnimator   = DefaultItemAnimator()
-//        keywordrecycler?.itemAnimator = DefaultItemAnimator
+
 
 
         tweets = ArrayList()
         // list of tweets
         loadtweets = ArrayList()
 
-//        keywords = ArrayList()
-//        keywords?.add("win")
-//        keywords?.add("partnership")
-//        keywords?.add("listing")
-//        keywords?.add("mainnet")
-//        keywords?.add("announcement")
-//        keywords?.add("exchange")
-//        keywords?.add("beta")
-//        keywords?.add("collaboration")
-//        keywords?.add("airdrop")
-//        keywords?.add("release")
-//        keywords?.add("government")
-//        keywords?.add("update")
-//        keywords?.add("association")
-//        keywords?.add("achievement")
 
         itemClickListener = object : ItemClickListener {
             override fun onItemClick(pos: Int) {
@@ -112,18 +93,17 @@ class allcoins : Fragment() {
         handler.postDelayed({
             loadquery(0, 20)
         },10)
-
-        cointweetrecycler?.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
-                //super.onScrolled(recyclerView, dx, dy)
+        cointweetrecycler?.addOnScrollListener(object :RecyclerView.OnScrollListener(){
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
                 if(dy > 0) {
                     val visibleItemCount = layoutManager.childCount
                     val totalItemCount = layoutManager.itemCount
                     val pastVisibleItems = layoutManager.findFirstVisibleItemPosition()
 
                     if (visibleItemCount + pastVisibleItems >= totalItemCount && !isLoading) {
-                        val handler = Handler()
-                        handler.postDelayed({
+                        val handler2 = Handler()
+                        handler2.postDelayed({
                             loadquery(20, 0)
                         },10)
 
@@ -135,28 +115,12 @@ class allcoins : Fragment() {
 
 
 
+
         keyClickListener = object :ItemClickListener{
             override fun onItemClick(pos: Int) {
             }
         }
-//        if(activity!=null){
-//            val keywordAdapter = KeywordAdapter(activity!!, keywords!!,itemClickListener)
-//            keywordrecycler?.adapter = keywordAdapter
-//        }
-//        sedit?.addTextChangedListener(object : TextWatcher {
-//            override fun afterTextChanged(p0: Editable?) {
-//
-//            }
-//
-//            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-//
-//            }
-//
-//            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-//                loadquery(p0)
-//            }
-//
-//        })
+
             retry?.setOnClickListener{
                 loadquery(0, 0)
             }
@@ -168,54 +132,6 @@ class allcoins : Fragment() {
         val handler2 = Handler()
         handler2.postDelayed({
             srl?.isRefreshing = false
-//            val jsonObjectrefRequest = JsonObjectRequest(Request.Method.GET, "https://www.cryptohype.live/tweets", null, Response.Listener { response ->
-//                var c = 0
-//                try {
-//                    val jsonArray = response.getJSONArray("tweets")
-//                    val sqltweets = java.util.ArrayList<Sqltweet>()
-//                    sqltweets.clear()
-//
-//
-//                    while (c < 10) {
-//                        val obj = jsonArray.getJSONObject(c)
-//                        val id = obj.getString("tweetid")
-//                        val coin = obj.getString("coin_name")
-//                        val coin_symbol = obj.getString("coin_symbol")
-//                        val mtweet = obj.getString("tweet")
-//                        val url = obj.getString("url")
-//                        val keyword = obj.getString("keyword")
-//                        val dates = obj.getString("date")
-//                        val coinpage = obj.getString("coin_handle")
-//
-//                        val sqltweet = Sqltweet(coin, coin_symbol, mtweet, url, keyword, id, dates, coinpage)
-//                        try {
-//                            val db = Dbhelper(activity!!)
-//                            db.insertData(sqltweet)
-//                            println("tweetno$c")
-//                        }
-//                        catch (e:KotlinNullPointerException){
-//                            e.printStackTrace()
-//                        }
-//
-//                        c++
-//                    }
-//                    srl?.isRefreshing = false
-//                    loadquery(null)
-//
-//                } catch (e: JSONException) {
-//                    e.printStackTrace()
-//                }
-//            }, Response.ErrorListener {
-//                srl?.isRefreshing = false
-//                Toast.makeText(activity,"Unable to refresh tweets",Toast.LENGTH_SHORT).show()
-//
-//            })
-//            try{
-//                Mysingleton.getInstance(activity!!).addToRequestqueue(jsonObjectrefRequest)
-//            }
-//            catch (e:KotlinNullPointerException){
-//                e.printStackTrace()
-//            }
 
         },2000)
 
@@ -272,9 +188,9 @@ class allcoins : Fragment() {
 
             val dataquery: String
             if(numOfTweets == 0) {
-                dataquery = "SELECT * FROM $TABLE_NAME ORDER BY $COL_ID DESC LIMIT 1844674407370955161 OFFSET $offset"
+                dataquery = "SELECT * FROM $TABLE_NAME ORDER BY $COL_ID DESC OFFSET $offset"
             } else {
-                dataquery = "SELECT * FROM $TABLE_NAME ORDER BY $COL_ID DESC LIMIT $numOfTweets OFFSET $offset"
+                dataquery = "SELECT * FROM $TABLE_NAME ORDER BY $COL_ID DESC LIMIT $numOfTweets"
             }
 
             var bookmarks = ArrayList<String>()
@@ -404,80 +320,6 @@ class allcoins : Fragment() {
         isLoading = false
 
 
-//        db.collection("Tweets").whereGreaterThanOrEqualTo("date",prevtime)
-//                .orderBy("date", Query.Direction.DESCENDING).addSnapshotListener{ documentSnapshot, e->
-//            tweets.clear()
-//                    val bookmarks : ArrayList<String> = ArrayList()
-//                    db.collection("users").document(auth.currentUser!!.uid).collection("bookmarks").addSnapshotListener { documnentSnapshot, e ->
-//                        bookmarks.clear()
-//                        tweets.clear()
-//                        for (doc in documnentSnapshot.documents) {
-//                            val tweetid = doc.id
-//                            bookmarks.add(tweetid)
-//                        }
-//
-//
-//                        if (p0 == null) {
-//                            for (doc in documentSnapshot.documents) {
-//                                var booked = false
-//                                var i = 0
-//                                while(i<bookmarks.size){
-//                                    if(doc.id.contains(bookmarks[i])){
-//                                    booked = true
-//                                }
-//                                i++
-//                                }
-//                                val id = doc.id
-//                                val coin = doc.getString("coin")
-//                                val coin_symbol = doc.getString("coin_symbol")
-//                                val mtweet = doc.getString("tweet")
-//                                val url = doc.getString("url")
-//                                val keyword = doc.getString("keyword")
-//                                val dates = doc.getString("dates")
-//                                val tweet = Tweet(coin, coin_symbol, mtweet, url, keyword, id, booked, dates)
-//                                tweets.add(tweet)
-//                            }
-//                            if (activity != null) {
-//                                if (!tweets.isEmpty()) {
-//                                    val tweetsAdapter = TweetsAdapter(activity!!, tweets, itemClickListener)
-//                                    cointweetrecycler?.adapter = tweetsAdapter
-//                                    //cointweetrecycler?.addItemDecoration(DividerItemDecoration(ContextCompat.getDrawable(activity!!,R.drawable.item_decorator)!!))
-//
-//                                }
-//                            }
-//                        } else {
-//                            for (doc in documentSnapshot.documents) {
-//                                var booked = false
-//                                var i = 0
-//                                while(i<bookmarks.size){
-//                                if(doc.id.contains(bookmarks[i])){
-//                                    booked = true
-//                                }
-//                                i++
-//                                }
-//                                val id = doc.id
-//                                val coin = doc.getString("coin")
-//                                val coin_symbol = doc.getString("coin_symbol")
-//                                val mtweet = doc.getString("tweet")
-//                                val url = doc.getString("url")
-//                                val keyword = doc.getString("keyword")
-//                                val dates = doc.getString("dates")
-//                                if (coin.toLowerCase().contains(p0) || coin_symbol.toLowerCase().contains(p0) || mtweet.toLowerCase().contains(p0) || keyword.toLowerCase().contains(p0) || coin.toUpperCase().contains(p0) || coin_symbol.toUpperCase().contains(p0) || mtweet.toUpperCase().contains(p0) || keyword.toUpperCase().contains(p0)) {
-//                                    val tweet = Tweet(coin, coin_symbol, mtweet, url, keyword, id, booked, dates)
-//                                    tweets.add(tweet)
-//                                }
-//
-//                            }
-//                            if (activity != null) {
-//                                if (!tweets.isEmpty()) {
-//                                    val tweetsAdapter = TweetsAdapter(activity!!, tweets, itemClickListener)
-//                                    cointweetrecycler?.adapter = tweetsAdapter
-//                                    //cointweetrecycler?.addItemDecoration(DividerItemDecoration(ContextCompat.getDrawable(activity!!,R.drawable.item_decorator)!!))
-//
-//                                }
-//                            }
-//                        }
-//                    }
 
 
     }
