@@ -186,11 +186,10 @@ class allcoins : Fragment() {
         if(activity!=null){
             val db = Dbhelper(activity!!)
 
-            val dataquery: String
-            if(numOfTweets == 0) {
-                dataquery = "SELECT * FROM $TABLE_NAME ORDER BY $COL_ID DESC OFFSET $offset"
+            val dataquery: String = if(numOfTweets == 0) {
+                "SELECT * FROM $TABLE_NAME ORDER BY $COL_ID DESC LIMIT -1 OFFSET $offset"
             } else {
-                dataquery = "SELECT * FROM $TABLE_NAME ORDER BY $COL_ID DESC LIMIT $numOfTweets"
+                "SELECT * FROM $TABLE_NAME ORDER BY $COL_ID DESC LIMIT $numOfTweets"
             }
 
             var bookmarks = ArrayList<String>()

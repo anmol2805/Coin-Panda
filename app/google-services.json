@@ -23,6 +23,38 @@
           }
         },
         {
+          "client_id": "474823730403-bup2gs674qdtvdplavsfg4c4ulqv9i2h.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.anmol.coinpanda",
+            "certificate_hash": "c20b6680f033df116328bd09385891eea4a9ef4d"
+          }
+        },
+        {
+          "client_id": "474823730403-ciqstkrj8c0c3f410gd2a72db96d9f5m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.anmol.coinpanda",
+            "certificate_hash": "352ddede24e7484d5615ddf123adf943f3c95149"
+          }
+        },
+        {
+          "client_id": "474823730403-7nbsmtnu6dr5qhdhrbvr4r9ipc4611cm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.anmol.coinpanda",
+            "certificate_hash": "6c22d6655d34c9d8c849d7aa0c5ff7dd135b4922"
+          }
+        },
+        {
+          "client_id": "474823730403-v1e31590j7na08ojtchubfj5g73ikd7u.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.anmol.coinpanda",
+            "certificate_hash": "76c3ef247adfbab4eb91af0d96dddf777401e7c1"
+          }
+        },
+        {
           "client_id": "474823730403-9015hrpu4pc777en0l0co9mkcubumahi.apps.googleusercontent.com",
           "client_type": 3
         }
