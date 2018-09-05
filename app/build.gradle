@@ -54,6 +54,7 @@ dependencies {
     implementation 'com.google.android.gms:play-services-auth:15.+'
     implementation 'org.jetbrains.anko:anko:0.10.4'
     implementation 'com.android.support:appcompat-v7:28.+'
+    implementation 'com.github.ybq:Android-SpinKit:1.1.0'
     implementation 'com.android.support:design:28.+'
     implementation 'com.android.support:support-compat:28.+'
     implementation 'com.android.support:support-emoji:28.+'

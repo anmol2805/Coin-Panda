@@ -22,6 +22,7 @@ import com.anmol.coinpanda.Model.Sqltweet
 import com.anmol.coinpanda.Model.Tweet
 import com.anmol.coinpanda.Mysingleton
 import com.anmol.coinpanda.R
+import com.github.ybq.android.spinkit.SpinKitView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import org.json.JSONException
@@ -43,7 +44,7 @@ class allcoins : Fragment() {
     var db = FirebaseFirestore.getInstance()
     val auth = FirebaseAuth.getInstance()
     var tweetsAdapter: TweetsAdapter? = null
-    var pgr: ProgressBar? = null
+    var pgr: SpinKitView? = null
     var empty: ImageView? = null
     var srl: SwipeRefreshLayout? = null
     var dcb: Dbcoinshelper? = null
@@ -92,7 +93,7 @@ class allcoins : Fragment() {
         val handler = Handler()
         handler.postDelayed({
             loadquery(0, 20)
-        },10)
+        },1000)
         cointweetrecycler?.addOnScrollListener(object :RecyclerView.OnScrollListener(){
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
@@ -102,10 +103,11 @@ class allcoins : Fragment() {
                     val pastVisibleItems = layoutManager.findFirstVisibleItemPosition()
 
                     if (visibleItemCount + pastVisibleItems >= totalItemCount && !isLoading) {
+                        pgr?.visibility = View.VISIBLE
                         val handler2 = Handler()
                         handler2.postDelayed({
                             loadquery(20, 0)
-                        },10)
+                        },2000)
 
                         isLoading = true
                     }
