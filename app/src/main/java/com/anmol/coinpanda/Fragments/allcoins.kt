@@ -93,7 +93,7 @@ class allcoins : Fragment() {
         val handler = Handler()
         handler.postDelayed({
             loadquery(0, 20)
-        },1000)
+        },200)
         cointweetrecycler?.addOnScrollListener(object :RecyclerView.OnScrollListener(){
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
@@ -107,7 +107,7 @@ class allcoins : Fragment() {
                         val handler2 = Handler()
                         handler2.postDelayed({
                             loadquery(20, 0)
-                        },2000)
+                        },2500)
 
                         isLoading = true
                     }

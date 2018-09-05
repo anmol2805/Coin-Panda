@@ -11,7 +11,7 @@ import android.view.ViewGroup
 import com.anmol.coinpanda.R
 import android.net.Uri
 import android.widget.*
-import com.anmol.coinpanda.ReferralDetailsActivity
+
 import com.anmol.coinpanda.SupportActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
@@ -158,9 +158,9 @@ class settings : Fragment() {
 
         }
 
-        airdrop?.setOnClickListener {
-            startActivity(Intent(activity!!,ReferralDetailsActivity::class.java))
-        }
+//        airdrop?.setOnClickListener {
+//            startActivity(Intent(activity!!,ReferralDetailsActivity::class.java))
+//        }
         return vi
     }
 
