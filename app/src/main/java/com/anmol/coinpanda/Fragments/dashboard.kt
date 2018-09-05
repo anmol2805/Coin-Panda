@@ -23,7 +23,7 @@ import com.anmol.coinpanda.Interfaces.ItemClickListener
 import com.anmol.coinpanda.Model.Tweet
 import com.anmol.coinpanda.Mysingleton
 import com.anmol.coinpanda.R
-import com.anmol.coinpanda.ReferralDetailsActivity
+
 import com.anmol.coinpanda.Services.CoinsdbService
 import com.anmol.coinpanda.Services.TweetsdbService
 import com.bumptech.glide.Glide
@@ -144,7 +144,7 @@ class dashboard : Fragment() {
                             System.out.println("firebaseresponse3")
                             noticebutton!!.visibility = View.VISIBLE
                             noticebutton!!.setOnClickListener {
-                                startActivity(Intent(activity!!, ReferralDetailsActivity::class.java))
+//                                startActivity(Intent(activity!!, ReferralDetailsActivity::class.java))
                             }
                         }
                         else ->{

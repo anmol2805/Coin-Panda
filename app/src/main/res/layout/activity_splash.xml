@@ -28,18 +28,16 @@
         android:textColor="@color/colorAccent"
         android:textSize="20sp" />
 
-    <android.widget.ProgressBar
+    <com.github.ybq.android.spinkit.SpinKitView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/pgr"
-        style="?android:attr/progressBarStyle"
+        style="@style/SpinKitView.FadingCircle"
         android:layout_width="25dp"
         android:layout_height="25dp"
+        android:layout_gravity="center"
         android:layout_below="@+id/textView10"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="50dp"
-        android:indeterminate="true"
-        android:indeterminateTintMode="multiply"
-        android:indeterminateTint="@color/colorAccent"
-        />
-
+        app:SpinKit_Color="@color/colorAccent" />
 
 </RelativeLayout>

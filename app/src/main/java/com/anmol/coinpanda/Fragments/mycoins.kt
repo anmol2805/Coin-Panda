@@ -32,6 +32,7 @@ import com.anmol.coinpanda.Model.Tweet
 import com.anmol.coinpanda.Mysingleton
 import com.anmol.coinpanda.R
 import com.facebook.shimmer.ShimmerFrameLayout
+import com.github.ybq.android.spinkit.SpinKitView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
@@ -58,12 +59,14 @@ class mycoins : Fragment(){
     val auth = FirebaseAuth.getInstance()
     var empty: TextView? = null
     lateinit var keyClickListener : ItemClickListener
-    var pgr :ProgressBar?=null
+    var pgr :SpinKitView?=null
     var retry:Button?=null
     var tweetsAdapter : TweetsAdapter?=null
     var srl:SwipeRefreshLayout?=null
     var dateedit:Button?=null
     var dbhelper:Dbhelper?=null
+    var isLoading: Boolean = false
+    lateinit var loadtweets: ArrayList<Tweet>
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val vi = inflater.inflate(R.layout.mycoins, container, false)
         if(activity!=null){
@@ -104,11 +107,36 @@ class mycoins : Fragment(){
             keywords?.add("association")
             keywords?.add("achievement")
             keywordrecycler?.itemAnimator = DefaultItemAnimator()
+
+
+            tweetsAdapter = TweetsAdapter(activity!!, loadtweets, itemClickListener)
+            cointweetrecycler?.adapter = tweetsAdapter
+
+
             val handler =  Handler()
             handler.postDelayed({
-                loadquery(null)
+                loadquery(0,20)
             },200)
+            cointweetrecycler?.addOnScrollListener(object :RecyclerView.OnScrollListener(){
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+                    if(dy > 0) {
+                        val visibleItemCount = layoutManager.childCount
+                        val totalItemCount = layoutManager.itemCount
+                        val pastVisibleItems = layoutManager.findFirstVisibleItemPosition()
 
+                        if (visibleItemCount + pastVisibleItems >= totalItemCount && !isLoading) {
+                            pgr?.visibility = View.VISIBLE
+                            val handler2 = Handler()
+                            handler2.postDelayed({
+                                loadquery(20, 0)
+                            },2500)
+
+                            isLoading = true
+                        }
+                    }
+                }
+            })
             itemClickListener = object : ItemClickListener {
                 override fun onItemClick(pos: Int) {
 
@@ -145,7 +173,7 @@ class mycoins : Fragment(){
         }
 
         retry?.setOnClickListener{
-            loadquery(null)
+            loadquery(0,0)
         }
         srl?.setColorSchemeColors(
                 resources.getColor(R.color.colorAccent)
@@ -191,7 +219,7 @@ class mycoins : Fragment(){
                         c++
                     }
                     srl?.isRefreshing = false
-                    loadquery(null)
+                    loadquery(0,0)
 
                 } catch (e: JSONException) {
                     e.printStackTrace()
@@ -206,7 +234,7 @@ class mycoins : Fragment(){
         return vi
     }
 
-    private fun loadquery(p0: CharSequence?) {
+    private fun loadquery(offset: Int, numOfTweets: Int) {
         tweets.clear()
         pgr?.visibility = View.VISIBLE
         retry?.visibility = View.GONE
@@ -217,15 +245,19 @@ class mycoins : Fragment(){
         val stringtime = format.format(cal.time)
         val prevtime = Timestamp.valueOf(stringtime)
         if(activity!=null){
-            val dataquery = "Select * from $TABLE_NAME ORDER BY $COL_ID DESC"
+            val dataquery: String = if(numOfTweets == 0) {
+                "SELECT * FROM $TABLE_NAME ORDER BY $COL_ID DESC LIMIT -1 OFFSET $offset"
+            } else {
+                "SELECT * FROM $TABLE_NAME ORDER BY $COL_ID DESC LIMIT $numOfTweets"
+            }
             var bookmarks = ArrayList<String>()
             val dbb = Dbbookshelper(activity!!)
             bookmarks = dbb.readbook()
             val dcb = Dbcoinshelper(activity!!)
             var coins :MutableList<Allcoin> = ArrayList()
             coins = dcb.readData()
-            val loadtweets = ArrayList<Tweet>()
-            loadtweets.clear()
+
+            //loadtweets.clear()
             val data = dbhelper!!.readData(dataquery)
             tweets = data
             if (!tweets.isEmpty()) {
@@ -255,9 +287,9 @@ class mycoins : Fragment(){
                     pgr?.visibility = View.GONE
                     retry?.visibility = View.GONE
                     empty?.visibility = View.GONE
-                    tweetsAdapter = TweetsAdapter(activity!!, loadtweets, itemClickListener)
+                    //tweetsAdapter = TweetsAdapter(activity!!, loadtweets, itemClickListener)
                     tweetsAdapter!!.notifyDataSetChanged()
-                    cointweetrecycler?.adapter = tweetsAdapter
+                    //cointweetrecycler?.adapter = tweetsAdapter
                 }
                 else{
                     pgr?.visibility = View.GONE
@@ -314,7 +346,7 @@ class mycoins : Fragment(){
 
             })
         }
-
+        isLoading = false
 
 
     }

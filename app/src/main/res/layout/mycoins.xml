@@ -79,45 +79,42 @@
         android:text="Filter by date"
         android:textColor="#000"
         android:visibility="gone" />
-
-    <!--<com.facebook.shimmer.ShimmerFrameLayout-->
-        <!--android:id="@+id/shimmer_view_container"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_gravity="center"-->
-        <!--android:orientation="vertical"-->
-        <!--shimmer:duration="800"-->
-        <!--android:layout_below="@id/keywordrecycler"-->
-        <!--&gt;-->
-        <!--<LinearLayout-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:orientation="vertical">-->
-
-            <!--<include layout="@layout/tweetshimmerrow" />-->
-
-            <!--<include layout="@layout/tweetshimmerrow" />-->
-
-            <!--<include layout="@layout/tweetshimmerrow" />-->
-
-        <!--</LinearLayout>-->
-    <!--</com.facebook.shimmer.ShimmerFrameLayout>-->
-    <android.support.v4.widget.SwipeRefreshLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/srl"
+        android:orientation="vertical"
         android:layout_marginBottom="60dp"
 
         android:layout_below="@+id/keywordrecycler"
         >
-        <android.support.v7.widget.RecyclerView
-
+        <android.support.v4.widget.SwipeRefreshLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/cointweetrecycler"
+            android:layout_height="0dp"
+            android:id="@+id/srl"
+            android:layout_weight="1"
+            >
+            <android.support.v7.widget.RecyclerView
 
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/cointweetrecycler"
+
+                />
+        </android.support.v4.widget.SwipeRefreshLayout>
+        <com.github.ybq.android.spinkit.SpinKitView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/pgr"
+            style="@style/SpinKitView.ThreeBounce"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_margin="5dp"
+            android:layout_gravity="center"
+            app:SpinKit_Color="@color/colorAccent"
+            android:visibility="gone"
             />
-    </android.support.v4.widget.SwipeRefreshLayout>
+    </LinearLayout>
+
+
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

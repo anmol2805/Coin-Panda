@@ -62,20 +62,7 @@ class ico : Fragment(){
 
         itemClickListener = object : ItemClickListener{
             override fun onItemClick(pos: Int) {
-//                val intent2 = Intent(activity!!,ScrollingActivity::class.java)
-//                intent2.putExtra("iconame",icocoins[pos].ico_name)
-//                intent2.putExtra("telegramurl",icocoins[pos].telegram_url)
-//                intent2.putExtra("twitterurl",icocoins[pos].twitter_url)
-//                intent2.putExtra("mediumurl",icocoins[pos].medium_url)
-//                intent2.putExtra("websiteurl",icocoins[pos].website)
-//                intent2.putExtra("description",icocoins[pos].icodescription)
-//                intent2.putExtra("hardcap",icocoins[pos].hardcap)
-//                intent2.putExtra("softcap",icocoins[pos].softcap)
-//                intent2.putExtra("status",icocoins[pos].ico_status)
-//                intent2.putExtra("crowdsale",icocoins[pos].crowdsale_date)
-//                intent2.putExtra("industry",icocoins[pos].industry)
-//                val optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(activity!!,vi.findViewById(R.id.coinicon),"myimage")
-//                startActivity(intent2,optionsCompat.toBundle())
+
             }
 
         }
@@ -86,48 +73,7 @@ class ico : Fragment(){
         val handler = Handler()
         handler.postDelayed({
             srl?.isRefreshing = false
-//            var c = 0
-//            val jsonArray = JsonArrayRequest(Request.Method.GET,"https://www.cryptohype.live/ico",null, Response.Listener {response ->
-//                try{
-//
-//                    icocoins.clear()
-//                    while (c<response.length()){
-//                        val jsonObject = response.getJSONObject(c)
-//                        val iconame = jsonObject.getString("ICO_Name")
-//                        val telegramurl = jsonObject.getString("Telegram_URL")
-//                        val website = jsonObject.getString("Website")
-//                        val mediumurl = jsonObject.getString("Medium_URL")
-//                        val crowdsale_date = jsonObject.getString("Crowdsale_Date")
-//                        val icostatus = jsonObject.getString("ICO_Status")
-//                        val industry = jsonObject.getString("Industry")
-//                        val icodescription = jsonObject.getString("Description")
-//                        val hardcap = jsonObject.getString("Hardcap")
-//                        val softcap = jsonObject.getString("Softcap")
-//                        val twitterurl = jsonObject.getString("Twitter_URL")
-//                        val rating = jsonObject.getString("Rating")
-//                        val icocoin = Icocoin(iconame,telegramurl,website,mediumurl,crowdsale_date,icostatus,industry,icodescription,hardcap,softcap,twitterurl,rating)
-//                        db!!.insertData(icocoin)
-//                        db!!.updatedata(icocoin)
-//                        c++
-//                    }
-//                    val query ="Select * from $TABLE_ICO"
-//                    val data = db!!.readData(query)
-//                    icocoins = data
-//                    srl?.isRefreshing = false
-//                    icoAdapter = IcoAdapter(activity!!,icocoins,itemClickListener)
-//                    icoAdapter!!.notifyDataSetChanged()
-//                    cointweetrecycler?.adapter = icoAdapter
-//
-//                }
-//                catch (e:KotlinNullPointerException){
-//                    e.printStackTrace()
-//                }
-//
-//            }, Response.ErrorListener {
-//                srl?.isRefreshing = false
-//                Toast.makeText(activity!!,"Unable to refresh Ico news",Toast.LENGTH_SHORT).show()
-//            })
-//            Mysingleton.getInstance(activity!!).addToRequestqueue(jsonArray)
+
 
         },2000)
 
