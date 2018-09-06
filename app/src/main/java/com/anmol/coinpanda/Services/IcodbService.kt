@@ -8,12 +8,18 @@ import com.android.volley.toolbox.JsonArrayRequest
 import com.anmol.coinpanda.Adapters.IcoAdapter
 import com.anmol.coinpanda.Fragments.ico
 import com.anmol.coinpanda.Helper.Dbicohelper
+import com.anmol.coinpanda.Helper.TABLE_ICO
 import com.anmol.coinpanda.Model.Icocoin
 import com.anmol.coinpanda.Mysingleton
 
 class IcodbService:IntentService("IcodbService"){
     override fun onHandleIntent(p0: Intent?) {
         val db = Dbicohelper(applicationContext)
+        val icocoins:List<Icocoin> = db.readData("Select * from $TABLE_ICO")
+        val iconames = ArrayList<String>()
+        for (i in icocoins.indices) {
+            iconames.add(icocoins[i].ico_name!!)
+        }
         var c = 0
         val jsonArray = JsonArrayRequest(Request.Method.GET,"https://www.cryptohype.live/ico",null, Response.Listener { response ->
             while (c<response.length()){
@@ -31,7 +37,18 @@ class IcodbService:IntentService("IcodbService"){
                 val twitterurl = jsonObject.getString("Twitter_URL")
                 val rating = jsonObject.getString("Rating")
                 val icocoin = Icocoin(iconame,telegramurl,website,mediumurl,crowdsale_date,icostatus,industry,icodescription,hardcap,softcap,twitterurl,rating)
-                db.insertData(icocoin)
+                var k = 0
+                for (j in iconames.indices) {
+                    if (iconames[j] == iconame) {
+                        k = 1
+                    }
+                }
+                if (k == 0) {
+                    print("noticestatus:newfeature entry")
+                    db.insertData(icocoin)
+                } else {
+                    print("noticestatus:already present")
+                }
                 db.updatedata(icocoin)
                 c++
             }
