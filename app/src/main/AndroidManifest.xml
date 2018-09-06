@@ -66,8 +66,7 @@
         <service android:name=".Services.IcodbService" />
         <service android:name=".Services.IcomsgdbService" />
         <service android:name=".Services.IcodbupdateService" />
-        <service android:name=".Services.ReferralService" />
-        <service android:name=".Services.CoinsshiftingService" />
+
         <service android:name=".Services.TopicsService" />
 
         <activity
@@ -102,11 +101,7 @@
             android:label="@string/title_activity_scrolling"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".ReferralDetailsActivity"
-            android:screenOrientation="portrait" />
-        <activity android:name=".ShiftingActivity" />
-        <activity android:name=".ReferralActivity"></activity>
+
     </application>
 
 </manifest>

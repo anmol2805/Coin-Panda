@@ -68,8 +68,8 @@ class Home2Activity : AppCompatActivity() {
         else{
 
 
-            val intent4 = Intent(this, CoinsshiftingService::class.java)
-            startService(intent4)
+//            val intent4 = Intent(this, CoinsshiftingService::class.java)
+//            startService(intent4)
 //            val intent5 = Intent(this,ReferralService::class.java)
 //            startService(intent5)
 //            val intent6 = Intent(this, BookmarksshiftingService::class.java)
