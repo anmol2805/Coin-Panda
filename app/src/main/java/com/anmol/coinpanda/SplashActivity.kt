@@ -11,8 +11,11 @@ import com.android.volley.Response
 import com.android.volley.VolleyError
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.StringRequest
+import com.anmol.coinpanda.Helper.COL_ID
 import com.anmol.coinpanda.Helper.Dbhelper
+import com.anmol.coinpanda.Helper.TABLE_NAME
 import com.anmol.coinpanda.Model.Sqltweet
+import com.anmol.coinpanda.Model.Tweet
 import com.anmol.coinpanda.Services.IcodbService
 import com.anmol.coinpanda.Services.IcomsgdbService
 import com.anmol.coinpanda.Services.TweetsdbService
@@ -33,6 +36,12 @@ class SplashActivity : AppCompatActivity() {
 
         updaterequest()
         moverequest()
+        val db = Dbhelper(this)
+        val tweets:List<Tweet> = db.readData("SELECT * FROM $TABLE_NAME ORDER BY $COL_ID DESC")
+        val tweetids = ArrayList<String>()
+        for (i in tweets.indices) {
+            tweetids.add(tweets[i].tweetid!!)
+        }
         val jsonObjectRequest = JsonObjectRequest(Request.Method.GET, "https://www.cryptohype.live/tweets", null, Response.Listener { response ->
             var c = 0
             try {
@@ -53,13 +62,23 @@ class SplashActivity : AppCompatActivity() {
                     val coinpage = obj.getString("coin_handle")
 
                     val sqltweet = Sqltweet(coin, coin_symbol, mtweet, url, keyword, id, dates, coinpage)
-                    val db = Dbhelper(this)
-                    db.insertData(sqltweet)
+                    var k = 0
+                    for (j in tweetids.indices) {
+                        if (tweetids[j] == id) {
+                            k = 1
+                        }
+                    }
+                    if (k == 0) {
+                        print("noticestatus:newfeature entry")
+                        db.insertData(sqltweet)
+                    } else {
+                        print("noticestatus:already present")
+                    }
                     println("tweetno$c")
                     c++
                 }
                 movetoActivity()
-            } catch (e: JSONException) {
+            } catch (e:JSONException) {
                 e.printStackTrace()
             }
         }, Response.ErrorListener {
