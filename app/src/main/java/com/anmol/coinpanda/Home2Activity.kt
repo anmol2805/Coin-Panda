@@ -335,16 +335,16 @@ class Home2Activity : AppCompatActivity() {
                         .withCircleShape()
                         .build()
         )
-        sequence.addSequenceItem(
-                MaterialShowcaseView.Builder(this)
-                        .setTarget(settingslayout)
-                        .setDismissText("Enjoy!")
-                        .setContentText("Click here to participate in the monthly airdrop. The more you refer, more are your chances")
-                        .setDismissTextColor(Color.WHITE)
-                        .setContentTextColor(Color.WHITE)
-                        .withCircleShape()
-                        .build()
-        )
+//        sequence.addSequenceItem(
+//                MaterialShowcaseView.Builder(this)
+//                        .setTarget(settingslayout)
+//                        .setDismissText("Enjoy!")
+//                        .setContentText("Click here to request support from our team")
+//                        .setDismissTextColor(Color.WHITE)
+//                        .setContentTextColor(Color.WHITE)
+//                        .withCircleShape()
+//                        .build()
+//        )
 
         sequence.start()
 
