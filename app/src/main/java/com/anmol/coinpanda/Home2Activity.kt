@@ -145,7 +145,7 @@ class Home2Activity : AppCompatActivity() {
             currentfragment = 3
             Glide.with(this).load(R.drawable.newsfilled).into(tweeticon)
             Glide.with(this).load(R.drawable.mycoinsunfilled).into(porticon)
-            Glide.with(this).load(R.drawable.bookmarksunfilled).into(bookmarksicon)
+            Glide.with(this).load(R.drawable.starunfilled).into(bookmarksicon)
             Glide.with(this).load(R.drawable.icounfilled).into(icoicon)
             Glide.with(this).load(R.drawable.settingsunfiled).into(settingsicon)
             showTutorSequence(500)
@@ -155,7 +155,7 @@ class Home2Activity : AppCompatActivity() {
             //currentfragment = 1
             Glide.with(this).load(R.drawable.newsunfilled).into(tweeticon)
             Glide.with(this).load(R.drawable.mycoinsfilled).into(porticon)
-            Glide.with(this).load(R.drawable.bookmarksunfilled).into(bookmarksicon)
+            Glide.with(this).load(R.drawable.starunfilled).into(bookmarksicon)
             Glide.with(this).load(R.drawable.icounfilled).into(icoicon)
             Glide.with(this).load(R.drawable.settingsunfiled).into(settingsicon)
         }
@@ -164,7 +164,7 @@ class Home2Activity : AppCompatActivity() {
             //currentfragment = 2
             Glide.with(this).load(R.drawable.newsunfilled).into(tweeticon)
             Glide.with(this).load(R.drawable.mycoinsunfilled).into(porticon)
-            Glide.with(this).load(R.drawable.bookmarksfilled).into(bookmarksicon)
+            Glide.with(this).load(R.drawable.starfilled).into(bookmarksicon)
             Glide.with(this).load(R.drawable.icounfilled).into(icoicon)
             Glide.with(this).load(R.drawable.settingsunfiled).into(settingsicon)
         }
@@ -173,7 +173,7 @@ class Home2Activity : AppCompatActivity() {
             //currentfragment = 3
             Glide.with(this).load(R.drawable.newsfilled).into(tweeticon)
             Glide.with(this).load(R.drawable.mycoinsunfilled).into(porticon)
-            Glide.with(this).load(R.drawable.bookmarksunfilled).into(bookmarksicon)
+            Glide.with(this).load(R.drawable.starunfilled).into(bookmarksicon)
             Glide.with(this).load(R.drawable.icounfilled).into(icoicon)
             Glide.with(this).load(R.drawable.settingsunfiled).into(settingsicon)
         }
@@ -182,7 +182,7 @@ class Home2Activity : AppCompatActivity() {
             //currentfragment = 4
             Glide.with(this).load(R.drawable.newsunfilled).into(tweeticon)
             Glide.with(this).load(R.drawable.mycoinsunfilled).into(porticon)
-            Glide.with(this).load(R.drawable.bookmarksunfilled).into(bookmarksicon)
+            Glide.with(this).load(R.drawable.starunfilled).into(bookmarksicon)
             Glide.with(this).load(R.drawable.icofilled).into(icoicon)
             Glide.with(this).load(R.drawable.settingsunfiled).into(settingsicon)
         }
@@ -191,7 +191,7 @@ class Home2Activity : AppCompatActivity() {
             //currentfragment = 5
             Glide.with(this).load(R.drawable.newsunfilled).into(tweeticon)
             Glide.with(this).load(R.drawable.mycoinsunfilled).into(porticon)
-            Glide.with(this).load(R.drawable.bookmarksunfilled).into(bookmarksicon)
+            Glide.with(this).load(R.drawable.starunfilled).into(bookmarksicon)
             Glide.with(this).load(R.drawable.icounfilled).into(icoicon)
             Glide.with(this).load(R.drawable.settingsfilled).into(settingsicon)
         }

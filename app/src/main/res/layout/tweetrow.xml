@@ -45,19 +45,22 @@
                 android:scaleType="fitStart"
                 app:srcCompat="@drawable/starunfilled" />
 
-            <Button
-                android:id="@+id/addcoin"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_toLeftOf="@+id/bookmark"
-                android:layout_toStartOf="@id/bookmark"
-                android:layout_marginEnd="10dp"
-                android:layout_marginTop="5dp"
-                android:elevation="8dp"
-                android:scaleType="fitStart"
-                android:background="@drawable/addcoin"
-                 />
 
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/addcoin"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginEnd="10dp"
+                android:layout_toStartOf="@id/bookmark"
+                android:layout_toLeftOf="@+id/bookmark"
+                android:src="@drawable/addcoin"
+                app:backgroundTint="#008200"
+
+                app:fabCustomSize="24dp"
+
+                app:fabSize="mini"
+                app:rippleColor="@color/colorPrimaryDark" />
 
             <ImageView
                 android:id="@+id/coinicon"

@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.net.Uri
+import android.support.design.widget.FloatingActionButton
 import android.support.v4.content.ContextCompat.startActivity
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -189,7 +190,7 @@ class TweetsAdapter(internal var c: Context, internal var tweets: List<Tweet>, p
         var bookmark:ImageView?=null
         var timestamp:TextView?=null
         var sharebtn:Button?=null
-        var addbtn:Button?=null
+        var addbtn:FloatingActionButton?=null
         init {
             this.mtweet = itemView.findViewById(R.id.tweet)
             this.mcoin = itemView.findViewById(R.id.coin)
