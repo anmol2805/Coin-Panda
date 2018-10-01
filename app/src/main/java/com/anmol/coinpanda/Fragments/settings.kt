@@ -31,6 +31,7 @@ class settings : Fragment() {
     var help : Button? = null
     var facebook:Button?=null
     var airdrop:Button?=null
+    var pp:Button?=null
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val vi = inflater.inflate(R.layout.settings,
                 container, false)
@@ -42,6 +43,7 @@ class settings : Fragment() {
         help = vi.findViewById(R.id.support)
         facebook = vi.findViewById(R.id.likefb)
         airdrop = vi.findViewById(R.id.airdrop)
+        pp = vi.findViewById(R.id.privacypolicy)
         share?.setOnClickListener {
             val shareintent = Intent()
             shareintent.action = Intent.ACTION_SEND

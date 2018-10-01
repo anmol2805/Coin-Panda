@@ -20,8 +20,8 @@ android {
         applicationId "com.anmol.coinpanda"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 21
-        versionName '2.9.6'
+        versionCode 22
+        versionName '2.9.7'
         multiDexEnabled true
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -42,16 +42,25 @@ android {
 }
 
 dependencies {
-    implementation 'com.google.firebase:firebase-core:16.0.1'
-    implementation 'com.google.firebase:firebase-messaging:17.1.0'
-    implementation 'com.google.firebase:firebase-auth:16.0.2'
-    implementation 'com.google.firebase:firebase-database:16.0.1'
-    implementation 'com.google.firebase:firebase-storage:16.0.1'
-    implementation 'com.google.firebase:firebase-crash:16.0.1'
-    implementation 'com.google.android.gms:play-services:12.0.1'
+    implementation 'com.google.firebase:firebase-core:16.0.3'
+    implementation 'com.google.firebase:firebase-messaging:17.3.2'
+    implementation 'com.google.firebase:firebase-auth:16.0.3'
+    implementation 'com.google.firebase:firebase-database:16.0.2'
+    implementation 'com.google.firebase:firebase-storage:16.0.2'
+    implementation 'com.google.firebase:firebase-crash:16.2.0'
+
+    implementation 'com.google.firebase:firebase-iid:17.0.2'
     implementation 'com.google.firebase:firebase-firestore:17.0.2'
     implementation 'com.google.firebase:firebase-config:16.0.0'
-    implementation 'com.google.android.gms:play-services-auth:15.+'
+    implementation 'com.google.android.gms:play-services-auth:16.0.0'
+    implementation 'com.google.android.gms:play-services-analytics:16.0.3'
+    implementation 'com.google.android.gms:play-services-cast:16.0.1'
+    implementation 'com.google.android.gms:play-services-gcm:15.0.1'
+    implementation 'com.google.android.gms:play-services-drive:15.0.1'
+    implementation 'com.google.android.gms:play-services-location:15.0.1'
+    implementation 'com.google.android.gms:play-services-maps:15.0.1'
+    implementation 'com.google.android.gms:play-services-base:15.0.1'
+    implementation 'com.google.android.gms:play-services-identity:15.0.1'
     implementation 'org.jetbrains.anko:anko:0.10.4'
     implementation 'com.android.support:appcompat-v7:28.+'
     implementation 'com.github.ybq:Android-SpinKit:1.1.0'
