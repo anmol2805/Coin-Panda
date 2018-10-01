@@ -13,6 +13,7 @@ import android.net.Uri
 import android.widget.*
 
 import com.anmol.coinpanda.SupportActivity
+import com.anmol.coinpanda.WebviewActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.firestore.FirebaseFirestore
@@ -122,6 +123,11 @@ class settings : Fragment() {
                 dialog.show()
             }
 
+        }
+        pp?.setOnClickListener {
+            val webintent = Intent(activity, WebviewActivity::class.java)
+            webintent.putExtra("weburl", "https://drive.google.com/open?id=1OzXlJl74deyPJfI8cdV9MyygETAKeC83")
+            startActivity(webintent)
         }
         request?.setOnClickListener {
             if(activity!=null){
