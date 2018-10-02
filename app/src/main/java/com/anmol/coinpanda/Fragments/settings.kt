@@ -126,7 +126,7 @@ class settings : Fragment() {
         }
         pp?.setOnClickListener {
             val webintent = Intent(activity, WebviewActivity::class.java)
-            webintent.putExtra("weburl", "https://drive.google.com/open?id=1OzXlJl74deyPJfI8cdV9MyygETAKeC83")
+            webintent.putExtra("weburl", "https://www.cryptohype.live/privacy.html")
             startActivity(webintent)
         }
         request?.setOnClickListener {
